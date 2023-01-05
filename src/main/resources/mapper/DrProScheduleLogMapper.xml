@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : DR_PRO_SCHEDULE_LOG
+ * 테이블 설명 : 레슨프로일정 로그
+-->
+<mapper namespace="com.yido.clubd.repository.DrProScheduleLogMapper">
+
+    <insert id="insertDrProScheduleLog">
+        <selectKey resultType="String" keyProperty="logSeq" order="BEFORE">
+			SELECT IFNULL(CAST(MAX(LOG_SEQ) AS UNSIGNED), 0)+1 
+			  FROM DR_PRO_SCHEDULE_LOG
+        </selectKey>   
+    	INSERT INTO DR_PRO_SCHEDULE_LOG (
+			CO_DIV				
+			, MS_NUM			
+			, LOG_SEQ
+			, LOG_DIV		
+			, SC_SEQ			
+			, SC_DAYOFWEEK	
+			, SC_FROM_TIME			
+			, SC_END_TIME
+    	) values (
+    		#{coDiv}			
+    		, #{msNum}	
+    		, #{logSeq}
+    		, #{logDiv}	
+    		, #{scSeq}			
+    		, #{scDayofweek}	
+    		, #{scFromTime}			
+    		, #{scEndTime}	
+    	)  	
+    </insert>
+</mapper>

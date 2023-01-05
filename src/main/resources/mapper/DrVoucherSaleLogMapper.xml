@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : DR_VOUCHER_SALE_LOG
+ * 테이블 설명 : 회원이용권 구매내역 로그
+-->
+<mapper namespace="com.yido.clubd.repository.DrVoucherSaleLogMapper">
+
+    <insert id="insertDrVoucherSaleLog">
+        <selectKey resultType="String" keyProperty="logSeq" order="BEFORE">
+			SELECT IFNULL(CAST(MAX(LOG_SEQ) AS UNSIGNED), 0)+1 
+			  FROM DR_VOUCHER_SALE_LOG
+        </selectKey>    
+    	INSERT INTO DR_VOUCHER_SALE_LOG (
+			CO_DIV
+			, SALE_DAY
+			, SALE_SEQ	
+			, LOG_SEQ
+			, LOG_DIV
+			, MS_NUM
+			, VC_CD
+			, DR_SERIAL_NO
+			, LK_CO_DIV
+			, LK_NUM
+			, VC_FROM_DAY
+			, VC_TO_DAY
+			, VC_STATE
+			, VC_LIMIT_CNT
+			, VC_SERVICE_CNT
+			, VC_USE_CNT
+			, VC_REM_CNT
+			, VC_REMARK
+			, USE_YN
+			, INPUT_STAFF
+			, INPUT_DATETIME
+			, INPUT_IP
+    	) values (
+    		#{coDiv}			
+    		, #{saleDay}		
+    		, #{saleSeq}	
+    		, #{logSeq}
+    		, #{logDiv}			
+    		, #{msNum}
+    		, #{vcCd}	
+    		, #{drSerialNo}	
+    		, #{lkCoDiv}		
+    		, #{lkNum}		
+    		, #{vcFromDay}		
+    		, #{vcToDay}		
+    		, #{vcState}		
+    		, #{vcLimitCnt}		
+    		, #{vcServiceCnt}		
+    		, #{vcUseCnt}		
+    		, #{vcRemCnt}		
+    		, #{vcRemark}	
+    		, #{useYn}	
+    		, #{inputStaff}			
+    		, now()
+			, #{ipAddr}						
+    	)  	
+    </insert>
+    
+</mapper>

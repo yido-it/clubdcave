@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : DR_BK_MARK
+ * 테이블 설명 : 예약선점용
+-->
+<mapper namespace="com.yido.clubd.repository.DrBkMarkMapper">
+
+	<select id="selectList" resultType="DrBkMark">
+       
+    </select>
+    
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : PRO_LICENSE
+ * 테이블 설명 : 레슨프로자격사항
+-->
+<mapper namespace="com.yido.clubd.repository.ProLicenseMapper">
+
+    <insert id="insertProLicense">
+    	INSERT INTO PRO_LICENSE (
+			MS_NUM				
+			, LIC_SEQ			
+			, LIC_KIND			
+			, LIC_REMARK
+    	) values (
+    		#{msNum}			
+    		, #{licSeq}		
+    		, #{licKind}			
+    		, #{licRemark}	
+    	)  	
+    </insert>
+    
+ 	<update id="updateProLicense">
+		UPDATE PRO_LICENSE
+		   SET LIC_KIND 		= #{licKind}
+		     , LIC_REMARK 		= #{licRemark}
+		 WHERE MS_NUM 			= #{msNum}
+		   AND LIC_SEQ 			= #{licSeq}
+	</update>
+	   
+</mapper>

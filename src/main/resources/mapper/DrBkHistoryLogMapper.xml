@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : DR_BK_HISTORY_LOG
+ * 테이블 설명 : 예약내역 로그
+-->
+<mapper namespace="com.yido.clubd.repository.DrBkHistoryLogMapper">
+    <insert id="insertDrBkHistory">
+        <selectKey resultType="String" keyProperty="logSeq" order="BEFORE">
+			SELECT IFNULL(CAST(MAX(LOG_SEQ) AS UNSIGNED), 0)+1 
+			  FROM DR_BK_HISTORY_LOG
+        </selectKey>    
+    	INSERT INTO DR_BK_HISTORY_LOG (
+			BK_SERIAL_NO
+			, LOG_SEQ
+			, LOG_DIV
+			, CO_DIV
+			, BK_DAY
+			, BAY_CONDI
+			, BK_TIME
+			, MS_NUM
+			, BK_NAME
+			, BK_FIRST_PHONE
+			, BK_MID_PHONE
+			, BK_LAST_PHONE
+			, BK_STATE
+			, BK_SMS_SEND
+			, BK_PAY_DIV
+			, BK_METHOD
+			, COST_DIV
+			, COST_CO_DIV
+			, COST_NAME
+			, COST_CD
+			, INPUT_STAFF
+			, INPUT_DATETIME
+			, INPUT_IP
+    	) values (
+    		#{bkSerialNo}	
+    		, #{logSeq}
+    		, #{logDiv}			
+    		, #{coDiv}		
+    		, #{bkDay}	
+    		, #{bayCondi}	
+    		, #{bkTime}		
+    		, #{msNum}		
+    		, #{bkName}	
+    		, #{bkFirstPhone}	
+    		, #{bkMidPhone}		
+    		, #{bkLastPhone}		
+    		, #{bkState}	
+    		, #{bkSmsSend}	
+    		, #{bkPayDiv}		
+    		, #{bkMethod}		
+    		, #{costDiv}	
+    		, #{costCoDiv}	
+    		, #{costName}	
+    		, #{costCd}	
+    		, #{inputStaff}			
+    		, now()
+			, #{ipAddr}			
+    	)  	
+    </insert>
+</mapper>

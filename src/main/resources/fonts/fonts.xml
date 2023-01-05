@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<fontFamilies>
+    <!-- fontFamily name 속성에 입력하는 값는 Jasper Studio에서 폰트를 등록할때 지정한 폰트명과 동일해야한다. -->
+    <fontFamily name="산돌명조">
+        <normal>fonts/산돌명조 L.ttf</normal>
+        <bold>fonts/산돌명조 M.ttf</bold>
+        <pdfEncoding>Identity-H</pdfEncoding>
+        <pdfEmbedded>true</pdfEmbedded>
+    </fontFamily>
+
+    <fontFamily name="산돌고딕">
+        <normal>fonts/산돌고딕l.ttf</normal>
+        <bold>fonts/산돌고딕 M.ttf</bold>
+        <pdfEncoding>Identity-H</pdfEncoding>
+        <pdfEmbedded>true</pdfEmbedded>
+    </fontFamily>
+
+    <fontFamily name="CombiNumerals">
+        <normal>fonts/CombiNumeralsLtd.otf</normal>
+        <pdfEncoding>Identity-H</pdfEncoding>
+        <pdfEmbedded>true</pdfEmbedded>
+    </fontFamily>
+    
+    <fontFamily name="맑은 고딕">
+        <normal>fonts/MALGUN.TTF</normal>
+        <bold>fonts/MALGUNBD.TTF</bold>
+        <Semilight>fonts/MALGUNSL.TTF</Semilight>
+        <pdfEncoding>Identity-H</pdfEncoding>
+        <pdfEmbedded>true</pdfEmbedded>
+    </fontFamily>    
+</fontFamilies>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : DR_MS_BASIC_LOG
+ * 테이블 설명 : 회원추가정보 로그
+-->
+<mapper namespace="com.yido.clubd.repository.DrMsBasicLogMapper">
+
+    <insert id="insertDrMsBasicLog">
+        <selectKey resultType="String" keyProperty="logSeq" order="BEFORE">
+			SELECT IFNULL(CAST(MAX(LOG_SEQ) AS UNSIGNED), 0)+1 
+			  FROM DR_MS_BASIC_LOG
+        </selectKey>
+    	INSERT INTO DR_MS_BASIC_LOG (
+			MS_NUM				
+			, LOG_SEQ
+			, LOG_DIV
+			, MS_HANDCAP			
+			, MS_LESSON_EXP_YN			
+			, MS_LESSON_MINUTE
+			, MS_LESSON_TREM	
+    	) values (
+    		#{msNum}			
+    		, #{logSeq}
+    		, #{logDiv}
+    		, #{msHandcap}		
+    		, #{msLessonExpYn}			
+    		, #{msLessonMinute}
+    		, #{msLessonTrem}			
+    	)  	
+    </insert>
+    
+</mapper>

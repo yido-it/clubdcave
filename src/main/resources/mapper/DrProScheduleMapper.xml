@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : DR_PRO_SCHEDULE
+ * 테이블 설명 : 레슨프로일정
+-->
+<mapper namespace="com.yido.clubd.repository.DrProScheduleMapper">
+
+    <insert id="insertDrProSchedule">
+    	INSERT INTO DR_PRO_SCHEDULE (
+			CO_DIV				
+			, MS_NUM			
+			, SC_SEQ			
+			, SC_DAYOFWEEK	
+			, SC_FROM_TIME			
+			, SC_END_TIME
+    	) values (
+    		#{coDiv}			
+    		, #{msNum}		
+    		, #{scSeq}			
+    		, #{scDayofweek}	
+    		, #{scFromTime}			
+    		, #{scEndTime}	
+    	)  	
+    </insert>
+    
+ 	<update id="updateDrMsBasic">
+		UPDATE DR_PRO_SCHEDULE
+		   SET SC_DAYOFWEEK 	= #{scDayofweek}
+		     , SC_FROM_TIME 	= #{scFromTime}
+		     , SC_END_TIME 		= #{scEndTime}
+		 WHERE SC_SEQ 			= #{scSeq}
+		   AND CO_DIV 			= #{coDiv}
+		   AND MS_NUM 			= #{msNum}
+	</update>   
+</mapper>

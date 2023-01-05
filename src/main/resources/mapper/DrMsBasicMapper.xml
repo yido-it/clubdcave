@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : DR_MS_BASIC
+ * 테이블 설명 : 회원추가정보
+-->
+<mapper namespace="com.yido.clubd.repository.DrMsBasicMapper">
+
+    <insert id="insertDrMsBasic">
+    	INSERT INTO DR_MS_BASIC (
+			MS_NUM				
+			, MS_HANDCAP			
+			, MS_LESSON_EXP_YN			
+			, MS_LESSON_MINUTE
+			, MS_LESSON_TREM	
+    	) values (
+    		#{msNum}			
+    		, #{msHandcap}		
+    		, #{msLessonExpYn}			
+    		, #{msLessonMinute}
+    		, #{msLessonTrem}			
+    	)  	
+    </insert>
+    
+	<update id="updateDrMsBasic">
+		UPDATE DR_MS_BASIC
+		   SET MS_HANDCAP 			= #{msHandcap}
+		     , MS_LESSON_EXP_YN 	= #{msLessonExpYn}
+		     , MS_LESSON_MINUTE 	= #{msLessonMinute}
+		     , MS_LESSON_TREM 		= #{msLessonTrem}
+		 WHERE MS_NUM 				= #{msNum}
+	</update>
+
+</mapper>

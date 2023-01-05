@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : PRO_NOTICE
+ * 테이블 설명 : 레슨프로특이사항
+-->
+<mapper namespace="com.yido.clubd.repository.ProNoticeMapper">
+   
+    <insert id="insertProNotice">
+    	INSERT INTO PRO_NOTICE (
+			MS_NUM				
+			, NOTICE_DIV			
+			, PRO_MUST_YN			
+			, PRO_REMARK
+			, NOTICE_OPEN_YN	
+    	) values (
+    		#{msNum}			
+    		, #{noticeDiv}		
+    		, #{proMustYn}			
+    		, #{proRemark}
+    		, #{noticeOpenYn}			
+    	)  	
+    </insert>
+    
+   	<update id="updateProNotice">
+		UPDATE PRO_NOTICE
+		   SET PRO_MUST_YN 		= #{proMustYn}
+		     , PRO_REMARK 		= #{proRemark}
+		     , NOTICE_OPEN_YN 	= #{noticeOpenYn}
+		 WHERE MS_NUM 			= #{msNum}
+		   AND NOTICE_DIV 		= #{noticeDiv}
+	</update>
+	
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : PG_HISTORY
+ * 테이블 설명 : PG 결제내역
+-->
+<mapper namespace="com.yido.clubd.repository.DrBkTimeMapper">
+
+	<insert id="insertOrderHistory" parameterType="hashmap">
+        <selectKey resultType="String" keyProperty="orderSeq" order="BEFORE">
+			SELECT IFNULL(CAST(MAX(ORDER_SEQ) AS UNSIGNED), 0)+1 
+			  FROM PG_HISTORY
+        </selectKey>    	
+		INSERT INTO PG_HISTORY (
+		        CO_DIV,                   ORDER_ID,                 ORDER_SEQ,                TRANSACTION_ID,           CANCEL_KEY,               
+		        ORDER_DATE,               AUTH_DATE,                AUTH_NUMBER,              AUTH_AMOUNT,              QUOTA,                    
+		        CARD_COMPANY_CODE,        PIN_NUMBER,               SIMPLE_AFF_NAME,          SIMPLE_DEAL_TYPE,         CANCEL_TYPE,              
+		        CANCEL_DATE,              CANCEL_AMOUNT,            PART_CANCEL_AMOUNT,       SEQ_NUMBER,               RESPONSE_CODE,            
+		        RESPONSE_MESSAGE,         DETAIL_RESPONSE_CODE,     DETAIL_RESPONSE_MESSAGE,  INPUT_STAFF,              INPUT_DATETIME,           
+		        INPUT_IP,                 UPDATE_STAFF,             UPDATE_DATETIME,          UPDATE_IP )
+		VALUES (
+		        #{coDiv},                 #{orderId},               #{orderSeq},              #{transactionId},         #{cancelKey},             
+		        #{orderDate},             #{authDate},              #{authNumber},            #{authAmount},            #{quota},                 
+		        #{cardCompanyCode},       #{pinNumber},             #{simpleAffName},         #{simpleDealType},        #{cancelType},            
+		        #{cancelDate},            #{cancelAmount},          #{partCancelAmount},      #{seqNumber},             #{responseCode},          
+		        #{responseMessage},       #{detailResponseCode},    #{detailResponseMessage}, 'HOMEPAGE',               NOW(),                    
+		        #{ipAddr},                'HOMEPAGE',               NOW(),                    #{ipAddr} )
+	</insert>
+	
+	
+</mapper>

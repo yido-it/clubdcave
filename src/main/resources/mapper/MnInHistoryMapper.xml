@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : MN_IN_HISTORY
+ * 테이블 설명 : 입금내역
+-->
+<mapper namespace="com.yido.clubd.repository.MnInHistoryMapper">
+
+    <insert id="insertMnInHistory">
+    	INSERT INTO MN_IN_HISTORY (
+			MN_SERIAL_NO			, CO_DIV			, MN_IN_DAY			, MN_SEQ
+			, MN_SHOP_CD			, MN_BEFORE_DIV		, MN_PAY_DIV		, MN_IN_NAME
+			, MS_NUM				, MN_REV_AMOUNT		, MN_IN_AMOUNT		, MN_CHANGE_AMOUNT
+			, MN_IN_NO				, MN_CARD_APPROVAL	, MN_MONTH			, MN_APP_DATE
+			, MN_CARD_DIV			, MN_CARD_GANO		, MN_TMID			, MN_CARD_SWIPE
+			, MN_CARD_NAME			, MN_REMARK			, MN_DELETE_YN		, MN_CANCEL_YN
+			, MN_ORI_CO_DIV			, MN_ORI_IN_DAY		, MN_ORI_MN_SEQ		, MN_ORI_SERIAL_NO
+			, INPUT_STAFF			, INPUT_DATETIME	, INPUT_IP
+    	) values (
+    		#{mnSerialNo}    		, #{coDiv}	   		, #{mnInDay}   		, #{mnSeq}
+    		, #{mnShopCd}    		, #{mnBeforeDiv}	, #{mnPayDiv}  		, #{mnInName}
+    		, #{msNum}	    		, #{mnRevAmount} 	, #{mnInAmount}  	, #{mnChangeAmount}
+    		, #{mnInNo}	    		, #{mnCardApproval} , #{mnMonth}   		, #{mnAppDate}
+    		, #{mnCardDiv}    		, #{mnCardGano}    	, #{mnTmid}    		, #{mnCardSwipe}
+    		, #{mnCardName}    		, #{mnRemark}  		, #{mnDeleteYn}  	, #{mnCancelYn}
+    		, #{mnOriCoDiv}    		, #{mnOriInDay}   	, #{mnOriMnSeq}   	, #{mnOriSerialNo}
+    		, #{inputStaff}			, now()				, #{ipAddr}			
+    	)  	
+    </insert>
+    
+</mapper>

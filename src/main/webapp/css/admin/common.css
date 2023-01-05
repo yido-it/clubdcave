@@ -1,0 +1,137 @@
+table {
+	font-size:10pt;
+}
+span {
+	font-size:11pt;
+}
+.content-wrapper {
+	padding:1.375rem 1.375rem 1.375rem 1.375rem;
+}
+
+.card-margin {
+	padding:10px;
+	margin-top:10px;
+	border-radius:10px;
+}
+.form-select{
+	height:41px;
+	display:inline-block;
+	font-size:0.8rem;
+	border: 1px solid #CED4DA;
+  	border-radius: 4px;
+  	padding-left: 8px;
+  	width:100%;
+  	color:#495057;
+}
+
+.form-control{
+	padding: 0.875rem 1.375rem 0.875rem 0.5rem;
+}
+
+.form-group, .form-group label{
+	margin-bottom: 0
+}
+
+.tabulator .tabulator-footer .tabulator-page {
+	font-size:12px;
+}
+
+#tabList, #tabDetail, #bkList{
+	font-size:12px;
+}
+
+.tabulator-page-counter{
+	font-size:12px;
+}
+
+/* 관리자 > 예약관리 > 예약리스트 > 우측 상세 테이블 */
+.bkDetailLog {
+	font-size:12px;
+	border-collapse: collapse;
+	width: 100%;
+	text-align:center;
+}
+.bkDetailLog > tbody > tr > th, .bkDetailLog > tbody > tr > td {
+     padding: 10px;
+     border-bottom: 1px solid #dbdbdb;
+}
+.bkDetailLog tr:hover { background-color: #F5F5F5; } 
+/* =================================== */
+
+/* 관리자 > 예약관리 > 예약리스트 > 예약정보 */
+.bkDetail {
+	border: 1px solid #8080808c;
+	width: 100%;
+}
+
+.bkDetail > tbody > tr > th {
+	border: 1px solid gray;
+	background-color:#c8c8e1;
+	text-align:center
+}
+
+.bkDetail > tbody > tr > th, .bkDetail > tbody > tr > td {
+	padding: 5px;
+}
+
+/* 관리자 > 예약관리 > 예약리스트 > 우측 상세 테이블 */
+.bkDetailList {
+	border:1px solid #dbdbdb;
+	border-collapse: collapse;
+	width: 800px;
+	text-align:center;
+}
+.bkDetailList > thead > tr > th, .bkDetailList > tbody > tr > td {
+     padding: 10px;
+     border-bottom: 1px solid #dbdbdb;
+}
+.bkDetailList tr:hover { background-color: #F5F5F5; } 
+/* =================================== */
+
+.bkDetailLogInfo {
+	border-bottom:1px solid #dbdbdb;
+	padding-bottom:10px;
+}
+.bkDetailLogInfo > span {
+	font-size:10pt;
+}
+
+.menuRoute{
+	font-size:12px;
+}
+
+.tabulator-cell{
+	height:30px;
+}
+/* 테이블 선택 CSS */
+.tabulator-row.tabulator-selected {
+	background-color : #c4b2dbab!important
+}
+
+.tabulator-row.tabulator-selected:hover {
+	background-color : #c4b2dbab!important
+}
+
+.flatpickr-months .flatpickr-month{
+	background:#7256a4;
+}
+.flatpickr-weekdays{
+	background:#7256a4;
+}
+.flatpickr-current-month .flatpickr-monthDropdown-months{
+	background:#7256a4;
+}
+.flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-monthDropdown-month{
+	background:#7256a4;
+}
+span.flatpickr-weekday{
+	background:#7256a4;
+	color:white;
+}
+.flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange, .flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus, .flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover, .flatpickr-day.selected.prevMonthDay, .flatpickr-day.startRange.prevMonthDay, .flatpickr-day.endRange.prevMonthDay, .flatpickr-day.selected.nextMonthDay, .flatpickr-day.startRange.nextMonthDay, .flatpickr-day.endRange.nextMonthDay{
+	background:#7256a4;
+	border-color:#7256a4;
+}
+.flatpickr-day.selected.startRange + .endRange:not(:nth-child(7n+1)), .flatpickr-day.startRange.startRange + .endRange:not(:nth-child(7n+1)), .flatpickr-day.endRange.startRange + .endRange:not(:nth-child(7n+1)){
+	box-shadow:-10px 0 0 #7256a4;
+}

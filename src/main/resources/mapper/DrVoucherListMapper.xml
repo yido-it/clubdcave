@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : DR_VOUCHER_LIST
+ * 테이블 설명 : 이용권세부내역
+-->
+<mapper namespace="com.yido.clubd.repository.DrVoucherListMapper">
+
+    <insert id="insertDrVoucherList">
+        <selectKey resultType="String" keyProperty="listSeq" order="BEFORE">
+			SELECT IFNULL(CAST(MAX(LIST_SEQ) AS UNSIGNED), 0)+1 
+			  FROM DR_VOUCHER_LIST
+        </selectKey>   
+    	INSERT INTO DR_VOUCHER_LIST (
+			CO_DIV				
+			, SALE_DAY			
+			, SALE_SEQ			
+			, LIST_SEQ
+			, VC_STATE	
+			, INPUT_STAFF	
+			, INPUT_DATETIME	
+			, INPUT_IP	
+    	) values (
+    		#{coDiv}			
+    		, #{saleDay}		
+    		, #{saleSeq}			
+    		, #{listSeq}
+    		, #{vcState}
+    		, #{inputStaff}			
+    		, now()
+			, #{ipAddr}				
+    	)  	
+    </insert>
+    
+	<update id="updateDrVoucherList">
+		UPDATE DR_VOUCHER_LIST
+		   SET VC_STATE 			= #{vcState}
+		 WHERE LIST_SEQ 			= #{listSeq}
+	</update>    
+</mapper>

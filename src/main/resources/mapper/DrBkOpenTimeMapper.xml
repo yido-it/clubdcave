@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : DR_BK_OPEN_TIME
+ * 테이블 설명 : 예약오픈일정 시간별
+-->
+<mapper namespace="com.yido.clubd.repository.DrBkOpenTimeMapper">
+	<!-- 현재 시간 기준으로 가장 마지막 오픈날짜 구하기 -->
+	<select id="getBkDay" resultType="DrBkOpenTime">
+		SELECT MAX(BK_DAY) AS BK_DAY
+		  FROM DR_BK_OPEN_TIME A INNER JOIN CD_COMMON B ON A.CO_DIV = B.CO_DIV AND A.MS_LEVEL = B.CD_TITLE1 AND CD_DIVISION = '002' AND CD_USEYN = 'Y'
+	     WHERE B.CD_CODE = #{msLevel}
+	       AND BAY_CONDI = #{bayCondi} 
+		   AND DATE_FORMAT(NOW(), '%Y%m%d%H') BETWEEN CONCAT(BK_FROM_DAY, BK_START_TIME) AND CONCAT(BK_TO_DAY, BK_END_TIME);    
+    </select>
+    
+</mapper>

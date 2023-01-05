@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : DR_MS_MAININFO_LOG
+ * 테이블 설명 : 회원정보 (회원/프로) 로그
+-->
+<mapper namespace="com.yido.clubd.repository.DrMsMainInfoLogMapper">
+
+	<insert id="insertDrMsMaininfoLog">
+        <selectKey resultType="String" keyProperty="logSeq" order="BEFORE">
+			SELECT IFNULL(CAST(MAX(LOG_SEQ) AS UNSIGNED), 0)+1 
+			  FROM DR_MS_MAININFO_LOG
+        </selectKey>
+    	INSERT INTO DR_MS_MAININFO_LOG (
+			MS_NUM				, MS_STATUS			, MS_DIVISION			, MS_LEVEL
+			, MS_LINK			, MS_ID				, MS_PASSWORD			, MS_NAME
+			, MS_ENAME			, MS_NICKNAME		, MS_IMAGENAME			, MS_SEX
+			, MS_BIRTH			, MS_BIRTHYL		, MS_FIRST_PHONE1		, MS_MID_PHONE1
+			, MS_LAST_PHONE1	, SMS_CHK1			, MS_BLANK				, MS_VOUCHER_DAY
+			, MS_WEDDINGDAY		, MS_WEDDING		, MS_EMAIL				, MS_EMAIL_YN
+			, MS_HOMETEL		, MS_HOMEZIP		, MS_HOMEADDR1			, MS_HOMEADDR2
+			, MS_POST_YN		, MS_COMPNM			, MS_COMPNO				, MS_COMPTEL
+			, MS_COMPFAX		, MS_COMPZIP		, MS_COMPADDR1			, MS_COMPADDR2
+			, MS_COMP_POST_YN	, MS_COMPDEPT		, MS_COMPPOSITION		, MS_REGDAY
+			, MS_ENDDAY			, MS_REMARK			, MS_MKT_AGREE_YN		, MS_DORMANT
+			, LOGIN_TIME		, MS_DI				, INPUT_STAFF			, INPUT_DATETIME
+			, INPUT_IP			, UPDATE_STAFF		, UPDATE_DATETIME		, UPDATE_IP
+			, LOG_SEQ			, LOG_DIV
+    	) values (
+    		#{msNum}			, #{msStatus}		, #{msDivision}			, #{msLevel}
+    		, #{msLink}			, #{msId}			, #{msPassword}			, #{msName}
+    		, #{msEname}		, #{msNickname}		, #{msImagename}		, #{msSex}
+    		, #{msBirth}		, #{msBirthYl}		, #{msfirstphone1}		, #{msMidPhone1}
+    		, #{msLastPhone1}	, #{smsChk1}		, #{msBlank}			, #{msVoucherDay}
+    		, #{msWeddingday}	, #{msWedding}		, #{msEmail}			, #{msEmailYn}
+    		, #{msHometel}		, #{msHomezip}		, #{msHomeaddr1}		, #{msHomeaddr2}
+    		, #{msPostYn}		, #{msCompnm}		, #{msCompno}			, #{msComptel}
+    		, #{msCompfax}		, #{msCompzip}		, #{msCompaddr1}		, #{msCompaddr2}
+    		, #{msCompPostYn}	, #{msCompdept}		, #{msCompposition}		, #{msRegday}
+    		, #{msEndday}		, #{msRemark}		, #{msMktAgreeYn}		, #{msDormant}
+			, #{loginTime}		, #{msDi}			, #{inputStaff}			, now()
+			, #{ipAddr}			, #{updateStaff}	, now()					, #{ipAddr}
+			, #{logSeq}			, #{logDiv}
+    	)  	
+    </insert>
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : DR_CL_BAY_MAKE
+ * 테이블 설명 : 일자별 BAY별 생성규칙
+-->
+<mapper namespace="com.yido.clubd.repository.DrClBayMakeMapper">
+
+	<select id="selectList" resultType="DrClBayMake">
+       
+    </select>
+    
+</mapper>

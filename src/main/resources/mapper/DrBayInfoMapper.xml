@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : DR_BAY_INFO 
+ * 테이블 설명 : BAY관리
+-->
+<mapper namespace="com.yido.clubd.repository.DrBayInfoMapper">
+
+	<select id="selectList" parameterType="hashmap" resultType="DrBayInfo">
+		SELECT CD_TITLE1 AS BAY_NAME
+		  FROM DR_BAY_INFO A INNER JOIN CD_COMMON B ON A.BAY_CD = B.CD_CODE AND CD_DIVISION = '020' AND CD_USEYN = 'Y'
+    </select>
+	
+</mapper>

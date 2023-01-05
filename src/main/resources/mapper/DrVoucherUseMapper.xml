@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : DR_VOUCHER_USE 
+ * 테이블 설명 : 이용권사용내역
+-->
+<mapper namespace="com.yido.clubd.repository.DrVoucherUseMapper">
+
+    <insert id="insertDrVoucherUse">
+    	INSERT INTO DR_VOUCHER_USE (
+			BK_SERIAL_NO				
+			, CO_DIV
+			, SALE_DAY
+			, SALE_SEQ			
+			, LIST_SEQ
+    	) values (
+    		#{bkSerialNo}			
+    		, #{coDiv}
+    		, #{saleDay}
+    		, #{saleSeq}		
+    		, #{listSeq}			
+    	)  	
+    </insert>
+    
+</mapper>
