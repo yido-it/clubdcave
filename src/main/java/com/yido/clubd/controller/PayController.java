@@ -222,13 +222,13 @@ public class PayController {
                 params.put("detailResponseMessage", detailResponseMessage);
              
                 // PG 결제내역 insert 
-                payService.insertOrderHistory(params);
+                // payService.insertOrderHistory(params);
                                 
                 // 결제 성공
                 if(responseCode.equals("0000")) {
-                	
                 	// 결제 후 예약처리...
                 	ResultVO resultVO = payService.successPayLogic(params, reserved2, reserved3); 
+                	
                 	if(resultVO.getCode().equals("0000")) {
                 		resultCode = "0000";
                 	} else {

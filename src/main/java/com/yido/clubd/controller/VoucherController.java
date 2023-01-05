@@ -32,20 +32,20 @@ public class VoucherController {
 	private DrVoucherCodeService drVoucherCodeService;
 	
 	/**
-	 * 이용권 조회
+	 * 이용권 구매 페이지
 	 * 
 	 * @param model
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping("/voucherList")  
-	public String voucherList(Model model, HttpServletRequest req, DrVoucherCode drVoucherCode) {
+	@RequestMapping("/voucherMain")  
+	public String voucherMain(Model model, HttpServletRequest req, DrVoucherCode drVoucherCode) {
 		
 		List<DrVoucherCode> list = new ArrayList<DrVoucherCode>();
 		list = drVoucherCodeService.selectList(drVoucherCode);
-		model.addAttribute("voucherList", list);
+		model.addAttribute("vocList", list);
 		
-		return "/voucher/voucherList";
+		return "/voucher/voucherMain";
 	}
 
 }

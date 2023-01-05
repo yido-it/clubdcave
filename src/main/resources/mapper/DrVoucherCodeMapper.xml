@@ -8,22 +8,13 @@
 <mapper namespace="com.yido.clubd.repository.DrVoucherCodeMapper">
 
 	<select id="selectList" resultType="DrVoucherCode">
-       	SELECT A.VC_CD
-			 , VC_NAME
-			 , VC_DIVISION
-			 , VC_LIMIT_CNT
-			 , VC_DAY_LIMIT_CNT
-			 , VC_MONTH
-			 , VC_MINUTE
-			 , VC_USE_WEEK
-			 , VC_ENTER_FROM_TIME
-			 , VC_ENTER_TO_TIME
-			 , VC_RETURN_METHOD 
+		SELECT A.VC_CD
+			 , A.VC_NAME
 			 , B.VC_AMOUNT
-		  FROM DR_VOUCHER_CODE  AS A INNER JOIN DR_VOUCHER_COST AS B ON A.CO_DIV = B.CO_DIV AND A.VC_CD = B.VC_CD AND B.USE_YN = 'Y'
-		 WHERE VC_DISPLAY_YN = 'Y'
-		   AND A.USE_YN = 'Y'
-		 ORDER BY VC_SORT;
+			 , A.VC_MONTH
+	     FROM DR_VOUCHER_CODE A INNER JOIN DR_VOUCHER_COST B ON A.CO_DIV = B.CO_DIV AND A.VC_CD = B.VC_CD AND B.USE_YN = 'Y'
+		  AND A.VC_DISPLAY_YN = 'Y'
+		ORDER BY VC_SORT
     </select>
     
 </mapper>

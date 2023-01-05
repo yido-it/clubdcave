@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="common">
+
+	<select id="sendSms" statementType="CALLABLE" parameterType="hashmap">
+		{ CALL SP_SMS_SEND(
+			  #{coDiv}
+			<if test="tplCd == null">, ''</if>
+			<if test="tplCd != null">, #{tplCd}</if>
+			, #{phone}
+			<if test="sendMsg == null">, (SELECT CONTENT FROM SMS_TEMPLATE WHERE CO_DIV = #{coDiv} AND TPL_CODE = #{tplCd})</if>
+			<if test="sendMsg != null">, #{sendMsg}</if>
+			<if test="bkDay == null">, ''</if>
+			<if test="bkDay != null">, #{bkDay}</if>
+			<if test="bkCos == null">, ''</if>
+			<if test="bkCos != null">, #{bkCos}</if>
+			<if test="bkTime == null">, ''</if>
+			<if test="bkTime != null">, #{bkTime}</if>
+			<if test="toBkDay == null">, ''</if>
+			<if test="toBkDay != null">, #{toBkDay}</if>
+			<if test="toBkCos == null">, ''</if>
+			<if test="toBkCos != null">, #{toBkCos}</if>
+			<if test="toBkTime == null">, ''</if>
+			<if test="toBkTime != null">, #{toBkTime}</if>
+			<if test="bkName == null">, ''</if>
+			<if test="bkName != null">, #{bkName}</if>
+			<if test="msNum == null">, ''</if>
+			<if test="msNum != null">, #{msNum}</if>
+			<if test="msId == null">, ''</if>
+			<if test="msId != null">, #{msId}</if>
+			<if test="msPw == null">, ''</if>
+			<if test="msPw != null">, #{msPw}</if>
+			, 'HOMEPAGE'
+			, #{ipAddr}) }
+	</select>
+
+</mapper>

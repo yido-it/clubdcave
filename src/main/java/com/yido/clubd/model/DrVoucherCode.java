@@ -37,6 +37,8 @@ public class DrVoucherCode {
 	private LocalDateTime inputDatetime;	// 입력일시
 	
 	private String inputIp;					// 입력IP
+	
+	private int vcAmount;					// 금액 
 
 }
 
