@@ -19,8 +19,10 @@ public class DrMsMaininfo {
 
 	private String msNum;				// 회원정보 
 	private String msStatus;			// 상태	
+	private String msBkGrant;			// 예약가능여부(위약 관련)
 	private String msDivision;			// 프로/회원 구분
 	private String msLevel; 			// 회원 등급
+	private String msLoginCd; 			// 로그인구분
 	private String msLink; 				// 가족회원연결번호
 	private String msId;				// 회원ID
 	private String msPassword;			// 패스워드
@@ -31,7 +33,7 @@ public class DrMsMaininfo {
 	private String msSex; 				// 성별
 	private String msBirth; 			// 생일일자
 	private String msBirthYl; 			// 생일(양,음)구분
-	private String msfirstphone1;		// 핸드폰번호1 FIRST
+	private String msFirstPhone1;		// 핸드폰번호1 FIRST
 	private String msMidPhone1; 		// 핸드폰번호1 MID
 	private String msLastPhone1; 		// 핸드폰번호1 LAST
 	private String smsChk1;				// 문자발송여부1
@@ -64,6 +66,9 @@ public class DrMsMaininfo {
 	private String loginTime;			// 홈페이지로그인(일시분초)
 	private String msDi; 				// 실명인증
 	private String inputStaff; 			// 입력사번
+	
+	private String msPhone; 			// 핸드폰번호(full)
+	public String ipAddr;
 
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -77,7 +82,10 @@ public class DrMsMaininfo {
 	private LocalDateTime updateDatetime;	// 수정일시
 	
 	private String updateIp; 			// 수정IP
-
+		
+	public String getFullMsPhone() {
+		return this.msFirstPhone1 + this.msMidPhone1 + this.msLastPhone1;
+	}	
 }
 
 

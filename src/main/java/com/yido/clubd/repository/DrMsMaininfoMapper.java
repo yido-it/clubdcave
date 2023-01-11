@@ -19,21 +19,23 @@ import com.yido.clubd.model.DrMsMaininfo;
 @Repository
 public interface DrMsMaininfoMapper {
 
-	public DrMsMaininfo selectDrMsMaininfo(String msId);
+	//public DrMsMaininfo selectDrMsMaininfo(String msId);
 	
-	public DrMsMaininfo selectOne(String msId);
+	// 회원 중복체크 (아이디, 이메일, 핸드폰 번호)
+	public DrMsMaininfo selectDuplicateUser(Map<String, Object> params);
+	
+	public DrMsMaininfo selectLoginUser(Map<String, Object> params);
 
-	public String getMsNum(Map<String, Object> params);
+	public String selectMsNum(Map<String, Object> params);
 	
-	public SessionVO getMsSession(Map<String, Object> params);
+	public SessionVO selectMsSession(Map<String, Object> params);
 
 	// 회원/프로 등록
-	public int insertDrMsMaininfo(DrMsMaininfo drMsMaininfo);
+	public void insertDrMsMaininfo(DrMsMaininfo drMsMaininfo);
 
 	// 회원/프로 수정
 	public int updateDrMsMaininfo(DrMsMaininfo drMsMaininfo);
 	
-	// 아이디 중복체크 
 	public int duplicateCheckSocialId(Map<String, Object> params);
 
 	// 회원 위약체크 

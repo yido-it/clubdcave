@@ -21,6 +21,22 @@
 <!-- // date range picker -->
 <script> 
 	AOS.init(); // 자바스크립트로 init()을 해야 동작한다.
+	
+	function chkInputVal (id) {
+		var str = $('#' + id).data('name');
+		const charCode = str.charCodeAt(str.length - 1);
+	    const consonantCode = (charCode - 44032) % 28;
+	    
+	    if($('#' + id).val() == "" || $('#' + id).val() == null) {
+	    	if(consonantCode === 0){
+		        alert(str + '를 입력해주세요');
+		    } else {	
+		        alert(str + '을 입력해주세요');
+		    }
+			return false;
+		}
+	    return true;
+	}
 </script>
 
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>

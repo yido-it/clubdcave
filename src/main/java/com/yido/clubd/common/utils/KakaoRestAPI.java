@@ -58,7 +58,7 @@ public class KakaoRestAPI {
 
             // 결과 코드가 200이라면 성공
             int responseCode = conn.getResponseCode();
-            log.info("[getAccessToken] 토큰발급 응닶코드 : " + responseCode);
+            log.info("[getAccessToken] 토큰발급 응답코드 : " + responseCode);
 
             // 요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -74,14 +74,12 @@ public class KakaoRestAPI {
           
             access_Token = element.getString("access_token");
             refresh_Token = element.getString("refresh_token");
-            
-            // log.info("[getAccessToken] access_token: {}, refresh_token: {}", access_Token, refresh_Token);
 
             br.close();
             bw.close();
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.debug(e.getMessage());
         }
 
         return access_Token;
@@ -124,14 +122,17 @@ public class KakaoRestAPI {
 
             JsonElement element = JsonParser.parseString(result);
             
+            String id = element.getAsJsonObject().get("id").getAsString();
+            
             JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
             String nickname = properties.getAsJsonObject().get("nickname").getAsString();
             
-            // JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
-            // String email = kakao_account.getAsJsonObject().get("email").getAsString();
-           
-            userInfo.put("nickname", nickname);
-            // log.info("userInfo : " + userInfo);
+            JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
+            String email = kakao_account.getAsJsonObject().get("email").getAsString();
+            
+            userInfo.put("msId", id);
+            userInfo.put("msName", nickname);
+            userInfo.put("msEmail", email);
 
         } catch (IOException e) {
             // TODO Auto-generated catch block

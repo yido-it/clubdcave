@@ -6,7 +6,6 @@
  * 테이블 설명 : 회원정보 (회원/프로) 로그
 -->
 <mapper namespace="com.yido.clubd.repository.DrMsMainInfoLogMapper">
-
 	<insert id="insertDrMsMaininfoLog">
         <selectKey resultType="String" keyProperty="logSeq" order="BEFORE">
 			SELECT IFNULL(CAST(MAX(LOG_SEQ) AS UNSIGNED), 0)+1 
@@ -31,7 +30,7 @@
     		#{msNum}			, #{msStatus}		, #{msDivision}			, #{msLevel}
     		, #{msLink}			, #{msId}			, #{msPassword}			, #{msName}
     		, #{msEname}		, #{msNickname}		, #{msImagename}		, #{msSex}
-    		, #{msBirth}		, #{msBirthYl}		, #{msfirstphone1}		, #{msMidPhone1}
+    		, #{msBirth}		, #{msBirthYl}		, #{msFirstPhone1}		, #{msMidPhone1}
     		, #{msLastPhone1}	, #{smsChk1}		, #{msBlank}			, #{msVoucherDay}
     		, #{msWeddingday}	, #{msWedding}		, #{msEmail}			, #{msEmailYn}
     		, #{msHometel}		, #{msHomezip}		, #{msHomeaddr1}		, #{msHomeaddr2}

@@ -19,6 +19,10 @@ import org.json.JSONObject;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -62,7 +66,37 @@ public class Utils {
 	    	}    	
 	    }
 	    
+	    public static String makeJsonString(ResultVO result) {
+	    	String returnValue = "{ \"resultCode\" : \"%s\", \"resultMessage\" : \"%s\", \"rows\" : %s, \"subData\" : %s }";
+	    	String mainData = "\"\"";
+	    	String subData = "\"\"";
 
+	    	Gson gson = new GsonBuilder().serializeNulls().create(); 
+	    	
+	    	if(result.getData() != null) {
+	    		mainData = gson.toJson(result.getData());
+	    	}
+	    	
+	    	if(result.getSub() != null) {
+	    		subData = gson.toJson(result.getSub());
+	    	}
+	    	
+			returnValue = String.format(returnValue, result.getCode(), result.getMessage(), mainData, subData);
+	    	
+	    	return returnValue;
+	    }
+	    
+	    public static String makeJsonString(List<Map<String, Object>> data) {
+	    	String rValue = "";
+	    	
+	    	Gson gson = new GsonBuilder().serializeNulls().create(); 
+	    	
+	    	if(data != null) {
+	    		rValue = gson.toJson(data);
+	    	}
+	    	
+	    	return rValue;
+	    }
 	    
 	    public static String getJsonValue(JSONObject obj, String key){
 	    	return obj.get(key) == null ? "" : obj.get(key).toString();
@@ -250,5 +284,16 @@ public class Utils {
 	    	}
 	     
 	      return returnValue;
+	    }
+	    
+	    public static Map<String, Object> changeVotoMap (Object vo) {
+	    	ObjectMapper objectMapper = new ObjectMapper();
+	    	Map<String, Object> map = objectMapper.convertValue(vo, Map.class);
+	    	return map;	    	
+	    }
+	    public static Object changeMaptoVO (Map<String, Object> map) {
+	    	ObjectMapper objectMapper = new ObjectMapper();
+	    	Object vo = objectMapper.convertValue(map, Object.class);
+	    	return vo;	    	
 	    }
 }
