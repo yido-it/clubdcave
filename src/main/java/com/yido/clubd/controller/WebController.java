@@ -2,28 +2,20 @@ package com.yido.clubd.controller;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.yido.clubd.common.utils.Utils;
+import com.yido.clubd.model.DrMsMaininfo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,10 +39,11 @@ public class WebController {
 	 */
 	@RequestMapping("/main")
 	public String index(Model model, HttpServletRequest request) {
+	
 		return "/index";
 	}
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(@RequestParam(required = false) String error, HttpServletRequest request, Model model, Authentication auth) throws IOException {
         
 		if(auth != null) {
@@ -79,7 +72,7 @@ public class WebController {
     	}
 
         log.debug("ip1 - {}", request.getRemoteAddr());
-        return "login";
+        return "/member/login";
     }
     
     @RequestMapping("/succ-logout")
@@ -99,7 +92,7 @@ public class WebController {
         	}
     	}    	
     	
-    	return "/login";
+    	return "/member/login";
 	}
 
 }

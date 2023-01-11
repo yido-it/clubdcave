@@ -348,14 +348,14 @@ function phoneNumberFormat(phone, div) {
 function progressStart() {
 	$.preloader.start({
         modal: true,
-        src : "../../images/sprites.png"
+        src : "../../img/sprites.png"
     });
 }
 
 function progressStart2() {
 	$.preloader.start({
         modal: true,
-        src : "../images/sprites.png"
+        src : "../../img/sprites.png"
     });
 }
 

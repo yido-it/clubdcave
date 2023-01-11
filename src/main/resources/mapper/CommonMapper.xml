@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yido.clubd.common.repository.CommonMapper">
+
+	<select id="getCommonCode" parameterType="hashmap" resultType="hashmap">
+		SELECT CO_DIV
+			 , CD_DIVISION
+			 , CD_CODE
+			 , CD_TITLE1
+			 , CD_TITLE2
+			 , CD_TITLE3
+			 , CD_TITLE4
+		  FROM CD_COMMON
+		 WHERE CO_DIV = #{coDiv}
+		   AND CD_DIVISION = #{cdDiv}
+		   AND CD_USEYN = 'Y'
+	</select>
+
+	<select id="doFindId" parameterType="hashmap" resultType="hashmap">
+		SELECT M.MS_ID msId
+		       ,IFNULL(NULLIF(D.MS_LOGIN_CD,''),'LOCAL') msLoginCd
+		  FROM MS_MAININFO M
+		 INNER JOIN CO_PLACE P
+		    ON P.CO_DIV = #{coDiv}
+		   AND M.MS_CODIV_BRAND = P.CO_BRAND_GU
+		 INNER JOIN MS_MAININFO_DETAIL D
+		    ON M.MS_NUM = D.MS_NUM
+		 WHERE M.MS_NAME = #{name}
+		   AND NVL(M.MS_BLANK, 'N') = 'N'
+		   AND CONCAT(M.MS_FIRST_PHONE1, AES_DECRYPT(UNHEX(M.MS_MID_PHONE1), 'JBOG'), M.MS_LAST_PHONE1 ) = #{phone}
+		 LIMIT 1
+	</select>
+
+	<select id="doFindPw" parameterType="hashmap" resultType="hashmap">
+		SELECT M.MS_NUM
+			 , CONCAT(M.MS_FIRST_PHONE1, AES_DECRYPT(UNHEX(M.MS_MID_PHONE1), 'JBOG'), M.MS_LAST_PHONE1 ) AS PHONE
+		  FROM MS_MAININFO M
+		 INNER JOIN CO_PLACE P
+		    ON P.CO_DIV = #{coDiv}
+		   AND M.MS_CODIV_BRAND = P.CO_BRAND_GU
+		 INNER JOIN MS_MAININFO_DETAIL D
+		    ON M.MS_NUM = D.MS_NUM
+		 WHERE M.MS_NAME = #{name}
+		   AND NVL(M.MS_BLANK, 'N') = 'N'
+		   AND M.MS_ID = #{id}
+		   AND IFNULL(D.MS_LOGIN_CD, 'LOCAL') = 'LOCAL'
+		 LIMIT 1
+	</select>
+
+	<select id="checkPhoneNumber" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*)
+		  FROM MS_MAININFO M
+		 INNER JOIN CO_PLACE P
+		    ON P.CO_DIV = #{coDiv}
+		   AND M.MS_CODIV_BRAND = P.CO_BRAND_GU
+		 WHERE CONCAT(M.MS_FIRST_PHONE1, AES_DECRYPT(UNHEX(M.MS_MID_PHONE1), 'JBOG'), M.MS_LAST_PHONE1 ) = #{phone}
+		   AND NVL(M.MS_BLANK, 'N') = 'N'
+		   AND M.MS_MAIN_CODIV <![CDATA[<>]]> '04'
+		   AND M.MS_DIVISION = '21'
+		   AND M.MS_CLASS = '01'
+		   AND M.MS_LEVEL = '00'
+		    <if test="mergeYn != null">
+		   AND M.MS_MERGE_YN = #{mergeYn}
+		   </if>
+	</select>
+
+	<update id="updatePw" parameterType="hashmap">
+		UPDATE MS_MAININFO
+		   SET MS_PASSWORD = SHA2(#{newPw}, 256)
+		 WHERE MS_NUM = #{msNum}
+	</update>
+
+	<select id="sendSms" statementType="CALLABLE" parameterType="hashmap">
+		{ CALL SP_SMS_SEND(
+			  #{coDiv}
+			<if test="tplCd == null">, ''</if>
+			<if test="tplCd != null">, #{tplCd}</if>
+			, #{phone}
+			<if test="sendMsg == null">, (SELECT CONTENT FROM SMS_TEMPLATE WHERE CO_DIV = #{coDiv} AND TPL_CODE = #{tplCd})</if>
+			<if test="sendMsg != null">, #{sendMsg}</if>
+			<if test="bkDay == null">, ''</if>
+			<if test="bkDay != null">, #{bkDay}</if>
+			<if test="bkCos == null">, ''</if>
+			<if test="bkCos != null">, #{bkCos}</if>
+			<if test="bkTime == null">, ''</if>
+			<if test="bkTime != null">, #{bkTime}</if>
+			<if test="toBkDay == null">, ''</if>
+			<if test="toBkDay != null">, #{toBkDay}</if>
+			<if test="toBkCos == null">, ''</if>
+			<if test="toBkCos != null">, #{toBkCos}</if>
+			<if test="toBkTime == null">, ''</if>
+			<if test="toBkTime != null">, #{toBkTime}</if>
+			<if test="bkName == null">, ''</if>
+			<if test="bkName != null">, #{bkName}</if>
+			<if test="msNum == null">, ''</if>
+			<if test="msNum != null">, #{msNum}</if>
+			<if test="msId == null">, ''</if>
+			<if test="msId != null">, #{msId}</if>
+			<if test="msPw == null">, ''</if>
+			<if test="msPw != null">, #{msPw}</if>
+			, 'HOMEPAGE'
+			, #{ipAddr}) }
+	</select>
+
+	<update id="actionAgree" parameterType="hashmap">
+		UPDATE MS_MAININFO_DETAIL
+		   SET MS_ID_AGREE_YN = 'Y'
+		 WHERE MS_NUM = #{msNum}
+	</update>
+
+	<update id="savePushKey" parameterType="hashmap">
+		UPDATE MS_MAININFO_DETAIL
+		   SET MS_PUSH_KEY = #{pushKey}
+		 WHERE MS_NUM = #{msNum}
+	</update>
+
+	<insert id="loginLog" parameterType="hashmap">
+		<selectKey resultType="Integer" keyProperty="loginSeq" order="BEFORE">
+			   SELECT IFNULL(MAX(LOGIN_SEQ), 0) + 1 as loginSeq
+			   FROM MS_MAININFO_LOGIN
+			  WHERE MS_NUM = #{msNum}
+			    AND LOGIN_DATE = DATE_FORMAT(NOW(), '%Y%m%d')
+	  	</selectKey>
+		INSERT INTO MS_MAININFO_LOGIN(
+			MS_NUM
+		  , LOGIN_DATE
+		  , LOGIN_SEQ
+		  , LOGIN_PLATFORM
+		  , USER_AGENT
+		  , LOGIN_AUTO
+		  , INPUT_STAFF
+		  , INPUT_DATETIME
+		  , INPUT_IP
+
+		) SELECT
+			#{msNum}
+		  , DATE_FORMAT(NOW(), '%Y%m%d')
+		  , #{loginSeq}
+		  , #{platform}
+		  , #{userAgent}
+		  , #{loginAuto}
+		  , #{inputStaff}
+		  , NOW()
+		  , #{ipAddr}
+		FROM DUAL
+	   WHERE 1 > (
+	   		 SELECT COUNT(MS_NUM) FROM MS_MAININFO_LOGIN
+	   		 WHERE MS_NUM = #{msNum}
+			   AND LOGIN_DATE = DATE_FORMAT(NOW(), '%Y%m%d')
+			   AND INPUT_DATETIME
+		   BETWEEN DATE_ADD(NOW(), INTERVAL -1 MINUTE) AND NOW()
+		   )
+	</insert>
+</mapper>
