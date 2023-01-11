@@ -1,11 +1,9 @@
 package com.yido.clubd.repository;
 
-
+import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import com.yido.clubd.model.DrBkHistory;
-import com.yido.clubd.model.DrBkHistoryLog;
 
 /**
  * 예약내역 로그
@@ -18,5 +16,5 @@ import com.yido.clubd.model.DrBkHistoryLog;
 public interface DrBkHistoryLogMapper {
 
 	// 로그 등록
-	public int insertDrBkHistoryLog(DrBkHistoryLog drBkHistoryLog);
+	public int insertDrBkHistoryLog(Map<String, Object> params);
 }

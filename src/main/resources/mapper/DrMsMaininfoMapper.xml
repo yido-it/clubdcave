@@ -22,6 +22,7 @@
            AND IFNULL(NULLIF(MS_BLANK,''),'N') = 'N'
     </select>
     
+    <!-- 회원번호 조회 -->
     <select id="getMsNum" parameterType="hashmap" resultType="String">
 		SELECT MS_NUM
 		  FROM DR_MS_MAININFO
@@ -33,8 +34,8 @@
 	<select id="getMsSession" parameterType="hashmap" resultType="com.yido.clubd.common.utils.SessionVO">
 		SELECT MS_NUM
 			 , MS_ID
-		  FROM DR_MS_MAININFO M INNER JOIN CO_PLACE P ON P.CO_DIV = #{CODIV}
-		 WHERE M.MS_NUM = #{MSNUM}
+		  FROM DR_MS_MAININFO M INNER JOIN CO_PLACE P ON P.CO_DIV = #{coDiv}
+		 WHERE M.MS_NUM = #{msNum}
 		   AND IFNULL(NULLIF(MS_BLANK,''),'N') = 'N'
 		 LIMIT 1
 	</select>
@@ -71,11 +72,20 @@
     	)  	
     </insert>
     
+    <!-- 아이디 중복체크  -->
     <select id="duplicateCheckSocialId" parameterType="hashmap" resultType="int">
 		SELECT COUNT(*)
 		  FROM DR_MS_MAININFO M INNER JOIN CO_PLACE P ON P.CO_DIV = #{coDiv}
 		 WHERE M.MS_ID = #{msId}
 		   AND IFNULL(NULLIF(MS_BLANK,''),'N') = 'N'
 	</select>    
+	
+	<!-- 회원 위약체크 -->
+	<select id="chkMsBkGrant" parameterType="hashmap" resultType="String">
+		SELECT MS_BK_GRANT
+		  FROM DR_MS_MAININFO
+		 WHERE MS_ID = #{msId}
+		   AND IFNULL(NULLIF(MS_BLANK,''),'N') = 'N'
+	</select>
 	
 </mapper>

@@ -1,5 +1,8 @@
 package com.yido.clubd.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yido.clubd.model.DrBkTime;
@@ -19,7 +22,27 @@ public class DrBkTimeService {
 	@Autowired
     private DrBkTimeMapper drBkTimeMapper;
 
-    public DrBkTime selectList(DrBkTime drBkTime) {
-    	return drBkTimeMapper.selectList(drBkTime);
+	/**
+	 * 베이별 잔여시간 조회 
+	 * 
+	 * @param map
+	 * @return
+	 */
+    public List<DrBkTime> bookAvailableTime(Map<String, Object> map) {
+    	return drBkTimeMapper.bookAvailableTime(map);
+    }
+
+    public DrBkTime getBkTime(Map<String, Object> map) {
+    	return drBkTimeMapper.getBkTime(map);
+    }
+    
+    /**
+     * [예약 타임] 테이블 데이터 변경 
+     * 
+     * @param map
+     * @return
+     */
+    public int updateBkRemCount(Map<String, Object> map) {
+    	return drBkTimeMapper.updateBkRemCount(map);
     }
 }

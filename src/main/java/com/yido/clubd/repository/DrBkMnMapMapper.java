@@ -6,18 +6,18 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
+import com.yido.clubd.model.DrBkMnMap;
 
 /**
- * PG 결제내역
+ * 예약 입금 연결 정보
  * 
  * @author bae
  *
  */
 @Mapper
 @Repository
-public interface PgHistoryMapper {
+public interface DrBkMnMapMapper {
 
-	 
-	public int insertOrderHistory(Map<String, Object> params);
+	public int insertDrBkMnMap(DrBkMnMap drBkMnMap);
 
 }

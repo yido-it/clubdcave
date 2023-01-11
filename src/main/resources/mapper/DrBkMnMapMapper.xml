@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : DR_BK_MN_MAP 
+ * 테이블 설명 : 예약 입금 연결 정보
+-->
+<mapper namespace="com.yido.clubd.repository.DrBkMnMapMapper">
+
+    <insert id="insertDrBkMnMap">
+    	INSERT INTO DR_BK_MN_MAP (
+			CO_DIV					
+			, BK_SERIAL_NO			
+			, MN_CO_DIV			
+			, MN_IN_DAY			
+			, MN_SEQ			
+			, MN_AMOUNT		
+    	) values (
+    		#{coDiv}	   			
+    		, #{bkSerialNo}   		
+    		, #{mnCoDiv}							
+    		, #{mnInDay} 	
+    		, #{mnSeq} 	
+    		, #{mnAmount}	
+    	)  	
+    </insert>
+    
+</mapper>

@@ -19,6 +19,7 @@ public class SessionVO {
 	private String msSex; 				// 성별
 	private String msBirth; 			// 생일일자
 	private String msBirthYl; 			// 생일(양,음)구분
+	private String msPhone;				// 핸드폰번호 전체 
 	private String msfirstphone1;		// 핸드폰번호1 FIRST
 	private String msMidPhone1; 		// 핸드폰번호1 MID
 	private String msLastPhone1; 		// 핸드폰번호1 LAST

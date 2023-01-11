@@ -7,7 +7,20 @@
 -->
 <mapper namespace="com.yido.clubd.repository.DrBkHistoryMapper">
 
-    <insert id="insertDrBkHistory">
+	<select id="getSerialNo" parameterType="hashmap" resultType="String">
+		SELECT DR_NEXTVAL('001', 'B', 'BK_SERIAL_NO')
+	</select>
+	
+	<select id="selectList" parameterType="hashmap" resultType="DrBkHistory">
+		SELECT *
+		FROM DR_BK_HISTORY
+		WHERE 1=1
+		<if test='bkSerialNo != null and bkSerialNo != ""'>
+		AND BK_SERIAL_NO = #{bkSerialNo}
+		</if>
+	</select>	
+	
+    <insert id="insertDrBkHistory" parameterType="hashmap">
     	INSERT INTO DR_BK_HISTORY (
 			BK_SERIAL_NO
 			, CO_DIV
@@ -20,8 +33,6 @@
 			, BK_MID_PHONE
 			, BK_LAST_PHONE
 			, BK_STATE
-			, BK_SMS_SEND
-			, BK_PAY_DIV
 			, BK_METHOD
 			, COST_DIV
 			, COST_CO_DIV
@@ -39,17 +50,15 @@
     		, #{msNum}		
     		, #{bkName}	
     		, #{bkFirstPhone}	
-    		, #{bkMidPhone}		
+    		, HEX(AES_ENCRYPT(#{bkMidPhone}, 'YIDO')) 		
     		, #{bkLastPhone}		
-    		, #{bkState}	
-    		, #{bkSmsSend}	
-    		, #{bkPayDiv}		
-    		, #{bkMethod}		
+    		, 'Y'	
+    		, 'M'			
     		, #{costDiv}	
     		, #{costCoDiv}	
     		, #{costName}	
     		, #{costCd}	
-    		, #{inputStaff}			
+    		, 'HOMEPAGE'		
     		, now()
 			, #{ipAddr}			
     	)  	

@@ -36,4 +36,6 @@ public interface DrMsMaininfoMapper {
 	// 아이디 중복체크 
 	public int duplicateCheckSocialId(Map<String, Object> params);
 
+	// 회원 위약체크 
+	public String chkMsBkGrant(Map<String, Object> params);
 }

@@ -6,11 +6,11 @@
  * 테이블 설명 : 예약내역 로그
 -->
 <mapper namespace="com.yido.clubd.repository.DrBkHistoryLogMapper">
-    <insert id="insertDrBkHistory">
+    <insert id="insertDrBkHistoryLog">
         <selectKey resultType="String" keyProperty="logSeq" order="BEFORE">
 			SELECT IFNULL(CAST(MAX(LOG_SEQ) AS UNSIGNED), 0)+1 
 			  FROM DR_BK_HISTORY_LOG
-        </selectKey>    
+        </selectKey>       	
     	INSERT INTO DR_BK_HISTORY_LOG (
 			BK_SERIAL_NO
 			, LOG_SEQ
@@ -25,8 +25,6 @@
 			, BK_MID_PHONE
 			, BK_LAST_PHONE
 			, BK_STATE
-			, BK_SMS_SEND
-			, BK_PAY_DIV
 			, BK_METHOD
 			, COST_DIV
 			, COST_CO_DIV
@@ -46,19 +44,17 @@
     		, #{msNum}		
     		, #{bkName}	
     		, #{bkFirstPhone}	
-    		, #{bkMidPhone}		
+    		, HEX(AES_ENCRYPT(#{bkMidPhone}, 'YIDO')) 		
     		, #{bkLastPhone}		
-    		, #{bkState}	
-    		, #{bkSmsSend}	
-    		, #{bkPayDiv}		
-    		, #{bkMethod}		
+    		, 'Y'	
+    		, 'M'			
     		, #{costDiv}	
     		, #{costCoDiv}	
     		, #{costName}	
     		, #{costCd}	
-    		, #{inputStaff}			
+    		, 'HOMEPAGE'		
     		, now()
 			, #{ipAddr}			
-    	)  	
+    	)  	    	
     </insert>
 </mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : DR_BK_TIME
+ * 테이블 설명 : 예약타임
+-->
+<mapper namespace="com.yido.clubd.repository.DrBkTimeMapper">
+	
+	<!-- 베이별 잔여시간 조회 -->
+	<select id="bookAvailableTime" parameterType="hashmap" resultType="DrBkTime">
+		SELECT CD_TITLE1
+			 , A.BK_TIME
+			 , A.BK_TOTAL_COUNT
+			 , A.BK_REM_COUNT 
+		 FROM DR_BK_TIME A INNER JOIN CD_COMMON B ON A.BAY_CONDI = B.CD_CODE AND CD_DIVISION = '020' AND CD_USEYN = 'Y'
+		 LEFT OUTER JOIN (
+		 			SELECT BAY_CONDI
+		 				 , BK_DAY
+		 				 , BK_TIME
+		 				 , BK_FROM_DAY
+		 				 , BK_START_TIME
+		 				 , BK_TO_DAY
+		 				 , BK_END_TIME  
+					 FROM DR_BK_OPEN_TIME A 
+					INNER JOIN CD_COMMON B ON A.MS_LEVEL = B.CD_CODE AND CD_DIVISION = '002' AND CD_USEYN = 'Y'
+					WHERE CD_CODE = #{msLevel}      
+		 ) C ON A.BAY_CONDI = C.BAY_CONDI AND A.BK_DAY = C.BK_DAY AND A.BK_TIME = C.BK_TIME
+		WHERE A.CO_DIV = #{coDiv} 
+		  AND A.BAY_CONDI = #{bayCondi} 
+		  AND A.BK_DAY = #{bkDay} 
+		  AND DATE_FORMAT(NOW(), '%Y%m%d%H') BETWEEN CONCAT(BK_FROM_DAY, BK_START_TIME) AND CONCAT(BK_TO_DAY, BK_END_TIME);       
+    </select>
+    
+	<select id="getBkTime" parameterType="hashmap" resultType="DrBkTime">
+		SELECT BK_TIME
+			 , BK_TOTAL_COUNT
+			 , BK_REM_COUNT 
+		 FROM DR_BK_TIME
+		WHERE 1=1 
+		<if test='coDiv != null and coDiv != ""'>
+		AND CO_DIV = #{coDiv} 
+		</if>	
+		<if test='bayCondi != null and bayCondi != ""'>
+		AND BAY_CONDI = #{bayCondi} 
+		</if>	
+		<if test='bkDay != null and bkDay != ""'>
+		AND BK_DAY = #{bkDay} 
+		</if>	
+		<if test='bkTime != null and bkTime != ""'>
+		AND BK_TIME = #{bkTime} 
+		</if>		
+    </select>  
+      
+    <!-- [예약 타임] 잔여수량 변경 -->
+    <update id="updateBkRemCount" parameterType="hashmap">
+    	UPDATE DR_BK_TIME
+    	   SET BK_TIME = BK_TIME
+	 		<if test='minusRemCnt != null and minusRemCnt == "Y"'>
+			 , BK_REM_COUNT		= BK_REM_COUNT - 1
+			</if>	
+	 		<if test='addRemCnt != null and addRemCnt == "Y"'>
+			, BK_REM_COUNT		= BK_REM_COUNT + 1
+			</if>	   	 
+		 WHERE CO_DIV 			= #{coDiv}
+		   AND BAY_CONDI 		= #{bayCondi}
+		   AND BK_DAY 			= #{bkDay}
+		   AND BK_TIME 			= #{bkTime}	  	
+    </update>
+    
+</mapper>

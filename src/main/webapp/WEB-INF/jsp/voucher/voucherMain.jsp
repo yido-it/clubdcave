@@ -12,7 +12,7 @@
 <c:forEach items="${vocList}" var="voc">
 	<div>
 	${voc.vcName} / ${voc.vcAmount} / <input type="button" value="구매" onClick="doPay('${voc.vcName}', ${voc.vcAmount})"/>
-	<br/> 유효기간 : 
+	<br/> 유효기간 : ${voc.nowDt} ~ ${voc.endDt}
 	<hr>
 	</div>
 </c:forEach>
@@ -22,7 +22,10 @@
 
 <script type="text/javascript">
 function doPay(vcName, vcAmount) {
-
+	var reservationInfo = {};
+	reservationInfo.vcName = vcName;
+	reservationInfo.vcAmount = vcAmount;
+	
 	var params = {
 		// key, userid, amount, itemName 등 수정해야함
 		"key"       : "1234",
@@ -36,7 +39,7 @@ function doPay(vcName, vcAmount) {
 		"userMail"  : "baeean@naver.com",
 		"reserved1" : "클럽디청담",
 		"reserved2" : "VOUCHER",
-		//"reserved3" : JSON.stringify(royalPayReservationInfo),
+		"reserved3" : JSON.stringify(reservationInfo),
 		"protocol"  : "<%=Globals.protocolType%>"
 	}
 
@@ -50,7 +53,7 @@ function doPay(vcName, vcAmount) {
 			location.href = "<c:url value='/hills/reservation/reservationCheck.do'/>";	
 		});*/
 		
-		alert("!!!!");
+		alert("이용권 구매 성공");
 	}, function() {
 		// 결제 실패했을때 .. 
 	});

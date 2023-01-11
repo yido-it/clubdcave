@@ -7,8 +7,22 @@
 -->
 <mapper namespace="com.yido.clubd.repository.DrCostInfoMapper">
 
-	<select id="selectList" resultType="DrCostInfo">
-       
+	<select id="getCostInfo" parameterType="hashmap" resultType="hashmap">
+		SELECT BK_DAY
+			 , BK_TIME
+			 , C.DR_AMOUNT
+			 , C.COST_DIV
+			 , C.CO_DIV
+			 , C.COST_NAME
+			 , C.COST_CD
+		FROM DR_COST_INFO A INNER JOIN DR_BK_TIME B ON A.CO_DIV = B.CO_DIV AND A.COST_CD = B.COST_CD AND USE_YN = 'Y'
+							INNER JOIN DR_COST_LIST C ON A.CO_DIV = C.CO_DIV AND A.COST_CD = C.COST_CD AND DISPLAY_YN = 'Y'
+							INNER JOIN CD_COMMON D ON C.CO_DIV = D.CO_DIV AND C.COST_DIV = D.CD_CODE AND CD_DIVISION = '003' AND CD_USEYN = 'Y'
+		WHERE B.CO_DIV = #{coDiv} 
+		 AND B.BAY_CONDI = #{bayCondi}
+		 AND B.BK_DAY = #{bkDay} AND B.BK_TIME = #{bkTime}
+		 AND A.USE_YN = 'Y'
+		LIMIT 1
     </select>
     
 </mapper>

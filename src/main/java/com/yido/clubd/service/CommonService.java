@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yido.clubd.repository.CommonMapper;
-import com.yido.clubd.repository.PgHistoryMapper;
 
 @Service("CommonService")
 public class CommonService {

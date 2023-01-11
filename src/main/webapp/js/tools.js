@@ -117,80 +117,91 @@ function mPostAjax(sUrl, formData, fnSuccess) {
     }
 }
 
-// 서버 통신
-function mAjax3(sUrl, params, method, proYn, fnSuccess) {
-  if(proYn) {
-    progressStart();
-  }
+//서버 통신
+function mAjax3(sUrl, params, method, fnSuccess) {
+	//if(proYn) {
+	//  progressStart();
+	//}
+	
+	var fnError = function(jqXHR, textStatus, errorThrown) {
+		// progressStop();
+		alert("서버와의 통신에 오류가 있습니다. 잠시 후 다시 시도하여 주세요.");
+		
+		if(method == "POST") {
+			var sParams = "";
+			var i = 0;
+			
+			for(var key in params) {
+				if(i == 0) {
+					sParams += String.format("{0}={1}", key, params[key]);
+				} else {
+					sParams += String.format("&{0}={1}", key, params[key]);
+				}
+				i++;
+			}
+			
+			console.log(sUrl + "?" + sParams);
+		}
+	};
+	
+	if(method == "GET") {
+		
+		var sParams = "";
+		var i = 0;
+		
+		for(var key in params) {
+			if(i == 0) {
+				sParams += String.format("{0}={1}", key, params[key]);
+			} else {
+				sParams += String.format("&{0}={1}", key, params[key]);
+			}
+			i++;
+		}
+		
+		console.log(sUrl + "?" + sParams);
+		
+		setTimeout(function() {
+			$.ajax({ 
+				"async" : true
+				, "type" : "GET"
+				, "url" : sUrl
+				, "data" : encodeURI(sParams)
+				, "cache" : false
+				, "success" : function(data) {
+					// progressStop();
+					fnSuccess(data);
+				}
+				, "error" : fnError
+				, "dataType" : "json"
+				, "contentType" : "application/json; charset=utf-8"
+			});
+		}, 300);
+	} else if(method == "POST") {
 
-  var fnError = function(jqXHR, textStatus, errorThrown) {
-    progressStop();
-    alert("서버와의 통신에 오류가 있습니다. 잠시 후 다시 시도하여 주세요.");
+		console.log("xxxxxxxxxxx");
+		
+		setTimeout(function() {
+			$.ajax({ 
+				"async" : true
+				, "type" : "POST"
+				, "url" : sUrl
+				, "data" : params
+				, "cache" : false
+				, "success" : function(data) {
+					// progressStop();
+					var obj = JSON.parse(data);
 
-    if(method == "POST") {
-      var sParams = "";
-      var i = 0;
-
-      for(var key in params) {
-        if(i == 0) {
-          sParams += String.format("{0}={1}", key, params[key]);
-        } else {
-          sParams += String.format("&{0}={1}", key, params[key]);
-        }
-        i++;
-      }
-
-      console.log(sUrl + "?" + sParams);
-    }
-  };
-
-  if(method == "GET") {
-    var sParams = "";
-    var i = 0;
-
-    for(var key in params) {
-      if(i == 0) {
-        sParams += String.format("{0}={1}", key, params[key]);
-      } else {
-        sParams += String.format("&{0}={1}", key, params[key]);
-      }
-      i++;
-    }
-
-    console.log(sUrl + "?" + sParams);
-
-    setTimeout(function() {
-      $.ajax({ "async" : true
-        , "type" : "GET"
-        , "url" : sUrl
-        , "data" : encodeURI(sParams)
-        , "cache" : false
-        , "success" : function(data) {
-          progressStop();
-          fnSuccess(data);
-        }
-        , "error" : fnError
-        , "dataType" : "json"
-        , "contentType" : "application/json; charset=utf-8"
-      });
-    }, 300);
-  } else if(method == "POST") {
-  	setTimeout(function() {
-      $.ajax({ "async" : true
-      	, "type" : "POST"
-    		, "url" : sUrl
-    		, "data" : params
-    		, "cache" : false
-    		, "success" : function(data) {
-				progressStop();
-    			var obj = JSON.parse(data);
-    			fnSuccess(obj);
-    		}
-    		, "error" : fnError
-      });
-  	}, 300);
-  }
+					console.log(obj);
+					fnSuccess(obj);
+					
+					
+				}
+				, "error" : fnError
+			});
+		}, 300);
+	}
 }
+
 
 function mFileAjax(sUrl, formData, fnSuccess) {	
 	var fnError = function(jqXHR, textStatus, errorThrown) {

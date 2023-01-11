@@ -7,8 +7,113 @@
 -->
 <mapper namespace="com.yido.clubd.repository.DrBkMarkMapper">
 
-	<select id="selectList" resultType="DrBkMark">
-       
+	<select id="selectList" parameterType="hashmap" resultType="DrBkMark">
+ 		SELECT CO_DIV
+ 			 , BK_DAY
+ 			 , BAY_CONDI
+ 			 , BK_TIME
+ 			 , BK_SEQ
+ 			 , BK_STATE
+ 			 , BK_SERIAL_NO
+ 			 , ENTRY_METHOD
+ 			 , ENTRY_USER
+ 			 , ENTRY_IP
+ 			 , ENTRY_DATETIME
+		 FROM DR_BK_MARK
+		WHERE 1=1
+		<if test='availableYn != null and availableYn == "Y"'>
+		AND BK_STATE = 'Y' AND (ENTRY_DATETIME IS NULL OR ENTRY_DATETIME = '') 		
+		</if>			
+		<if test='coDiv != null and coDiv != ""'>
+		AND CO_DIV = #{coDiv} 
+		</if>	
+		<if test='bayCondi != null and bayCondi != ""'>
+		AND BAY_CONDI = #{bayCondi} 
+		</if>	
+		<if test='bkDay != null and bkDay != ""'>
+		AND BK_DAY = #{bkDay} 
+		</if>	
+		<if test='bkTime != null and bkTime != ""'>
+		AND BK_TIME = #{bkTime} 
+		</if>	
+		<if test='msId != null and msId != ""'>
+		AND ENTRY_USER = #{msId} 
+		</if>	
+		<if test='bkState != null and bkState != ""'>
+		AND BK_STATE = #{bkState} 
+		</if>		  	      
+		ORDER BY BK_SEQ
     </select>
+   
+   	<!-- [예약 선점용] 테이블에서 예약 가능한 데이터 조회하기 -->
+  	<select id="selectAvailableData" parameterType="hashmap" resultType="DrBkMark">
+ 		SELECT CO_DIV
+ 			 , BK_DAY
+ 			 , BAY_CONDI
+ 			 , BK_TIME
+ 			 , BK_SEQ
+ 			 , BK_STATE
+ 			 , BK_SERIAL_NO
+ 			 , ENTRY_METHOD
+ 			 , ENTRY_USER
+ 			 , ENTRY_IP
+ 			 , ENTRY_DATETIME
+		 FROM DR_BK_MARK
+		WHERE 1=1
+		AND BK_STATE = 'Y' AND (ENTRY_DATETIME IS NULL OR ENTRY_DATETIME = '') 		
+		<if test='coDiv != null and coDiv != ""'>
+		AND CO_DIV = #{coDiv} 
+		</if>	
+		<if test='bayCondi != null and bayCondi != ""'>
+		AND BAY_CONDI = #{bayCondi} 
+		</if>	
+		<if test='bkDay != null and bkDay != ""'>
+		AND BK_DAY = #{bkDay} 
+		</if>	
+		<if test='bkTime != null and bkTime != ""'>
+		AND BK_TIME = #{bkTime} 
+		</if>			  	      
+		ORDER BY BK_SEQ
+    </select>
+    
+    <!-- [예약 선점용] 테이블 데이터 변경 (선점할때, 해제할때, 예약완료되었을때)-->
+    <update id="updateDrBkMark" parameterType="hashmap">
+    	UPDATE DR_BK_MARK
+    	   SET BK_TIME = BK_TIME
+	    	<if test='bkSerialNo != null'>
+			, BK_SERIAL_NO = #{bkSerialNo}
+			</if>	
+	    	<if test='bkState != null'>
+			, BK_STATE = #{bkState}
+			</if>	
+	    	<if test='entryMethod != null'>
+			, ENTRY_METHOD = #{entryMethod}
+			</if>	      
+ 	    	<if test='updMsId != null'>
+			, ENTRY_USER = #{updMsId}
+			</if>	    
+ 	    	<if test='ipAddr != null'>
+			, ENTRY_IP = #{ipAddr}
+			</if>	
+			<if test='insertEntryDt != null and insertEntryDt == "Y"'>
+			, ENTRY_DATETIME	= DATE_ADD(NOW(), INTERVAL #{entryTime} MINUTE)
+			</if>		
+			<if test='deleteEntryDt != null and deleteEntryDt == "Y"'>
+			, ENTRY_DATETIME	= NULL
+			</if>	
+		 WHERE CO_DIV 			= #{coDiv}
+		   AND BAY_CONDI 		= #{bayCondi}
+		   AND BK_DAY 			= #{bkDay}
+		   AND BK_TIME 			= #{bkTime}	   
+		<if test='bkSeq != null and bkSeq != ""'>
+		   AND BK_SEQ 			= #{bkSeq} 
+		</if>	 
+		<if test='entryUser != null and entryUser != ""'>
+		   AND ENTRY_USER 			= #{entryUser} 
+		</if>
+		<if test='bkStateIsY != null and bkStateIsY == "Y"'>
+		   AND BK_STATE 			= 'Y'
+		</if>
+    </update>
     
 </mapper>

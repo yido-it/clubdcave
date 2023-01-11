@@ -7,26 +7,56 @@
 -->
 <mapper namespace="com.yido.clubd.repository.MnInHistoryMapper">
 
+ 	<select id="getMnSeq" parameterType="hashmap" resultType="int">
+		SELECT IFNULL(CAST(MAX(MN_SEQ) AS UNSIGNED), 0)+1 
+		  FROM MN_IN_HISTORY
+		 WHERE 1=1
+		<if test='coDiv != null and coDiv != ""'>
+		  AND CO_DIV	= #{coDiv}
+		</if>		
+		<if test='orderId != null and orderId != ""'>
+		  AND ORDER_ID	= #{orderId}
+		</if>			  
+	</select>
+	
+	<!-- 입금내역 등록 -->
     <insert id="insertMnInHistory">
     	INSERT INTO MN_IN_HISTORY (
-			MN_SERIAL_NO			, CO_DIV			, MN_IN_DAY			, MN_SEQ
-			, MN_SHOP_CD			, MN_BEFORE_DIV		, MN_PAY_DIV		, MN_IN_NAME
-			, MS_NUM				, MN_REV_AMOUNT		, MN_IN_AMOUNT		, MN_CHANGE_AMOUNT
+			CO_DIV					, MN_IN_DAY			, MN_SEQ			, MN_BEFORE_DIV			
+			, MN_PAY_DIV			, MN_REV_AMOUNT		, MN_IN_AMOUNT		, MN_CHANGE_AMOUNT
 			, MN_IN_NO				, MN_CARD_APPROVAL	, MN_MONTH			, MN_APP_DATE
-			, MN_CARD_DIV			, MN_CARD_GANO		, MN_TMID			, MN_CARD_SWIPE
-			, MN_CARD_NAME			, MN_REMARK			, MN_DELETE_YN		, MN_CANCEL_YN
-			, MN_ORI_CO_DIV			, MN_ORI_IN_DAY		, MN_ORI_MN_SEQ		, MN_ORI_SERIAL_NO
-			, INPUT_STAFF			, INPUT_DATETIME	, INPUT_IP
+			, MN_CARD_DIV			, MN_CARD_NAME		, INPUT_STAFF		, INPUT_DATETIME	
+			, INPUT_IP				, ORDER_ID			, TRANSACTION_ID	, CANCEL_KEY
+			, MN_CANCEL_YN			, MN_REMARK
     	) values (
-    		#{mnSerialNo}    		, #{coDiv}	   		, #{mnInDay}   		, #{mnSeq}
-    		, #{mnShopCd}    		, #{mnBeforeDiv}	, #{mnPayDiv}  		, #{mnInName}
-    		, #{msNum}	    		, #{mnRevAmount} 	, #{mnInAmount}  	, #{mnChangeAmount}
+    		#{coDiv}	   			, #{mnInDay}   		, #{mnSeq}			, '2'					
+    		, '12'  				, #{mnRevAmount} 	, #{mnInAmount} 	, #{mnChangeAmount}
     		, #{mnInNo}	    		, #{mnCardApproval} , #{mnMonth}   		, #{mnAppDate}
-    		, #{mnCardDiv}    		, #{mnCardGano}    	, #{mnTmid}    		, #{mnCardSwipe}
-    		, #{mnCardName}    		, #{mnRemark}  		, #{mnDeleteYn}  	, #{mnCancelYn}
-    		, #{mnOriCoDiv}    		, #{mnOriInDay}   	, #{mnOriMnSeq}   	, #{mnOriSerialNo}
-    		, #{inputStaff}			, now()				, #{ipAddr}			
+    		, #{mnCardDiv}    		, #{mnCardName}    	, 'HOMEPAGE'		, NOW()				
+    		, #{ipAddr}				, #{orderId}		, #{transactionId}	, #{cancelKey}	
+    		, #{mnCancelYn}			, #{mnRemark}
     	)  	
     </insert>
     
+    <!-- 입금내역 변경 -->
+    <update id="updateMnInHistory" parameterType="hashmap">
+    	UPDATE MN_IN_HISTORY 
+    	   SET MN_SERIAL_NO 	= #{mnSerialNo}
+    	     , MN_IN_NAME 		= #{mnInName}
+    	     , MS_NUM 			= #{msNum}
+		 WHERE CO_DIV 			= #{coDiv}
+		   AND MN_IN_DAY 		= #{mnInDay}
+		   AND MN_SEQ 			= #{mnSeq}	
+    </update>
+    
+    <!-- 카드사 정보조회 -->
+ 	<select id="selectCardInfo" parameterType="hashmap" resultType="hashmap">
+		SELECT CD_CODE   AS CARD_CODE
+		     , CD_TITLE1 AS CARD_NAME
+		  FROM CD_COMMON
+		 WHERE CO_DIV      = #{coDiv}
+		   AND CD_DIVISION = '005'
+		   AND CD_REFER2   = #{cardCompanyCode}
+	</select>
+	
 </mapper>

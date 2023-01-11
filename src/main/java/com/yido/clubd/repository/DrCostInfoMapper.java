@@ -1,5 +1,7 @@
 package com.yido.clubd.repository;
 
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import com.yido.clubd.model.DrCostInfo;
@@ -14,6 +16,7 @@ import com.yido.clubd.model.DrCostInfo;
 @Repository
 public interface DrCostInfoMapper {
 
-	public DrCostInfo selectList(DrCostInfo drCostInfo);
+	// 요금조회
+	public Map<String, Object> getCostInfo(Map<String, Object> map);
 
 }

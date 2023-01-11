@@ -1,21 +1,26 @@
 package com.yido.clubd.config;
 
-
-
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-
 @Configuration
 public class AppConfig  extends WebMvcConfigurerAdapter{
-	
+
+	@Autowired
+    private InterceptorConfig interceptorConfig;
 	@Value("${file.root}") String rootDir;
-	
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(interceptorConfig);
+    }
+    
     @Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
 		// Restful 한 서비스에서 APPLICATION_JSON_VALUE로 지정하여도 충분하나

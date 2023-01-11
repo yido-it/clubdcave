@@ -1,5 +1,7 @@
 package com.yido.clubd.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yido.clubd.model.DrCostInfo;
@@ -19,7 +21,13 @@ public class DrCostInfoService {
 	@Autowired
     private DrCostInfoMapper drCostInfoMapper;
 
-    public DrCostInfo selectList(DrCostInfo drCostInfo) {
-    	return drCostInfoMapper.selectList(drCostInfo);
+	/**
+	 * 요금조회
+	 * 
+	 * @param map
+	 * @return
+	 */
+    public Map<String, Object> getCostInfo(Map<String, Object> map) {
+    	return drCostInfoMapper.getCostInfo(map);
     }
 }

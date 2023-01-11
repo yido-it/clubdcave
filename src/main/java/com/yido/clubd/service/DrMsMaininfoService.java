@@ -79,4 +79,16 @@ public class DrMsMaininfoService {
 	public int duplicateCheckSocialId(Map<String, Object> params) {
 		return drMsMaininfoMapper.duplicateCheckSocialId(params);
 	}
+	
+	/**
+	 * 회원 위약체크 
+	 * - 회원테이블 > DR_BK_GRANT
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public String chkMsBkGrant(Map<String, Object> params) {
+		return drMsMaininfoMapper.chkMsBkGrant(params);
+	}
+	
 }

@@ -2,6 +2,8 @@
 var mPay = function() {
 	var fnSuccess, fnFail;
 
+	// SERVICE_CODE = 0900 (신용카드)
+	// SERVICE_TYPE = 0000 (일반결제)
 	var form = "<form name='payment' id='frm_payment' method='post'> \
 				  <input type='hidden' name='SERVICE_ID'   value='{0}'> \
 				  <input type='hidden' name='SERVICE_CODE' value='0900'> \
