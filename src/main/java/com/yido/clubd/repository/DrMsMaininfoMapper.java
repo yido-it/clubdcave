@@ -19,6 +19,8 @@ import com.yido.clubd.model.DrMsMaininfo;
 @Repository
 public interface DrMsMaininfoMapper {
 
+	public DrMsMaininfo selectUser(Map<String, Object> params);
+	
 	public DrMsMaininfo selectDrMsMaininfo(String msId);
 	
 	// 회원 중복체크 (아이디, 이메일, 핸드폰 번호)

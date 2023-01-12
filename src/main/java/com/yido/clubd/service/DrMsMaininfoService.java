@@ -3,15 +3,9 @@ package com.yido.clubd.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.yido.clubd.common.utils.SessionVO;
-import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.model.DrMsMaininfo;
 import com.yido.clubd.repository.DrMsMaininfoMapper;
 
@@ -32,14 +26,12 @@ public class DrMsMaininfoService {
 	
 	@Autowired
 	private DrMsMaininfoService drMsMaininfoService;
-	
-	@Autowired
-    private PasswordEncoder passwordEncoder;
 
-    public DrMsMaininfo selectDrMsMaininfo(String msId) {
-    	return drMsMaininfoMapper.selectDrMsMaininfo(msId);
-    }
-    
+	public DrMsMaininfo selectUser(Map<String, Object> params) {
+    	return drMsMaininfoMapper.selectUser(params);
+	}
+	
+	
 	/**
 	 * 아이디 중복체크 
 	 * 

@@ -6,17 +6,11 @@ import java.security.Principal;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.yido.clubd.common.utils.Utils;
-import com.yido.clubd.model.DrMsMaininfo;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -25,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 public class WebController {
 
 	@RequestMapping("")
-	public String index(Model model, Authentication auth) {
+	public String index(Model model) {
 		return "redirect:main";	
 	}
 	
@@ -39,31 +33,15 @@ public class WebController {
 	 */
 	@RequestMapping("/main")
 	public String index(Model model, HttpServletRequest request) {
-	
 		return "/index";
 	}
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(@RequestParam(required = false) String error, HttpServletRequest request, Model model, Authentication auth) throws IOException {
-        
-		if(auth != null) {
-			// 로그인 성공시 관리자 메인페이지로 이동
-			// return "redirect:/admin/main";
-		}
-		
+    public String login(@RequestParam(required = false) String error, HttpServletRequest request, Model model) throws IOException {
+     
         String referrer = request.getHeader("Referer");
 		log.debug("referrer - {}", referrer);
-		
-        if (null != error) {
-            Exception exception = (Exception) request.getSession().getAttribute("SPRING_SECURITY_LAST_EXCEPTION");
-//            if(exception instanceof LockedException || exception instanceof BadCredentialsException) {
-                error = exception.getMessage();
-//            }else {
-//                error = "Invalid username and password!";
-//            }
-            model.addAttribute("errorMessage", error);
-        }
-        
+	
         Cookie[] cs = request.getCookies();
     	if(cs != null) {
     		for(Cookie c : cs) {

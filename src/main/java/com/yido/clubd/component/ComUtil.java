@@ -30,11 +30,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.slf4j.Slf4j;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
 
 @Controller
 @Component
@@ -125,48 +120,5 @@ public class ComUtil {
                 }
             }
         }
-    }
-    
-
-    /**
-     * 레포트 PDF변환
-     * @param fileName
-     * @param reportName
-     * @param param
-     * @param request
-     * @return
-     */
-    public static boolean makeReportPdf(String fileName, String reportName, Map<String, Object> param, HttpServletRequest request) {
-		
-		try {			
-			JasperReport jr = JasperCompileManager.compileReport(request.getServletContext().getRealPath("/report/" + reportName +".jrxml"));
-			JasperPrint jp = JasperFillManager.fillReport(jr,  param, DriverManager.getConnection(jsUrl, jsUserNm, jsUserPw));
-			
-			String sUrl = request.getServletContext().getRealPath("/");
-			makeDir(sUrl + "/tmpReport/");
-			OutputStream output = null;
-			output = new FileOutputStream(new File(sUrl + "/tmpReport/" + fileName));
-			
-			JasperExportManager.exportReportToPdfStream(jp, output);
-			output.flush();
-			output.close();
-						
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-    
-    /**
-     * 레포트관련 디렉토리 생성
-     * @param path
-     */
-    public static void makeDir(String path) {
-
-    	//String path = "\\tmpReport\\";
-    	File Folder = new File(path);
-
-    	if (!Folder.exists()) Folder.mkdir();
     }
 }

@@ -14,7 +14,7 @@
 					<div class="col-lg-4 mx-auto">
 						<div class="auth-form-light text-left py-5 px-4 px-sm-5">					
 					
-							<form class="pt-3" id="form-login" action="/checkLogin" method="post" novalidate="novalidate">
+							<form class="pt-3" id="form-login" action="" method="post" novalidate="novalidate">
 								<!-- 아이디 -->
 								<div class="form-group">
 									<input type="text" name="msId" id="msId" class="form-control form-control-lg"  placeholder="아이디" value="">

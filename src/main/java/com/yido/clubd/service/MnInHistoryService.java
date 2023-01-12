@@ -254,6 +254,7 @@ public class MnInHistoryService {
 		String detailResponseMessage = "";
     	
     	BufferedReader br = null;
+
 		
 		try {
 			String current = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
@@ -341,7 +342,6 @@ public class MnInHistoryService {
             params.put("cardCompanyCode" 	, "");							// 카드 발급사 코드 4자리       
             params.put("orderId"			, orderId);						// 주문번호
             params.put("transactionId"		, transactionId);				// 거래번호
-            params.put("mnRemark"			, detailResponseMessage);		// 비고에 응답상세메시지 insert 
             params.put("mnCancelYn"			, "Y");							// 취소여부 
             params.put("ipAddr"             , ipAddr);
             

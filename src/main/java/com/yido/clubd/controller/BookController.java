@@ -10,8 +10,6 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,7 +78,6 @@ public class BookController {
 			Map<String, Object> map = new HashMap<String, Object>();
 			List<DrBayInfo> bayList = drBayInfoService.selectList(map);
 			log.info("[bookMain] bayList 1: " + bayList);
-			log.debug("[bookMain] bayList 2: " + bayList);
 			model.addAttribute("bayList", bayList);
 			
 			// 현재 시간 기준으로 가장 마지막 오픈날짜 구하기

@@ -3,9 +3,10 @@
 <%@ page import="com.yido.clubd.common.utils.Globals" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <jsp:include page="../common/head.jsp" />
+<jsp:include page="../common/script.jsp" />
 <body>
 
-예약&결제 페이지
+예약&결제 페이지 
 
 <div style="padding:10px">
 	<form id="frm">
@@ -45,6 +46,22 @@
 
 <script type="text/javascript">
 
+var msId = "<c:out value='${sessionScope.msMember.msId}'/>";
+var msLevel = "<c:out value='${sessionScope.msMember.msLevel}'/>";
+var msEmail = "<c:out value='${sessionScope.msMember.msEmail}'/>";
+var msName = "<c:out value='${sessionScope.msMember.msName}'/>";
+var msPhone = "<c:out value='${sessionScope.msMember.msPhone}'/>";
+
+$(document).ready(function() {
+	
+	if (msId == null || msId == "") {
+		alert("로그인 후 이용 가능합니다.");
+		location.href = "/login";	
+		return;
+	}
+	
+});
+
 // 다중결제 테스트 
 function doPayTest() {
 	var reservationInfo 		= {};
@@ -53,22 +70,22 @@ function doPayTest() {
 	reservationInfo.bkDay 		= $('#bkDay').val();
 	reservationInfo.bkTime 		= "0800,1300";			// 쉼표로 구분하여 연결
 	reservationInfo.bkAmount 	= "100000";				// 금액 합산
-	reservationInfo.msLevel 	= '${session.msLevel}';
-	reservationInfo.userMail 	= '${session.msEmail}';
-	reservationInfo.msId 		= '${session.msId}';
-	reservationInfo.userName 	= '${session.msName}';
-	reservationInfo.phone 		= '${session.msPhone}';	
+	reservationInfo.msLevel 	= msLevel;
+	reservationInfo.userMail 	= msEmail;
+	reservationInfo.msId 		= msId;
+	reservationInfo.userName 	= msName;
+	reservationInfo.phone 		= msPhone;	
 	
 	var params = {
-		"key"      	  : '${session.msNum}'
+		"key"      	  : '${sessionScope.msMember.msNum}'
 		, "serviceId" : "<%=Globals.serviceId%>"
 		, "amount"    : amount
 		, "returnUrl" : "<%=Globals.returnPayUrl%>"
 		, "itemCode"  : "0004"
 		, "itemName"  : "예약"
-		, "userId"    : '${session.msId}'
-		, "userName"  : '${session.msName}'
-		, "userMail"  : '${session.msEmail}'
+		, "userId"    : msId
+		, "userName"  : msName
+		, "userMail"  : msEmail
 		, "reserved1" : $('#coDiv').val()
 		, "reserved2" : "RESERVATION"
 		, "reserved3" : JSON.stringify(reservationInfo)
@@ -100,11 +117,11 @@ function doPay(amount, bkTime) {
 	reservationInfo.bkDay 		= $('#bkDay').val();
 	reservationInfo.bkTime 		= bkTime;
 	reservationInfo.bkAmount 	= amount;
-	reservationInfo.msLevel		= '${session.msLevel}';
-	reservationInfo.userMail 	= '${session.msEmail}';
-	reservationInfo.msId 		= '${session.msId}';
-	reservationInfo.userName 	= '${session.msName}';
-	reservationInfo.phone 		= '${session.msPhone}';
+	reservationInfo.msLevel		= msLevel;
+	reservationInfo.userMail 	= msEmail;
+	reservationInfo.msId 		= msId;
+	reservationInfo.userName 	= msName;
+	reservationInfo.phone 		= '${sessionScope.msMember.msPhone}';
 
 	// 예약가능여부 조회 	
 	var result = fnChkBook(reservationInfo);
@@ -115,15 +132,15 @@ function doPay(amount, bkTime) {
 	
 			// 예약가능한 경우 결제창 띄우기 
 			var params = {
-				"key"      	  : '${session.msNum}'
+				"key"      	  : '${sessionScope.msMember.msNum}'
 				, "serviceId" : "<%=Globals.serviceId%>"
 				, "amount"    : amount
 				, "returnUrl" : "<%=Globals.returnPayUrl%>"
 				, "itemCode"  : "0004"
 				, "itemName"  : "예약"
-				, "userId"    : '${session.msId}'
-				, "userName"  : '${session.msName}'
-				, "userMail"  : '${session.msEmail}'
+				, "userId"    : msId
+				, "userName"  : msName
+				, "userMail"  : msEmail
 				, "reserved1" : $('#coDiv').val()
 				, "reserved2" : "RESERVATION"
 				, "reserved3" : JSON.stringify(reservationInfo)
@@ -206,7 +223,7 @@ function selectTime() {
        	, dataType: 'json'
       	, data: { 
            	"coDiv" 		: $('#coDiv').val() 
-           	, "msLevel" 	: '${session.msLevel}'
+           	, "msLevel" 	: msLevel
            	, "bayCondi" 	: $('#bayCondi').val()
            	, "bkDay" 		: $('#bkDay').val()
     	}
@@ -239,7 +256,7 @@ function costInfo(bkTime) {
         , dataType: 'json'
         , data: { 
         	"coDiv" : $('#coDiv').val() 
-        	, "msLevel" : '${session.msEmail}'
+        	, "msLevel" : '${sessionScope.msMember.msEmail}'
         	, "bayCondi" : $('#bayCondi').val()
         	, "bkDay" : $('#bkDay').val()
         	, "bkTime" : bkTime
@@ -261,7 +278,6 @@ function costInfo(bkTime) {
 	});
 }
 </script>
-<jsp:include page="../common/script.jsp" />
 <style>
 .time {
 	background-color:#f9e7da;padding:5px;border-radius:5px;margin-right:5px;width:80px;text-align:center;float:left
