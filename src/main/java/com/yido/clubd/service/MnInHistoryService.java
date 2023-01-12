@@ -119,7 +119,7 @@ public class MnInHistoryService {
 				
 				params.put("msNum", msNum);
 	
-				SessionVO sessionVO = drMsMaininfoMapper.getMsSession(params);
+				SessionVO sessionVO = drMsMaininfoMapper.selectMsSession(params);
 				if(sessionVO == null) {
 					throw new Exception("회원정보가 존재하지 않습니다.");
 				}
