@@ -6,6 +6,12 @@
  * 테이블 설명 : 회원정보 (회원/프로) 
 -->
 <mapper namespace="com.yido.clubd.repository.DrMsMaininfoMapper">
+	<select id="selectDrMsMaininfo" resultType="DrMsMaininfo">
+        SELECT *
+          FROM DR_MS_MAININFO
+         WHERE USER_ID  = #{userId}
+           AND IFNULL(NULLIF(MS_BLANK,''),'N') = 'N'
+    </select>
 
 	<select id="selectUser" resultType="DrMsMaininfo">
 		SELECT MS_ID
