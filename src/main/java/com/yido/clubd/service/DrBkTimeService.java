@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.yido.clubd.model.BookInfoVO;
 import com.yido.clubd.model.DrBkTime;
 import com.yido.clubd.repository.DrBkTimeMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -32,8 +34,8 @@ public class DrBkTimeService {
     	return drBkTimeMapper.bookAvailableTime(map);
     }
 
-    public DrBkTime getBkTime(Map<String, Object> map) {
-    	return drBkTimeMapper.getBkTime(map);
+    public List<DrBkTime> getBkTime(BookInfoVO bkInfo) {
+    	return drBkTimeMapper.getBkTime(bkInfo);
     }
     
     /**

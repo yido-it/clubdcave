@@ -17,11 +17,11 @@
 							<form class="pt-3" id="form-login" action="" method="post" novalidate="novalidate">
 								<!-- 아이디 -->
 								<div class="form-group">
-									<input type="text" name="msId" id="msId" class="form-control form-control-lg"  placeholder="아이디" value="">
+									<input type="text" name="msId" id="msId" class="form-control form-control-lg"  placeholder="아이디" >
 								</div>
 								<!-- 비밀번호 -->
 								<div class="form-group">
-									<input type="password" name="msPassword" id="msPassword" class="form-control form-control-lg" placeholder="비밀번호" value="">
+									<input type="password" name="msPassword" id="msPassword" class="form-control form-control-lg" placeholder="비밀번호" >
 								</div>
 								<div class="my-2 d-flex justify-content-between align-items-center">
 									<div class="form-check">

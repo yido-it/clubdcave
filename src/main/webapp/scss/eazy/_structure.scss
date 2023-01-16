@@ -1,0 +1,44 @@
+/*Page Stucture Settings*/
+#page {
+    overflow-x: hidden;
+	position: relative;
+}
+.page-content {
+    position: relative;
+    transition: $globalTransitions;
+	z-index: 90;
+}
+
+
+.page-content-bg {
+	z-index: 52;
+	position: fixed;
+	top: -1250px;
+	bottom: -1250px;
+    transform:translate3d(0,0,0);
+	left: -50px;
+	right: -50px;
+}
+
+.content-box {
+	background-color: $theme-light-structure;
+	border-radius: $rounded-m;
+	margin-left: $globalMargin/2;
+	margin-right: $globalMargin/2;
+	box-shadow: $shadow-m;
+}
+/*Content Boxes*/
+.content {
+	margin: ($globalMargin/2)+5 $globalMargin/2 ($globalMargin) $globalMargin/2;
+	p {
+		&:last-child {
+			margin-bottom: 0px;
+		}
+	}
+}
+.content-full {
+	margin: 0px;
+}
+.content-boxed {
+	padding: ($globalMargin/2)+5 $globalMargin/2 0px $globalMargin/2;
+}

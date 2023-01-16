@@ -39,6 +39,7 @@ public class DrBkTime {
 	private LocalDateTime inputDatetime;	// 입력일시
 	
 	private String inputIp;					// 입력IP
+	private String amount;					
 
 }
 

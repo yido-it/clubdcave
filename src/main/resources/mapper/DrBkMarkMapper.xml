@@ -7,7 +7,7 @@
 -->
 <mapper namespace="com.yido.clubd.repository.DrBkMarkMapper">
 
-	<select id="selectList" parameterType="hashmap" resultType="DrBkMark">
+	<select id="selectList" parameterType="BookInfoVO" resultType="DrBkMark">
  		SELECT CO_DIV
  			 , BK_DAY
  			 , BAY_CONDI
@@ -72,7 +72,7 @@
 		</if>	
 		<if test='bkTime != null and bkTime != ""'>
 		AND BK_TIME = #{bkTime} 
-		</if>			  	      
+		</if>			      
 		ORDER BY BK_SEQ
     </select>
     

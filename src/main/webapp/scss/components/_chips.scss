@@ -1,0 +1,47 @@
+$chip-small: scale(1,1);
+$chip-medium: scale(1.05,1.05);
+$chip-large: scale(1.15,1.15);
+$chip-xlarge: scale(1.2,1.2);
+
+
+/*Chips*/
+.chip {
+	* {
+		font-size: 12px;
+	}
+	display: inline-block;
+	margin: 0px 10px 15px 0px;
+	border-radius: $rounded-l;
+	padding-right: 15px;
+	span {
+		line-height: 29px;
+	}
+	i {
+		width: 30px;
+		line-height: 30px;
+		border-radius: $rounded-l;
+		display: inline-block;
+		text-align: center;
+		margin-right: 5px;
+	}
+	img {
+		display: inline;
+		margin-right: 9px;
+		border-radius: $rounded-l;
+		width: 30px;
+		line-height: 30px;
+	}
+}
+
+.chip-s {
+	transform: $chip-small;
+}
+.chip-m {
+	transform: $chip-medium
+}
+.chip-l {
+	transform: $chip-large;
+}
+.chip-xl {
+	transform: $chip-xlarge;
+}

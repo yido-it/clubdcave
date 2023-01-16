@@ -15,6 +15,21 @@
 		SELECT *
 		FROM DR_BK_HISTORY
 		WHERE 1=1
+		<if test='coDiv != null and coDiv != ""'>
+		AND CO_DIV = #{coDiv}
+		</if>
+		<if test='bayCondi != null and bayCondi != ""'>
+		AND BAY_CONDI = #{bayCondi}
+		</if>
+		<if test='bkDay != null and bkDay != ""'>
+		AND BK_DAY = #{bkDay}
+		</if>
+		<if test='bkTime != null and bkTime != ""'>
+		AND BK_TIME = #{bkTime}
+		</if>
+		<if test='msNum != null and msNum != ""'>
+		AND MS_NUM = #{msNum}
+		</if>
 		<if test='bkSerialNo != null and bkSerialNo != ""'>
 		AND BK_SERIAL_NO = #{bkSerialNo}
 		</if>
@@ -52,13 +67,13 @@
     		, #{bkFirstPhone}	
     		, HEX(AES_ENCRYPT(#{bkMidPhone}, 'YIDO')) 		
     		, #{bkLastPhone}		
-    		, 'Y'	
+    		, #{bkState}	
     		, 'M'			
     		, #{costDiv}	
     		, #{costCoDiv}	
     		, #{costName}	
     		, #{costCd}	
-    		, 'HOMEPAGE'		
+    		, 'APP'		
     		, now()
 			, #{ipAddr}			
     	)  	

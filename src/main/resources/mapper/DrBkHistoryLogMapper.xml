@@ -45,14 +45,14 @@
     		, #{bkName}	
     		, #{bkFirstPhone}	
     		, HEX(AES_ENCRYPT(#{bkMidPhone}, 'YIDO')) 		
-    		, #{bkLastPhone}		
-    		, 'Y'	
+    		, #{bkLastPhone}	
+    		, #{bkState}	
     		, 'M'			
     		, #{costDiv}	
     		, #{costCoDiv}	
     		, #{costName}	
     		, #{costCd}	
-    		, 'HOMEPAGE'		
+    		, 'APP'		
     		, now()
 			, #{ipAddr}			
     	)  	    	

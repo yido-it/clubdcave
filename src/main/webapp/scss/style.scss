@@ -1,0 +1,115 @@
+// Importing Bootstrap Variables to Reuse
+
+/*
+
+1.  Table of Contents 
+2.  Typography
+3.  Structure
+4.  Page Logos
+5.  Highlight Colors
+6.  Header and Page Title
+7.  Menu Structure & Design
+8.  General Utility Classes
+9. Preloader
+10. Buttons
+11. Icons
+12. Accordion
+13. Offline Detection
+14. Add to Home
+15. Ads
+16. Alerts
+17. Notifications
+18. Back to Top
+19. Cards
+20. Chips
+21. Dividers
+22. Switches
+23. Radios & Checkboxes
+24. Input Styles
+25. Range Sliders
+26. List Groups
+27. Toasts
+28. Snackbars
+29. Pagination
+30. Search
+31. Tabs
+32. Working Hours
+33. Iframes
+34. Page Calendar
+35. Page Chat
+36. Page Contact
+37. Page Map
+38. Page Media
+39. Page Timeline
+40. Page Interests
+41. Page VCard
+42. Dark Mode Settings
+43. Demo Styles - Can be Removed
+44. Lightbox Plugin
+45. Owl Carousel
+
+*/
+
+@import "bootstrap/functions";
+@import "bootstrap/variables";
+
+//Importing Utility Classes
+@import "eazy/variables"; 
+
+//Importing Sturctural Elements
+@import "eazy/typography";
+@import "eazy/structure";
+@import "eazy/logos";
+@import "highlights/colors";
+@import "eazy/header-bar";
+@import "eazy/menu";
+@import "eazy/utilities";
+
+//Importing Components
+@import "components/preloader";
+@import "components/buttons";
+@import "components/icons";
+@import "components/accordion";
+@import "components/offline"; 
+@import "components/add-to-home"; 
+@import "components/ads";
+@import "components/alerts";
+@import "components/notifications";
+@import "components/back-to-top";
+@import "components/cards";
+@import "components/chips";
+@import "components/dividers";
+@import "components/switches";  
+@import "components/checkradio";
+@import "components/inputs";
+@import "components/range";
+@import "components/list-group";
+@import "components/toasts";
+@import "components/snackbars"; 
+@import "components/pagination";
+@import "components/search";
+@import "components/tabs";
+@import "components/working-hours";
+@import "components/iframes";
+
+//Importing Pages
+@import "pages/calendar";
+@import "pages/chat";
+@import "pages/contact"; 
+@import "pages/map";
+@import "pages/media";
+@import "pages/timeline";
+@import "pages/interests";
+@import "pages/vcard";
+
+//Importing Dark Mode
+@import "eazy/_dark";
+
+//Demo Aligns for Icons and Background Demo Images
+//Can be deleted to save space
+@import "components/zdemo.scss";
+
+//Importing Plugins
+@import "plugins/lightbox";
+@import "plugins/owl-carousel";
+

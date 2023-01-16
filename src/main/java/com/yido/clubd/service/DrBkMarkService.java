@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.yido.clubd.model.BookInfoVO;
 import com.yido.clubd.model.DrBkMark;
 import com.yido.clubd.repository.DrBkMarkMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +24,8 @@ public class DrBkMarkService {
 	@Autowired
     private DrBkMarkMapper drBkMarkMapper;
 
-    public List<DrBkMark> selectList(Map<String, Object> map) {
-    	return drBkMarkMapper.selectList(map);
+    public List<DrBkMark> selectList(BookInfoVO bkInfo) {
+    	return drBkMarkMapper.selectList(bkInfo);
     }
     
 	/**
@@ -32,8 +34,8 @@ public class DrBkMarkService {
 	 * @param map
 	 * @return
 	 */
-	public List<DrBkMark> selectAvailableData(Map<String, Object> map){
-    	return drBkMarkMapper.selectAvailableData(map);
+	public List<DrBkMark> selectAvailableData(BookInfoVO bkInfo){
+    	return drBkMarkMapper.selectAvailableData(bkInfo);
 	}
 	
     

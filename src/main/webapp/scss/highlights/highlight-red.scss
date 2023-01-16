@@ -1,0 +1,32 @@
+/* Generating Color Pack*/
+
+$defaultGradient : linear-gradient(to bottom, #ED5565 0%, #DA4453 100%)!important;
+$colorHighlightLight: #ED5565;
+$colorHighlightDark: #DA4453;
+
+$colorPack: (
+    "highlight" $colorHighlightLight $colorHighlightDark, 
+);
+
+.color-highlight{color:nth(nth($colorPack,1),3)!important;}
+.bg-highlight{background-color:nth(nth($colorPack,1),3)!important; color:#FFF!important;}
+.border-highlight{border-color:nth(nth($colorPack,1),3)!important;}
+.gradient-highlight{background-image:linear-gradient(to bottom, nth(nth($colorPack,1),2), nth(nth($colorPack,1),3))!important;}
+.gradient-menu{background-image:linear-gradient(130deg, #7ea5f6, #ff384c)!important;}
+
+/*Footer Bar Colors*/
+.footer-bar-1 .active-nav  strong {background-color:$colorHighlightLight;}
+.footer-bar-2 .active-nav strong {background-color:$colorHighlightLight;}
+.footer-bar-3 .active-nav span { color:$colorHighlightLight;}
+.footer-bar-3 .active-nav i{ color:$colorHighlightLight;}
+.footer-bar-4 .active-nav strong { background-color:$colorHighlightLight;}
+.footer-bar-5 .active-nav strong {background-color:$colorHighlightLight;}
+.footer-bar-6 .active-nav  em {background-image: $defaultGradient }
+.footer-bar-6 .circle-nav strong{background-image: $defaultGradient }
+
+/*Input Fields*/
+.input-style .input-style-1-active{color:$colorHighlightLight!important;}
+.input-style input:focus, .input-style textarea:focus, .input-style select:focus{border-color:$colorHighlightLight}
+
+/*Interest Page*/
+.interest-check input:checked ~ label{background-color:$colorHighlightDark!important;}

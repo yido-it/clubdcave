@@ -22,6 +22,7 @@ import com.yido.clubd.common.utils.ResultVO;
 import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.StringUtils;
 import com.yido.clubd.common.utils.Utils;
+import com.yido.clubd.model.DrBkHistory;
 import com.yido.clubd.model.DrBkMnMap;
 import com.yido.clubd.repository.DrBkHistoryMapper;
 import com.yido.clubd.repository.DrBkMarkMapper;
@@ -120,6 +121,7 @@ public class MnInHistoryService {
 				params.put("msNum", msNum);
 	
 				SessionVO sessionVO = drMsMaininfoMapper.selectMsSession(params);
+				log.info("[successPayLogic] successPayLogic : " + sessionVO);
 				if(sessionVO == null) {
 					throw new Exception("회원정보가 존재하지 않습니다.");
 				}
@@ -127,7 +129,7 @@ public class MnInHistoryService {
 				JSONObject data = new JSONObject(reserved.replaceAll("&quot;", "\""));
 				
 				params.put("bkDay",        Utils.getJsonValue(data, "bkDay"));
-				params.put("bkTime",       Utils.getJsonValue(data, "bkTime"));
+				//params.put("bkTime",       Utils.getJsonValue(data, "bkTime"));
 				params.put("bkAmount",     Utils.getJsonValue(data, "bkAmount"));
 				params.put("bayCondi",     Utils.getJsonValue(data, "bayCondi"));
 				params.put("msLevel",      Utils.getJsonValue(data, "msLevel"));
@@ -139,11 +141,11 @@ public class MnInHistoryService {
 				log.info("[successPayLogic] 예약정보:" + params);
 				
 				// 예약고유번호 채번
-				String bkSerialNo = drBkHistoryMapper.getSerialNo(params);
-				params.put("bkSerialNo", bkSerialNo);
-				mnMap.setBkSerialNo(bkSerialNo);
+				//String bkSerialNo = drBkHistoryMapper.getSerialNo(params);
+				//params.put("bkSerialNo", bkSerialNo);
+				//mnMap.setBkSerialNo(bkSerialNo);
 	       		
-				// 이미 다른 회원이 예약했는지 체크 후 예약 데이터 insert 진행
+				// 예약 내역 insert 
 				drBkHistoryService.actionReservationLogicQuery(params, sessionVO);
 				
         		this.afterPayLogic(params, mnMap);
@@ -203,29 +205,56 @@ public class MnInHistoryService {
 		map.put("coDiv", param.get("coDiv"));
 		map.put("msNum", param.get("msNum"));
 		map.put("mnInName", param.get("userName"));
-		map.put("mnSerialNo", param.get("bkSerialNo"));
 		
 		mnInHistoryMapper.updateMnInHistory(map);
 		// end.
 
-		
-		// 예약선점 테이블 변경 (예약고유번호, 상태)
-		// 조회조건 : 지점코드, 베이코드, 일자, 시간, 아이디, 상태 Y인거 
 		Map<String, Object> map2 = new HashMap<String, Object>();
 		map2.put("coDiv"		, param.get("coDiv"));
 		map2.put("bayCondi"		, param.get("bayCondi"));
 		map2.put("bkDay"		, param.get("bkDay"));
-		map2.put("bkTime"		, param.get("bkTime"));
 		map2.put("entryUser"	, param.get("msId"));
+		map2.put("msNum"		, param.get("msNum"));
 		map2.put("bkStateIsY"	, "Y");
-		
-		map2.put("bkSerialNo"	, param.get("bkSerialNo"));
 		map2.put("bkState"		, "N");
-		drBkMarkMapper.updateDrBkMark(map2);
-		// end.
+	
+		if (param.get("bkTime").toString().indexOf(",") > 0) {
+			// 다건 예약
+			log.info("[actionReservationLogicQuery] 다건 예약");
+			String bkTime[] = param.get("bkTime").toString().split(",");
+			
+			for (int i = 0; i < bkTime.length; i++) {
+				map2.put("bkTime", bkTime[i]);
+				List<DrBkHistory> list = drBkHistoryMapper.selectList(map2);
+				
+				// 예약선점 테이블 변경 (예약고유번호, 상태)
+				// 조회조건 : 지점코드, 베이코드, 일자, 시간, 아이디, 상태 Y인거 
+				map2.put("bkSerialNo", list.get(0).getBkSerialNo());
+				drBkMarkMapper.updateDrBkMark(map2);	
+				
+				// 예약-입금 연결 정보 insert
+				// 건수가 여러개이면 순번, 예약고유번호 다르게 들어가야함 
+				mnMap.setBkSerialNo(list.get(0).getBkSerialNo());
+				drBkMnMapMapper.insertDrBkMnMap(mnMap);		
+				
+			}
+		} else {
+			// 단건 예약
+			map2.put("bkTime", param.get("bkTime"));
+			List<DrBkHistory> list = drBkHistoryMapper.selectList(map2);
+			
+			// 예약선점 테이블 변경 (예약고유번호, 상태)
+			// 조회조건 : 지점코드, 베이코드, 일자, 시간, 아이디, 상태 Y인거 
+			map2.put("bkSerialNo", list.get(0).getBkSerialNo());
+			drBkMarkMapper.updateDrBkMark(map2);	
+			
+			// 예약-입금 연결 정보 insert
+			// 건수가 여러개이면 순번, 예약고유번호 다르게 들어가야함 
+			mnMap.setBkSerialNo(list.get(0).getBkSerialNo());
+			drBkMnMapMapper.insertDrBkMnMap(mnMap);		
+			
+		}
 		
-		// 예약-입금 연결 정보 insert
-		drBkMnMapMapper.insertDrBkMnMap(mnMap);		
 	}
 	
 	/**
@@ -331,9 +360,9 @@ public class MnInHistoryService {
 	        detailResponseMessage = Utils.getJsonValue(result, "DETAIL_RESPONSE_MESSAGE");
             
             params.put("coDiv"				, coDiv);
-            params.put("mnInDay"			, orderDate.substring(0,8));	// 취소일자
-            params.put("mnRevAmount"		, cancelAmount);				// 총입금액
-            params.put("mnInAmount"			, cancelAmount);				// 결제금액
+            params.put("mnInDay"			, orderDate.substring(0,8));					// 취소일자
+            params.put("mnRevAmount"		, -Integer.parseInt(cancelAmount));				// 총입금액
+            params.put("mnInAmount"			, -Integer.parseInt(cancelAmount));				// 결제금액
             params.put("mnChangeAmount"		, 0);							// 반환금액
             params.put("mnInNo"				, "");							// 카드번호
             params.put("mnCardApproval"		, "");							// 승인번호

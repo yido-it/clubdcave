@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yido.clubd.common.utils.SessionVO;
+import com.yido.clubd.model.BookInfoVO;
 import com.yido.clubd.model.DrMsMaininfo;
 import com.yido.clubd.repository.DrMsMaininfoMapper;
 
@@ -121,8 +122,8 @@ public class DrMsMaininfoService {
 	 * @param params
 	 * @return
 	 */
-	public String chkMsBkGrant(Map<String, Object> params) {
-		return drMsMaininfoMapper.chkMsBkGrant(params);
+	public String chkMsBkGrant(BookInfoVO bookInfo) {
+		return drMsMaininfoMapper.chkMsBkGrant(bookInfo);
 	}
 	
 }

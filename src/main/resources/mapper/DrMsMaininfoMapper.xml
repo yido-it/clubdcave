@@ -245,7 +245,7 @@
 	</select>    
 	
 	<!-- 회원 위약체크 -->
-	<select id="chkMsBkGrant" parameterType="hashmap" resultType="String">
+	<select id="chkMsBkGrant" parameterType="BookInfoVO" resultType="String">
 		SELECT MS_BK_GRANT
 		  FROM DR_MS_MAININFO
 		 WHERE MS_ID = #{msId}

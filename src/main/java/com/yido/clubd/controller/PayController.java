@@ -197,6 +197,7 @@ public class PayController {
                 isSuccessPay          = responseCode.equals("0000");
 
                 log.info("[returnPay] params 1 : " + params);
+                log.info("[returnPay] reserved3 : " + reserved3);
                 
                 params.put("coDiv"				, reserved1);
                 params.put("mnInDay"			, orderDate.substring(0,8));	// 입금일자
@@ -236,7 +237,6 @@ public class PayController {
                     mnMap.setCoDiv(reserved1);
                     mnMap.setMnCoDiv(reserved1);
                     mnMap.setMnInDay(orderDate.substring(0,8));
-                    mnMap.setMnSeq(mnSeq);
                     mnMap.setMnAmount(Integer.parseInt(authAmount));
                     // end.
                     

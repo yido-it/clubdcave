@@ -1,0 +1,42 @@
+/*Toasts*/
+.toast-tiny {
+	z-index: 90;
+	position: fixed;
+	left: 50%;
+	line-height: 35px;
+	padding: 0px 20px;
+	color: $color_white;
+	transition: all 200ms ease;
+	max-width: auto !important;
+	font-size: 12px;
+	border-radius: 60px;
+	border: 0px !important;
+}
+.toast-bottom {
+	bottom: 20px;
+	bottom: calc(20px + (constant(safe-area-inset-bottom))*1.1) !important;
+	bottom: calc(20px + (env(safe-area-inset-bottom))*1.1) !important;
+	transform: translate(-50%, 160px) scale(0,0);
+}
+.toast-bottom.toast-tiny.show {
+	transform: translate(-50%, 0px) scale(1,1);
+}
+.toast-top {
+	top: 60px;
+	top: calc(65px + (constant(safe-area-inset-bottom))*1.1) !important;
+	top: calc(65px + (env(safe-area-inset-bottom))*1.1) !important;
+	transform: translate(-50%, -100px) scale(0,0);
+}
+.toast-top.toast-tiny.show {
+	transform: translate(-50%, 0px) scale(1,1);
+}
+
+.toast-center {
+    opacity:0;
+	top: 50%;
+	transform: translate(-50.1%, 0px) scale(0,0);
+}
+.toast-center.toast-tiny.show {
+    opacity:1;
+	transform: translate(-50.1%, 0px) scale(1,1);
+}

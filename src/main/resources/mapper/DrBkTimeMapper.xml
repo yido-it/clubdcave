@@ -49,7 +49,7 @@
 		</if>	
 		<if test='bkTime != null and bkTime != ""'>
 		AND BK_TIME = #{bkTime} 
-		</if>		
+		</if>			
     </select>  
       
     <!-- [예약 타임] 잔여수량 변경 -->

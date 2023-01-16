@@ -32,7 +32,7 @@
     		#{coDiv}	   			, #{mnInDay}   		, #{mnSeq}			, '2'					
     		, '12'  				, #{mnRevAmount} 	, #{mnInAmount} 	, #{mnChangeAmount}
     		, #{mnInNo}	    		, #{mnCardApproval} , #{mnMonth}   		, #{mnAppDate}
-    		, #{mnCardDiv}    		, #{mnCardName}    	, 'HOMEPAGE'		, NOW()				
+    		, #{mnCardDiv}    		, #{mnCardName}    	, 'APP'				, NOW()				
     		, #{ipAddr}				, #{orderId}		, #{transactionId}	, #{cancelKey}	
     		, #{mnCancelYn}			, #{mnRemark}
     	)  	
@@ -41,8 +41,7 @@
     <!-- 입금내역 변경 -->
     <update id="updateMnInHistory" parameterType="hashmap">
     	UPDATE MN_IN_HISTORY 
-    	   SET MN_SERIAL_NO 	= #{mnSerialNo}
-    	     , MN_IN_NAME 		= #{mnInName}
+    	   SET MN_IN_NAME 		= #{mnInName}
     	     , MS_NUM 			= #{msNum}
 		 WHERE CO_DIV 			= #{coDiv}
 		   AND MN_IN_DAY 		= #{mnInDay}

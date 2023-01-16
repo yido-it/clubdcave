@@ -4,27 +4,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.yido.clubd.common.utils.ResultVO;
 import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
+import com.yido.clubd.model.BookInfoVO;
 import com.yido.clubd.model.DrBayInfo;
-import com.yido.clubd.model.DrBkHistory;
-import com.yido.clubd.model.DrBkMark;
 import com.yido.clubd.model.DrBkOpenTime;
 import com.yido.clubd.model.DrBkTime;
-import com.yido.clubd.model.ProNotice;
 import com.yido.clubd.service.BookService;
 import com.yido.clubd.service.DrBayInfoService;
 import com.yido.clubd.service.DrBkHistoryService;
@@ -32,8 +27,6 @@ import com.yido.clubd.service.DrBkMarkService;
 import com.yido.clubd.service.DrBkOpenTimeService;
 import com.yido.clubd.service.DrBkTimeService;
 import com.yido.clubd.service.DrMsMaininfoService;
-import com.yido.clubd.service.DrProScheduleService;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -42,9 +35,6 @@ import lombok.extern.slf4j.Slf4j;
 public class BookController {
 
 	@Autowired
-	private DrBkHistoryService drBkHistoryService;
-	
-	@Autowired
 	private DrBayInfoService drBayInfoService;
 	
 	@Autowired
@@ -52,9 +42,6 @@ public class BookController {
 	
 	@Autowired
 	private DrBkTimeService drBkTimeService;
-	
-	@Autowired
-	private DrBkMarkService drBkMarkService;
 
 	@Autowired
 	private DrMsMaininfoService drMsMaininfoService;
@@ -71,55 +58,53 @@ public class BookController {
 	 */
 	@RequestMapping("/bookMain")  
 	public String bookMain(Model model, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
 		
 		try {
-			
-			// BAY 목록
-			Map<String, Object> map = new HashMap<String, Object>();
-			List<DrBayInfo> bayList = drBayInfoService.selectList(map);
-			log.info("[bookMain] bayList 1: " + bayList);
-			model.addAttribute("bayList", bayList);
-			
-			// 현재 시간 기준으로 가장 마지막 오픈날짜 구하기
-			DrBkOpenTime drBkOpenTime = new DrBkOpenTime();
-			drBkOpenTime.setMsLevel("11");
-			drBkOpenTime.setBayCondi("001");
-			drBkOpenTime = drBkOpenTimeService.getBkDay(drBkOpenTime);
-			log.info("[bookMain] getBkDay : " + drBkOpenTime.getBkDay());
-			model.addAttribute("maxBkDay", drBkOpenTime.getBkDay());
-			
+			if (sessionVO != null) {
+				// BAY 목록
+				Map<String, Object> map = new HashMap<String, Object>();
+				List<DrBayInfo> bayList = drBayInfoService.selectList(map);
+				model.addAttribute("bayList", bayList);
+				log.info("bayList size : " + bayList.size());
+				
+				// 현재 시간 기준으로 가장 마지막 오픈날짜 구하기
+				DrBkOpenTime drBkOpenTime = new DrBkOpenTime();
+				drBkOpenTime.setMsLevel(sessionVO.getMsLevel());
+				drBkOpenTime.setBayCondi("001");
+				drBkOpenTime = drBkOpenTimeService.getBkDay(drBkOpenTime);
+				model.addAttribute("maxBkDay", drBkOpenTime.getBkDay());
+			} 
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return "/book/bookMain";
 	}
-
+	
 	/**
-	 * 예약 등록
+	 * 예약내역 조회
 	 * 
+	 * @param model
 	 * @param req
-	 * @param drBkHistory
 	 * @return
-	 
-	@RequestMapping("/insertBook")
-	@ResponseBody
-	public Map<String, Object> insertBook(HttpServletRequest req, DrBkHistory drBkHistory){
+	 */
+	@RequestMapping("/bookList")  
+	public String bookList(Model model, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
 
-		Map<String, Object> map = new HashMap<String, Object>();
-
+		log.info("bookList");
 		try {
-			drBkHistoryService.insertDrBkHistory(drBkHistory);
-			map.put("result",  true);
+			//
 		} catch(Exception e) {
 			e.printStackTrace();
-			map.put("result",  false);
-			map.put("message", "등록중 오류가 발생하였습니다.");
 		}
 		
-		return map;
-	}*/
-	
+		return "/book/bookList";
+	}
+
 	/**
 	 * 베이별 잔여시간 조회
 	 * - 파라미터 : 베이, 날짜, 회원등급 등
@@ -147,6 +132,36 @@ public class BookController {
 	}
 
 	/**
+	 * 회원위약체크
+	 * 
+	 * @param req
+	 * @param params
+	 * @return
+	 */
+	@RequestMapping("/chkGrant")
+	@ResponseBody
+	public ResultVO chkGrant(HttpServletRequest req, BookInfoVO bookInfo){
+		
+		log.info("[chkGrant] bookInfo : " + bookInfo);
+    	ResultVO result = new ResultVO();
+    	
+		try {
+				
+			String grantYn = drMsMaininfoService.chkMsBkGrant(bookInfo);
+			if (grantYn.equals("N")) {
+				result.setCode("9999");
+				result.setMessage("위약이 걸려있어 예약이 불가능합니다.");	
+				return result;
+			} 
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	/**
 	 * 잔여수량 체크(=예약가능여부 체크) + 예약선점 처리
 	 * 
 	 * @param req
@@ -155,23 +170,17 @@ public class BookController {
 	 */
 	@RequestMapping("/chkBook")
 	@ResponseBody
-	public ResultVO chkBook(HttpServletRequest req, @RequestParam Map<String, Object> params){
+	public ResultVO chkBook(HttpServletRequest req, BookInfoVO bookInfo){
 		
-		log.info("[chkBook] params : " + params);
+		log.info("[chkBook] bookInfo : " + bookInfo);
 		String ipAddr = Utils.getClientIpAddress(req);
     	ResultVO result = new ResultVO();
     	
 		try {
-			params.put("ipAddr", ipAddr);
-			
-			String grantYn = drMsMaininfoService.chkMsBkGrant(params);
-			if (grantYn.equals("N")) {
-				result.setCode("9999");
-				result.setMessage("위약이 걸려있어 예약이 불가능합니다.");	
-				return result;
-			} 
-			
-			result = bookService.chkBookLogic(params);
+			bookInfo.setIpAddr(ipAddr);
+					
+			// 잔여수량 체크(=예약가능여부 체크) + 예약선점 처리
+			result = bookService.chkBookLogic(bookInfo);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -179,6 +188,7 @@ public class BookController {
 		
 		return result;
 	}
+		
 	
 	/**
 	 * 예약 선점된거 풀기 
@@ -189,13 +199,13 @@ public class BookController {
 	 */
 	@RequestMapping("/unBkMark")
 	@ResponseBody
-	public ResultVO unBkMark(HttpServletRequest req, @RequestParam Map<String, Object> params){
+	public ResultVO unBkMark(HttpServletRequest req, BookInfoVO bookInfo){
 		
-		log.info("[unBkMark] params : " + params);
+		log.info("[unBkMark] params : " + bookInfo);
     	ResultVO result = new ResultVO();
     	
 		try {
-			result = bookService.unBkMarkLogic(params);
+			result = bookService.unBkMarkLogic(bookInfo);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
