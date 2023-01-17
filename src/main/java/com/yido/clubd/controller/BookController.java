@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +22,7 @@ import com.yido.clubd.model.DrBayInfo;
 import com.yido.clubd.model.DrBkOpenTime;
 import com.yido.clubd.model.DrBkTime;
 import com.yido.clubd.service.BookService;
+import com.yido.clubd.service.ClDayInfoService;
 import com.yido.clubd.service.DrBayInfoService;
 import com.yido.clubd.service.DrBkHistoryService;
 import com.yido.clubd.service.DrBkMarkService;
@@ -49,6 +51,10 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 	
+	@Autowired
+	private ClDayInfoService clDayInfoService;
+	
+	
 	/**
 	 * 예약페이지
 	 * 
@@ -56,8 +62,8 @@ public class BookController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping("/bookMain")  
-	public String bookMain(Model model, HttpServletRequest req) {
+	@RequestMapping("/bookMain/{coDiv}")  
+	public String bookMain(Model model, HttpServletRequest req, @PathVariable String coDiv) {
 		HttpSession session = req.getSession();
 		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
 		
@@ -76,11 +82,47 @@ public class BookController {
 				drBkOpenTime = drBkOpenTimeService.getBkDay(drBkOpenTime);
 				model.addAttribute("maxBkDay", drBkOpenTime.getBkDay());
 			} 
+			
+			model.addAttribute("coDiv", coDiv);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 
 		return "/book/bookMain";
+	}
+	
+	/**
+	 * 예약 캘린더에 표출할 데이터 조회 
+	 * 
+	 * @param model
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("/getCalendar")  
+	@ResponseBody
+	public List<Map<String, Object>> getCalendar(Model model, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		
+		try {
+			if (sessionVO != null) {
+				
+				// 달력 조회
+				Map<String, Object> cMap = new HashMap<String, Object>();
+				cMap.put("coDiv", req.getParameter("coDiv"));
+				cMap.put("selYM", req.getParameter("selYM"));
+				cMap.put("msLevel", req.getParameter("msLevel"));
+				list = clDayInfoService.selectList(cMap); 
+				
+				log.info("[getCalendar] list : " + list);
+			} 
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
 	}
 	
 	/**

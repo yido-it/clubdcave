@@ -1,6 +1,9 @@
 package com.yido.clubd.repository;
 
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +19,6 @@ import com.yido.clubd.model.ClDayInfo;
 @Repository
 public interface ClDayInfoMapper {
 
-	public ClDayInfo selectList(ClDayInfo clDayInfo);
+	public List<Map<String, Object>> selectList(Map<String, Object> map);
 
 }

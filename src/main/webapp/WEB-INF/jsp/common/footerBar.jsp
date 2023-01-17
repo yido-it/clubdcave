@@ -14,7 +14,7 @@
 	</a>
 	
 	<!-- 예약 -->
-	<a href="javascript:location.href='/book/bookMain';" class="circle-nav">
+	<a href="javascript:location.href='/book/bookMain/001';" class="circle-nav">
 		<i class="fa fa-calendar-check"></i><span>예약</span><strong><u></u></strong>
 	</a>
 	

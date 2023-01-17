@@ -13,35 +13,46 @@
 <div id="page">
     
     <div class="header header-fixed header-logo-app">
-        <a href="index.html" class="header-title header-subtitle">예약</a>
+        <a href="javascript:history.back(-1)" class="header-title header-subtitle">예약</a>
 		<jsp:include page="../common/top.jsp" />
     </div>
     
-    <!-------- 좌측GNB--------->
-
-        
-<jsp:include page="../common/menu.jsp" />
-<!-- //좌측GNB-->
+    <!-- 좌측GNB-->
+	<jsp:include page="../common/menu.jsp" />
+	<!-- //좌측GNB-->
 
    
     <div class="page-content header-clear-medium">
          
 
       <div class="content">
+		<form id="frm">
+			<input type="hidden" name="bayCondi" id="bayCondi" value="" />
+			<input type="hidden" name="coDiv" id="coDiv" value="${coDiv}" />
+			<input type="hidden" name="bkDay" id="bkDay" value="" /> 
+		</form>
+		
         <h3 class="mb-3">클럽디청담 예약 </h3> 
         <div class="input-style input-style-2 input-required" data-menu="select_bay">
-            <span class="color-highlight input-style-1-inactive">베이선택</span>
+            <span class="color-highlight input-style-1-inactive bayInfo">베이선택</span>
             <em><i class="fa fa-chevron-down color-green-dark"></i></em> 
             <input class="form-control" type="text" placeholder="">
         </div>
          
 
-
+		<!-- 예약 캘린더 -->
         <div class="calendar">
             <div class="cal-header">
-                <h4 class="cal-title text-center text-uppercase font-800 bg-highlight color-white">2023년 1월</h4>
-                <h6 class="cal-title-left color-white"><i class="fa fa-chevron-left"></i></h6>
-                <h6 class="cal-title-right color-white"><i class="fa fa-chevron-right"></i></h6>
+            	<!-- 년  / 월 -->
+                <h4 class="cal-title text-center text-uppercase font-800 bg-highlight color-white" id="calHeader"></h4>
+                <!-- 이전달 -->
+                <h6 class="cal-title-left color-white">
+                	<i class="fa fa-chevron-left"></i>
+                </h6>
+                <!-- 다음달 -->
+                <h6 class="cal-title-right color-white">
+                	<i class="fa fa-chevron-right"></i>
+                </h6>
             </div>
             <div class="clearfix"></div>
             <div class="cal-days bg-highlight opacity-80 bottom-0">
@@ -54,13 +65,7 @@
                 <a href="#">토</a>
                 <div class="clearfix"></div>
             </div>
-            <div class="cal-dates cal-dates-border">
-                <a href="#" class="cal-disabled">25</a>
-                <a href="#" class="cal-disabled">26</a>
-                <a href="#" class="cal-disabled">27</a>
-                <a href="#" class="cal-disabled">28</a>
-                <a href="#" class="cal-disabled">29</a>
-                <a href="#" class="cal-disabled">30</a>
+            <div class="cal-dates cal-dates-border" id="calendar-body">
                 <a href="#">1</a>
                 <a href="#">2</a>
                 <a href="#">3</a>
@@ -68,35 +73,6 @@
                 <a href="#">5</a>
                 <a href="#">6</a>
                 <a href="#">7</a>
-                <a href="#">8</a>
-                <a href="#">9</a>
-                <a href="#">10</a>
-                <a href="#">11</a>
-                <a href="#">12</a>
-                <a href="#" class="cal-selected"><i class="fa fa-square color-highlight"></i><span>13</span></a>
-                <a href="#">14</a>
-                <a href="#">15</a>
-                <a href="#">16</a>
-                <a href="#">17</a>
-                <a href="#">18</a>
-                <a href="#">19</a>
-                <a href="#">20</a>
-                <a href="#">21</a>
-                <a href="#">22</a>
-                <a href="#">23</a>
-                <a href="#">24</a>
-                <a href="#">25</a>
-                <a href="#">26</a>
-                <a href="#">27</a>
-                <a href="#">28</a>
-                <a href="#">29</a>
-                <a href="#">30</a>
-                <a href="#">31</a>
-                <a href="#" class="cal-disabled">1</a>
-                <a href="#" class="cal-disabled">2</a>
-                <a href="#" class="cal-disabled">3</a>
-                <a href="#" class="cal-disabled">4</a>
-                <a href="#" class="cal-disabled">5</a>
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -170,7 +146,6 @@
 		
 </div>
 
-
 <!--베이선택 팝업-->
 <div id="select_bay" class="menu menu-box-bottom rounded-0 modal_bay" data-menu-height="435" data-menu-effect="menu-parallax" style="display: block; height: 335px;">
     <div class="menu-title">
@@ -180,15 +155,14 @@
     <div class="mr-3 ml-3 mt-3">
         <div class="list-group list-custom-small">
         
+        <!-- 베이목록 -->
        	<c:forEach items="${bayList}" var="bay">
-       	     <a href="#" class="close-menu">
-                <img class="mr-3 mt-2" src="">
+       	     <a href="#" onClick="javscript:selectedBay(${bay.bayCd}, '${bay.bayName}')" class="close-menu">
+                <img class="mr-3 mt-2" src="/images/gallery/1.jpg">
                 <span>${bay.bayName}</span><i class="fa fa-angle-right"></i>
             </a>
        	</c:forEach>
-        
-
-         
+       
         </div>
         <div class="clear"></div>
     </div>
@@ -264,7 +238,6 @@
        
     </div> 
 </div>
-
  
 <!--결제동의 모달-->
 <div id="modal_pay" class="menu menu-box-bottom rounded-0 " data-menu-height="530" data-menu-effect="menu-parallax" style="display: block; height: 510px;">
@@ -310,11 +283,9 @@
 
 </body>
 
-
 <!--페이지 로드되자마자 베이선택팝업 활성화-->
 <div class="menu-hider menu-active"><div></div></div>
 <!--//페이지 로드되자마자 베이선택팝업 활성화-->
-
 
 <script type="text/javascript">
 
@@ -329,6 +300,7 @@ var msLastPhone1 	= "<c:out value='${sessionScope.msMember.msLastPhone1}'/>";
 var msPhone 		= msFirstPhone1 + "-" + msMidPhone1 + "-" + msLastPhone1;
 
 var result = new Object() ;
+var sYear, fYear, sMonth, fMonth;
 
 var reservationInfo 		= {};
 reservationInfo.coDiv 		= $('#coDiv').val();
@@ -349,7 +321,121 @@ $(document).ready(function() {
 		location.href = "/login";	
 		return;
 	}
+	
+	init();
 });
+
+function init() {
+	var date = new Date();
+	sYear = date.yyyy();
+	sMonth = date.mm();
+	
+	initCalendar(sYear, sMonth);
+}
+
+// 달력 표출
+function initCalendar(year, month) {
+
+	$.ajax({
+		url: "/book/getCalendar"
+		, type: "post"
+		, dataType: 'json'
+		, data: {
+			"coDiv" : reservationInfo.coDiv
+			, "selYM" : year + month
+			, "msLevel" : msLevel
+		}
+		, contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+		, success: function(data) {
+
+			var currentDay = new Date().yyyymmdd();
+			$("#calHeader").html(year + "년 " + month + "월");
+
+			var currentDay = new Date().yyyymmdd();
+			var tBody = $("#calendar-body");
+			tBody.empty();
+
+			if(data.length > 0) {
+				var row;
+				var fWeek = data[0].CL_DAYDIV - 1;
+
+				for(i=0; i<fWeek; i++) {
+					tBody.append($("<a href='#'></a>"));
+				}
+				
+				for(i=0; i<data.length; i++) {
+					var td;
+
+					if(data[i].CL_SOLAR == currentDay) {
+						// 당일
+						var td = $("<a href='#' class='cal-selected'><i class='fa fa-square color-highlight'></i><span>" + data[i].DAYNUM + '</span></a>');
+					} else {
+						// 당일 아닌거 
+						var td = $("<a href='#'>" + data[i].DAYNUM + "</a>");
+						
+						if ( data[i].CL_SOLAR > currentDay) {
+							// 미래 날짜 
+							if(data[i].BK_REM_COUNT <= 0) {
+								// 예약 불가한날 
+								td.addClass('cal-disabled');
+							}
+						} else {
+							// 과거 날짜 예약 불가 
+							td.addClass('cal-disabled');
+						}
+					} 
+
+					tBody.append(td);
+
+					if(data[i].CL_DAYDIV == 7) {
+						tBody.appendTo(tBody);
+					}
+				}
+
+				tBody.appendTo(tBody);
+			} else {
+				for(i=0; i<42; i++) {
+					tBody.append($("<a href='#' class='cal-disabled'>-</a>"));
+				}
+				tBody.appendTo(tBody);
+			}
+		
+		}
+	});
+}
+
+// 이전달 클릭
+$('.cal-title-left').on('click', function() {
+	if(sMonth == "01") {
+		sYear -= 1;
+		sMonth = "12";
+	} else {
+		sMonth = Number(sMonth) - 1;
+		sMonth = (sMonth > 9 ? '' : '0') + sMonth;
+	}
+
+	initCalendar(sYear, sMonth);
+});
+
+// 다음달 클릭
+$('.cal-title-right').on('click', function() {
+	if(sMonth == "12") {
+		sYear += 1;
+		sMonth = "01";
+	} else {
+		sMonth = Number(sMonth) + 1;
+		sMonth = (sMonth > 9 ? '' : '0') + sMonth;
+	}
+
+	initCalendar(sYear, sMonth);
+});
+
+
+// 베이 선택
+function selectedBay(bayCd, bayName) {
+	document.querySelector(".bayInfo").innerHTML = bayName;
+	$('#bayCondi').val(bayCd);
+}
 
 // 시간선택 + 예약선점
 // 예약마감 체크해서 마감이면 팝업창 띄워주고 마감으로 변경해주기 

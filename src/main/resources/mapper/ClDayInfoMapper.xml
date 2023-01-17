@@ -7,8 +7,30 @@
 -->
 <mapper namespace="com.yido.clubd.repository.ClDayInfoMapper">
 
-	<select id="selectList" resultType="ClDayInfo">
-       
+	<select id="selectList" parameterType="hashmap" resultType="hashmap">
+
+		SELECT A.CO_DIV
+			 , A.CL_SOLAR
+			 , SUBSTRING(A.CL_SOLAR, 7, 2) + 0 AS DAYNUM
+			 , D.BK_DAY
+			 , IFNULL(NULLIF(E.BK_REM_COUNT,''),0) BK_REM_COUNT
+			 , A.CL_DAYDIV
+		FROM CL_DAYINFO A 
+				LEFT JOIN (
+					SELECT B.CO_DIV, BAY_CONDI, BK_DAY
+		            FROM DR_BK_OPEN_TIME B INNER JOIN CD_COMMON C ON B.CO_DIV = C.CO_DIV AND B.MS_LEVEL = C.CD_CODE AND CD_DIVISION = '002' AND CD_USEYN = 'Y'
+		            WHERE DATE_FORMAT(NOW(), '%Y%m%d%H') BETWEEN CONCAT(BK_FROM_DAY, BK_START_TIME) AND CONCAT(BK_TO_DAY, BK_END_TIME)
+		            AND C.CD_CODE = #{msLevel} -- 회원 등급 
+		            GROUP BY B.CO_DIV, BAY_CONDI, BK_DAY
+		        ) D ON A.CO_DIV = D.CO_DIV AND A.CL_SOLAR = D.BK_DAY 
+				LEFT JOIN (
+					SELECT CO_DIV, BAY_CONDI, BK_DAY, SUM(BK_REM_COUNT) AS BK_REM_COUNT
+		            FROM DR_BK_TIME 
+		            GROUP BY CO_DIV, BAY_CONDI, BK_DAY
+		        ) E ON D.CO_DIV = E.CO_DIV AND D.BAY_CONDI = E.BAY_CONDI AND D.BK_DAY = E.BK_DAY      
+		WHERE A.CO_DIV = #{coDiv}
+		AND A.CL_SOLAR LIKE CONCAT(#{selYM}, '%') 
+		ORDER BY CL_SOLAR;		
     </select>
     
 </mapper>

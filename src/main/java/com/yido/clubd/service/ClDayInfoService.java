@@ -1,5 +1,8 @@
 package com.yido.clubd.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yido.clubd.model.ClDayInfo;
@@ -19,7 +22,7 @@ public class ClDayInfoService {
 	@Autowired
     private ClDayInfoMapper clDayInfoMapper;
 
-    public ClDayInfo selectList(ClDayInfo clDayInfo) {
-    	return clDayInfoMapper.selectList(clDayInfo);
+    public List<Map<String, Object>> selectList(Map<String, Object> map) {
+    	return clDayInfoMapper.selectList(map);
     }
 }

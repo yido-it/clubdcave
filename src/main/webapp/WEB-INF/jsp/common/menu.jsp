@@ -69,7 +69,7 @@
 			<i class="fa fa-pen color-brown-dark"></i>정보수정<i class="fa fa-angle-right"></i>
 		</a>
 		
-		<a href="javascript:location.href='/book/bookMain';" id="nav-contact">
+		<a href="javascript:location.href='/book/bookMain/001';" id="nav-contact">
 			<i class="fa fa-calendar-check color-blue-dark"></i>예약내역<i class="fa fa-angle-right"></i>
 		</a>
 	
