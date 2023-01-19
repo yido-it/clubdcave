@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.yido.clubd.common.utils.SessionVO;
+import com.yido.clubd.model.BookInfoVO;
 import com.yido.clubd.model.DrMsMaininfo;
 
 /**
@@ -43,7 +44,7 @@ public interface DrMsMaininfoMapper {
 	public void updatePw(Map<String, Object> params) throws Exception;
 
 	// 회원 위약체크 
-	public String chkMsBkGrant(Map<String, Object> params);
+	public String chkMsBkGrant(BookInfoVO bookInfo);
 
 	public List<DrMsMaininfo> selectProList();
 

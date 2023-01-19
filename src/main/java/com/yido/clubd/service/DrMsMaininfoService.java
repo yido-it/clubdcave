@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.yido.clubd.common.utils.Globals;
 import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
+import com.yido.clubd.model.BookInfoVO;
 import com.yido.clubd.model.DrMsMaininfo;
 import com.yido.clubd.repository.DrMsMaininfoMapper;
 
@@ -156,8 +157,8 @@ public class DrMsMaininfoService {
 	 * @param params
 	 * @return
 	 */
-	public String chkMsBkGrant(Map<String, Object> params) {
-		return drMsMaininfoMapper.chkMsBkGrant(params);
+	public String chkMsBkGrant(BookInfoVO bookInfo) {
+		return drMsMaininfoMapper.chkMsBkGrant(bookInfo);
 	}
 	
 	public void updatePw(Map<String, Object> params) throws Exception {
