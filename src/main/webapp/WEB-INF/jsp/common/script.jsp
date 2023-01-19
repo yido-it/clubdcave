@@ -5,8 +5,9 @@
 
 <script type="text/javascript" src="/scripts/jquery.js"></script>
 <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
-<script type="text/javascript" src="/scripts/custom.js"></script>
 <script type="text/javascript" src="/scripts/main.js"></script>
+<script type="text/javascript" src="/scripts/custom.js"></script>
+<script type="text/javascript" src="/scripts/custom2.js"></script>
 <!-- // date range picker -->
 
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>

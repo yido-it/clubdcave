@@ -3,26 +3,30 @@
 <%@ page import="com.yido.clubd.common.utils.Globals" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <jsp:include page="../common/head.jsp" />
+<jsp:include page="../common/script.jsp" />
+<html>
+<head>
+</head>
 <body>
 
 회원가입 선택사항 입력 
  
 <form id="frmMember" name="frmMember">
 	<div class="mt-2">
-		<input type="text" id="msNum" name="msNum"/>
+		<input type="hidden" id="msNum" name="msNum" value="${sessionScope.msMember.msNum}"/>
 	</div>
-	<div class="row mt-2 col-md-10">
+	<%-- <div class="row mt-2 col-md-10">
 		<div class="col-md-2"> 
 			<h6 class=""> 이메일 </h6>
 		</div> 
 		<div class="col-md-6"> 
-			<input type="text" id="msEmail" name="msEmail">
+			<input type="text" id="msEmail" name="msEmail" value="${sessionScope.msMember.msEmail}">
 			<div class="mt-2">
 				<input type="checkbox" id="chkSmsYn"/> 이메일 수신에 동의합니다
 				<input type="hidden" id="msEmailYn" name="msEmailYn"/>
 			</div>
 		</div>
-	</div>
+	</div> --%>
 	
 	<div class="row mt-2 col-md-10">
 		<div class="col-md-2"> 
@@ -60,30 +64,10 @@
 	
 	<div class="row mt-2 col-md-10">
 		<div class="col-md-2"> 
-			<h6 class=""> 직장명 </h6 >
-		</div> 
-		<div class="col-md-6"> 
-			<input type="text" id="msCompnm" name="msCompnm">
-		</div>
-	</div>
-	
-	<div class="row mt-2 col-md-10">
-		<div class="col-md-2"> 
-			<h6 class=""> 직장주소 </h6 >
-		</div> 
-		<div class="col-md-6"> 
-			<input type="text" id="msCompaddr1" name="msCompaddr1">
-			<button type="button">찾기</button>
-			<input type="text" id="msCompaddr1" name="msCompaddr2">
-		</div>
-	</div>
-	
-	<div class="row mt-2 col-md-10">
-		<div class="col-md-2"> 
 			<h6 class=""> 핸디캡 </h6 >
 		</div> 
 		<div class="col-md-6"> 
-			<input type="text" id="msHandcap" name="msHandcap">회?
+			<input type="text" id="msHandcap" name="msHandcap">
 		</div>
 	</div>
 	
@@ -102,7 +86,11 @@
 			<h6 class=""> 레슨빈도 </h6 >
 		</div> 
 		<div class="col-md-6"> 
-			월<input type="text" id="msLessonTrem" name="msLessonTrem">회
+			<select id="msLessonTrem1" name="msLessonTrem1">
+				<option value="월">월</option>
+				<option value="주">주</option>
+			</select>
+			<input type="text" id="msLessonTrem2" name="msLessonTrem2">회
 		</div>
 	</div>
 	
@@ -117,18 +105,103 @@
 	
 	<div class="row mt-2 col-md-10">
 		<div class="col-md-2"> 
+			<h6 class=""> 라운드 빈도 </h6 >
+		</div> 
+		<div class="col-md-6">
+			<select id="msRoundTrem1" name="msRoundTrem1">
+				<option value="월">월</option>
+				<option value="주">주</option>
+			</select>
+			<input type="text" id="msRoundTrem2" name="msRoundTrem2">회
+		</div>
+	</div>
+	
+	<div class="row mt-2 col-md-10">
+		<div class="col-md-2"> 
+			<h6 class=""> 선호하는 업장 </h6 >
+		</div> 
+		<div class="col-md-6"> 
+			<input type="checkbox" value="cheongdam" checked> 클럽디 청담
+		</div>
+	</div>
+	
+	<div class="row mt-2 col-md-10">
+		<div class="col-md-2"> 
+			<h6 class=""> 직업 </h6 >
+		</div> 
+		<div class="col-md-6"> 
+			<input type="text" id="msLessonTrem" name="msLessonTrem">
+		</div>
+	</div>
+	
+	<div class="row mt-2 col-md-10">
+		<div class="col-md-2"> 
+			<h6 class=""> 직장명 </h6 >
+		</div> 
+		<div class="col-md-6"> 
+			<input type="text" id="msCompnm" name="msCompnm">
+		</div>
+	</div>
+	
+	<div class="row mt-2 col-md-10">
+		<div class="col-md-2"> 
+			<h6 class=""> 직장주소 </h6 >
+		</div> 
+		<div class="col-md-6"> 
+			<input type="text" id="msCompaddr1" name="msCompaddr1">
+			<button type="button">찾기</button>
+			<input type="text" id="msCompaddr1" name="msCompaddr2">
+		</div>
+	</div>	
+	
+	<!-- <div class="row mt-2 col-md-10">
+		<div class="col-md-2"> 
 			<h6 class=""> 결혼유무 </h6 >
 		</div> 
 		<div class="col-md-6"> 
 			<input type="radio" id="msWedding" name="msWedding" value="Y" checked>기혼
 			<input type="radio" id="msWedding" name="msWedding" value="N">미혼
 		</div>
+	</div> -->
+	
+	<div class="row mt-2 col-md-10">
+		<div class="col-md-2"> 
+			<h6 class=""> 차량번호 (최대 3개까지 등록 가능) </h6>
+		</div> 
+		<div class="col-md-6"> 
+			<input type="text" id="msCarNo1" name="msCarNo1" placeholder="차량번호">
+			<input type="text" id="msCarKind1" name="msCarKind1" placeholder="차량종류">
+		</div>
+	</div>
+	
+	<div class="row mt-2 col-md-10">
+		<div class="col-md-2"> 
+		</div>
+		<div class="col-md-6"> 
+			<input type="text" id="msCarNo1" name="msCarNo1" placeholder="차량번호">
+			<input type="text" id="msCarKind1" name="msCarKind1" placeholder="차량종류">
+		</div>
+	</div>
+	
+	<div class="row mt-2 col-md-10">
+		<div class="col-md-2"> 
+		</div>
+		<div class="col-md-6"> 
+			<input type="text" id="msCarNo1" name="msCarNo1" placeholder="차량번호">
+			<input type="text" id="msCarKind1" name="msCarKind1" placeholder="차량종류">
+		</div>
 	</div>
 	
 	<div class="row mt-3">
 		<div class="col-md-6">
 			<button onclick="insertMember()" class="btn btn-dark" id="btnSave">저장</button>
-			<button type="button" class="btn btn-dark" id="btnLater">나중에 하기</button>		
+			<button type="button" onclick="location.href='/member/joinComplete'" class="btn btn-dark" id="btnLater">나중에 하기</button>		
+		</div>
+	</div>
+	
+	<div class="row mt-2 col-md-10">
+		<div class="col-md-6"> 
+			<input type="checkbox" value="agree"> 회원약관을 확인하였으며 정보제공에 동의합니다.
 		</div>
 	</div>
 		
@@ -173,6 +246,5 @@ function insertMember() {
 
 }
 </script>
-<jsp:include page="../common/script.jsp" />
 </body>
 </html>

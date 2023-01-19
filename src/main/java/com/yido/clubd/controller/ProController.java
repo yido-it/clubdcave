@@ -5,15 +5,22 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yido.clubd.common.utils.ResultVO;
+import com.yido.clubd.common.utils.Utils;
+import com.yido.clubd.model.DrMsMaininfo;
 import com.yido.clubd.model.DrProSchedule;
 import com.yido.clubd.model.ProLicense;
 import com.yido.clubd.model.ProNotice;
+import com.yido.clubd.service.DrMsMaininfoService;
 import com.yido.clubd.service.DrProScheduleService;
 import com.yido.clubd.service.ProLicenseService;
 import com.yido.clubd.service.ProNoticeService;
@@ -33,6 +40,9 @@ public class ProController {
 	
 	@Autowired
 	private DrProScheduleService drProScheduleService;
+	
+	@Autowired
+	private DrMsMaininfoService drMsMaininfoService;
 	
 	/**
 	 * 레슨프로 특이사항 등록
@@ -182,5 +192,63 @@ public class ProController {
 		}
 		
 		return map;
+	}
+	
+	/**
+	 * 레슨프로 목록 페이지
+	 * 
+	 */	
+	@RequestMapping("/proMain")  
+	public String goProMain() {		
+		return "/pro/proMain";
+	}
+	
+	/**
+	 * 레슨프로 목록 페이지
+	 * 
+	 * @param model
+	 * @param req
+	 * @return
+	 */	
+	@RequestMapping("/getProList")
+	@ResponseBody
+	public Map<String, Object> getProList(HttpServletResponse response) {
+		Map<String, Object> map = new HashMap<>();		
+		
+		try {
+			List<DrMsMaininfo> drMsMaininfoList = drMsMaininfoService.selectProList();
+			
+			if(drMsMaininfoList.isEmpty()) {
+				throw new Exception("조회 가능한 프로가 없습니다");
+			}
+			map.put("result", true);
+			map.put("proList", drMsMaininfoList);			
+		} catch (Exception e) {
+			map.put("result", false);
+			map.put("message", e.getMessage());
+		}
+		return map;
+	}
+	
+	/**
+	 * 레슨프로 상세 페이지
+	 * 
+	 * @param model
+	 * @return
+	 */	
+	@RequestMapping("/proDetail")  
+	public String goProDetail(Model model, HttpServletRequest req, @RequestParam String msNum) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("msNum", msNum);
+		
+		DrMsMaininfo drMsMaininfo = drMsMaininfoService.selectDrMsMaininfo(map);
+		List<ProNotice> proNoticeList = proNoticeService.selectProNoticeList(map);
+		List<ProNotice> proImageList = proNoticeService.selectProImageList(map);
+		
+		model.addAttribute("proInfo", drMsMaininfo);
+		model.addAttribute("proNoticeList", proNoticeList);
+		model.addAttribute("proPictureList", proImageList);
+		
+		return "/pro/proDetail";
 	}
 }

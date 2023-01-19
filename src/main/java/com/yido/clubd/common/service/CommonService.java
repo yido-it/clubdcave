@@ -19,22 +19,6 @@ public class CommonService {
 		return commonMapper.getCommonCode(params);
 	}
 
-	public Map<String, Object> doFindId(Map<String, Object> params) throws Exception {
-		return commonMapper.doFindId(params);
-	}
-
-	public int checkPhoneNumber(Map<String, Object> params) throws Exception {
-		return commonMapper.checkPhoneNumber(params);
-	}
-
-	public Map<String, Object> doFindPw(Map<String, Object> params) throws Exception {
-		return commonMapper.doFindPw(params);
-	}
-
-	public void updatePw(Map<String, Object> params) throws Exception {
-		commonMapper.updatePw(params);
-	}
-
 	public void savePushKey(Map<String, Object> params) throws Exception {
 		commonMapper.savePushKey(params);
 	}

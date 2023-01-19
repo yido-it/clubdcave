@@ -1,9 +1,12 @@
 package com.yido.clubd.controller;
 
-import java.io.IOException;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,12 +17,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.WebUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yido.clubd.common.service.CommonService;
 import com.yido.clubd.common.utils.Globals;
 import com.yido.clubd.common.utils.KakaoRestAPI;
+import com.yido.clubd.common.utils.ResultVO;
 import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.model.DrMsBasic;
@@ -50,10 +55,10 @@ public class MemberController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping("/join01")  
-	public String goJoin01(HttpServletRequest req, Model model) {
+	@RequestMapping("/agree")  
+	public String goAgree(HttpServletRequest req, Model model) {
 		model.addAttribute("msLoginCd", req.getParameter("msLoginCd"));
-		return "/member/join01";
+		return "/member/agree";
 	}
 	
 	/**
@@ -63,11 +68,11 @@ public class MemberController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping("/join02")  
-	public String goJoin02(HttpServletRequest req, Model model) {
+	@RequestMapping("/memberForm")  
+	public String goMemberForm(HttpServletRequest req, Model model) {
 		model.addAttribute("msMktAgreeYn", req.getParameter("msMktAgreeYn"));
 		model.addAttribute("msLoginCd", req.getParameter("msLoginCd"));
-		return "/member/join02";
+		return "/member/memberForm";
 	}
 	
 	/**
@@ -77,9 +82,9 @@ public class MemberController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping("/join03")  
-	public String goJoin03(Model model, HttpServletRequest req) {
-		return "/member/join03";
+	@RequestMapping("/memberAddForm")  
+	public String goMemberAddForm(Model model, HttpServletRequest req) {
+		return "/member/memberAddForm";
 	}
 	
 	/**
@@ -89,18 +94,18 @@ public class MemberController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping("/join04")  
-	public String goJoin04(Model model, HttpServletRequest req) {
-		return "/member/join04";
+	@RequestMapping("/joinComplete")  
+	public String goJoinComplete(Model model, HttpServletRequest req) {
+		return "/member/joinComplete";
 	}
 	
 	@RequestMapping("/checkIdExist")
 	@ResponseBody
-	public Map<String, Object> checkIdExist (@RequestParam(required = false) String msId) {
+	public Map<String, Object> checkIdExist (@RequestParam(required = false) String msId) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		map.put("msId", msId);
 		
-		if (drMsMaininfoService.findDuplicateUser(map) != null) {
+		if (drMsMaininfoService.selectFindUser(map) != null) {
 			map.put("message",  "이미 가입된 아이디입니다.");
 			map.put("result", false);			
 		} else {
@@ -121,7 +126,7 @@ public class MemberController {
 		params.put("msLastPhone1", msPhone[2]);
 				
 		try {
-			if(drMsMaininfoService.findDuplicateUser(params) != null) {				
+			if(drMsMaininfoService.selectFindUser(params) != null) {				
 				map.put("result", false);
 				map.put("message", "이미 가입된 번호입니다.");				
 			} else {
@@ -141,17 +146,27 @@ public class MemberController {
 	 * @param req
 	 * @param drMsMaininfo
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping("/doSignUp")
 	@ResponseBody
-	public Map<String, Object> doSignUp (HttpServletRequest req, HttpSession session, DrMsMaininfo drMsMaininfo){
+	public Map<String, Object> doSignUp (HttpServletRequest req, HttpServletResponse res, HttpSession session, DrMsMaininfo drMsMaininfo) throws Exception{
 		
-		drMsMaininfo.setIpAddr(Globals.serverIpAddress);
 		Map<String, Object> map = new HashMap<String, Object>();
-		log.debug(session.getAttribute("msMember").toString());
+		drMsMaininfo.setIpAddr(Globals.serverIpAddress);
+		log.debug(String.valueOf(session.getAttribute("msMember")));
+		
+		if(drMsMaininfo.getMsLoginCd() != "APP") {
+			map.put("msId", drMsMaininfo.getMsId());
+			if(drMsMaininfoService.selectMsNum(map) != null) {				
+				map.put("result",  false);
+				map.put("message", "이미 소셜 아이디로 가입된 회원입니다.");
+				return map;
+			}
+		}
 		try {
 			drMsMaininfoService.insertDrMsMaininfo(drMsMaininfo);
-			this.loginUserInfo(session, Utils.changeVotoMap(drMsMaininfo));
+			drMsMaininfoService.loginUserInfo(req, res, session, Utils.changeVotoMap(drMsMaininfo));
 			
 			map.put("result",  true);
 			map.put("userInfo",  drMsMaininfo);
@@ -175,31 +190,32 @@ public class MemberController {
      */
     @RequestMapping(value = "/doLogin")
     @ResponseBody
-    public String doLogin (HttpServletRequest req, HttpSession session
+    public Map<String, Object> doLogin (HttpServletRequest req, HttpServletResponse res, HttpSession session
     		, @RequestParam Map<String, Object> params) throws JsonProcessingException {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		params.put("ipAddr", Globals.serverIpAddress);
+		params.put("msLoginCd", "APP");
 
     	try {
-    		DrMsMaininfo userInfo = drMsMaininfoService.loginUser(params);    		
+    		DrMsMaininfo userInfo = drMsMaininfoService.selectLoginUser(params);    		
     		if(userInfo == null) {
     			// 유저 정보 불일치
-        		map.put("resultCode",  "100");
+        		map.put("result",  false);
+        		map.put("message",  "해당하는 사용자 정보가 없습니다.");
     		} else {
-    			this.loginUserInfo(session, params);        		
-        		map.put("resultCode",  "200");
+    			drMsMaininfoService.loginUserInfo(req, res, session, params);  
+    			  		
+    			map.put("result",  true);
         		map.put("userInfo",  userInfo);
         		
     		}
     	} catch (Exception e) {
-    		log.debug(e.getMessage());
-    		map.put("resultCode",  "999");
-			map.put("message", "오류가 발생하였습니다.");
+    		map.put("result",  false);
+    		map.put("message",  "로그인 중 에러가 발생했습니다.");
     	}
     	
-    	ObjectMapper mapper = new ObjectMapper();
-    	return mapper.writeValueAsString(map);
+    	return map;
     }
     
     /**
@@ -212,75 +228,30 @@ public class MemberController {
      */
     @RequestMapping(value = "/doLoginForSocial")
     @ResponseBody
-    public Map<String, Object> doLoginForSocial (HttpServletRequest req , HttpSession session
+    public Map<String, Object> doLoginForSocial (HttpServletRequest req, HttpServletResponse res, HttpSession session
     		, @RequestParam Map<String, Object> params) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
     	try {
     		params.put("ipAddr", Globals.serverIpAddress);
     		
-    		if(drMsMaininfoService.findDuplicateUser(params) == null) {
+    		if(drMsMaininfoService.selectFindUser(params) == null) {
     			// 최초가입 -> 간편회원가입 페이지로 이동
     			session.setAttribute("joinInfo", params);
     			session.setAttribute("msLoginCd", params.get("msLoginCd"));
         		session.setMaxInactiveInterval(30 * 60);
         		
-        		map.put("resultCode",  "100");
+        		map.put("resultCode",  "1000");
 				return map;
 				
     		} else {
     			// 기존가입 -> 로그인처리
-    			this.loginUserInfo(session, params);  
-
-        		//로그인 log - USER_LOGIN_LOG 테이블 ?
-        
-        		/*
-        		String app = (String) session.getAttribute("app");
-        		String platform = null;
-        		String ua = null;
-
-        		if(params.get("ua") != null) {
-					ua = params.get("ua").toString();
-				}else {
-					ua = request.getHeader("user-agent");
-					if (ua.indexOf("Android") != -1) {
-						ua = "Android";
-					} else if( ua.indexOf("iPad") != -1 || ua.indexOf("iPhone") != -1 || ua.indexOf("iOS") != -1 || ua.indexOf("MAC") != -1 ) {
-						ua = "iPhone";
-					} else if( ua.indexOf("Windows") != -1) {
-						ua = "windows";
-					} else {
-						ua = request.getHeader("user-agent");
-					}
-				}
-        		
-				if(app != null) {
-					platform = "APP";
-				}else if (ua.indexOf("iPhone") != -1 || ua.indexOf("iPad") != -1 ||
-				   ua.indexOf("Android") != -1  || ua.indexOf("BlackBerry") != -1  ||
-				   ua.indexOf("sony") != -1  || ua.indexOf("Mobile") != -1 ) {
-					  platform = "MOBILE";
-				}else {
-					platform = "PC";
-				}
-
-				params.put("msNum", msNum);
-				params.put("platform", platform);
-				params.put("userAgent", ua);
-				params.put("loginAuto", "N");
-				if (sessionVO !=null) {
-					params.put("inputStaff", sessionVO.getMsId());
-				}
-				params.put("ipAddr", Utils.getClientIpAddress(request));
-
-				commonService.loginLog(params);*/
-        		
-
-    			map.put("resultCode",  "200");
+    			drMsMaininfoService.loginUserInfo(req, res, session, params);
+    			map.put("resultCode",  "0000");
     		}
     	} catch (Exception e) {
     		log.debug(e.getMessage());
-    		map.put("resultCode",  "999");
+    		map.put("resultCode",  "9999");
 			map.put("message", "오류가 발생하였습니다.");
     	}
     	
@@ -309,39 +280,48 @@ public class MemberController {
      */
     @RequestMapping(value = "/succKakaoLogin")
     public String oauthKakao(@RequestParam(value = "code", required = false) String code, HttpServletRequest req, Model model) throws Exception {
-            try {
-            	String access_Token = KakaoRestAPI.getAccessToken(code);
-            	HashMap<String, Object> joinInfo = KakaoRestAPI.getKakaoUserInfo(access_Token);
-            	model.addAttribute("joinInfo", joinInfo);               
-            } catch(Exception e) {
-            	log.debug(e.getMessage());
-            	model.addAttribute("errorMessage", "카카오 가입 정보를 불러올 수 없습니다.");  
-            }
-            return "/member/succKakaoLogin"; 
+        try {
+        	String access_Token = KakaoRestAPI.getAccessToken(code);
+        	HashMap<String, Object> joinInfo = KakaoRestAPI.getKakaoUserInfo(access_Token);
+        	model.addAttribute("joinInfo", joinInfo);               
+        } catch(Exception e) {
+        	log.debug(e.getMessage());
+        	model.addAttribute("message", "카카오 가입 정보를 불러올 수 없습니다.");  
+        }
+        return "/member/succKakaoLogin"; 
     }
     
-	public void loginUserInfo(HttpSession session, Map<String, Object> params) {
-		String msNum = drMsMaininfoService.selectMsNum(params);
-		params.put("msNum", msNum);
-		SessionVO sessionVO = drMsMaininfoService.selectMsSession(params);			
-		session.setAttribute("msMember", sessionVO);
-		session.setMaxInactiveInterval(30 * 60);
+	@RequestMapping("/memberModify")  
+	public String goMemberModify(Model model, HttpServletRequest req) {
+		return "/member/memberModify";
+	}	
+	
+	@RequestMapping("/saveMemberModify")
+	@ResponseBody
+	public Map<String, Object> saveMemberModify(HttpSession session, @RequestParam Map<String, Object> params) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		SessionVO member = new SessionVO();
 		
-		// 로그인 시간 기록 (아직)
-		//자동 로그인 (아직)
-		//로그인 log (아직)		
-	}
-    
-    @RequestMapping(value = "/doLogout")
-    @ResponseBody
-    public Map<String, Object> doLogout (HttpServletRequest req, HttpSession session){
-    	Map<String, Object> map = new HashMap<String, Object>();
-
-		session.removeAttribute("msMember");
-		
-		map.put("result", true);
+		try {
+			if(params.containsKey("newMsPassword")) {
+				DrMsMaininfo userInfo = drMsMaininfoService.selectLoginUser(params);    		
+				if(userInfo == null) {
+					// 유저 정보 불일치
+		    		map.put("result",  false);
+		    		map.put("message",  "비밀번호가 일치하지 않습니다.");
+		    		return map;
+				}
+			}
+			member = drMsMaininfoService.updateDrMsMaininfo(params);
+    		session.setAttribute("msMember", member);
+			map.put("result", true);
+    	} catch (Exception e) {
+    		map.put("result", false);
+    		map.put("message", "수정 중 오류가 발생했습니다.");
+    	}
 		return map;
-    }
+	}	
+	
 	
 	/**
 	 * 회원추가정보 등록
@@ -350,6 +330,7 @@ public class MemberController {
 	 * @param drMsBasic
 	 * @return
 	 */
+	
 	@RequestMapping("/insertBasicInfo")
 	@ResponseBody
 	public Map<String, Object> insertBasicInfo(HttpServletRequest req, DrMsBasic drMsBasic){
@@ -392,4 +373,119 @@ public class MemberController {
 		
 		return map; 
 	}    
+	
+	/**
+	 * 아이디/비밀번호 찾기
+	 * 
+	 * @param model
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("/find")  
+	public String goFind(Model model, HttpServletRequest req) {
+		return "/member/find";
+	}
+	
+	@RequestMapping(value = "/doFindId")
+	public void doFindId(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+			@RequestParam Map<String, Object> params) {
+			ResultVO result = new ResultVO();
+
+		try {
+			DrMsMaininfo drMsMaininfo = drMsMaininfoService.selectFindUser(params);
+
+			if (drMsMaininfo == null) {
+				throw new Exception("등록 된 아이디가 없습니다.");
+			}
+			
+			if(drMsMaininfo.getMsLoginCd().equals("KAKAO")) {
+				throw new Exception("KAKAO 간편 로그인 회원 가입자입니다. 간편로그인으로 로그인 부탁드립니다.");
+			}
+
+			if(drMsMaininfo.getMsLoginCd().equals("NAVER")) {
+				throw new Exception("NAVER 간편 로그인 회원 가입자입니다. 간편로그인으로 로그인 부탁드립니다.");
+			}
+			params.put("ipAddr", Utils.getClientIpAddress(request));
+			params.put("tplCd", Utils.getProperties("Globals.findId.tplCd", "00001"));
+			params.put("msId", drMsMaininfo.getMsId());
+
+			// commonService.sendSms(params); (나중)
+		} catch (Exception e) {
+			result.setCode("9999");
+			result.setMessage(e.getMessage());
+		} finally {
+			// 실패(9999) 또는 기본(0000)를 보냄
+			Utils.sendData(response, Utils.makeJsonString(result));
+		}
+	}
+
+	@RequestMapping(value = "/doFindPw")
+	public void doFindPw(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+			@RequestParam Map<String, Object> params) {
+		ResultVO result = new ResultVO();
+
+		try {
+			DrMsMaininfo drMsMaininfo = drMsMaininfoService.selectFindUser(params);
+
+			if (drMsMaininfo == null) {
+				throw new Exception("등록 된 정보가 없습니다.");
+			}
+
+			StringBuffer newMsPassword = new StringBuffer();
+			Random rnd = new Random();
+			for (int i = 0; i < 6; i++) {
+				int rIndex = rnd.nextInt(2);
+				switch (rIndex) {
+				case 0:
+					newMsPassword.append((char) ((int) (rnd.nextInt(26)) + 97));
+					break;
+				case 1:
+					newMsPassword.append((rnd.nextInt(10)));
+					break;
+				}
+			}
+
+			params.put("msNum", drMsMaininfo.getMsNum());
+			params.put("newMsPassword", newMsPassword.toString());
+
+			drMsMaininfoService.updatePw(params);
+
+			params.put("ipAddr", Utils.getClientIpAddress(request));
+			params.put("tplCd", Utils.getProperties("Globals.findPw.tplCd", "00001"));
+			params.put("msPhone", (params.get("msPhone")).toString().replace("-", ""));
+			params.put("msPassword", newMsPassword);
+			
+			// commonService.sendSms(params); (나중)
+		} catch (Exception e) {
+			result.setCode("9999");
+			result.setMessage(e.getMessage());
+		} finally {
+			Utils.sendData(response, Utils.makeJsonString(result));
+		}
+	}
+
+	/*@RequestMapping(value = "/checkPhoneNumber")
+	public void checkPhoneNumber(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+			@RequestParam Map<String, Object> params) {
+		ResultVO result = new ResultVO();
+
+		try {
+			if(drMsMaininfoService.selectPhoneNumber(params) > 0) {
+				params.put("mergeYn", "Y");
+				if(drMsMaininfoService.selectPhoneNumber(params) > 0) {
+					result.setCode("1000");
+	        		result.setMessage("이미 가입된 핸드폰번호 입니다.");
+    			}else {
+    				result.setCode("2000");
+    				result.setMessage("이미 가입한 이력이 있습니다. 통합회원으로 새로 가입하시겠습니까?");
+    			}
+			}
+		} catch (Exception e) {
+			result.setCode("9999");
+			result.setMessage(e.getMessage());
+		} finally {
+			Utils.sendData(response, Utils.makeJsonString(result));
+		}
+	}
+	*/
 }

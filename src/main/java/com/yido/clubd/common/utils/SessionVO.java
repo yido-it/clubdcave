@@ -11,6 +11,8 @@ public class SessionVO {
 	private String msDivision;			// 프로/회원 구분
 	private String msLevel; 			// 회원 등급
 	private String msLoginCd; 			// 로그인구분
+	private String msSessionKey;
+	private String msSessionLimit;
 	private String msLink; 				// 가족회원연결번호
 	private String msId;				// 회원ID
 	private String msPassword;			// 패스워드

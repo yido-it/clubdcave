@@ -16,13 +16,14 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class DrMsMaininfo {
-
 	private String msNum;				// 회원정보 
 	private String msStatus;			// 상태	
 	private String msBkGrant;			// 예약가능여부(위약 관련)
 	private String msDivision;			// 프로/회원 구분
 	private String msLevel; 			// 회원 등급
 	private String msLoginCd; 			// 로그인구분
+	private String msSessionKey;		// 세션키
+	private String msSessionLimit;		// 세션만료시간
 	private String msLink; 				// 가족회원연결번호
 	private String msId;				// 회원ID
 	private String msPassword;			// 패스워드
@@ -64,25 +65,23 @@ public class DrMsMaininfo {
 	private String msMktAgreeYn; 		// 마케팅동의여부(약관동의)
 	private String msDormant; 			// 휴면계정구분
 	private String loginTime;			// 홈페이지로그인(일시분초)
-	private String msDi; 				// 실명인증
-	private String inputStaff; 			// 입력사번
+	
+	private String msDi; 												// 실명인증
+	private String inputStaff; 											// 입력사번
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime inputDatetime;								// 입력일시
+	private String inputIp;												// 입력IP
+	
+	private String updateStaff; 										// 수정사번
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime updateDatetime;								// 수정일시
+	private String updateIp; 											// 수정IP
 	
 	private String msPhone; 			// 핸드폰번호(full)
 	public String ipAddr;
-
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime inputDatetime;	// 입력일시
 	
-	private String inputIp;				// 입력IP
-	private String updateStaff; 		// 수정사번
-
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime updateDatetime;	// 수정일시
-	
-	private String updateIp; 			// 수정IP
-		
 	public String getFullMsPhone() {
 		return this.msFirstPhone1 + this.msMidPhone1 + this.msLastPhone1;
 	}	

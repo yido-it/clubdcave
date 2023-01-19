@@ -15,10 +15,15 @@ import lombok.EqualsAndHashCode;
 public class ProNotice {
 
 	private String msNum;		// 회원번호
+	private String msImagename;
+	private String msName;
 	private String noticeDiv;	// 비고 종류(경력, 레슨계획, 유투브채널,..)
 	private String proMustYn;	// 필수 입력 여부
 	private String proRemark;	// 비고 사항
 	private String noticeOpenYn; // 공개 여부
+	
+	private String msImgName;
+	private String msImgData;
 }
 
 
