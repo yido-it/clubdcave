@@ -5,18 +5,19 @@
 	
 	<!-- 상단 로그인 버튼 -->
 	<div class="text-center pt-4 notch-clear">
-		<h1 class="text-uppercase font-800"><span class="color-highlight font-800">클럽디 </span>청담</h1>
+		<a href="javascript:location.href='/main'"><h1 class="text-uppercase font-800"><span class="color-highlight font-800">클럽디 </span>청담</h1></a>
 	
 		<c:if test="${empty sessionScope.msMember.msId}">
 			<!-- 비로그인 상태 -->
 			<div class="row mb-0" style="margin:0 auto">
 				<div class="col-6 pr-1">
-					<a href="/login" class="btn btn-border btn-m btn-full mb-3 rounded-sm text-uppercase font-900 border-blue-dark color-blue-dark bg-theme">
+					<a href="javascript:location.href='login'" class="btn btn-border btn-m btn-full mb-3 rounded-sm text-uppercase font-900 border-blue-dark color-blue-dark bg-theme">
 					로그인
 					</a>
 				</div>
 				<div class="col-6  pr-2">
-					<a href="agree.html" class="btn btn-border btn-m btn-full mb-3 rounded-sm text-uppercase font-900 border-green-dark color-green-dark bg-theme">
+					<a href="javascript:location.href='/member/agree?msLoginCd=APP'" 
+						class="btn btn-border btn-m btn-full mb-3 rounded-sm text-uppercase font-900 border-green-dark color-green-dark bg-theme">
 					회원가입
 					</a>
 				</div>
@@ -46,7 +47,7 @@
 			<i class="fa fa-map-location-dot color-blue-dark"></i>오시는길<i class="fa fa-angle-right"></i>
 		</a>
 		
-		<a href="pro.html" id="nav-navigation">
+		<a href="javascript:location.href='/pro/proMain'" id="nav-navigation">
 			<i class="fa fa-user color-magenta-dark"></i>프로정보<i class="fa fa-angle-right"></i>
 		</a>
 		
@@ -65,7 +66,7 @@
 			<i class="fa fa-ticket color-red-dark"></i>이용권<i class="fa fa-angle-right"></i>
 		</a>
 		
-		<a href="mypage.html" id="nav-templates">
+		<a href="javascript:location.href='member/memberModify'" id="nav-templates">
 			<i class="fa fa-pen color-brown-dark"></i>정보수정<i class="fa fa-angle-right"></i>
 		</a>
 		
@@ -75,7 +76,7 @@
 	
 		<c:if test="${!empty sessionScope.msMember.msId}">
 			<!-- 로그인 상태 일때-->
-			<a href="/member/doLogout" class="">
+			<a href="#" class="" id="btnLogout">
 				<i class="fa fa-right-to-bracket color-red-dark"></i>로그아웃<i class="fa fa-angle-right"></i>
 			</a>
 		</c:if>	
@@ -106,3 +107,12 @@
 <div id="menu-colors" data-menu-load="menu-colors.html" data-menu-effect="menu-parallax" class="menu menu-box-right"  data-menu-width="75"></div>   
 <div id="menu-share"  data-menu-load="menu-share.html"  data-menu-effect="menu-parallax" class="menu menu-box-bottom" data-menu-height="323"></div>   
 -->
+
+<script type="text/javascript">
+	$('#btnLogout').on('click', function() {
+		if(confirm('로그아웃 하시겠습니까?')) {
+			location.href = '/succ-logout';
+		}
+	})
+</script>
+
