@@ -211,7 +211,9 @@ h1 .badge, h2 .badge, h3 .badge, h4 .badge, h5 .badge {
 }
 
 .bg-highlight {
-  background-color: #4A89DC !important;
+  /* background-color: #4A89DC !important; */
+  /* 네이버 로그인 버튼 - 230118 YMS */
+  background-color: #00c63b !important;
   color: #FFF !important;
 }
 

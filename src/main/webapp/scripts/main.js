@@ -34,12 +34,12 @@
   var nav = $('nav');
   var navHeight = nav.outerHeight();
 
-  /*--/ ScrollReveal /Easy scroll animations for web and mobile browsers /--*/
+  /*--/ ScrollReveal /Easy scroll animations for web and mobile browsers /--
   window.sr = ScrollReveal();
   sr.reveal('.foo', {
     duration: 1000,
     delay: 15
-  });
+  });*/
 
   /*--/ Carousel owl /--*/
   $('#carousel').owlCarousel({
@@ -265,7 +265,6 @@ function randomNum(){
 
     return randomNum;
 }
-
 
 function chkInputVal (id) {
 	var str = $('#' + id).data('name');

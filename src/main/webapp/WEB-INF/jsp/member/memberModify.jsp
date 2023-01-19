@@ -6,15 +6,18 @@
 <jsp:include page="../common/script.jsp" />
 <head>
 </head>
-<body>
-	회원가입 기본정보 입력  
+<body>회원정보 수정
+	<button type="button" onclick="javascript:location.href='memberAddForm'">추가정보 확인</button>
+	<button type="button" onclick="javascript:location.href='deleteMember'">회원탈퇴</button>
 	<form id="frmMember" name="frmMember">
 		<div class="mt-2">
-			<input type="text" class="app" id="msId" name="msId" placeholder="아이디" data-name="아이디"/>
-			<button type="button" class="btn btn-dark" id="idExist">중복확인</button>
+			<input type="text" class="app" id="msId" name="msId" placeholder="아이디" data-name="아이디" value="${sessionScope.msMember.msId}" readonly/>
 		</div>	
 		<div class="mt-2">
-			<input type="password" class="app" id="msPassword" name="msPassword" placeholder="비밀번호" data-name="비밀번호"/>
+			<input type="password" class="app" id="msPassword" name="msPassword" placeholder="현재 비밀번호" data-name="현재 비밀번호"/>
+		</div>
+		<div class="mt-2">
+			<input type="password" class="app" id="newMsPassword" name="newMsPassword" placeholder="변경할 비밀번호" data-name="변경할 비밀번호"/>
 		</div>
 		<div id="pwdMsg1"></div>
 		<div class="mt-2">
@@ -22,10 +25,10 @@
 		</div>
 		<div id="pwdMsg2"></div>
 		<div class="mt-2">
-			<input type="text" class="all" id="msName" name="msName" placeholder="이름" data-name="이름"/>
+			<input type="text" class="all" id="msName" name="msName" placeholder="이름" data-name="이름" value="${sessionScope.msMember.msName}" />
 		</div>
 		<div class="mt-2">
-			<input type="text" class="all" id="msPhone" name="msPhone" placeholder="핸드폰번호" data-name="핸드폰번호"/>
+			<input type="text" class="all" id="msPhone" name="msPhone" placeholder="핸드폰번호" data-name="핸드폰번호" value="" />
 			<button type="button" class="btn btn-dark" id="sendCode">인증요청</button>
 		</div>
 		<div class="mt-2">
@@ -35,92 +38,53 @@
 		<div class="mt-2">
 			<input type="hidden" id="hiddenCode" name="hiddenCode"/>
 		</div>
+				<div class="mt-2">
+			<input type="hidden" id="msNum" name="msNum" value="${sessionScope.msMember.msNum}"/>
+		</div>
 		<div class="mt-2">
 			<input type="checkbox" id="chkSmsYn"/> SMS 수신에 동의합니다
-			<input type="hidden" id="smsChk1" name="smsChk1"/>
+			<input type="hidden" id="smsChk1" name="smsChk1" value="${sessionScope.msMember.smsChk1}"/>
 		</div>
 		<div class="mt-2">
-			<input type="hidden" id="msMktAgreeYn" name="msMktAgreeYn" value='${msMktAgreeYn}'/>
-		</div>
-		<div class="mt-2">
-			<input type="hidden" id="msEmail" name="msEmail"/>
-		</div>
-		<div class="mt-2">
-			<input type="text" id="msLoginCd" name="msLoginCd" value="${msLoginCd}"/>
+			<input type="hidden" id="msLoginCd" name="msLoginCd" value="${sessionScope.msMember.msLoginCd}"/>
 		</div>
 		<div class="mt-3">
-			<button type="button" class="btn btn-dark" id="signUp">가입하기</button>
+			<button type="button" class="btn btn-dark" id="saveMember">저장</button>
 		</div>		
 	</form>
 	
 	<script>
-		var checkId = false; // 아이디 중복 여부
 		var checkVerify = false; // 인증 완료 여부
 		var idReg = /^(?=.*[a-z0-9])[a-z0-9]{3,16}$/;
 		var pwdReg = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 		
 		var msLoginCd = $('#msLoginCd').val();
-		var msId = "<c:out value='${sessionScope.joinInfo.msId}'/>";
-		var msName = "<c:out value='${sessionScope.joinInfo.msName}'/>";
-		var msEmail = "<c:out value='${sessionScope.joinInfo.msEmail}'/>";
+		var msName = "${sessionScope.msMember.msName}";
+		var msPhone = "${sessionScope.msMember.msFirstPhone1}" + "-" + "${sessionScope.msMember.msMidPhone1}" + "-" + "${sessionScope.msMember.msLastPhone1}";
+		var smsChk1 = "${sessionScope.msMember.smsChk1}";
+		$('#msPhone').val(msPhone);
 		
-		if(msLoginCd == 'APP') {			
-			$('#msId').val('');
-			$('#msName').val('');			
-			$('#msEmail').val('');	
+		
+		if(msLoginCd == 'APP') {	
 			$('.app').show();
-		} else {			
-			$('#msId').val(msId);
-			$('#msName').val(msName);			
-			$('#msEmail').val(msEmail);			
+		} else {				
 			$('.app').hide();
 		}
 		
-		$('#chkSmsYn').on('change', function () {
-			if($('#chkSmsYn').is(':checked')) {
-				$('#smsChk1').val('Y');
-			} else {
-				$('#smsChk1').val('N');
-			}
-		})
-		
-		$('#idExist').on('click', function() {
-			if (!chkInputVal ('msId')) return;
-			if(!$('#msId').val().match(idReg)) {
-				alert('3~16자의 영문/숫자 조합으로 입력해주세요.');
-				return;
-			}
-			$.ajax({
-		        url: "/member/checkIdExist",
-		        type: "post",
-		        dataType: 'json',
-		        data: {msId : $('#msId').val()},
-		        contentType: 'application/x-www-form-urlencoded; charset=UTF-8', 
-		        success: function(data) {    	
-		            if(data.result == true){
-		            	alert('사용 가능한 아이디입니다.');
-		            	$('#msId').prop('readonly', true);
-		            	checkId = true;
-		            } else {
-		                alert('이미 가입된 아이디입니다.');
-		                checkId = false;
-		            }                
-		        },
-		        error: function(data) {
-		           alert('중복확인 중 오류가 발생하였습니다.');
-		        }
-		    });
-		})
-		
-		
-		$('#msPassword').on('keyup', function() {
+		if($('#smsChk1').val() == 'Y') {
+			$('#chkSmsYn').prop("checked", true);
+		} else {
+			$('#chkSmsYn').prop("checked", false);			
+		}
+			
+		$('#newMsPassword').on('keyup', function() {
 			if(!$('#msPassword').val().match(pwdReg)) {
 				$('#pwdMsg1').html('8자 이상의 특수문자 한개 이상을 포함한 영어 및 숫자 조합으로 입력해주세요.');
 			} else {
 				$('#pwdMsg1').html('');
 			}
 		})
-		
+				
 		$('#msPasswordChk').on('keyup', function() {
 			if($('#msPassword').val() != $('#msPasswordChk').val()) {
 				$('#pwdMsg2').html('비밀번호 확인이 일치하지 않습니다.');				
@@ -162,7 +126,7 @@
 		
 		$('#verifyChk').on('click', function () {
 			if (!chkInputVal ('verifyCode')) return;
-			if($('verifyCode').val != $('hiddenCode').val) {
+			if($('verifyCode').val() != $('hiddenCode').val()) {
 				alert('입력하신 인증번호가 일치하지 않습니다.');
 				return;
 			} else {
@@ -176,60 +140,85 @@
 		$('#msPhone').on('keyup', function() {
 			var msPhone = $('#msPhone').val();
 			$('#msPhone').val(msPhone.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`));
+		})		
+		
+		$('#chkSmsYn').on('change', function () {
+			if($('#chkSmsYn').is(':checked')) {
+				$('#smsChk1').val('Y');
+			} else {
+				$('#smsChk1').val('N');
+			}
 		})
 		
-		$('#signUp').on('click', function() {
+		$('#saveMember').on('click', function() {
+			
 			var result = true;
-			if(msLoginCd == 'APP') {				
-				$('.app, .all').each(function() {
-					if (!chkInputVal(this.id)) {
-						result = false;
-						return false;
-					}				
-				})
-			} else {
-				$('.all').each(function() {
-					if (!chkInputVal(this.id)) {
-						result = false;
-						return false;
-					}				
-				})
+			var params = {
+					  msId : $('#msId').val()
+					, msNum : $('#msNum').val()
+			};
+			
+			if($('#newMsPassword').val().replace(' ', '') != "") {
+				alert($('#newMsPassword').val());
+				if(!chkInputVal('msPassword')) {
+					result = false;
+					return;
+				}
+				if($('#newMsPassword').val() != $('#msPasswordChk').val()) {
+					alert('비밀번호 확인이 일치하지 않습니다.');
+					result = false;
+					return;
+				}
+				params.msPassword = $('#msPassword').val();
+				params.newMsPassword = $('#newMsPassword').val();
 			}
 			if (!result) return;
 			
-			if(msLoginCd == 'APP' && !checkId) {
-				alert('아이디 중복확인을 해주세요.');
-				return;
+			if($('#msName').val() != msName) {
+				params.msName = $('#msName').val(); 
 			}
-			/* if(!checkVerify) {
-				alert('본인인증이 완료되지 않았습니다.');
-				return;
-			} */
-			if(msLoginCd == 'APP' && $('#msPassword').val() != $('#msPasswordChk').val()) {
-				alert('비밀번호가 일치하지 않습니다.');
-				return;
-			}
-			doSignUp();
+			if($('#msPhone').val() != msPhone) {
+				alert($('#msPhone').val());
+				alert(msPhone);
+				if(!checkVerify) {
+					alert('본인인증이 완료되지 않았습니다.');
+					result = false;
+					return;
+				} 					
+				params.msPhone = $('#msPhone').val(); 
+			}						
+			if (!result) return;
 			
+			if($('#smsChk1').val() != smsChk1) {
+				params.smsChk1 = $('#smsChk1').val(); 
+			}
+			
+			if(Object.keys(params).length == 2) {
+				alert('수정된 내용이 없습니다.');
+				return;
+			}
+			
+			console.log(params);
+			saveMemberModify(params);
 		})
 		
-		function doSignUp() {
+		function saveMemberModify(params) {
 		    $.ajax({
-		        url: "/member/doSignUp",
+		        url: "/member/saveMemberModify",
 		        type: "post",
 		        dataType: 'json',
-		        data: $('#frmMember').serialize(),
+		        data: params,
 		        contentType: 'application/x-www-form-urlencoded; charset=UTF-8', 
 		        success: function(data) {		    	
 		            if(data.result){
-		            	alert('가입이 완료되었습니다.');
-						location.href="/member/join03";
+		            	alert('수정이 완료되었습니다.');
+						location.reload();
 		            } else {
 		                alert(data.message);                    
 		            }                
 		        },
 		        error: function(data) {
-		           alert('[error] 가입중 오류가 발생하였습니다.');
+		        	alert('[error] 오류가 발생했습니다.');
 		        }
 		    });
 		

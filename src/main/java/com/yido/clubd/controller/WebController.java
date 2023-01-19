@@ -32,45 +32,45 @@ public class WebController {
 	 * @return
 	 */
 	@RequestMapping("/main")
-	public String index(Model model, HttpServletRequest request) {
+	public String index(Model model, HttpServletRequest req) {
 		return "/index";
 	}
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(@RequestParam(required = false) String error, HttpServletRequest request, Model model) throws IOException {
+    public String login(@RequestParam(required = false) String error, HttpServletRequest req, Model model) throws IOException {
      
-        String referrer = request.getHeader("Referer");
+        String referrer = req.getHeader("Referer");
 		log.debug("referrer - {}", referrer);
 	
-        Cookie[] cs = request.getCookies();
-    	if(cs != null) {
-    		for(Cookie c : cs) {
-    			model.addAttribute(c.getName(), c.getValue());
+        Cookie[] cookies = req.getCookies();
+    	if(cookies != null) {
+    		for(Cookie cookie : cookies) {
+    			model.addAttribute(cookie.getName(), cookie.getValue());
         	}
     	}
 
-        log.debug("ip1 - {}", request.getRemoteAddr());
+        log.debug("ip1 - {}", req.getRemoteAddr());
         return "/member/login";
     }
     
     @RequestMapping("/succ-logout")
-	public String successLogout(Model model, Principal principal, HttpServletRequest request, HttpServletResponse response) {
+	public String successLogout(Model model, Principal principal, HttpServletRequest req, HttpServletResponse res) {
 
 		//세션 invalidate
-		request.getSession().invalidate();
+    	req.getSession().invalidate();
 		
 		//delete cookie
-		Cookie[] cs = request.getCookies();
-    	if(cs != null) {
-    		for(Cookie c : cs) {
-    			System.out.println("delete cookie = " + c.getName());
-    			c.setMaxAge(0);
-    			c.setValue(null);
-    			response.addCookie(c);    			
+		Cookie[] cookies = req.getCookies();
+    	if(cookies != null) {
+    		for(Cookie cookie : cookies) {
+    			System.out.println("delete cookie = " + cookie.getName());
+    			cookie.setMaxAge(0);
+    			cookie.setValue(null);
+    			res.addCookie(cookie);    			
         	}
-    	}    	
+    	}
     	
-    	return "/member/login";
+    	return "/index";
 	}
 
 }

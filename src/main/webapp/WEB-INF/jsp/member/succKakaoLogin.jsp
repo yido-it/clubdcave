@@ -9,8 +9,8 @@
 	<script type="text/javascript">
 		
 		$(document).ready(function(){			
-			if('${errorMessage}' != ''){
-		        alert('${errorMessage}');
+			if('${message}' != ''){
+		        alert('${message}');
 		        history.back();
 			}
 		});
@@ -43,10 +43,10 @@
 			// progressStart();
 			
 			mAjax(sUrl, sParams, function(data) {
-				if(data.resultCode == "100") {
+				if(data.resultCode == "1000") {
 					// 가입된 정보 없다면, 간편회원가입으로 이동 
-					location.href = "<c:url value='/member/join01?msLoginCd=" + type + "'/>";
-				} else if(data.resultCode == "200") {
+					location.href = "<c:url value='/member/join?msLoginCd=" + type + "'/>";
+				} else if(data.resultCode == "0000") {
 					// 로그인 성공시 메인으로 이동
 					location.href = "<c:url value='/main'/>";
 				} else {

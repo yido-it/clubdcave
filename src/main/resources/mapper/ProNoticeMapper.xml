@@ -32,4 +32,29 @@
 		   AND NOTICE_DIV 		= #{noticeDiv}
 	</update>
 	
+	<select id="selectProNoticeList" resultType="ProNotice">
+		SELECT
+			  M.MS_NUM
+			, MS_IMAGENAME
+		    , MS_NAME
+		    , NOTICE_DIV
+		    , PRO_MUST_YN
+		    , PRO_REMARK
+		    , NOTICE_OPEN_YN
+	    FROM PRO_NOTICE N
+	    RIGHT OUTER JOIN DR_MS_MAININFO M ON N.MS_NUM = M.MS_NUM
+	    WHERE 1 = 1
+			AND M.MS_NUM = ${msNum}
+	        AND IFNULL(NULLIF(M.MS_BLANK,''),'N') = 'N';		    
+	</select>
+	<select id="selectProImageList" resultType="ProNotice">
+		SELECT
+			  MS_NUM
+			, MS_IMG_NAME
+			, MS_IMG_DATA
+	    FROM DR_MS_PICTURE		
+	    WHERE 1 = 1
+			AND MS_NUM = ${msNum}	    
+	</select>
+	
 </mapper>

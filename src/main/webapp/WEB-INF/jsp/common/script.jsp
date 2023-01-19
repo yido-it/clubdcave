@@ -10,9 +10,9 @@
 
 <script type="text/javascript" src="/scripts/jquery.js"></script>
 <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
-<script type="text/javascript" src="/scripts/custom.js"></script>
 <script type="text/javascript" src="/scripts/main.js"></script>
-
+<script type="text/javascript" src="/scripts/custom.js"></script>
+<script type="text/javascript" src="/scripts/custom2.js"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script type="text/javascript" src="<%=Globals.serviceJs%>" ></script>

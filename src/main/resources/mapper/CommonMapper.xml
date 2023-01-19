@@ -16,66 +16,12 @@
 		   AND CD_USEYN = 'Y'
 	</select>
 
-	<select id="doFindId" parameterType="hashmap" resultType="hashmap">
-		SELECT M.MS_ID msId
-		       ,IFNULL(NULLIF(D.MS_LOGIN_CD,''),'LOCAL') msLoginCd
-		  FROM MS_MAININFO M
-		 INNER JOIN CO_PLACE P
-		    ON P.CO_DIV = #{coDiv}
-		   AND M.MS_CODIV_BRAND = P.CO_BRAND_GU
-		 INNER JOIN MS_MAININFO_DETAIL D
-		    ON M.MS_NUM = D.MS_NUM
-		 WHERE M.MS_NAME = #{name}
-		   AND NVL(M.MS_BLANK, 'N') = 'N'
-		   AND CONCAT(M.MS_FIRST_PHONE1, AES_DECRYPT(UNHEX(M.MS_MID_PHONE1), 'JBOG'), M.MS_LAST_PHONE1 ) = #{phone}
-		 LIMIT 1
-	</select>
-
-	<select id="doFindPw" parameterType="hashmap" resultType="hashmap">
-		SELECT M.MS_NUM
-			 , CONCAT(M.MS_FIRST_PHONE1, AES_DECRYPT(UNHEX(M.MS_MID_PHONE1), 'JBOG'), M.MS_LAST_PHONE1 ) AS PHONE
-		  FROM MS_MAININFO M
-		 INNER JOIN CO_PLACE P
-		    ON P.CO_DIV = #{coDiv}
-		   AND M.MS_CODIV_BRAND = P.CO_BRAND_GU
-		 INNER JOIN MS_MAININFO_DETAIL D
-		    ON M.MS_NUM = D.MS_NUM
-		 WHERE M.MS_NAME = #{name}
-		   AND NVL(M.MS_BLANK, 'N') = 'N'
-		   AND M.MS_ID = #{id}
-		   AND IFNULL(D.MS_LOGIN_CD, 'LOCAL') = 'LOCAL'
-		 LIMIT 1
-	</select>
-
-	<select id="checkPhoneNumber" parameterType="hashmap" resultType="int">
-		SELECT COUNT(*)
-		  FROM MS_MAININFO M
-		 INNER JOIN CO_PLACE P
-		    ON P.CO_DIV = #{coDiv}
-		   AND M.MS_CODIV_BRAND = P.CO_BRAND_GU
-		 WHERE CONCAT(M.MS_FIRST_PHONE1, AES_DECRYPT(UNHEX(M.MS_MID_PHONE1), 'JBOG'), M.MS_LAST_PHONE1 ) = #{phone}
-		   AND NVL(M.MS_BLANK, 'N') = 'N'
-		   AND M.MS_MAIN_CODIV <![CDATA[<>]]> '04'
-		   AND M.MS_DIVISION = '21'
-		   AND M.MS_CLASS = '01'
-		   AND M.MS_LEVEL = '00'
-		    <if test="mergeYn != null">
-		   AND M.MS_MERGE_YN = #{mergeYn}
-		   </if>
-	</select>
-
-	<update id="updatePw" parameterType="hashmap">
-		UPDATE MS_MAININFO
-		   SET MS_PASSWORD = SHA2(#{newPw}, 256)
-		 WHERE MS_NUM = #{msNum}
-	</update>
-
 	<select id="sendSms" statementType="CALLABLE" parameterType="hashmap">
 		{ CALL SP_SMS_SEND(
-			  #{coDiv}
+			#{coDiv}
 			<if test="tplCd == null">, ''</if>
 			<if test="tplCd != null">, #{tplCd}</if>
-			, #{phone}
+			, #{msPhone}
 			<if test="sendMsg == null">, (SELECT CONTENT FROM SMS_TEMPLATE WHERE CO_DIV = #{coDiv} AND TPL_CODE = #{tplCd})</if>
 			<if test="sendMsg != null">, #{sendMsg}</if>
 			<if test="bkDay == null">, ''</if>
@@ -96,8 +42,8 @@
 			<if test="msNum != null">, #{msNum}</if>
 			<if test="msId == null">, ''</if>
 			<if test="msId != null">, #{msId}</if>
-			<if test="msPw == null">, ''</if>
-			<if test="msPw != null">, #{msPw}</if>
+			<if test="msPassword == null">, ''</if>
+			<if test="msPassword != null">, #{msPassword}</if>
 			, 'HOMEPAGE'
 			, #{ipAddr}) }
 	</select>

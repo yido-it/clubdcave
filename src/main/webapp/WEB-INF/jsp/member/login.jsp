@@ -1,67 +1,88 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.yido.clubd.common.utils.Globals" %>
-<html>
-
+<jsp:include page="../common/head.jsp" />
 <jsp:include page="../common/script.jsp" />
-<head>
-</head>
-<body>
-	<div class="container-scroller">
-		<div class="container-fluid page-body-wrapper full-page-wrapper">
-			<div class="content-wrapper d-flex align-items-center auth px-0">
-				<div class="row w-100 mx-0">
-					<div class="col-lg-4 mx-auto">
-						<div class="auth-form-light text-left py-5 px-4 px-sm-5">					
-					
-							<form class="pt-3" id="form-login" action="" method="post" novalidate="novalidate">
-								<!-- 아이디 -->
-								<div class="form-group">
-									<input type="text" name="msId" id="msId" class="form-control form-control-lg"  placeholder="아이디" >
-								</div>
-								<!-- 비밀번호 -->
-								<div class="form-group">
-									<input type="password" name="msPassword" id="msPassword" class="form-control form-control-lg" placeholder="비밀번호" >
-								</div>
-								<div class="my-2 d-flex justify-content-between align-items-center">
-									<div class="form-check">
-										<label class="form-check-label text-muted">
-										<input type="checkbox" class="form-check-input" name="chkSaveLogin" id="chkSaveLogin">
-										자동로그인
-										</label>
-									</div>
-								</div>
-								<!-- 로그인 -->
-								<div class="mt-3">
-									<button type="button" class="btn-login" id="btnLogin">로그인</button>
-								</div>								
-								<!-- 회원가입, 아이디/비번찾기 -->
-								<div class="mt-3">
-									<a href="/member/join01?msLoginCd=APP" class="btn-join" id="btnJoin">회원가입</a>
-									<a href="/member/find" class="btn-find" id="btnFind">아이디/비밀번호 찾기</a>
-								</div>								
-								<!-- 카카오 로그인 -->
-								<div id="kakao_id_login" style="display:inline-block;"><img id='kakao_btn_image'/></div>
-								<!-- 네이버 로그인 -->
-						 		<div id="naver_id_login" style="display:inline-block;"></div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script type="text/javascript">
-	
+<style>
+	#naver_id_login_anchor {
+		background-color : '#00c63b !important';
+	}
+</style>
+<body class="is-not-ios theme-light">
+    
+<div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
+<div id="">
+    <div class="header header-fixed header-logo-app header-transparent">
+        <a href="#" class="color-white header-title header-subtitle">로그인</a>
+        <a href="#" data-back-button class="color-white header-icon header-icon-1"><i class="fa fa-arrow-left"></i></a>
+        <a href="#" data-menu="menu-main" class="color-white header-icon header-icon-2"><i class="fas fa-bars"></i></a>
+    </div>
+   	<jsp:include page="../common/menu.jsp" />
+
+    <div class="page-content mb-0 pb-0">            
+
+        <div data-card-height="cover-card" class="card bg-1">
+            <div class="card-center">
+                <div style="width:100%;text-align:center">
+                	<img src="../images/logo_wing.png" class="text-center" style="width:50px;margin-bottom:10px">
+                </div> 
+                <h2 class="font-800 text-center color-white font-40 text-uppercase">Login</h2>
+                <p class="mt-1 text-center color-white color-highlight font-12">클럽디청담 회원로그인</p>
+                <div style="max-width:300px;" class="mx-auto">
+                    <div class="input-style input-light input-style-1 has-icon input-required">
+                        <i class="input-icon fa fa-user"></i>
+                        <em>(필수)</em>
+                        <input class="form-control" type="name" id="msId" name="msId" placeholder="아이디">
+                    </div> 
+                    <div class="input-style input-light input-style-1 has-icon input-required">
+                        <i class="input-icon fa fa-lock"></i>
+                        <em>(필수)</em>
+                        <input class="form-control" type="password" id="msPassword" name="msPassword" placeholder="비밀번호">
+                    </div> 
+                    <div class="form-check icon-check mt-3 opacity-60">
+                        <input class="form-check-input" type="checkbox" value="" id="chkSaveLogin" name="chkSaveLogin">
+                        <label class="form-check-label color-white" for="chkSaveLogin">자동로그인</label>
+                        <i class="icon-check-1 fa fa-square color-gray-dark font-16 ml-n1"></i>
+                        <i class="icon-check-2 fa fa-check-square font-16 color-highlight ml-n1"></i>
+                    </div>
+                
+                    <a href="#" class="btn btn-md bg-blue-dark btn-full shadow-xl text-uppercase font-800 rounded-s" id="btnLogin">로그인</a>
+                    
+                    <div class="row pt-3 mb-3 font-15">
+                        <div class="col-6 text-start">
+                        <a href="<c:url value='/member/agree?msLoginCd=APP'/>" class="color-highlight">회원가입</a>
+                        </div>
+                        <div class="col-6 text-right">
+                         <a href="<c:url value='/member/find'/>" class="color-highlight">비밀번호찾기</a>
+                        </div>
+                    </div>
+
+                    <p class="mb-1 opacity-80" style="border-top: 1px solid #3a3a3a;padding-top: 10px;">SNS간편로그인</p>
+                    <div class="row mb-0"> 
+                        <div class="col-6" id="naver_id_login"></div>
+                        <div class="col-6">
+                            <a href="#" class="letter1 font-13 btn btn-icon btn-m btn-full font-800 text-uppercase rounded-sm= bg-yellow-dark" id="kakao_id_login">
+                                <i class="fa-solid fa-k text-center"></i>카카오톡</a>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            <div class="card-overlay bg-black opacity-80"></div>
+        </div>
+
+    </div><!-- Page-content ends-->
+</div> <!-- Page ends-->  
+<jsp:include page="../common/alertModal.jsp" />  
+<script type="text/javascript">
+
 	var kakao_key = "${Globals.KakaoKey}";
 	var kakao_client_id = "${Globals.kakaoClientId}";
 	var kakao_redirect_url = "${Globals.kakaoRedirectUrl}";
-	var kakao_button_image = "<c:url value='/img/login_kakao.png'/>";
-
+	
 	var naver_domain = "${Globals.NaverDomain}";
 	var naver_key = "${Globals.NaverKey}"; 
 	var naver_callback = "${Globals.NaverCallbackUrl}";
-	var naver_button_image = "<c:url value='/img/login_naver.png'/>";	
     var naver_id_login = new naver_id_login(naver_key, naver_callback);
     
 	$(document).ready(function(){
@@ -77,8 +98,6 @@
 
 	// 카카오 로그인 버튼 클릭
 	$('#kakao_id_login').on('click', function () {
-		console.log(kakao_client_id);
-		console.log(kakao_redirect_url);
 		// REST api 방법
 		location.href = "https://kauth.kakao.com/oauth/authorize?response_type=code"
 					  + "&client_id=" + kakao_client_id
@@ -112,130 +131,89 @@
 	$('#btnLogin').on('click', function () {		
 		doLogin();
 	})
-		
+	
+	$('#msPassword').on('keyup', function(e){
+		if(e.keyCode == 13) $('#btnLogin').trigger('click');
+	});
+	
 	function kakaoInit() {
-		$("#kakao_id_login").css("cursor", "pointer");
-		$("#kakao_btn_image").attr("src", kakao_button_image);
-	  	<!-- 카카오 로그인 javascript키 초기화 -->
+	  	// 카카오 로그인 javascript키 초기화 
 		Kakao.init(kakao_key);
 	}
 		
 	function naverInit() {
 	    var state = naver_id_login.getUniqState();
-	    
-	    naver_id_login.setButton("green", 2, 43);
 	    naver_id_login.setDomain(naver_domain);
 	    naver_id_login.setState(state);
 	    naver_id_login.init_naver_id_login();
+	    
+	    // 네이버 로그인 버튼 자동 css 막기
+	    $('#naver_id_login_anchor').addClass('letter1 font-13 btn btn-icon btn-m btn-full font-800 text-uppercase rounded-sm= bg-highlight');
+	    $('#naver_id_login_anchor').empty();
+	    $('#naver_id_login_anchor').css('background-color', '#00c63b !important');
+	    $('#naver_id_login_anchor').append('<i class="fa-solid fa-n text-center"></i> 네이버</a>');
 	}
 	
 	function doLogin() {
-		var sUrl = "<c:url value='/member/doLogin'/>";
 		
 		var msId = $("#msId").val();
 		var msPassword = $("#msPassword").val();
-		var saveLogin = $('input:checkbox[id="chkSaveLogin"]').is(":checked") ? "1" : "0";
+		var saveLogin = $('input:checkbox[id="chkSaveLogin"]').is(":checked") ? "Y" : "N";
 
 		if(msId == "") {
-			alert("아이디를 입력하세요.");
+			alertModal.fail('아이디를 입력해주세요.');
 			return;
 		}
 		if(msPassword == "") {
-			alert("비밀번호를 입력하세요.");
+			alertModal.fail('비밀번호를 입력해주세요.');
 			return;
 		}
 		var sParams = {
 				  msId : msId
 				, msPassword : msPassword
-				, chkSaveLogin : saveLogin
-		}
-
-        mAjax2(sUrl, sParams, function(data) {
-        	if (data.resultCode == "100") {
-        		alert('회원정보가 없거나 일치하지 않습니다.');
-        		
-        	} else if (data.resultCode == "200") {
-
-        		// 휴면계정
-        		if(data.userInfo.msDormant == 'Y'){
-            		if(confirm('휴면계정입니다. 휴면 상태를 해제하시겠습니까?')){
-						location.href = "<c:url value='/clubd/member/sleeper.do?coDiv=" +" '/>";
-            		}
-            	}
-        		
-        		/* var bUri = document.referrer;
-				var idx = bUri.indexOf("reservation.do");				
-				var _bkDay = getCookie("_bkDayNew");
-				
-				// _bkDay 값이 있으면 예약페이지로 이동 (메인에서 날짜 클릭한거)- 배은화 (2022-12-07)
-				if (_bkDay != "") {
-					if("${setCoDiv}" == globals.coDiv.boeun) {
-						location.href = "<c:url value='/boeun/reservation/reservation.do'/>";
-					} else if("${setCoDiv}" == globals.coDiv.songnisan) {
-						location.href = "<c:url value='/songnisan/reservation/reservation.do'/>";
-					} else if("${setCoDiv}" == globals.coDiv.geumgang) {
-						location.href = "<c:url value='/geumgang/reservation/reservation.do'/>";
-					} else if("${setCoDiv}" == globals.coDiv.geochang) {
-						location.href = "<c:url value='/geochang/reservation/reservation.do'/>";
-					}			
+				, loginAuto : saveLogin
+				, ua : getUserAgent()
+		};
+		
+		$.ajax({
+			  url: "<c:url value='/member/doLogin'/>"
+			, type: "post"
+			, dataType: 'json'
+			, data: sParams
+			, contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+			, success: function(data) {
+				if(data.result) {
+					if(data.userInfo.msDormant == 'Y'){
+	            		if(confirm('휴면계정입니다. 휴면 상태를 해제하시겠습니까?')){
+							location.href = "<c:url value='/member/sleeper?coDiv=" +" '/>";
+	            		}
+	            	}
+					location.href = "<c:url value='/main'/>";
 				} else {
-					if(idx == -1) {
-						if("${setCoDiv}" == globals.coDiv.boeun) {
-							location.href = "<c:url value='/boeun/index.do'/>";
-						} else if("${setCoDiv}" == globals.coDiv.songnisan) {
-							location.href = "<c:url value='/songnisan/index.do'/>";
-						} else if("${setCoDiv}" == globals.coDiv.geumgang) {
-							location.href = "<c:url value='/geumgang/index.do'/>";
-						} else if("${setCoDiv}" == globals.coDiv.geochang) {
-							location.href = "<c:url value='/geochang/index.do'/>";
-						}
-					} else {
-						if("${setCoDiv}" == globals.coDiv.boeun) {
-							location.href = "<c:url value='/boeun/reservation/reservation.do'/>";
-						} else if("${setCoDiv}" == globals.coDiv.songnisan) {
-							location.href = "<c:url value='/songnisan/reservation/reservation.do'/>";
-						} else if("${setCoDiv}" == globals.coDiv.geumgang) {
-							location.href = "<c:url value='/geumgang/reservation/reservation.do'/>";
-						} else if("${setCoDiv}" == globals.coDiv.geochang) {
-							location.href = "<c:url value='/geochang/reservation/reservation.do'/>";
-						}
-					}					
-				} */
-				
-        		location.href = "<c:url value='/main'/>";
-
-            } else if(data.resultCode == "999") {
-        		if($('input:checkbox[id="chkSaveId"]').is(":checked")){
-        			setCookie("id", $("#msId").val(), 365);
-        		} else {
-        			setCookie("id", "", 365);
-        		}
-        		loginPopupOpen(data.subData);
-            }
-        });
-	}	
-		
-	//로그인 버튼 클릭
-	$(".auth-form-btn").on("click", function(){
-		var userId = $('#userId').val().trim();
-		var password = $('#password').val().trim();
-		
-		if (userId == "") {
-			alert('아이디를 입력해주세요.');
-			return;
-		}
-		if (password == "") {
-			alert('비밀번호를 입력해주세요.');
-			return;
-		}
-		
-		$("#form-login").submit();
-	})
+					alert(data.message);
+				}
+			}
+			, error: function(data) {
+				alert('[error] 오류가 발생했습니다.');
+			}
+		});
+	}
 	
-	$('#password').on('keyup', function(e){
-		if(e.keyCode == 13) $('.auth-form-btn').trigger('click');
-	});
-	</script>
-</body>
+	function getUserAgent(){
+		var varUA = navigator.userAgent.toLowerCase();
+		var ua;
+		if (varUA.indexOf("android") > -1) {
+			ua = "Android";
+		} else if (varUA.indexOf("iphone") > -1 || varUA.indexOf("ipad") > -1 || varUA.indexOf("ipod") > -1 || varUA.indexOf("apple") > -1) {
+			ua = "iPhone";
+		} else {
+			ua = "etc";
+		}
+		return ua;
+	}	
+	
+</script>
+
+</body>	
 </html>
 
