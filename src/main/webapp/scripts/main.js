@@ -240,6 +240,17 @@ function getStringDt(date, separator){
 	return strtYear + separator + realMonth + separator + realDate;
 }
 
+//날짜 문자열로 반환 (년/월/일)
+function getStringDt2(date){
+
+	// 파라미터 : 20230117
+	var year = date.substr(0, 4);
+	var month = date.substr(4, 2);
+	var day = date.substr(6);
+	
+	return year + "년 " + month + "월 " + day + "일";
+}
+
 function getTimeFormat(data){
 	var returnValue = data;
 		

@@ -40,7 +40,7 @@ public class BookService {
 	@Transactional
     public ResultVO chkBookLogic(BookInfoVO bkInfo) throws Exception  {
     	ResultVO result = new ResultVO();
-    	
+		
         try {
         	log.info("[chkBookLogic] bookInfo : " + bkInfo);
 			

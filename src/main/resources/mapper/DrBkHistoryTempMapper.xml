@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : DR_BK_HISTORY_TEMP
+ * 테이블 설명 : 예약내역 임시테이블
+-->
+<mapper namespace="com.yido.clubd.repository.DrBkHistoryTempMapper">
+
+	<select id="selectList" parameterType="hashmap" resultType="DrBkHistoryTemp">
+		SELECT *
+		FROM DR_BK_HISTORY_TEMP
+		WHERE 1=1
+		<if test='msNum != null and msNum != ""'>
+		AND MS_NUM = #{msNum}
+		</if>
+		<if test='serialNo != null and serialNo != ""'>
+		AND SERIAL_NO = #{serialNo}
+		</if>
+		<if test='coDiv != null and coDiv != ""'>
+		AND CO_DIV = #{coDiv}
+		</if>
+	</select>	
+	
+    <insert id="insertDrBkHistoryTemp" parameterType="DrBkHistoryTemp">
+    	INSERT INTO DR_BK_HISTORY_TEMP (			
+			CO_DIV
+			, SERIAL_NO
+			, MS_NUM
+			, BAY_CD
+			, BK_DAY
+			, BK_TIME
+			, INPUT_DATETIME
+			, INPUT_IP
+    	) values (
+    		#{coDiv}		
+    		, #{serialNo}	
+    		, #{msNum}	
+    		, #{bayCd}		
+    		, #{bkDay}		
+    		, #{bkTime}	
+    		, now()
+			, #{inputIp}			
+    	)  	
+    </insert>
+    
+</mapper>

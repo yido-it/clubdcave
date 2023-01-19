@@ -1,12 +1,15 @@
 package com.yido.clubd.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +22,13 @@ import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.model.BookInfoVO;
 import com.yido.clubd.model.DrBayInfo;
+import com.yido.clubd.model.DrBkHistoryTemp;
 import com.yido.clubd.model.DrBkOpenTime;
 import com.yido.clubd.model.DrBkTime;
 import com.yido.clubd.service.BookService;
 import com.yido.clubd.service.ClDayInfoService;
 import com.yido.clubd.service.DrBayInfoService;
-import com.yido.clubd.service.DrBkHistoryService;
-import com.yido.clubd.service.DrBkMarkService;
+import com.yido.clubd.service.DrBkHistoryTempService;
 import com.yido.clubd.service.DrBkOpenTimeService;
 import com.yido.clubd.service.DrBkTimeService;
 import com.yido.clubd.service.DrMsMaininfoService;
@@ -53,6 +56,9 @@ public class BookController {
 	
 	@Autowired
 	private ClDayInfoService clDayInfoService;
+	
+	@Autowired
+	private DrBkHistoryTempService drBkHistoryTempService;
 	
 	
 	/**
@@ -89,6 +95,65 @@ public class BookController {
 		}
 
 		return "/book/bookMain";
+	}
+
+	/**
+	 * 예약 2단계 페이지로 이동 (사용자가 담아둔 예약 정보를 임시테이블에 넣기)
+	 * 
+	 * @param req
+	 * @param bookInfo
+	 * @param coDiv
+	 * @return
+	 */
+	@RequestMapping("/book2/{coDiv}")
+	@ResponseBody
+	public String book2(HttpServletRequest req, BookInfoVO bInfo, @PathVariable String coDiv){
+		
+		log.info("[chkGrant] bookInfo : " + bInfo);
+		LocalDateTime nowDt = LocalDateTime.now();
+		
+		HttpSession session = req.getSession();
+		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
+		String ipAddr = Utils.getClientIpAddress(req);
+		
+		String serialNo = "";
+		
+		try {
+			if (sessionVO != null) {
+				
+				// 시리얼번호 생성 (YYMMDDHHMMSS)
+				// 임시 테이블 PK : 지점코드 + 시리얼번호 + 회원번호
+				serialNo = nowDt.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+				
+				// 예약시간 
+				List<Map<String, Object>> bkList = bInfo.getBkList();
+				String bkTime = "";
+				for (Map<String, Object> bk : bkList) {
+					if (bkTime.equals("")) bkTime = bk.get("bkTime").toString();
+					else bkTime += "," + bk.get("bkTime").toString();
+				}
+				
+				DrBkHistoryTemp temp = new DrBkHistoryTemp();
+				temp.setCoDiv(coDiv);
+				temp.setSerialNo(serialNo);
+				temp.setMsNum(sessionVO.getMsNum());
+				temp.setBayCd(bInfo.getBayCondi());
+				temp.setBkDay(bInfo.getBkDay());
+				temp.setBkTime(bkTime);
+				temp.setInputIp(ipAddr);
+				
+				int insertResult = drBkHistoryTempService.insertDrBkHistoryTemp(temp);
+				log.info("insertResult:{}", insertResult);
+				if (insertResult <= 0) {
+					serialNo = "";
+				}
+				log.info("serialNo:{}", serialNo);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return serialNo;
 	}
 	
 	/**
@@ -186,9 +251,12 @@ public class BookController {
 		
 		log.info("[chkGrant] bookInfo : " + bookInfo);
     	ResultVO result = new ResultVO();
-    	
+
+		HttpSession session = req.getSession();
+		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
 		try {
 				
+			bookInfo.setMsId(sessionVO.getMsId());
 			String grantYn = drMsMaininfoService.chkMsBkGrant(bookInfo);
 			if (grantYn.equals("N")) {
 				result.setCode("9999");
@@ -218,10 +286,13 @@ public class BookController {
 		String ipAddr = Utils.getClientIpAddress(req);
     	ResultVO result = new ResultVO();
     	
+		HttpSession session = req.getSession();
+		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
+
 		try {
 			bookInfo.setIpAddr(ipAddr);
-					
-			// 잔여수량 체크(=예약가능여부 체크) + 예약선점 처리
+			bookInfo.setMsId(sessionVO.getMsId());
+			// 잔여수량 체크(=예약가능여부 체크) + 예약선점 처리			
 			result = bookService.chkBookLogic(bookInfo);
 			
 		} catch(Exception e) {
@@ -254,4 +325,5 @@ public class BookController {
 		
 		return result;
 	}
+	
 }
