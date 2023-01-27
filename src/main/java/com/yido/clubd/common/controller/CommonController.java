@@ -43,21 +43,21 @@ public class CommonController {
 		}
 	}
 
-	@RequestMapping(value = "/getCommonCode")
-	public void getCommonCode(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam Map<String, Object> params) {
-		ResultVO result = new ResultVO();
-
-		try {
-			List<Map<String, Object>> list = commonService.getCommonCode(params);
-
-			result.setData(list);
-		} catch (Exception e) {
-			result.setCode("9999");
-			result.setMessage(e.getMessage());
-		} finally {
-			Utils.sendData(response, Utils.makeJsonString(result));
-		}
-	}
+//	@RequestMapping(value = "/getCommonCode")
+//	public void getCommonCode(HttpServletRequest request, HttpServletResponse response,
+//			@RequestParam Map<String, Object> params) {
+//		ResultVO result = new ResultVO();
+//
+//		try {
+//			List<Map<String, Object>> list = commonService.getCommonCode(params);
+//
+//			result.setData(list);
+//		} catch (Exception e) {
+//			result.setCode("9999");
+//			result.setMessage(e.getMessage());
+//		} finally {
+//			Utils.sendData(response, Utils.makeJsonString(result));
+//		}
+//	}
 
 }

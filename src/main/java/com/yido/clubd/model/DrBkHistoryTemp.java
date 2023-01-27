@@ -22,7 +22,8 @@ public class DrBkHistoryTemp {
 	private String msNum;					// 회원번호
 	private String bayCd;					// BAY 코드
 	private String bkDay;					// 예약날짜
-	private String bkTime;					// 예약시간 (쉼표로 구분해서 들어감)
+	private String bkTime;					// 예약시간 (쉼표로 구분해서 들어감) 화면에 보여주는 용도 ex) 11:00, 13:00
+	private String bkTime2;					// 예약시간 (쉼표로 구분해서 들어감) ex) 1100, 1300
 	
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")

@@ -205,7 +205,7 @@ public class DrMsMaininfoService {
 
 		if(params.get("ua") != null) {
 			ua = params.get("ua").toString();
-		}else {
+		} else {
 			ua = req.getHeader("user-agent");
 			if (ua.indexOf("Android") != -1) {
 				ua = "Android";

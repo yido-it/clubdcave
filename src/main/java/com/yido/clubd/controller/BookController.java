@@ -21,17 +21,28 @@ import com.yido.clubd.common.utils.ResultVO;
 import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.model.BookInfoVO;
+import com.yido.clubd.model.CoPlace;
 import com.yido.clubd.model.DrBayInfo;
+import com.yido.clubd.model.DrBkHistory;
 import com.yido.clubd.model.DrBkHistoryTemp;
 import com.yido.clubd.model.DrBkOpenTime;
 import com.yido.clubd.model.DrBkTime;
+import com.yido.clubd.model.DrVoucherCode;
+import com.yido.clubd.model.DrVoucherList;
 import com.yido.clubd.service.BookService;
 import com.yido.clubd.service.ClDayInfoService;
+import com.yido.clubd.service.CoPlaceService;
 import com.yido.clubd.service.DrBayInfoService;
+import com.yido.clubd.service.DrBkHistoryService;
 import com.yido.clubd.service.DrBkHistoryTempService;
 import com.yido.clubd.service.DrBkOpenTimeService;
 import com.yido.clubd.service.DrBkTimeService;
+import com.yido.clubd.service.DrCostInfoService;
 import com.yido.clubd.service.DrMsMaininfoService;
+import com.yido.clubd.service.DrVoucherCodeService;
+import com.yido.clubd.service.DrVoucherListService;
+import com.yido.clubd.service.DrVoucherSaleService;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -60,9 +71,23 @@ public class BookController {
 	@Autowired
 	private DrBkHistoryTempService drBkHistoryTempService;
 	
+	@Autowired
+	private DrBkHistoryService drBkHistoryService;
+	
+	@Autowired
+	private CoPlaceService coPlaceService;
+	
+	@Autowired
+	private DrCostInfoService drCostInfoService;
+	
+	@Autowired
+	private DrVoucherSaleService drVoucherSaleService;
+	
+	@Autowired
+	private DrVoucherListService drVoucherListService;
 	
 	/**
-	 * 예약페이지
+	 * [예약] 예약페이지
 	 * 
 	 * @param model
 	 * @param req
@@ -98,7 +123,7 @@ public class BookController {
 	}
 
 	/**
-	 * 예약 2단계 페이지로 이동 (사용자가 담아둔 예약 정보를 임시테이블에 넣기)
+	 * [예약] 예약 2단계 페이지로 이동 (사용자가 담아둔 예약 정보를 임시테이블에 넣기)
 	 * 
 	 * @param req
 	 * @param bookInfo
@@ -107,9 +132,10 @@ public class BookController {
 	 */
 	@RequestMapping("/book2/{coDiv}")
 	@ResponseBody
-	public String book2(HttpServletRequest req, BookInfoVO bInfo, @PathVariable String coDiv){
+	public ResultVO tempBook2(HttpServletRequest req, BookInfoVO bInfo, @PathVariable String coDiv){
 		
-		log.info("[chkGrant] bookInfo : " + bInfo);
+		log.info("[tempBook2] bookInfo : " + bInfo);
+    	ResultVO result = new ResultVO();
 		LocalDateTime nowDt = LocalDateTime.now();
 		
 		HttpSession session = req.getSession();
@@ -119,41 +145,136 @@ public class BookController {
 		String serialNo = "";
 		
 		try {
-			if (sessionVO != null) {
+
+			if (sessionVO == null) {
+				return result;
+			}
 				
-				// 시리얼번호 생성 (YYMMDDHHMMSS)
-				// 임시 테이블 PK : 지점코드 + 시리얼번호 + 회원번호
-				serialNo = nowDt.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-				
-				// 예약시간 
-				List<Map<String, Object>> bkList = bInfo.getBkList();
-				String bkTime = "";
-				for (Map<String, Object> bk : bkList) {
-					if (bkTime.equals("")) bkTime = bk.get("bkTime").toString();
-					else bkTime += "," + bk.get("bkTime").toString();
+			// 시리얼번호 생성 (YYMMDDHHMMSS)
+			// 임시 테이블 PK : 지점코드 + 시리얼번호 + 회원번호
+			serialNo = nowDt.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+			
+			// 예약시간 
+			List<Map<String, Object>> bkList = bInfo.getBkList();
+			String bkTime = "";
+			String bkTime2 = "";
+			for (Map<String, Object> bk : bkList) {
+				String tmpTime = bk.get("bkTime").toString(); // 1100
+				if (bkTime.equals("")) {
+					bkTime = tmpTime.substring(0, 2) + ":" + tmpTime.substring(2);
+					bkTime2 = tmpTime;
+				} else {
+					bkTime += ", " + tmpTime.substring(0, 2) + ":" + tmpTime.substring(2);
+					bkTime2 += ", " + tmpTime;
 				}
+			}
+			
+			DrBkHistoryTemp temp = new DrBkHistoryTemp();
+			temp.setCoDiv(coDiv);
+			temp.setSerialNo(serialNo);
+			temp.setMsNum(sessionVO.getMsNum());
+			temp.setBayCd(bInfo.getBayCondi());
+			temp.setBkDay(bInfo.getBkDay());
+			temp.setBkTime(bkTime);
+			temp.setBkTime2(bkTime2);
+			temp.setInputIp(ipAddr);
+			
+			// 임시 테이블에 데이터 저장
+			drBkHistoryTempService.insertDrBkHistoryTemp(temp);
+			result.setData(serialNo);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			result.setCode("9999");
+			result.setData("");
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * [예약] 예약 2단계 페이지 (예약 임시 데이터 조회 해서 화면에 표출해주기)
+	 * 
+	 * @param model
+	 * @param req
+	 * @param serialNo
+	 * @return
+	 */
+	@RequestMapping("/book2/{coDiv}/{serialNo}")  
+	public String book2(Model model, HttpServletRequest req, @PathVariable String coDiv, @PathVariable String serialNo) {
+		HttpSession session = req.getSession();
+		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
+		String returnPage = "/book/book2";
+
+		log.info("sessionVO: {}", sessionVO);
+		try {
+			if (coDiv == null || serialNo == null || sessionVO == null 
+					|| coDiv.equals("") || serialNo.equals("") || sessionVO.getMsId().equals("")) {
+				return returnPage;
+			}
+			
+			// 예약 임시 테이블 조회
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("coDiv"		, coDiv);
+			map.put("serialNo"	, serialNo);
+			map.put("msNum"		, sessionVO.getMsNum());
+			DrBkHistoryTemp temp = drBkHistoryTempService.getHistory(map);
+
+			log.info("예약 임시 데이터: {}", temp);
+			
+			if (temp != null) {
+				model.addAttribute("bkHis", temp);
 				
-				DrBkHistoryTemp temp = new DrBkHistoryTemp();
-				temp.setCoDiv(coDiv);
-				temp.setSerialNo(serialNo);
-				temp.setMsNum(sessionVO.getMsNum());
-				temp.setBayCd(bInfo.getBayCondi());
-				temp.setBkDay(bInfo.getBkDay());
-				temp.setBkTime(bkTime);
-				temp.setInputIp(ipAddr);
+				// 날짜 포맷 변경
+				String tmpDay = temp.getBkDay();	// 20230131			
+				String bkDay = tmpDay.substring(0, 4) + "년 " 
+							+ tmpDay.substring(4, 6) + "월 " 
+							+ tmpDay.substring(6) + "일" ;
+				model.addAttribute("bkDay", bkDay);
+				// end.
+								
+				// 지점 정보 조회 
+				List<CoPlace> place = coPlaceService.selectList(map); 
+				model.addAttribute("place", place.get(0));
+				// end.
 				
-				int insertResult = drBkHistoryTempService.insertDrBkHistoryTemp(temp);
-				log.info("insertResult:{}", insertResult);
-				if (insertResult <= 0) {
-					serialNo = "";
+				// 베이 정보 조회
+				map.put("bayCondi",temp.getBayCd());
+				List<DrBayInfo> bay = drBayInfoService.selectList(map);
+				model.addAttribute("bay", bay.get(0));
+				// end.
+				
+				// 해당 날짜의 요금 조회
+				Integer amount = 0;
+				map.put("bkDay", temp.getBkDay());
+				Map<String, Object> cost = drCostInfoService.getCostInfo(map);
+
+				model.addAttribute("timeAmt", cost.get("DR_AMOUNT").toString());	// 시간당 금액 (이용권1장 = 시간당금액)
+				if (temp.getBkTime().indexOf(",") > 0) {
+					String[] strArr = temp.getBkTime().split(",");	
+					amount = Integer.parseInt(cost.get("DR_AMOUNT").toString());
+					amount = amount * strArr.length;
+					model.addAttribute("amount", amount);
+				} else {
+					amount = Integer.parseInt(cost.get("DR_AMOUNT").toString());
+					model.addAttribute("amount", amount);
 				}
-				log.info("serialNo:{}", serialNo);
+				// end.
+				
+				// 이용권 내역 조회
+				List<Map<String, Object>> vList = drVoucherSaleService.selectList(map);
+				model.addAttribute("vcList", vList);
+				// end.
+				
+				// log.info("지점 정보: {}", place.get(0));
+				// log.info("베이 정보: {}", bay.get(0));
+				// log.info("요금: {}", cost);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		
-		return serialNo;
+
+		return returnPage;
 	}
 	
 	/**
@@ -191,20 +312,23 @@ public class BookController {
 	}
 	
 	/**
-	 * 예약내역 조회
+	 * [예약] 예약내역 조회
 	 * 
 	 * @param model
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping("/bookList")  
-	public String bookList(Model model, HttpServletRequest req) {
+	@RequestMapping("/bookList/{coDiv}")  
+	public String bookList(Model model, HttpServletRequest req, @PathVariable String coDiv) {
 		HttpSession session = req.getSession();
 		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
 
-		log.info("bookList");
 		try {
-			//
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("msNum", sessionVO.getMsNum());
+			map.put("coDiv", coDiv);
+			List<Map<String, Object>> list = drBkHistoryService.selectBkHis(map);			
+			model.addAttribute("list", list);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -212,6 +336,33 @@ public class BookController {
 		return "/book/bookList";
 	}
 
+	/**
+	 * [예약] 결제 완료 페이지 
+	 * 
+	 * @param model
+	 * @param req
+	 * @param calcSerialNo
+	 * @return
+	 */
+	@RequestMapping("/bookConfirm")  
+	public String bookConfirm(Model model, HttpServletRequest req) {
+		
+		try {
+			if (req.getParameter("calcSerialNo") != null) {
+				// 대표 예약고유번호로 데이터 조회 
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("calcSerialNo", req.getParameter("calcSerialNo"));
+				List<Map<String, Object>> list = drBkHistoryService.selectBkHis(map);
+				model.addAttribute("bk", list.get(0));
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "/book/bookConfirm";
+	}
+
+	
 	/**
 	 * 베이별 잔여시간 조회
 	 * - 파라미터 : 베이, 날짜, 회원등급 등

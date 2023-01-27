@@ -42,6 +42,9 @@ public class DrVoucherSale {
 	private LocalDateTime inputDatetime;	// 입력일시
 	
 	private String inputIp;					// 입력IP
+	
+	private int logSeq; 					// 로그순번
+	private String logDiv; 					// 로그종류(I,U,D)
 
 }
 

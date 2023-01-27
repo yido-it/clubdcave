@@ -7,6 +7,28 @@
 -->
 <mapper namespace="com.yido.clubd.repository.DrVoucherListMapper">
 
+	<select id="selectList" parameterType="hashmap" resultType="DrVoucherList">
+		SELECT *
+	      FROM DR_VOUCHER_LIST 
+	     WHERE 1=1
+		<if test='coDiv != null and coDiv != ""'>
+		  AND CO_DIV = #{coDiv}
+		</if> 	  
+		<if test='saleDay != null and saleDay != ""'>
+		  AND SALE_DAY = #{saleDay}
+		</if> 	  
+		<if test='saleSeq != null and saleSeq != ""'>
+		  AND SALE_SEQ = #{saleSeq}
+		</if> 	  
+		<if test='vcState != null and vcState != ""'>
+		  AND VC_STATE = #{vcState}
+		</if> 	  
+		ORDER BY LIST_SEQ
+		<if test='limit != null'>
+  		 LIMIT #{limit}
+		</if> 		      
+    </select>
+      
     <insert id="insertDrVoucherList">
         <selectKey resultType="String" keyProperty="listSeq" order="BEFORE">
 			SELECT IFNULL(CAST(MAX(LIST_SEQ) AS UNSIGNED), 0)+1 
@@ -35,7 +57,8 @@
     
 	<update id="updateDrVoucherList">
 		UPDATE DR_VOUCHER_LIST
-		   SET VC_STATE 			= #{vcState}
-		 WHERE LIST_SEQ 			= #{listSeq}
+		   SET VC_STATE = #{vcState}
+		 WHERE LIST_SEQ = #{listSeq}
+		   AND SALE_SEQ = #{saleSeq}
 	</update>    
 </mapper>

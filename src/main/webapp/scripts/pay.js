@@ -54,10 +54,9 @@ var mPay = function() {
 		GX_pay("payment", "popup", params.protocol);
     }
 
-	var result = function(code) {
+	var result = function(code, serialNo) {
 		if(code == "0000") {
-			alert('성공');
-			fnSuccess();
+			fnSuccess(serialNo);
 		} else {
 			fnFail();
 		}

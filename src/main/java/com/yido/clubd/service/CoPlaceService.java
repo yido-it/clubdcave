@@ -1,5 +1,8 @@
 package com.yido.clubd.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yido.clubd.model.CoPlace;
@@ -19,7 +22,7 @@ public class CoPlaceService {
 	@Autowired
     private CoPlaceMapper coPlaceMapper;
 
-    public CoPlace selectList(CoPlace coPlace) {
-    	return coPlaceMapper.selectList(coPlace);
+    public List<CoPlace> selectList(Map<String, Object> map) {
+    	return coPlaceMapper.selectList(map);
     }
 }

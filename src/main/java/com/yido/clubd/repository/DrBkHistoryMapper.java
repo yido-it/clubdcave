@@ -24,7 +24,12 @@ public interface DrBkHistoryMapper {
 
 	public List<DrBkHistory> selectList(Map<String, Object> params);
 	
+	// 고객 예약내역 확인 
+	public List<Map<String, Object>> selectBkHis(Map<String, Object> params);
+	
 	// 예약내역 등록
 	public int insertDrBkHistory(Map<String, Object> params);
+	
+	public int updateBkAmount(DrBkHistory drBkHistory);
 	
 }

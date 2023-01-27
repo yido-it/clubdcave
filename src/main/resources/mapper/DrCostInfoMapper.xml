@@ -18,10 +18,33 @@
 		FROM DR_COST_INFO A INNER JOIN DR_BK_TIME B ON A.CO_DIV = B.CO_DIV AND A.COST_CD = B.COST_CD AND USE_YN = 'Y'
 							INNER JOIN DR_COST_LIST C ON A.CO_DIV = C.CO_DIV AND A.COST_CD = C.COST_CD AND DISPLAY_YN = 'Y'
 							INNER JOIN CD_COMMON D ON C.CO_DIV = D.CO_DIV AND C.COST_DIV = D.CD_CODE AND CD_DIVISION = '003' AND CD_USEYN = 'Y'
-		WHERE B.CO_DIV = #{coDiv} 
-		 AND B.BAY_CONDI = #{bayCondi}
-		 AND B.BK_DAY = #{bkDay} AND B.BK_TIME = #{bkTime}
-		 AND A.USE_YN = 'Y'
+		WHERE 1=1 
+		<if test='coDiv != null and coDiv != ""'>
+		  AND B.CO_DIV = #{coDiv} 
+		</if>	
+		<if test='bayCondi != null and bayCondi != ""'>
+		  AND B.BAY_CONDI = #{bayCondi}
+		</if>	
+		<if test='bkDay != null and bkDay != ""'>
+		  AND B.BK_DAY = #{bkDay} 
+		</if>	
+		
+		<choose> 
+			<!-- 1개 타임 예약할때 -->
+			<when test='bkList == null and bkTime != null and bkTime != ""'>
+			  AND B.BK_TIME = #{bkTime} 
+			</when> 
+			<!-- 2개이상 타임 예약할때 -->
+			<when test='bkList != null'>
+			  AND B.BK_TIME IN 
+			 	<foreach collection="bkList" item="item" index="index" separator="," open="(" close=")">
+			 	#{item}
+				</foreach>
+			</when> 
+			<otherwise></otherwise>
+		</choose> 
+
+	      AND A.USE_YN = 'Y'
 		LIMIT 1
     </select>
     

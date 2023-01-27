@@ -7,7 +7,7 @@
 -->
 <mapper namespace="com.yido.clubd.repository.DrBkHistoryTempMapper">
 
-	<select id="selectList" parameterType="hashmap" resultType="DrBkHistoryTemp">
+	<select id="getHistory" parameterType="hashmap" resultType="DrBkHistoryTemp">
 		SELECT *
 		FROM DR_BK_HISTORY_TEMP
 		WHERE 1=1
@@ -30,6 +30,7 @@
 			, BAY_CD
 			, BK_DAY
 			, BK_TIME
+			, BK_TIME2
 			, INPUT_DATETIME
 			, INPUT_IP
     	) values (
@@ -38,10 +39,20 @@
     		, #{msNum}	
     		, #{bayCd}		
     		, #{bkDay}		
-    		, #{bkTime}	
+    		, #{bkTime}		
+    		, #{bkTime2}	
     		, now()
 			, #{inputIp}			
     	)  	
     </insert>
     
+    <!-- 데이터 삭제 -->
+    <update id="deleteHistoryTemp">
+        DELETE
+          FROM DR_BK_HISTORY_TEMP
+         WHERE 1=1 
+        <if test='serialNo != null and serialNo != ""'>
+		  AND SERIAL_NO = #{serialNo}
+		</if>      
+    </update>    
 </mapper>

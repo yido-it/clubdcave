@@ -1,3 +1,7 @@
+<!-- 
+기능 : 예약 메인 페이지
+작성자 :bae
+-->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.yido.clubd.common.utils.Globals" %>
@@ -120,18 +124,13 @@
 <div class="menu-hider menu-active"><div></div></div>
 <!--//페이지 로드되자마자 베이선택팝업 활성화-->
 
+<jsp:include page="../common/alertModal.jsp" />  
 <script type="text/javascript">
 
 var sYear, sMonth, sDate;
 var msId 				= "<c:out value='${sessionScope.msMember.msId}'/>";
-var msNum				= "<c:out value='${sessionScope.msMember.msNum}'/>";
 var msLevel 			= "<c:out value='${sessionScope.msMember.msLevel}'/>";
-var msEmail 			= "<c:out value='${sessionScope.msMember.msEmail}'/>";
-var msName 				= "<c:out value='${sessionScope.msMember.msName}'/>";
-var msFirstPhone1		= "<c:out value='${sessionScope.msMember.msFirstPhone1}'/>";
-var msMidPhone1 		= "<c:out value='${sessionScope.msMember.msMidPhone1}'/>";
-var msLastPhone1 		= "<c:out value='${sessionScope.msMember.msLastPhone1}'/>";
-var msPhone 			= msFirstPhone1 + "-" + msMidPhone1 + "-" + msLastPhone1;
+var msNum				= "<c:out value='${sessionScope.msMember.msNum}'/>";
 
 var reservationInfo 	= {};
 reservationInfo.coDiv 	= $('#coDiv').val();
@@ -143,7 +142,7 @@ $(document).ready(function() {
     $(".modal_bay").addClass('menu-active');
     
 	if (msId == null || msId == "") {
-		alert("로그인 후 이용 가능합니다.");
+		// alertModal.fail('로그인 후 이용 가능합니다.');
 		location.href = "/login";	
 		return;
 	}
@@ -166,9 +165,7 @@ function init() {
 function onClickDay(date, num) {
 	
 	if ($('#bayCondi').val() == "") {
-		document.querySelector(".txtFail").innerHTML = "베이를 선택해주세요.";
-		$("#btnFail").trigger("click");
-		
+		alertModal.fail('베이를 선택해주세요.');
 		return;
 	}
 	console.log('click day > date:' , date, ', num:', num);
@@ -403,15 +400,13 @@ function selectedBay(bayCd, bayName) {
 function doBook() {
 
 	if ($('#bayCondi').val() == "") {
-		document.querySelector(".txtFail").innerHTML = "베이를 선택해주세요.";
-		$("#btnFail").trigger("click");
+		alertModal.fail('베이를 선택해주세요.');
 		return;
 	}
 
 	console.log('[doBook] bkList: ', bkList);
 	if (bkList == null || bkList.length <= 0) {
-		document.querySelector(".txtFail").innerHTML = "예약시간을 선택해주세요.";
-		$("#btnFail").trigger("click");
+		alertModal.fail('예약시간을 선택해주세요.');
 		return;
 	}
 
@@ -420,14 +415,15 @@ function doBook() {
 	
 	// 다음페이지로 이동 		
 	$.ajax({
-	url: "/book/book2/" + $('#coDiv').val()
+		url: "/book/book2/" + $('#coDiv').val()
 		, type: "post"
 		, dataType: 'json'
 		, data: reservationInfo
 		, contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
 		, success: function(data) {
-			console.log(data);
-			//location.href="/book/book2";
+			if (data.code == '0000') {
+				location.href="/book/book2/"+$('#coDiv').val()+"/"+data.data;
+			}
 		}
 	});		
 
@@ -456,7 +452,7 @@ function doTimeSelect(bkTime, idx) {
 		});
 		bkList.splice(json_idx, 1);
 		
-		//chkBkMark(reservationInfo, "N");
+		chkBkMark(reservationInfo, "N");
 	} else {
 		// 선점 전에 예약가능여부 조회 (회원위약)
 		$.ajax({
@@ -480,7 +476,7 @@ function doTimeSelect(bkTime, idx) {
 			
 			console.log('선점');
 			
-			//chkBkMark(reservationInfo, "Y");
+			chkBkMark(reservationInfo, "Y");
 
 			// 선택된 시간을 bkList 에 저장 (예약하기 버튼 클릭시 필요한 정보)
 			bookData.timeIdx 	= idx;
@@ -532,31 +528,5 @@ function chkBkMark(reservationInfo, gubun) {
 }
 
 </script>
-
-<!-- 알림 띄우기 위한 버튼-->
-<div style="display:none">
-    <a href="#" data-menu="popSuccess" class="menu-active" id="btnSuccess"></a>
-    <a href="#" data-menu="popFail" class="menu-active" id="btnFail"></a>   
-</div> 
-
-<!-- 성공 팝업창 -->
-<div id="popSuccess" 
-class="menu menu-box-modal rounded-m " 
-data-menu-hide="1000"
-data-menu-width="220"
-data-menu-height="160">
-<h1 class="text-center fa-5x mt-2 pt-3 pb-2"><i class="fa fa-check-circle color-green-dark"></i></h1>
-<h3 class="text-center txtSuccess"></h3>
-</div>
-
-<!-- 실패 팝업창 -->
-<div id="popFail" 
-class="menu menu-box-modal rounded-m" 
-data-menu-hide="1000"
-data-menu-width="220"
-data-menu-height="160">
-<h1 class="text-center fa-5x mt-2 pt-3 pb-2"><i class="fa fa-times-circle color-red-dark"></i></h1>
-<h4 class="text-center txtFail"></h4>
-</div>
 
 </html>

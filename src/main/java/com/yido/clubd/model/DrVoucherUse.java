@@ -16,6 +16,7 @@ public class DrVoucherUse {
 
 	private String bkSerialNo;	// 예약고유번호
 	private String coDiv;		// 지점코드
+	private String vcCoDiv;		// 이용권지점코드
 	private String saleDay;		// 매출일자
 	private int saleSeq;		// 매출 순번
 	private int listSeq;		// 세부 순번

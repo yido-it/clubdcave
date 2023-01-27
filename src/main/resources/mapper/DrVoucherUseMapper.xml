@@ -10,13 +10,15 @@
     <insert id="insertDrVoucherUse">
     	INSERT INTO DR_VOUCHER_USE (
 			BK_SERIAL_NO				
-			, CO_DIV
+			, CO_DIV			
+			, VC_CO_DIV
 			, SALE_DAY
 			, SALE_SEQ			
 			, LIST_SEQ
     	) values (
     		#{bkSerialNo}			
-    		, #{coDiv}
+    		, #{coDiv}	
+    		, #{vcCoDiv}
     		, #{saleDay}
     		, #{saleSeq}		
     		, #{listSeq}			

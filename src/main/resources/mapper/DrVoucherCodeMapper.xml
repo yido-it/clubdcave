@@ -17,5 +17,5 @@
 		  AND A.VC_DISPLAY_YN = 'Y'
 		ORDER BY VC_SORT
     </select>
-    
+
 </mapper>

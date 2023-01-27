@@ -43,6 +43,7 @@ public class PayController {
 	
 	/**
 	 * 가맹점 결과 처리 함수 
+	 * - 예약, 이용권 모두 해당됨 
 	 * 
 	 * @param request
 	 * @param response
@@ -57,6 +58,7 @@ public class PayController {
 		BufferedReader br = null; 
 		String resultCode = "9999";
 		boolean isSuccessPay = false;
+		ResultVO resultVO = new ResultVO();
 
 		String serviceId             = "";
 		String serviceCode           = "";
@@ -223,7 +225,7 @@ public class PayController {
 
                 log.info("[returnPay] params 2 : " + params);
                
-                // PG 결제내역 등록
+                // PG 결제내역 등록 (예약, 이용권)
                 Map<String, Object> tmpMap = new HashMap<String, Object>();
                 int mnSeq = mnInHistoryService.getMnSeq(tmpMap);
                 params.put("mnSeq", mnSeq);
@@ -235,13 +237,14 @@ public class PayController {
                 	// 예약-입금 연결 정보 
                     DrBkMnMap mnMap = new DrBkMnMap();
                     mnMap.setCoDiv(reserved1);
+                    mnMap.setMnSeq(mnSeq);
                     mnMap.setMnCoDiv(reserved1);
                     mnMap.setMnInDay(orderDate.substring(0,8));
                     mnMap.setMnAmount(Integer.parseInt(authAmount));
                     // end.
                     
                 	// 결제 후 예약처리...
-                	ResultVO resultVO = mnInHistoryService.successPayLogic(params, reserved2, reserved3, mnMap); 
+                	resultVO = mnInHistoryService.successPayLogic(params, reserved2, reserved3, mnMap); 
                 	
                 	if(resultVO.getCode().equals("0000")) {
                 		resultCode = "0000";
@@ -264,7 +267,8 @@ public class PayController {
                 e.printStackTrace();
             }
     	}
-    	
+
+    	model.addAttribute("calcSerialNo", resultVO.getData());
     	model.addAttribute("resultCode", resultCode);
     	
     	return "/book/payReturn";

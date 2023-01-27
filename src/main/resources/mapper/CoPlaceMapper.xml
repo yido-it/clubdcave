@@ -7,8 +7,14 @@
 -->
 <mapper namespace="com.yido.clubd.repository.CoPlaceMapper">
 
-	<select id="selectList" resultType="CoPlace">
-       
+	<select id="selectList" parameterType="hashmap" resultType="CoPlace">
+       SELECT * 
+       FROM CO_PLACE
+       WHERE 1=1
+		<if test='coDiv != null and coDiv != ""'>
+		AND CO_DIV = #{coDiv}
+		</if>       
+		AND USE_YN = 'Y'
     </select>
     
 </mapper>

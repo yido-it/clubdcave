@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
 <title>ClubD 청담</title>
 <link rel="stylesheet" type="text/css" href="/styles/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="/styles/style.css">
+<link rel="stylesheet" type="text/css" href="/styles/style.css?now=<%=new Date()%>">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="/fonts/css/fontawesome-all.min.css">    
 </head>

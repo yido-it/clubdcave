@@ -22,6 +22,7 @@ public class BookInfoVO {
 	private String msLevel;			// 회원등급
 	private String userMail;		// 이메일
 	private String msId;			// 아이디
+	private String msNum;			
 	private String userName;		// 이름
 	private String ipAddr;			// ip
 	private String phone; 			// 전화번호
@@ -30,6 +31,7 @@ public class BookInfoVO {
 	private String availableYn;		// (예약선점용 조회할때 사용) Y이면 예약 가능한 데이터 조회
 	
 	private List<Map<String, Object>> bkList;		// [{"bkTime":"08:00","amount":50000},{"bkTime":"13:00","amount":50000}]
+	private List<Map<String, Object>> vList;		// [{coDiv=001, quantity=1, saleDay=20230119, saleSeq=3}, {coDiv=001, quantity=1, saleDay=20230119, saleSeq=4}]
 	private List<String> timeList;					// 08:00, 13:00 
 }
 

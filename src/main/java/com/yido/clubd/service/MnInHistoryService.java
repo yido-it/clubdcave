@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -17,14 +18,19 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.yido.clubd.common.utils.Globals;
 import com.yido.clubd.common.utils.ResultVO;
 import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.StringUtils;
 import com.yido.clubd.common.utils.Utils;
+import com.yido.clubd.model.BookInfoVO;
 import com.yido.clubd.model.DrBkHistory;
+import com.yido.clubd.model.DrBkHistoryTemp;
 import com.yido.clubd.model.DrBkMnMap;
 import com.yido.clubd.repository.DrBkHistoryMapper;
+import com.yido.clubd.repository.DrBkHistoryTempMapper;
 import com.yido.clubd.repository.DrBkMarkMapper;
 import com.yido.clubd.repository.DrBkMnMapMapper;
 import com.yido.clubd.repository.DrMsMaininfoMapper;
@@ -41,12 +47,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class MnInHistoryService {
-
+	@Autowired
+    private VoucherService voucherService;
+	
+	@Autowired
+    private DrBkHistoryService drBkHistoryService;
+	
 	@Autowired
     private DrBkHistoryMapper drBkHistoryMapper;
 	
 	@Autowired
-    private DrBkHistoryService drBkHistoryService;
+    private DrBkHistoryTempMapper drBkHistoryTempMapper;
 	
 	@Autowired
     private DrMsMaininfoMapper drMsMaininfoMapper;
@@ -104,16 +115,18 @@ public class MnInHistoryService {
 	 * @param mnMap 	: 예약-입금 연결 정보 
 	 * @return
 	 */
-	@SuppressWarnings("deprecation")
 	@Transactional
 	public ResultVO successPayLogic(Map<String, Object> params, String action, String reserved, DrBkMnMap mnMap) {	
 		ResultVO resultVO = new ResultVO();
+		Gson gson = new Gson();
 		
 		try {
 			log.info("[successPayLogic] action : " + action);
 			
-			if(action.equals("RESERVATION")) {
-				// RESERVATION = 예약
+			if(action.equals("RESERVATION")) {	// RESERVATION = 예약
+				String isVoucherUse = "N";
+				List<Map<String, Object>> vList = new ArrayList<Map<String, Object>>();
+				BookInfoVO bkInfo = new BookInfoVO();
 				
 				String orderId = StringUtils.isNullOrEmpty(params.get("orderId"), "");	// 주문번호
 				String msNum = orderId.split("_")[0];									// 회원번호
@@ -128,26 +141,48 @@ public class MnInHistoryService {
 				
 				JSONObject data = new JSONObject(reserved.replaceAll("&quot;", "\""));
 				
-				params.put("bkDay",        Utils.getJsonValue(data, "bkDay"));
-				//params.put("bkTime",       Utils.getJsonValue(data, "bkTime"));
-				params.put("bkAmount",     Utils.getJsonValue(data, "bkAmount"));
-				params.put("bayCondi",     Utils.getJsonValue(data, "bayCondi"));
-				params.put("msLevel",      Utils.getJsonValue(data, "msLevel"));
-				params.put("userName",     Utils.getJsonValue(data, "userName"));
-				params.put("userMail",     Utils.getJsonValue(data, "userMail"));
-				params.put("phone",    	   Utils.getJsonValue(data, "phone"));
-				params.put("msId",    	   Utils.getJsonValue(data, "msId"));
+				params.put("bkDay"			, Utils.getJsonValue(data, "bkDay"));
+				params.put("bkTime"			, Utils.getJsonValue(data, "bkTime"));
+				params.put("bkAmount"		, Utils.getJsonValue(data, "bkAmount"));
+				params.put("oriBkAmount"	, Utils.getJsonValue(data, "oriBkAmount"));
+				params.put("bayCondi"		, Utils.getJsonValue(data, "bayCondi"));
+				params.put("msLevel"		, Utils.getJsonValue(data, "msLevel"));
+				params.put("bkName"			, Utils.getJsonValue(data, "userName"));
+				params.put("userMail"		, Utils.getJsonValue(data, "userMail"));
+				params.put("phone"			, Utils.getJsonValue(data, "phone"));
+				params.put("msId"			, Utils.getJsonValue(data, "msId"));	
+				params.put("vList"			, Utils.getJsonValue(data, "vList"));		// vList : 이용권 고유번호, 이용권 금액, 사용수량 등
+				params.put("serialNo"		, Utils.getJsonValue(data, "serialNo"));	// serialNo : 예약 임시테이블 고유번호 (결제 완료 후 임시테이블 데이터 삭제 해야함)
+				params.put("isVoucherUse"	, isVoucherUse);
+			
+				// vList : 이용권  
+				if (params.get("vList") != null) {
+					vList = gson.fromJson(params.get("vList").toString(), new TypeToken<List<Map<String, Object>>>() {}.getType());			
+					if (vList.size() > 0) isVoucherUse = "Y";
+				}
+				
+				// 지불수단 
+				if (Integer.parseInt(params.get("bkAmount").toString()) > 0) params.put("bkPayDiv", 2); // 선불 
+				else params.put("bkPayDiv", 1); // 이용권 
 
-				log.info("[successPayLogic] 예약정보:" + params);
+				log.info("[successPayLogic] 예약정보 : " + params);
 				
-				// 예약고유번호 채번
-				//String bkSerialNo = drBkHistoryMapper.getSerialNo(params);
-				//params.put("bkSerialNo", bkSerialNo);
-				//mnMap.setBkSerialNo(bkSerialNo);
-	       		
-				// 예약 내역 insert 
-				drBkHistoryService.actionReservationLogicQuery(params, sessionVO);
+				// 예약 내역 insert 				
+				Map<String, Object> returnMap = drBkHistoryService.actionReservation(params, mnMap);
+				resultVO.setData(returnMap.get("calcSerialNo"));
 				
+				if (isVoucherUse.equals("Y")) {
+					log.info("================= 이용권 사용처리 =================");
+					// 이용권 사용처리 
+					bkInfo.setVList(vList);
+					bkInfo.setCoDiv(params.get("coDiv").toString());
+					bkInfo.setIpAddr(params.get("ipAddr").toString());
+
+					voucherService.useVoucher(bkInfo, returnMap);					
+				} else {
+					log.info("================= 이용권 사용안함 =================");
+				}
+
         		this.afterPayLogic(params, mnMap);
 	
 				// ┌───────────────── SMS 전송 ─────────────────┐
@@ -169,8 +204,7 @@ public class MnInHistoryService {
 	//    		
 	//    		commonService.sendSms2(params);
 				// └───────────────── SMS 전송 ─────────────────┘
-			} else if(action.equals("VOUCHER")) {
-				// VOUCHER = 이용권
+			} else if(action.equals("VOUCHER")) {	// VOUCHER = 이용권
 				JSONObject data = new JSONObject(reserved.replaceAll("&quot;", "\""));
 				
 				params.put("vcName",        Utils.getJsonValue(data, "vcName"));
@@ -190,7 +224,8 @@ public class MnInHistoryService {
 	/**
 	 * 결제 완료 후 처리 
 	 * - PG결제내역 변경 (예약고유번호, 회원이름, 회원번호) 
-	 * - 예약선점 테이블 변경 (예약고유번호, 상태) 
+	 * - 예약 임시테이블 데이터 삭제 
+	 * - 이용권 잔여수량 업데이트 / 이용권 잔여수량 변경된 로그 / 이용권 세부 내역 업데이트
 	 * 
 	 * @param param
 	 * @param mnMap		: 예약-입금 연결 정보 
@@ -207,54 +242,18 @@ public class MnInHistoryService {
 		map.put("mnInName", param.get("userName"));
 		
 		mnInHistoryMapper.updateMnInHistory(map);
-		// end.
-
-		Map<String, Object> map2 = new HashMap<String, Object>();
-		map2.put("coDiv"		, param.get("coDiv"));
-		map2.put("bayCondi"		, param.get("bayCondi"));
-		map2.put("bkDay"		, param.get("bkDay"));
-		map2.put("entryUser"	, param.get("msId"));
-		map2.put("msNum"		, param.get("msNum"));
-		map2.put("bkStateIsY"	, "Y");
-		map2.put("bkState"		, "N");
-	
-		if (param.get("bkTime").toString().indexOf(",") > 0) {
-			// 다건 예약
-			log.info("[actionReservationLogicQuery] 다건 예약");
-			String bkTime[] = param.get("bkTime").toString().split(",");
-			
-			for (int i = 0; i < bkTime.length; i++) {
-				map2.put("bkTime", bkTime[i]);
-				List<DrBkHistory> list = drBkHistoryMapper.selectList(map2);
-				
-				// 예약선점 테이블 변경 (예약고유번호, 상태)
-				// 조회조건 : 지점코드, 베이코드, 일자, 시간, 아이디, 상태 Y인거 
-				map2.put("bkSerialNo", list.get(0).getBkSerialNo());
-				drBkMarkMapper.updateDrBkMark(map2);	
-				
-				// 예약-입금 연결 정보 insert
-				// 건수가 여러개이면 순번, 예약고유번호 다르게 들어가야함 
-				mnMap.setBkSerialNo(list.get(0).getBkSerialNo());
-				drBkMnMapMapper.insertDrBkMnMap(mnMap);		
-				
-			}
-		} else {
-			// 단건 예약
-			map2.put("bkTime", param.get("bkTime"));
-			List<DrBkHistory> list = drBkHistoryMapper.selectList(map2);
-			
-			// 예약선점 테이블 변경 (예약고유번호, 상태)
-			// 조회조건 : 지점코드, 베이코드, 일자, 시간, 아이디, 상태 Y인거 
-			map2.put("bkSerialNo", list.get(0).getBkSerialNo());
-			drBkMarkMapper.updateDrBkMark(map2);	
-			
-			// 예약-입금 연결 정보 insert
-			// 건수가 여러개이면 순번, 예약고유번호 다르게 들어가야함 
-			mnMap.setBkSerialNo(list.get(0).getBkSerialNo());
-			drBkMnMapMapper.insertDrBkMnMap(mnMap);		
-			
-		}
+		// end.		
 		
+		// 예약 임시테이블 데이터 삭제
+		DrBkHistoryTemp temp = new DrBkHistoryTemp();
+		temp.setSerialNo(param.get("serialNo").toString());
+		drBkHistoryTempMapper.deleteHistoryTemp(temp);
+		// end.
+		
+		// 이용권 잔여수량 업데이트 / 이용권 잔여수량 변경된 로그 / 이용권 세부 내역 업데이트
+		log.debug("[afterPayLogic] 이용권: " + param.get("vList"));
+		
+		// end.
 	}
 	
 	/**

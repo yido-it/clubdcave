@@ -7,16 +7,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.yido.clubd.common.utils.ResultVO;
+import com.yido.clubd.common.utils.Utils;
+import com.yido.clubd.model.BookInfoVO;
 import com.yido.clubd.model.DrVoucherCode;
 import com.yido.clubd.service.DrVoucherCodeService;
-
+import com.yido.clubd.service.DrVoucherListService;
+import com.yido.clubd.service.DrVoucherSaleService;
+import com.yido.clubd.service.VoucherService;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -26,6 +31,16 @@ public class VoucherController {
 
 	@Autowired
 	private DrVoucherCodeService drVoucherCodeService;
+
+	@Autowired
+	private DrVoucherSaleService drVoucherSaleService;
+
+	@Autowired
+	private DrVoucherListService drVoucherListService;
+	
+	@Autowired
+	private VoucherService voucherService;
+	
 	
 	/**
 	 * 이용권 구매 페이지
@@ -51,6 +66,34 @@ public class VoucherController {
 		}
 		
 		return "/voucher/voucherMain";
+	}
+	
+	/**
+	 * 이용권 결제처리 (이용권 사용 후 결제금액 0원인 경우) 
+	 * 
+	 * @param model
+	 * @param req
+	 * @param bInfo
+	 * @return
+	 */
+	@RequestMapping("/vPay")  
+	@ResponseBody
+	public ResultVO vPay(Model model, HttpServletRequest req, BookInfoVO bInfo) {
+
+    	ResultVO result = new ResultVO();
+		String ipAddr = Utils.getClientIpAddress(req);
+    	log.info("[vPay] bInfo: " + bInfo);
+    	
+		try {
+			bInfo.setIpAddr(ipAddr);
+			result = voucherService.vPay(bInfo);
+		} catch(Exception e) {
+			e.printStackTrace();
+			result.setCode("9999");
+			result.setMessage("처리중 오류가 발생하였습니다.");
+		}
+
+		return result;
 	}
 
 }

@@ -18,8 +18,10 @@ import com.yido.clubd.model.DrBkHistoryTemp;
 @Repository
 public interface DrBkHistoryTempMapper {
 	
-	public List<DrBkHistoryTemp> selectList(Map<String, Object> params);
+	public DrBkHistoryTemp getHistory(Map<String, Object> params);
 	
 	public int insertDrBkHistoryTemp(DrBkHistoryTemp drBkHistoryTemp);
+	
+	public int deleteHistoryTemp(DrBkHistoryTemp drBkHistoryTemp);
 	
 }

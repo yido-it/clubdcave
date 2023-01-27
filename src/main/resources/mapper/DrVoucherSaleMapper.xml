@@ -7,6 +7,56 @@
 -->
 <mapper namespace="com.yido.clubd.repository.DrVoucherSaleMapper">
 
+	<!-- 이용권 구매내역  -->
+    <select id="selectList" parameterType="hashmap" resultType="hashmap">
+    
+	    SELECT A.CO_DIV
+	 		 , SALE_SEQ
+	 		 , A.SALE_DAY
+	    	 , VC_NAME
+			 , VC_MONTH 
+		     , A.VC_LIMIT_CNT
+		     , A.VC_REM_CNT
+			 , DATE_FORMAT(A.VC_TO_DAY, "%Y.%m.%d") AS VC_TO_DAY
+			 , FLOOR(A.VC_AMOUNT / A.VC_LIMIT_CNT) AS AMOUNT
+		FROM DR_VOUCHER_SALE A 
+								INNER JOIN DR_VOUCHER_CODE B ON A.VC_CD = B.VC_CD
+		                        INNER JOIN DR_BK_TIME_VOUCHER C ON B.CO_DIV = C.CO_DIV AND B.VC_CD = C.VC_CD
+		WHERE 1=1 
+		<if test='coDiv != null and coDiv != ""'>
+		  AND C.CO_DIV = #{coDiv}
+		</if> 
+		<if test='bayCondi != null and bayCondi != ""'>
+		  AND C.BAY_CONDI = #{bayCondi}
+		</if> 
+		<if test='bkDay != null and bkDay != ""'>
+		  AND C.BK_DAY = #{bkDay}
+		</if> 
+		<if test='bkTime != null and bkTime != ""'>
+		  AND C.BK_TIME = #{bkTime}
+		</if> 
+		<if test='msNum != null and msNum != ""'>
+		  AND A.MS_NUM = #{msNum}
+		</if> 
+		  AND A.USE_YN = 'Y'
+    </select>
+    
+    <select id="getVoucherSale" resultType="DrVoucherSale">
+	    SELECT *
+		  FROM DR_VOUCHER_SALE 
+		 WHERE 1=1 
+		<if test='coDiv != null and coDiv != ""'>
+		  AND CO_DIV = #{coDiv}
+		</if> 
+		<if test='saleDay != null and saleDay != ""'>
+		  AND SALE_DAY = #{saleDay}
+		</if> 
+		<if test='saleSeq != null and saleSeq != ""'>
+		  AND SALE_SEQ = #{saleSeq}
+		</if> 
+    </select>
+    
+    
     <insert id="insertDrVoucherSale">
         <selectKey resultType="String" keyProperty="saleSeq" order="BEFORE">
 			SELECT IFNULL(CAST(MAX(SALE_SEQ) AS UNSIGNED), 0)+1 
@@ -59,15 +109,17 @@
     
 	<update id="updateDrVoucherSale">
 		UPDATE DR_VOUCHER_SALE
-		   SET VC_STATE 		= #{vcState}
-		     , VC_LIMIT_CNT 	= #{vcLimitCnt}
-		     , VC_SERVICE_CNT 	= #{vcServiceCnt}
-		     , VC_USE_CNT 		= #{vcUseCnt}
-		     , VC_REM_CNT 		= #{vcRemCnt}
-		     , VC_REMARK 		= #{vcRemark}
-		     , USE_YN 			= #{useYn}
+		   SET VC_REM_CNT 		= #{vcRemCnt} 
 		 WHERE CO_DIV 			= #{coDiv}
 		   AND SALE_DAY 		= #{saleDay}
 		   AND SALE_SEQ 		= #{saleSeq}
 	</update>    
+	
+	<update id="updateVcRemCnt">
+		UPDATE DR_VOUCHER_SALE
+		   SET VC_REM_CNT 		= VC_REM_CNT - #{vcRemCnt} 
+		 WHERE CO_DIV 			= #{coDiv}
+		   AND SALE_DAY 		= #{saleDay}
+		   AND SALE_SEQ 		= #{saleSeq}
+	</update> 
 </mapper>

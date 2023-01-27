@@ -3,6 +3,7 @@ package com.yido.clubd.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yido.clubd.model.DrVoucherSale;
 import com.yido.clubd.model.DrVoucherSaleLog;
 import com.yido.clubd.repository.DrVoucherSaleLogMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ public class DrVoucherSaleLogService {
 	 * @param drVoucherSaleLog
 	 * @return
 	 */
-	public int insertDrVoucherSaleLog(DrVoucherSaleLog drVoucherSaleLog) {
-		return drVoucherSaleLogMapper.insertDrVoucherSaleLog(drVoucherSaleLog);
+	public int insertDrVoucherSaleLog(DrVoucherSale drVoucherSale) {
+		return drVoucherSaleLogMapper.insertDrVoucherSaleLog(drVoucherSale);
 	}
 }

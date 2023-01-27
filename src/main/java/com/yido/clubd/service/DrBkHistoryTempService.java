@@ -23,11 +23,15 @@ public class DrBkHistoryTempService {
 	@Autowired
     private DrBkHistoryTempMapper drBkHistoryTempMapper;
 
-	public List<DrBkHistoryTemp> selectList(Map<String, Object> params) {
-		return drBkHistoryTempMapper.selectList(params);
+	public DrBkHistoryTemp getHistory(Map<String, Object> params) {
+		return drBkHistoryTempMapper.getHistory(params);
 	}
 	
 	public int insertDrBkHistoryTemp(DrBkHistoryTemp drBkHistoryTemp) {
 		return drBkHistoryTempMapper.insertDrBkHistoryTemp(drBkHistoryTemp);
+	}
+	
+	public int deleteHistoryTemp(DrBkHistoryTemp drBkHistoryTemp) {
+		return drBkHistoryTempMapper.deleteHistoryTemp(drBkHistoryTemp);
 	}
 }

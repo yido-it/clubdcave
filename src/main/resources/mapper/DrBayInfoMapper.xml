@@ -11,6 +11,13 @@
 		SELECT CD_TITLE1 AS BAY_NAME
 			 , A.BAY_CD
 		  FROM DR_BAY_INFO A INNER JOIN CD_COMMON B ON A.BAY_CD = B.CD_CODE AND CD_DIVISION = '020' AND CD_USEYN = 'Y'
+	     WHERE 1=1
+		<if test='coDiv != null and coDiv != ""'>
+		AND A.CO_DIV = #{coDiv}
+		</if>       
+		<if test='bayCondi != null and bayCondi != ""'>
+		  AND A.BAY_CD = #{bayCondi}
+		</if> 
     </select>
 	
 </mapper>

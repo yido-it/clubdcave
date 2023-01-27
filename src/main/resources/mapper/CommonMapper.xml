@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yido.clubd.common.repository.CommonMapper">
 
-	<select id="getCommonCode" parameterType="hashmap" resultType="hashmap">
+	<select id="getCommonCode" resultType="CdCommon">
 		SELECT CO_DIV
 			 , CD_DIVISION
 			 , CD_CODE
@@ -10,10 +10,18 @@
 			 , CD_TITLE2
 			 , CD_TITLE3
 			 , CD_TITLE4
+			 , CD_LENGTH
 		  FROM CD_COMMON
-		 WHERE CO_DIV = #{coDiv}
-		   AND CD_DIVISION = #{cdDiv}
-		   AND CD_USEYN = 'Y'
+		 WHERE CD_USEYN = 'Y'
+		<if test='coDiv != null and coDiv != ""'>
+		  AND CO_DIV = #{coDiv}
+		</if> 	  
+		<if test='cdDivision != null and cdDivision != ""'>
+		  AND CD_DIVISION = #{cdDivision}
+		</if> 	 
+		<if test='cdCode != null and cdCode != ""'>
+		  AND CD_CODE = #{cdCode}
+		</if> 			   
 	</select>
 
 	<select id="sendSms" statementType="CALLABLE" parameterType="hashmap">

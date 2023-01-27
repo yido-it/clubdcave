@@ -35,6 +35,40 @@
 		</if>
 	</select>	
 	
+	<select id="selectBkHis" parameterType="hashmap" resultType="hashmap">
+		SELECT B.CO_NAME
+ 			 , B.CO_DIV
+			 , D.CD_TITLE1 AS BAY_NAME
+		     , BK_DAY
+		     , GROUP_CONCAT(CONCAT(LEFT(BK_TIME, 2),':', RIGHT(BK_TIME, 2)) SEPARATOR ', ') AS BK_TIME
+		     , IFNULL(NULLIF(E.MN_AMOUNT,''),'0') AS MN_AMOUNT 
+		     , A.BK_STATE 
+             , F.CD_TITLE1 AS BK_STATE_NAME
+             , I.VC_NAME
+             , COUNT(G.BK_SERIAL_NO) AS VC_CNT
+		FROM DR_BK_HISTORY A 
+			INNER JOIN CO_PLACE B ON A.CO_DIV = B.CO_DIV
+			INNER JOIN DR_BAY_INFO C ON A.CO_DIV = C.CO_DIV AND A.BAY_CONDI = C.BAY_CD 
+		    INNER JOIN CD_COMMON D ON C.BAY_CD = D.CD_CODE AND D.CD_DIVISION = '020' AND D.CD_USEYN = 'Y'
+		    LEFT JOIN DR_BK_MN_MAP E ON A.CO_DIV = E.CO_DIV AND A.CALC_SERIAL_NO = E.BK_SERIAL_NO
+		    INNER JOIN CD_COMMON F ON A.CO_DIV = F.CO_DIV AND A.BK_STATE = F.CD_CODE AND F.CD_DIVISION = '015' AND F.CD_USEYN = 'Y'		    
+            LEFT JOIN DR_VOUCHER_USE G ON A.CO_DIV = G.CO_DIV AND A.BK_SERIAL_NO = G.BK_SERIAL_NO 
+            LEFT JOIN DR_VOUCHER_SALE H ON G.VC_CO_DIV = H.CO_DIV AND G.SALE_DAY = H.SALE_DAY AND G.SALE_SEQ = H.SALE_SEQ 
+            LEFT JOIN DR_VOUCHER_CODE I ON H.CO_DIV = I.CO_DIV AND H.VC_CD = I.VC_CD AND I.USE_YN = 'Y'
+		WHERE 1=1 
+		<if test='coDiv != null and coDiv != ""'>
+		 AND A.CO_DIV = #{coDiv}
+		</if>
+		<if test='msNum != null and msNum != ""'>
+		 AND A.MS_NUM = #{msNum}
+		</if>
+		<if test='calcSerialNo != null and calcSerialNo != ""'>
+		 AND A.CALC_SERIAL_NO = #{calcSerialNo}
+		</if>
+		GROUP BY B.CO_NAME, D.CD_TITLE1, BK_DAY, A.CALC_SERIAL_NO
+        ORDER BY A.CALC_SERIAL_NO DESC
+	</select>
+		
     <insert id="insertDrBkHistory" parameterType="hashmap">
     	INSERT INTO DR_BK_HISTORY (
 			BK_SERIAL_NO
@@ -56,6 +90,9 @@
 			, INPUT_STAFF
 			, INPUT_DATETIME
 			, INPUT_IP
+			, CALC_SERIAL_NO
+			, BK_PAY_DIV
+			, BK_AMOUNT
     	) values (
     		#{bkSerialNo}			
     		, #{coDiv}		
@@ -75,8 +112,16 @@
     		, #{costCd}	
     		, 'APP'		
     		, now()
-			, #{ipAddr}			
+			, #{ipAddr}		
+			, #{calcSerialNo}	
+			, #{bkPayDiv}		
+			, #{bkAmount}			
     	)  	
     </insert>
     
+    <update id="updateBkAmount">
+		UPDATE DR_BK_HISTORY
+		   SET BK_AMOUNT = #{bkAmount}
+		 WHERE BK_SERIAL_NO = #{bkSerialNo}
+	</update>    
 </mapper>

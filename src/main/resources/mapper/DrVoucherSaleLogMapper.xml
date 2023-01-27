@@ -8,7 +8,7 @@
 <mapper namespace="com.yido.clubd.repository.DrVoucherSaleLogMapper">
 
     <insert id="insertDrVoucherSaleLog">
-        <selectKey resultType="String" keyProperty="logSeq" order="BEFORE">
+        <selectKey resultType="Integer" keyProperty="logSeq" order="BEFORE">
 			SELECT IFNULL(CAST(MAX(LOG_SEQ) AS UNSIGNED), 0)+1 
 			  FROM DR_VOUCHER_SALE_LOG
         </selectKey>    
@@ -55,9 +55,9 @@
     		, #{vcRemCnt}		
     		, #{vcRemark}	
     		, #{useYn}	
-    		, #{inputStaff}			
+    		, 'APP'			
     		, now()
-			, #{ipAddr}						
+			, #{inputIp}						
     	)  	
     </insert>
     

@@ -11,9 +11,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.yido.clubd.common.repository.CommonMapper;
 import com.yido.clubd.common.utils.ResultVO;
 import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.model.BookInfoVO;
+import com.yido.clubd.model.CdCommon;
 import com.yido.clubd.model.DrBkMark;
 import com.yido.clubd.model.DrBkTime;
 import com.yido.clubd.repository.DrBkMarkMapper;
@@ -29,6 +32,9 @@ public class BookService {
 
 	@Autowired
     private DrBkMarkMapper drBkMarkMapper;
+	
+	@Autowired
+    private CommonMapper cdCommonMapper;
 	
 	/**
 	 * 잔여수량 체크(=예약가능여부 체크) + 예약선점 처리
@@ -66,11 +72,21 @@ public class BookService {
 				// 예약 가능한 데이터 있는 경우, 선점 처리
 				Map<String, Object> param = new HashMap<String, Object>();
 
+				// 선점 시간 조회 
+				CdCommon common = new CdCommon();
+				common.setCoDiv(bkInfo.getCoDiv());
+				common.setCdDivision("999");
+				common.setCdCode("DRC03");
+				common = cdCommonMapper.getCommonCode(common);
+				Integer eTime = common != null && !common.getCdLength().equals("") ? 
+						Integer.parseInt(common.getCdLength()) : 15;
+				// end.
+				
 				param.put("entryMethod"		, "모바일");	
 				param.put("updMsId"			, bkInfo.getMsId());		
 				param.put("ipAddr"			, bkInfo.getIpAddr());		
 				param.put("insertEntryDt"	, "Y");			// entry_datetime 에 값을 넣겠다는 뜻 
-				param.put("entryTime"		, 15);			// 이부분 나중에 공통코드로 바꿔줘야함
+				param.put("entryTime"		, eTime);			
 				
 				param.put("coDiv"			, bkInfo.getCoDiv());
 				param.put("bayCondi"		, bkInfo.getBayCondi());
