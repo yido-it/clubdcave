@@ -4,11 +4,6 @@
 <%@ page import="com.yido.clubd.common.utils.Globals" %>
 <jsp:include page="../common/head.jsp" />
 <jsp:include page="../common/script.jsp" />
-<style>
-	#naver_id_login_anchor {
-		background-color : '#00c63b !important';
-	}
-</style>
 <body class="is-not-ios theme-light">
     
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
@@ -27,15 +22,15 @@
                 <div style="width:100%;text-align:center">
                 	<img src="../images/logo_wing.png" class="text-center" style="width:50px;margin-bottom:10px">
                 </div> 
-                <h2 class="font-800 text-center color-white font-40 text-uppercase">Login</h2>
+                <a href="/main"><h2 class="font-800 text-center color-white font-40 text-uppercase">Login</h2></a>
                 <p class="mt-1 text-center color-white color-highlight font-12">클럽디청담 회원로그인</p>
                 <div style="max-width:300px;" class="mx-auto">
-                    <div class="input-style input-light input-style-1 has-icon input-required">
+                    <div class="input-style input-light input-style-1 has-icon">
                         <i class="input-icon fa fa-user"></i>
                         <em>(필수)</em>
-                        <input class="form-control" type="name" id="msId" name="msId" placeholder="아이디">
+                        <input class="form-control" type="" id="msId" name="msId" placeholder="아이디">
                     </div> 
-                    <div class="input-style input-light input-style-1 has-icon input-required">
+                    <div class="input-style input-light input-style-1 has-icon">
                         <i class="input-icon fa fa-lock"></i>
                         <em>(필수)</em>
                         <input class="form-control" type="password" id="msPassword" name="msPassword" placeholder="비밀번호">
@@ -54,7 +49,7 @@
                         <a href="<c:url value='/member/agree?msLoginCd=APP'/>" class="color-highlight">회원가입</a>
                         </div>
                         <div class="col-6 text-right">
-                         <a href="<c:url value='/member/find'/>" class="color-highlight">비밀번호찾기</a>
+                         <a href="<c:url value='/member/memberFind'/>" class="color-highlight">비밀번호찾기</a>
                         </div>
                     </div>
 
@@ -73,6 +68,7 @@
 
     </div><!-- Page-content ends-->
 </div> <!-- Page ends-->  
+<div class="menu-hider"><div></div></div>
 <jsp:include page="../common/alertModal.jsp" />  
 <script type="text/javascript">
 
@@ -148,7 +144,7 @@
 	    naver_id_login.init_naver_id_login();
 	    
 	    // 네이버 로그인 버튼 자동 css 막기
-	    $('#naver_id_login_anchor').addClass('letter1 font-13 btn btn-icon btn-m btn-full font-800 text-uppercase rounded-sm= bg-highlight');
+	    $('#naver_id_login_anchor').addClass('letter1 font-13 btn btn-icon btn-m btn-full font-800 text-uppercase rounded-sm= bg-naver-green');
 	    $('#naver_id_login_anchor').empty();
 	    $('#naver_id_login_anchor').css('background-color', '#00c63b !important');
 	    $('#naver_id_login_anchor').append('<i class="fa-solid fa-n text-center"></i> 네이버</a>');
@@ -190,11 +186,11 @@
 	            	}
 					location.href = "<c:url value='/main'/>";
 				} else {
-					alert(data.message);
+					alertModal.fail(data.message);
 				}
 			}
 			, error: function(data) {
-				alert('[error] 오류가 발생했습니다.');
+				alertModal.fail('[error] 오류가 발생했습니다.');
 			}
 		});
 	}

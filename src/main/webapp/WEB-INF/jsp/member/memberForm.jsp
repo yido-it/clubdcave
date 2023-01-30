@@ -9,10 +9,8 @@
     <div id="">
         
         <div class="header header-fixed header-logo-app header-transparent">
-            <a href="index.html" class="color-white header-title header-subtitle">회원가입</a>
-            <a href="#" data-back-button class="color-white header-icon header-icon-1"><i class="fa fa-arrow-left"></i></a>
-            <a href="#" data-menu="menu-main" class="color-white header-icon header-icon-2"><i class="fas fa-bars"></i></a>
-            <a href="#" data-toggle-theme class="color-white header-icon header-icon-4 show-on-theme-light"><i class="fas fa-moon"></i></a>
+            <a href="javascript:history.back(-1)" class="color-white header-title header-subtitle">회원가입</a>
+            <jsp:include page="../common/top.jsp" />
         </div>
     
         <div class="page-content mb-0">
@@ -24,7 +22,7 @@
                 	</div> 
                     <h2 class="font-800 text-center color-white font-40 text-uppercase">REGISTER</h2>
                     <p class="mt-1 text-center color-white font-11">  가입정보 입력</p>
-                    <form id="frmMember" name="frmMember">
+                    <form id="frmMemberForm" name="frmMemberForm">
                         <div style="max-width:300px;" class="mx-auto mb-n5">
                         
                             
@@ -40,7 +38,7 @@
                                 <em>(필수)</em>
                                 <input class="form-control" type="password" id="msPassword" name="msPassword" placeholder="비밀번호" data-name="비밀번호">
                             </div> 
-                            <p class="text-right font-12 color-red-light mb-1" id="pwdMsg1">*특수문자를 포함, 야합니다.</p>
+                            <p class="text-right font-12 color-red-light mb-1" id="pwdMsg1"></p>
                             <div class="input-style input-light input-style-1 has-icon input-required app" >
                                 <i class="input-icon fa fa-lock"></i>
                                 <span class="color-highlight">비밀번호 확인</span>
@@ -72,10 +70,11 @@
                                 <input type="checkbox" id="chkSmsYn"/> SMS 수신에 동의합니다
                                 <input type="hidden" id="smsChk1" name="smsChk1"/>
                                 <input type="hidden" id="msEmail" name="msEmail"/>
+                                <input type="hidden" id="msMktAgreeYn" name="msMktAgreeYn" value="${msMktAgreeYn}"/>
                                 <input type="hidden" id="msLoginCd" name="msLoginCd" value="${msLoginCd}"/>
-                            <a href="" class="mt-4 mb-4 btn btn-md bg-blue-dark btn-full shadow-xl text-uppercase font-800 rounded-s" id="signUp">
+                            <button type="button" class="col-12 mt-4 mb-4 btn btn-md bg-blue-dark btn-full shadow-xl text-uppercase font-800 rounded-s" id="btnSignUp">
                                 가입하기
-                            </a>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -84,6 +83,29 @@
         </div> <!-- page-content end-->
         
     </div> <!-- page end-->
+    
+    <!-- 추가 정보 입력 팝업 -->
+	<!-- <div id="memberAddPop" class="menu menu-box-bottom rounded-0 modal_bay" data-menu-height="102%" data-menu-effect="menu-parallax" style="display: block;">
+	</div>	 -->
+	<!-- // 추가 정보 입력 팝업 -->
+    
+    <!-- 가입완료 팝업 -->
+	<!-- <div id="memberComplete" class="menu menu-box-modal rounded-0 " data-menu-height="310" data-menu-width="330" data-menu-effect="menu-parallax" >
+	    <h1 class="text-center mt-4"><i class="fa fa-3x fa-crown scale-box color-yellow-light shadow-xl rounded-circle"></i></h1>
+	    <h3 class="text-center mt-3 font-700">회원가입 완료!</h3>
+	    <p class="boxed-text-xl opacity-70">
+	        김이도 회원님 반갑습니다!<br/>
+	        클럽디청담 서비스 이용이 가능합니다 <br>
+	    </p>
+	    <div class="row mb-0 mr-3 ml-3">
+	     
+	        <div class="col-12">
+	            <a href="javascript:location.href='/main'" class="btn btn-full btn-md bg-blue-dark font-800 text-uppercase rounded-s">시작하기</a>
+	        </div>
+	    </div>
+	</div>	 -->
+	<!-- // 가입완료 팝업 -->
+	<div class="menu-hider"><div></div></div>
 	<jsp:include page="../common/alertModal.jsp" /> 
 	<script>
 		var checkId = false; // 아이디 중복 여부
@@ -121,7 +143,7 @@
 		$('#idExist').on('click', function() {
 			if (!chkInputVal ('msId')) return;
 			if(!$('#msId').val().match(idReg)) {
-				alert('3~16자의 영문/숫자 조합으로 입력해주세요.');
+				alertModal.fail('3~16자의 영문/숫자 조합으로 입력해주세요.');
 				return;
 			}
 			$.ajax({
@@ -132,16 +154,16 @@
 		        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
 		        , success: function(data) {    	
 		            if(data.result == true){
-		            	alert('사용 가능한 아이디입니다.');
+		            	alertModal.success('사용 가능한 아이디입니다.');
 		            	$('#msId').prop('readonly', true);
 		            	checkId = true;
 		            } else {
-		                alert('이미 가입된 아이디입니다.');
+		            	alertModal.fail('이미 가입된 아이디입니다.');
 		                checkId = false;
 		            }                
 		        }
 		        , error: function(data) {
-		        	alert('[error] 오류가 발생했습니다.');
+		        	alertModal.fail('[error] 오류가 발생했습니다.');
 		        }
 		    });
 		})
@@ -149,7 +171,7 @@
 		
 		$('#msPassword').on('keyup', function() {
 			if(!$('#msPassword').val().match(pwdReg)) {
-				$('#pwdMsg1').html('8자 이상의 특수문자 한개 이상을 포함한 영어 및 숫자 조합으로 입력해주세요.');
+				$('#pwdMsg1').html('특수문자를 포함한 영어/숫자로 8자 이상 입력해주세요.');
 			} else {
 				$('#pwdMsg1').html('');
 			}
@@ -182,14 +204,14 @@
 		        , success: function(data) {
 		        	if(data.result){
 			        	$('#hiddenCode').val(verifyCode);
-		        		alert(data.message);
+		        		alertModal.send(data.message);
 		        	}else{
 		        		$('#hiddenCode').val("");
-		        		alert(data.message);
+		        		alertModal.fail(data.message);
 		        	}
 		        }
 		        , error: function(data) {
-		        	alert('[error] 오류가 발생했습니다.');
+		        	alertModal.fail('[error] 오류가 발생했습니다.');
 		        }
 		    });
 		})
@@ -197,10 +219,10 @@
 		$('#verifyChk').on('click', function () {
 			if (!chkInputVal ('verifyCode')) return;
 			if($('verifyCode').val() != $('hiddenCode').val()) {
-				alert('입력하신 인증번호가 일치하지 않습니다.');
+				alertModal.fail('입력하신 인증번호가 일치하지 않습니다.');
 				return;
 			} else {
-				alert('인증이 완료되었습니다');
+				alertModal.success('인증이 완료되었습니다');
 				checkVerify = true;
 				$('verifyCode').prop('readonly', true);
 			}
@@ -212,39 +234,31 @@
 			$('#msPhone').val(msPhone.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`));
 		})
 		
-		$('#signUp').on('click', function() {
-			var result = true;
-			if(msLoginCd == 'APP') {				
-				$('.app, .all').each(function() {
-					if (!chkInputVal(this.id)) {
-						result = false;
-						return false;
-					}				
-				})
-			} else {
-				$('.all').each(function() {
-					if (!chkInputVal(this.id)) {
-						result = false;
-						return false;
-					}				
-				})
+		$('#btnSignUp').on('click', function() {
+			location.href = "/member/memberAddPop";
+			/*if(msLoginCd == 'APP') {
+				if(!chkInputVal('msId')) return;
+				if(!checkId) {
+					alertModal.fail('아이디 중복확인을 해주세요.');
+					return;
+				}
+				if(!$('#msPassword').val().match(pwdReg)) {
+					alertModal.fail('올바른 비밀번호가 아닙니다.');
+					return;
+				}
+				if(!chkInputVal('msPassword')) return;
+				if($('#msPassword').val() != $('#msPasswordChk').val()) {
+					alertModal.fail('비밀번호가 일치하지 않습니다.');
+					return;
+				}
+			} 
+			if(!chkInputVal('msName')) return;
+			if(!checkVerify) {
+				alertModal.fail('본인인증이 완료되지 않았습니다.');
+				return;
 			}
-			if (!result) return;
 			
-			if(msLoginCd == 'APP' && !checkId) {
-				alert('아이디 중복확인을 해주세요.');
-				return;
-			}
-			/* if(!checkVerify) {
-				alert('본인인증이 완료되지 않았습니다.');
-				return;
-			} */
-			if(msLoginCd == 'APP' && $('#msPassword').val() != $('#msPasswordChk').val()) {
-				alert('비밀번호가 일치하지 않습니다.');
-				return;
-			}
-			doSignUp();
-			
+			doSignUp();*/			
 		})
 		
 		function doSignUp() {
@@ -252,18 +266,20 @@
 		          url: "<c:out value='/member/doSignUp'/>"
 		        , type: "post"
 		        , dataType: 'json'
-		        , data: $('#frmMember').serialize()
+		        , data: $('#frmMemberForm').serialize()
 		        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
 		        , success: function(data) {		    	
 		            if(data.result){
-		            	alert('가입이 완료되었습니다.');
-						location.href="/member/memberAddForm";
+		            	alertModal.success('가입이 완료되었습니다.');
+		    			/* $('#memberAddPop').load('/member/memberAddPop');
+		    			$('#memberAddPop').addClass('menu-active'); */
+		            	location.href = "/member/memberAddPop";
 		            } else {
-		                alert(data.message);                    
+		                alertModal.fail(data.message);                    
 		            }                
 		        }
 		        , error: function(data) {
-		        	alert('[error] 오류가 발생했습니다.');
+		        	alertModal.fail('[error] 오류가 발생했습니다.');
 		        }
 		    });
 		

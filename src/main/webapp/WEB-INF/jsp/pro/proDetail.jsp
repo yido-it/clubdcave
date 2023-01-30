@@ -23,9 +23,15 @@
 			${item.proRemark}
 			</c:if>
 		</div>
-		<div id="kakao">
+		<div id="kakaoChat">
+			<c:if test="${item.noticeDiv == '005'}">
+			${item.proRemark}
+			</c:if>
 		</div>
 		<div id="instagram">
+			<c:if test="${item.noticeDiv == '006'}">
+			${item.proRemark}
+			</c:if>
 		</div>
 		<!-- 경력, 레슨 계획 -->
 		<div id="profileText">

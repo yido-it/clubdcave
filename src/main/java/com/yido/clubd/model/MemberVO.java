@@ -1,21 +1,25 @@
 package com.yido.clubd.model;
 
 import java.time.LocalDateTime;
+
 import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 테이블명 : DR_MS_MAININFO 
- * 테이블 설명 : 회원정보 (회원/프로) 
+ * 모델명 : MemberVO 
+ * 모델 설명 : 일반 회원정보
  * 
- * @author bae
+ * @author MSYOO
  *
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class DrMsMaininfo {
+public class MemberVO {
+	/* 기본 정보 */
 	private String msNum;				// 회원정보 
 	private String msStatus;			// 상태	
 	private String msBkGrant;			// 예약가능여부(위약 관련)
@@ -64,23 +68,37 @@ public class DrMsMaininfo {
 	private String msRemark; 			// 비고사항
 	private String msMktAgreeYn; 		// 마케팅동의여부(약관동의)
 	private String msDormant; 			// 휴면계정구분
-	private String loginTime;			// 홈페이지로그인(일시분초)
-	
+	private String loginTime;			// 홈페이지로그인(일시분초)	
 	private String msDi; 												// 실명인증
 	private String inputStaff; 											// 입력사번
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime inputDatetime;								// 입력일시
 	private String inputIp;												// 입력IP
-	
 	private String updateStaff; 										// 수정사번
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime updateDatetime;								// 수정일시
 	private String updateIp; 											// 수정IP
 	
+	/* 컬럼 외  */
 	private String msPhone; 			// 핸드폰번호(full)
 	public String ipAddr;
+	
+	/* 추가 정보 */
+	private String msHandcap;				// 핸디캡
+	private String msLessonExpYn;		// 레슨경험유무
+	private String msLessonMinute;		// 1회레슨시 선호시간(분)
+	private String msLessonTrem;		// 레슨빈도
+	private String msLessonUnit;		// 레슨단위
+	private String msRoundCnt;			// 라운딩횟수
+	private String msRoundUnit;			// 라운딩측정단위
+	private String msJobCd;				// 직업코드
+	private String Cmpnm;				// 회사명
+	private String Cmpaddr1;			// 회사주소
+	private String Cmpaddr2;			// 회사주소상세
+	private Integer carSeq;					// 차량순번
+	private String msCarNo;				// 차량번호
 	
 	public String getFullMsPhone() {
 		return this.msFirstPhone1 + this.msMidPhone1 + this.msLastPhone1;

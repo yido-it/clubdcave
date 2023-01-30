@@ -23,6 +23,28 @@
 		  AND CD_CODE = #{cdCode}
 		</if> 			   
 	</select>
+	
+	<select id="getCommonCodeList" resultType="CdCommon">
+		SELECT CO_DIV
+			 , CD_DIVISION
+			 , CD_CODE
+			 , CD_TITLE1
+			 , CD_TITLE2
+			 , CD_TITLE3
+			 , CD_TITLE4
+			 , CD_LENGTH
+		  FROM CD_COMMON
+		 WHERE CD_USEYN = 'Y'
+		<if test='coDiv != null and coDiv != ""'>
+		  AND CO_DIV = #{coDiv}
+		</if> 	  
+		<if test='cdDivision != null and cdDivision != ""'>
+		  AND CD_DIVISION = #{cdDivision}
+		</if> 	 
+		<if test='cdCode != null and cdCode != ""'>
+		  AND CD_CODE = #{cdCode}
+		</if> 			   
+	</select>
 
 	<select id="sendSms" statementType="CALLABLE" parameterType="hashmap">
 		{ CALL SP_SMS_SEND(
@@ -55,6 +77,45 @@
 			, 'HOMEPAGE'
 			, #{ipAddr}) }
 	</select>
+	
+	
+	<select id="getAddrList" parameterType="hashmap" resultType="hashmap">
+		SELECT
+		  건물관리번호 AS num
+		, CONCAT(
+			  '('
+			, 우편번호
+			, ') '
+			, 시도
+	        , ' '
+			, 시군구
+	        , ' '
+			, 읍면
+	        , ' '
+			, 도로명		
+	        , CONCAT(건물번호본번, IF(건물번호부번 != 0, CONCAT('-', 건물번호부번), ''))
+	        , IF(지하여부 = 1, '지하 ', IF(지하여부 = 2, '공중 ', ''))
+	    ) AS d_address
+	    , CONCAT(
+			  '('
+			, 우편번호
+			, ') '
+			, 시도
+	        , ' '
+			, 시군구
+	        , ' '
+			, 읍면
+	        , ' '
+			, IFNULL(법정동명, IFNULL(리명, ''))	
+	        , CONCAT(지번본번, IF(지번부번 != 0, CONCAT('-', 지번부번), ''))
+	        , IF(지하여부 = 1, '지하 ', IF(지하여부 = 2, '공중 ', ''))
+	    ) AS j_address
+	FROM ziipcode_dummy
+	WHERE
+	   CONCAT(도로명, 건물번호본번, IF(건물번호부번 != 0, CONCAT('-', 건물번호부번), '')) LIKE CONCAT('%', #{searchAddr}, '%')
+	OR CONCAT(IFNULL(법정동명, IFNULL(리명, '')), 지번본번, IF(지번부번 != 0, CONCAT('-', 지번부번), '')) LIKE CONCAT('%', #{searchAddr}, '%')
+	</select>
+	
 
 	<update id="actionAgree" parameterType="hashmap">
 		UPDATE MS_MAININFO_DETAIL

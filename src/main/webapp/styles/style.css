@@ -211,9 +211,7 @@ h1 .badge, h2 .badge, h3 .badge, h4 .badge, h5 .badge {
 }
 
 .bg-highlight {
-  /* background-color: #4A89DC !important; */
-  /* 네이버 로그인 버튼 - 230118 YMS */
-  background-color: #00c63b !important;
+  background-color: #4A89DC !important; 
   color: #FFF !important;
 }
 
@@ -410,6 +408,11 @@ h1 .badge, h2 .badge, h3 .badge, h4 .badge, h5 .badge {
 .color-icon-yellow {
   stroke: #F6BB42 !important;
   fill: rgba(246, 187, 66, 0.3) !important;
+}
+
+.bg-naver-green {
+  background-color: #00c63b !important;
+  color: #FFF !important;
 }
 
 .bg-yellow-dark {

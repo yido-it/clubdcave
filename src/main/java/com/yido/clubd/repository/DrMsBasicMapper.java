@@ -4,7 +4,7 @@ package com.yido.clubd.repository;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import com.yido.clubd.model.DrMsBasic;
-import com.yido.clubd.model.DrMsMaininfo;
+import com.yido.clubd.model.MemberVO;
 
 /**
  * 회원추가정보

@@ -19,3 +19,4 @@
 <script type="text/javascript" src="<%=Globals.serviceJs%>" ></script>
 <script type="text/javascript" src="/scripts/tools.js?now=<%=new Date()%>"></script>
 <script type="text/javascript" src="/scripts/pay.js?now=<%=new Date()%>"></script>
+<script type="text/javascript" src="https://unpkg.com/@swup/preload-plugin@2"></script>

@@ -51,7 +51,7 @@ public class WebController {
 
         log.debug("ip1 - {}", req.getRemoteAddr());
         return "/member/login";
-    }
+    }  
     
     @RequestMapping("/succ-logout")
 	public String successLogout(Model model, Principal principal, HttpServletRequest req, HttpServletResponse res) {
@@ -68,8 +68,7 @@ public class WebController {
     			cookie.setValue(null);
     			res.addCookie(cookie);    			
         	}
-    	}
-    	
+    	}    	
     	return "/index";
 	}
 

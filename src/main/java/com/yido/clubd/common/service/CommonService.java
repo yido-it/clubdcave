@@ -24,6 +24,14 @@ public class CommonService {
     	return commonMapper.getCommonCode(cdCommon);
     }
 
+    public List<CdCommon> getCommonCodeList(CdCommon cdCommon) {
+    	return commonMapper.getCommonCodeList(cdCommon);
+    }
+    
+	public List<Map<String, Object>> getAddrList(Map<String, Object> params) {
+		return commonMapper.getAddrList(params);
+	}
+    
 	public void savePushKey(Map<String, Object> params) throws Exception {
 		commonMapper.savePushKey(params);
 	}
@@ -35,4 +43,5 @@ public class CommonService {
 	public void actionAgree(Map<String, Object> params) throws Exception {
 		commonMapper.actionAgree(params);
 	}
+
 }

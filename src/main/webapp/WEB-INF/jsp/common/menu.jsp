@@ -11,7 +11,7 @@
 			<!-- 비로그인 상태 -->
 			<div class="row mb-0" style="margin:0 auto">
 				<div class="col-6 pr-1">
-					<a href="javascript:location.href='login'" class="btn btn-border btn-m btn-full mb-3 rounded-sm text-uppercase font-900 border-blue-dark color-blue-dark bg-theme">
+					<a href="javascript:location.href='/login'" class="btn btn-border btn-m btn-full mb-3 rounded-sm text-uppercase font-900 border-blue-dark color-blue-dark bg-theme">
 					로그인
 					</a>
 				</div>

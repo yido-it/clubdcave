@@ -5,9 +5,9 @@
  * 테이블명 : DR_MS_MAININFO 
  * 테이블 설명 : 회원정보 (회원/프로) 
 -->
-<mapper namespace="com.yido.clubd.repository.DrMsMaininfoMapper">
+<mapper namespace="com.yido.clubd.repository.MemberMapper">
 
-	<select id="selectDrMsMaininfo" resultType="DrMsMaininfo">
+	<select id="selectMember" resultType="MemberVO">
 		SELECT
 		  	  MS_NUM
 			, MS_STATUS
@@ -23,7 +23,7 @@
 			, MS_NICKNAME
 			, MS_IMAGENAME
 			, MS_SEX
-			, MS_BIRTH
+			, DATE_FORMAT(MS_BIRTH, '%Y-%m-%d') AS MS_BIRTH
 			, MS_BIRTHYL
 			, MS_FIRST_PHONE1
 			, AES_DECRYPT(UNHEX(MS_MID_PHONE1), 'YIDO') AS MS_MID_PHONE1
@@ -57,6 +57,7 @@
 			, MS_DORMANT
 			, LOGIN_TIME
 			, MS_DI
+			, MS_JOB_CD
 			, INPUT_STAFF
 			, INPUT_DATETIME
 			, INPUT_IP
@@ -74,7 +75,7 @@
 		 	AND IFNULL(NULLIF(MS_BLANK,''),'N') = 'N'
     </select>
     
-    <select id="selectLoginUser" resultType="DrMsMaininfo">
+    <select id="selectLoginUser" resultType="MemberVO">
     	/* drMsMaininfoMapper.selectLoginUser - 아이디/비밀번호로 조회 (로그인) */
         SELECT
           MS_NUM
@@ -91,7 +92,7 @@
 			, MS_NICKNAME
 			, MS_IMAGENAME
 			, MS_SEX
-			, MS_BIRTH
+			, DATE_FORMAT(MS_BIRTH, '%Y-%m-%d') AS MS_BIRTH
 			, MS_BIRTHYL
 			, MS_FIRST_PHONE1
 			, AES_DECRYPT(UNHEX(MS_MID_PHONE1), 'YIDO') AS MS_MID_PHONE1
@@ -125,6 +126,7 @@
 			, MS_DORMANT
 			, LOGIN_TIME
 			, MS_DI
+			, MS_JOB_CD
 			, INPUT_STAFF
 			, INPUT_DATETIME
 			, INPUT_IP
@@ -146,6 +148,8 @@
 			, MS_DIVISION
 			, MS_LEVEL
 			, MS_LOGIN_CD
+			, MS_SESSION_KEY
+			, MS_SESSION_LIMIT
 			, MS_LINK
 			, MS_ID
 			, MS_PASSWORD
@@ -154,7 +158,7 @@
 			, MS_NICKNAME
 			, MS_IMAGENAME
 			, MS_SEX
-			, MS_BIRTH
+			, DATE_FORMAT(MS_BIRTH, '%Y-%m-%d') AS MS_BIRTH
 			, MS_BIRTHYL
 			, MS_FIRST_PHONE1
 			, AES_DECRYPT(UNHEX(MS_MID_PHONE1), 'YIDO') AS MS_MID_PHONE1
@@ -188,6 +192,7 @@
 			, MS_DORMANT
 			, LOGIN_TIME
 			, MS_DI
+			, MS_JOB_CD
 			, INPUT_STAFF
 			, INPUT_DATETIME
 			, INPUT_IP
@@ -226,7 +231,7 @@
 			, MS_NICKNAME
 			, MS_IMAGENAME
 			, MS_SEX
-			, MS_BIRTH
+			, DATE_FORMAT(MS_BIRTH, '%Y-%m-%d') AS MS_BIRTH
 			, MS_BIRTHYL
 			, MS_FIRST_PHONE1
 			, AES_DECRYPT(UNHEX(MS_MID_PHONE1), 'YIDO') AS MS_MID_PHONE1
@@ -260,6 +265,7 @@
 			, MS_DORMANT
 			, LOGIN_TIME
 			, MS_DI
+			, MS_JOB_CD
 			, INPUT_STAFF
 			, INPUT_DATETIME
 			, INPUT_IP
@@ -272,7 +278,7 @@
 		LIMIT 1
 	</select>
 		
-    <insert id="insertDrMsMaininfo">
+    <insert id="insertMember">
     	<selectKey keyColumn="MS_NUM" keyProperty="msNum" order="BEFORE" resultType="java.lang.String">
     		SELECT LPAD(((IFNULL(MAX(MS_NUM), 0) ) + 1), 12, 0) AS MS_NUM FROM DR_MS_MAININFO
     	</selectKey>
@@ -324,7 +330,7 @@
 			, #{ipAddr}						
 		)	 	
     </insert>
-    <update id="updateDrMsMaininfo">
+    <!-- <update id="updateMember">
     	UPDATE DR_MS_MAININFO
     		SET MS_NUM = #{msNum}
     		<if test='newMsPassword != null and newMsPassword != ""'>
@@ -338,15 +344,164 @@
 			</if>
 			<if test='msPhone != null and msPhone != ""'>
 			, MS_FIRST_PHONE1 = #{msFirstPhone1}
-			, MS_MID_PHONE1 = #{msMidPhone1}
+			, MS_MID_PHONE1 = HEX(AES_ENCRYPT(#{msMidPhone1}, 'YIDO'))
 			, MS_LAST_PHONE1 = #{msLastPhone1}
 			</if>
 			, UPDATE_STAFF = #{updateStaff}
 			, UPDATE_DATETIME = NOW()
 			, UPDATE_IP = #{updateIp}
 		 WHERE MS_NUM = #{msNum}
-    </update>    	
-	<select id="selectFindUser" parameterType="hashmap" resultType="DrMsMaininfo">
+    </update> -->
+    <update id="updateMember">
+    	UPDATE DR_MS_MAININFO
+    		SET MS_NUM = #{msNum}
+    		<if test='newMsPassword != null and newMsPassword != ""'>
+			, MS_PASSWORD = SHA2(#{newMsPassword}, 256)
+			</if>
+			<if test='msName != null and msName != ""'>
+			, MS_NAME = #{msName}
+			</if>
+			<if test='smsChk1 != null and smsChk1 != ""'>
+			, SMS_CHK1 = #{smsChk1}
+			</if>
+			<if test='msPhone != null and msPhone != ""'>
+			, MS_FIRST_PHONE1 = #{msFirstPhone1}
+			, MS_MID_PHONE1 = HEX(AES_ENCRYPT(#{msMidPhone1}, 'YIDO'))
+			, MS_LAST_PHONE1 = #{msLastPhone1}
+			</if>
+			<if test='msSex != null and msSex != ""'>
+			, MS_SEX = #{msSex}
+			</if>
+			<if test='msBirth != null and msBirth != ""'>
+			, MS_BIRTH = DATE_FORMAT(#{msBirth}, '%Y%m%d')
+			</if>
+			<if test='msCompnm != null and msCompnm != ""'>
+			, MS_COMPNM = #{msCompnm}
+			</if>
+			<if test='msCompaddr1 != null and msCompaddr1 != ""'>
+			, MS_COMPADDR1 = #{msCompaddr1}
+			</if>
+			<if test='msCompaddr2 != null and msCompaddr2 != ""'>
+			, MS_COMPADDR2 = #{msCompaddr2}
+			</if>
+			<if test='msJobCd != null and msJobCd != ""'>
+			, MS_JOB_CD = #{msJobCd}
+			</if>
+			, UPDATE_STAFF = #{updateStaff}
+			, UPDATE_DATETIME = NOW()
+			, UPDATE_IP = #{updateIp}
+		 WHERE MS_NUM = #{msNum}
+    </update>  
+    <select id="selectMemberBasic" resultType="MemberVO" parameterType="String">
+    	SELECT
+    		  MS_NUM
+    		, CONCAT(MS_HANDCAP, '개') AS MS_HANDCAP
+    		, MS_LESSON_EXP_YN
+    		, CONCAT(MS_LESSON_MINUTE, '분') AS MS_LESSON_MINUTE
+    		, CONCAT(MS_LESSON_UNIT, MS_LESSON_TREM, '회') AS MS_LESSON_TREM
+    		, CONCAT(MS_ROUND_UNIT, MS_ROUND_CNT, '회') AS MS_ROUND_CNT
+    	FROM DR_MS_BASIC
+    	WHERE MS_NUM = #{msNum}
+    </select>
+    <insert id="insertMemberBasic">
+    	INSERT INTO DR_MS_BASIC (
+    		  MS_NUM
+    		<if test='msHandcap != null and msHandcap != ""'>
+    		, MS_HANDCAP
+    		</if>
+    		<if test='msLessonExpYn != null and msLessonExpYn != ""'>
+    		, MS_LESSON_EXP_YN
+    		</if>
+    		<if test='msLessonMinute != null and msLessonMinute != ""'>
+    		, MS_LESSON_MINUTE
+    		</if>
+    		<if test='msLessonTrem != null and msLessonTrem != ""'>
+    		, MS_LESSON_TREM
+    		</if>
+    		<if test='msLessonUnit != null and msLessonUnit != ""'>
+    		, MS_LESSON_UNIT
+    		</if>
+    		<if test='msRoundCnt != null and msRoundCnt != ""'>
+    		, MS_ROUND_CNT
+    		</if>
+    		<if test='msRoundUnit != null and msRoundUnit != ""'>
+    		, MS_ROUND_UNIT
+    		</if>
+    	)VALUES (
+    		  #{msNum}
+    		<if test='msHandcap != null and msHandcap != ""'>
+    		, #{msHandcap}
+    		</if>
+    		<if test='msLessonExpYn != null and msLessonExpYn != ""'>
+    		, #{msLessonExpYn}
+    		</if>
+    		<if test='msLessonMinute != null and msLessonMinute != ""'>
+    		, #{msLessonMinute}
+    		</if>
+    		<if test='msLessonTrem != null and msLessonTrem != ""'>
+    		, #{msLessonTrem}
+    		</if>
+    		<if test='msLessonUnit != null and msLessonUnit != ""'>
+    		, #{msLessonUnit}
+    		</if>
+    		<if test='msRoundCnt != null and msRoundCnt != ""'>
+    		, #{msRoundCnt}
+    		</if>
+    		<if test='msRoundUnit != null and msRoundUnit != ""'>
+    		, #{msRoundUnit}
+    		</if>
+    	)
+   	</insert>
+    <update id="updateMemberBasic">
+    	UPDATE DR_MS_BASIC
+    		SET MS_NUM = #{msNum}
+    		<if test='msHandcap != null and msHandcap != ""'>
+			, MS_HANDCAP = #{msHandcap}
+			</if>
+			<if test='msLessonExpYn != null and msLessonExpYn != ""'>
+			, MS_LESSON_EXP_YN = #{msLessonExpYn}
+			</if>
+			<if test='msLessonMinute != null and msLessonMinute != ""'>
+			, MS_LESSON_MINUTE = #{msLessonMinute}
+			</if>
+			<if test='msLessonTrem != null and msLessonTrem != ""'>
+			, MS_LESSON_TREM = #{msLessonTrem}
+			</if>
+			<if test='msLessonUnit != null and msLessonUnit != ""'>
+			, MS_LESSON_UNIT = #{msLessonUnit}
+			</if>
+			<if test='msRoundCnt != null and msRoundCnt != ""'>
+			, MS_ROUND_CNT = #{msRoundCnt}
+			</if>
+			<if test='msRoundUnit != null and msRoundUnit != ""'>
+			, MS_ROUND_UNIT = #{msRoundUnit}
+			</if>
+		 WHERE MS_NUM = #{msNum}
+    </update>  
+    <select id="selectMemberCarList" resultType="MemberVO" parameterType="String">
+    	SELECT
+    		  CAR_SEQ
+    		, MS_NUM
+    		, MS_CAR_NO
+    	FROM DR_MS_CAR
+    	WHERE MS_NUM = #{msNum}
+    	ORDER BY CAR_SEQ ASC
+    </select>
+    <delete id="deleteMemberCar">
+    	DELETE FROM DR_MS_CAR WHERE MS_NUM = #{msNum}
+    </delete>
+    <insert id="insertMemberCar">
+    	INSERT INTO DR_MS_CAR (
+    		  CAR_SEQ
+    		, MS_NUM
+    		, MS_CAR_NO
+    	)VALUES (
+    		  #{carSeq}
+    		, #{msNum}
+    		, #{msCarNo}
+    	)
+    </insert> 
+	<select id="selectFindUser" parameterType="hashmap" resultType="MemberVO">
 		SELECT 
 			  MS_NUM
 			, MS_ID
@@ -366,7 +521,7 @@
 		 LIMIT 1
 	</select>
 
-	<select id="selectFindPw" parameterType="hashmap" resultType="DrMsMaininfo">
+	<select id="selectFindPw" parameterType="hashmap" resultType="MemberVO">
 		SELECT MS_NUM
 			 , CONCAT(MS_FIRST_PHONE1, AES_DECRYPT(UNHEX(MS_MID_PHONE1), 'YIDO'), MS_LAST_PHONE1 ) AS MS_PHONE
 		  FROM DR_MS_MAININFO M
@@ -391,7 +546,7 @@
 		   AND IFNULL(NULLIF(MS_BLANK,''),'N') = 'N'
 	</select>
 	
-	<select id="selectProList" resultType="DrMsMaininfo">
+	<select id="selectProList" resultType="MemberVO">
 	/* drMsMaininfoMapper.selectProList - 프로 목록 조회 */
 		SELECT *
 		FROM DR_MS_MAININFO

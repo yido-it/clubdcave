@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yido.clubd.common.utils.ResultVO;
 import com.yido.clubd.common.utils.Utils;
-import com.yido.clubd.model.DrMsMaininfo;
+import com.yido.clubd.model.MemberVO;
 import com.yido.clubd.model.DrProSchedule;
 import com.yido.clubd.model.ProLicense;
 import com.yido.clubd.model.ProNotice;
-import com.yido.clubd.service.DrMsMaininfoService;
+import com.yido.clubd.service.MemberService;
 import com.yido.clubd.service.DrProScheduleService;
 import com.yido.clubd.service.ProLicenseService;
 import com.yido.clubd.service.ProNoticeService;
@@ -42,7 +42,7 @@ public class ProController {
 	private DrProScheduleService drProScheduleService;
 	
 	@Autowired
-	private DrMsMaininfoService drMsMaininfoService;
+	private MemberService drMsMaininfoService;
 	
 	/**
 	 * 레슨프로 특이사항 등록
@@ -216,7 +216,7 @@ public class ProController {
 		Map<String, Object> map = new HashMap<>();		
 		
 		try {
-			List<DrMsMaininfo> drMsMaininfoList = drMsMaininfoService.selectProList();
+			List<MemberVO> drMsMaininfoList = drMsMaininfoService.selectProList();
 			
 			if(drMsMaininfoList.isEmpty()) {
 				throw new Exception("조회 가능한 프로가 없습니다");
@@ -241,11 +241,11 @@ public class ProController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("msNum", msNum);
 		
-		DrMsMaininfo drMsMaininfo = drMsMaininfoService.selectDrMsMaininfo(map);
+		MemberVO member = drMsMaininfoService.selectMember(map);
 		List<ProNotice> proNoticeList = proNoticeService.selectProNoticeList(map);
 		List<ProNotice> proImageList = proNoticeService.selectProImageList(map);
 		
-		model.addAttribute("proInfo", drMsMaininfo);
+		model.addAttribute("proInfo", member);
 		model.addAttribute("proNoticeList", proNoticeList);
 		model.addAttribute("proPictureList", proImageList);
 		

@@ -16,6 +16,10 @@ public interface CommonMapper {
 	
 	public CdCommon getCommonCode(CdCommon cdCommon);
 	
+	public List<CdCommon> getCommonCodeList(CdCommon cdCommon);
+	
+	public List<Map<String, Object>> getAddrList(Map<String, Object> params);
+	
 	public void savePushKey(Map<String, Object> params) throws Exception;
 	
 	public void sendSms(Map<String, Object> params) throws Exception;

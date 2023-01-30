@@ -7,7 +7,7 @@
 <body class="theme-dark">
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
     
-<div class="page-content mb-0">
+<div class="" style="transform:translateX(0px);">
     <div id="">
 		<div class="header header-fixed header-logo-app header-transparent">
 			<a href="#" class="color-white header-title header-subtitle">약관 확인하기</a>
@@ -36,7 +36,7 @@
 	                <a href="#" class="mt-4 mb-4 btn btn-md bg-blue-dark btn-full shadow-xl text-uppercase font-800 rounded-s" id="btnNext">
 	                    다음단계
 	                </a>
-			       	<input type="text" id="msLoginCd" name="msLoginCd" value="${msLoginCd}"/>
+			       	<input type="hidden" id="msLoginCd" name="msLoginCd" value="${msLoginCd}"/>
 	            </div>
 	        </div>
 	        <div class="card-overlay bg-black opacity-80"></div>
@@ -114,6 +114,7 @@
    </div>
 </div>
 </div>  
+<div class="menu-hider"><div></div></div>
 <jsp:include page="../common/alertModal.jsp" />  
 	<script type="text/javascript">
 	

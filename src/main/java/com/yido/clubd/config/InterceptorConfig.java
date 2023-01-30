@@ -18,7 +18,7 @@ import org.springframework.web.util.WebUtils;
 
 import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
-import com.yido.clubd.service.DrMsMaininfoService;
+import com.yido.clubd.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class InterceptorConfig extends HandlerInterceptorAdapter {
 	
 	@Autowired
-	private DrMsMaininfoService drMsMaininfoService;
+	private MemberService drMsMaininfoService;
 	
 	@Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {

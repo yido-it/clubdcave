@@ -273,34 +273,29 @@ function chkInputVal (id) {
     
     if($('#' + id).val() == "" || $('#' + id).val() == null) {
     	if(consonantCode === 0){
-	        alert(str + '를 입력해주세요');
+	        alertModal.fail(str + '를 입력해주세요');
 	    } else {	
-	        alert(str + '을 입력해주세요');
+	        alertModal.fail(str + '을 입력해주세요');
 	    }
 		return false;
 	}
     return true;
 }
-// console.log("${sessionScope.msMember}");
-if ("${sessionScope.msMember.msNum}" != null && "${sessionScope.msMember.msNum}" != "") {
-	$('#btnLogout').show();
+
+function setSelectValue(id) {
+	var id = "#" + id;
+	var valId = id + "Val";
+	if($(valId).val() != null && $(valId).val() != "") {		
+		$(id).parent().find('span').removeClass('input-style-1-inactive input-style-1-active');
+		$(id).val($(valId).val()).prop("selected", true);
+		$(id).parent().find('span').addClass('input-style-1-inactive input-style-1-active');
+	}
 }
 
-$('.btnLogout').on('click', function() {
-	var sUrl = "<c:url value='/member/doLogout'/>";
-	 $.ajax({
-	        url: sUrl,
-	        type: "post",
-	        dataType: 'json',
-	        contentType: 'application/x-www-form-urlencoded; charset=UTF-8', 
-	        success: function(data) {		    	
-	        	if(data.result) {
-					alert('로그아웃 되었습니다.');
-					location.href = "<c:url value='/login'/>";
-				}              
-	        },
-	        error: function(data) {
-	        	alert('로그아웃에 실패했습니다.');
-	        }
-	    });
-});
+function setDateValue(id) {
+	var id = "#" + id;
+	if($(id).val() != null && $(id).val() != "") {		
+		$(id).parent().find('span').removeClass('input-style-1-inactive input-style-1-active');
+		$(id).parent().find('span').addClass('input-style-1-inactive input-style-1-active');
+	}
+}

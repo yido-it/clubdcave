@@ -28,7 +28,7 @@
 	            console.alertOpen("출력할 메시지가 없습니다.");
 	            return;
 	        }else{
-	            this.alertOpen("fa fa-times-circle color-blue-dark", txt);
+	            this.alertOpen("fa-regular fa-envelope color-blue-dark", txt);
 	        }
 		},
 		alertOpen : function(icon, txt){
@@ -39,6 +39,7 @@
 	        setTimeout(this.close, 1000, popup);
 	    },
 		close : function(popup) {
+			popup.find("i").removeClass();
 			popup.removeClass('menu-active');
 		}
 	    
