@@ -3,8 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="content"> 
-	<div class="content mb-0">
-		<h1 class="font-700">EVENT</h1>
+	<div class="mb-0">
+	
+		<h1 class="font-700">
+			<img src="images/logo_wing.png" class="txt_logo">
+		EVENT</h1>
 	
 		<div class="single-slider-boxed owl-carousel owl-no-dots">
 			<div class="item">

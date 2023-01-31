@@ -469,11 +469,11 @@ $(document).ready(function(){
         setTimeout(function(){
             $('.user-slider').owlCarousel({loop:false, margin:20, nav:false, lazyLoad:true, items:1, autoplay: false, dots:false, autoplayTimeout:4000});
             $('.single-slider').owlCarousel({loop:true, margin:0, nav:false, lazyLoad:true, stagePadding:0, items:1, autoplay: true, autoplayTimeout:4000});
-            $('.single-slider-boxed').owlCarousel({loop:true, margin:20, stagePadding:40, nav:false, lazyLoad:true, items:1, autoplay: true, autoplayTimeout:4000});  //이벤트 슬라이드
+            $('.single-slider-boxed').owlCarousel({loop:true, margin:18, stagePadding:32, nav:false, lazyLoad:true, items:1, autoplay: true, autoplayTimeout:4000});  //이벤트 슬라이드
             $('.card-slider').owlCarousel({loop:true, margin:20, nav:false, lazyLoad:true, stagePadding:50, items:1, autoplay: true, autoplayTimeout:4000});
             $('.story-slider').owlCarousel({loop:true, margin:20, nav:false, stagePadding:30, lazyLoad:true, items:4, autoplay: false, dots:false, autoplayTimeout:4000});
             $('.cover-slider').owlCarousel({loop:false, margin:0, nav:false, lazyLoad:true, items:1, autoplay: true, autoplayTimeout:6000});
-            $('.double-slider').owlCarousel({loop: true, stagePadding:35, margin: 23, nav: false, items: 2, autoplay:true, autoPlayTimeout:4000, dots: false}); //프로사진 슬라이드
+            $('.double-slider').owlCarousel({loop: true, stagePadding:27, margin:18, nav: false, items: 2, autoplay:true, autoPlayTimeout:4000, dots: false}); //프로사진 슬라이드
             $('.task-slider').owlCarousel({loop:true, margin:20, nav:false, stagePadding:50, lazyLoad:true, items:2, autoplay: false, autoplayTimeout:4000});
             $('.next-slide, .next-slide-arrow, .next-slide-text, .cover-next').on('click',function(){$(this).parent().find('.owl-carousel').trigger('next.owl.carousel');});
             $('.prev-slide, .prev-slide-arrow, .prev-slide-text, .cover-prev').on('click',function(){$(this).parent().find('.owl-carousel').trigger('prev.owl.carousel');});

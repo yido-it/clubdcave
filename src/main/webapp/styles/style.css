@@ -1,53 +1,4 @@
-/*
-
-1.  Table of Contents 
-2.  Typography
-3.  Structure
-4.  Page Logos
-5.  Highlight Colors
-6.  Header and Page Title
-7.  Menu Structure & Design
-8.  General Utility Classes
-9. Preloader
-10. Buttons
-11. Icons
-12. Accordion
-13. Offline Detection
-14. Add to Home
-15. Ads
-16. Alerts
-17. Notifications
-18. Back to Top
-19. Cards
-20. Chips
-21. Dividers
-22. Switches
-23. Radios & Checkboxes
-24. Input Styles
-25. Range Sliders
-26. List Groups
-27. Toasts
-28. Snackbars
-29. Pagination
-30. Search
-31. Tabs
-32. Working Hours
-33. Iframes
-34. Page Calendar
-35. Page Chat
-36. Page Contact
-37. Page Map
-38. Page Media
-39. Page Timeline
-40. Page Interests
-41. Page VCard
-42. Dark Mode Settings
-43. Demo Styles - Can be Removed
-44. Lightbox Plugin
-45. Owl Carousel
-
-*/
-/*Typography Settings*/
+ 
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css); 
 
 @font-face {
@@ -211,7 +162,7 @@ h1 .badge, h2 .badge, h3 .badge, h4 .badge, h5 .badge {
 }
 
 .bg-highlight {
-  background-color: #4A89DC !important; 
+  background-color: #4A89DC !important;
   color: #FFF !important;
 }
 
@@ -408,11 +359,6 @@ h1 .badge, h2 .badge, h3 .badge, h4 .badge, h5 .badge {
 .color-icon-yellow {
   stroke: #F6BB42 !important;
   fill: rgba(246, 187, 66, 0.3) !important;
-}
-
-.bg-naver-green {
-  background-color: #00c63b !important;
-  color: #FFF !important;
 }
 
 .bg-yellow-dark {
@@ -877,7 +823,7 @@ h1 .badge, h2 .badge, h3 .badge, h4 .badge, h5 .badge {
 .border-transparent {
   border-color: transparent !important;
 }
-
+.letter1{letter-spacing:1px !important}
 /*--Header---*/
 .header-title span {
   font-family: "Poppins", sans-serif;
@@ -1253,7 +1199,7 @@ h1 .badge, h2 .badge, h3 .badge, h4 .badge, h5 .badge {
 }
 
 .page-title-fixed {
-  dislay: flex;
+  display: flex;
   position: fixed;
   left: 0px;
   right: 0px;
@@ -1758,6 +1704,7 @@ h1 .badge, h2 .badge, h3 .badge, h4 .badge, h5 .badge {
 .font-900 {
   font-weight: 700;
 }
+.bold{font-weight:bold !important}
 
 /*Opacity Values - Used for Contrasting Text, example opacity-30 will make the opacity 0.3*/
 .opacity-0 {
@@ -3723,6 +3670,7 @@ img.mx-auto {
   -webkit-appearance: none;
   background-color: rgba(0, 0, 0, 0);
   font-size: 14px;
+  
 }
 
 .input-style-1 select:focus {
@@ -3806,7 +3754,7 @@ input[type="range"]::-webkit-slider-thumb:after {
 }
 
 .input-style-2 .input-style-1-active {
-  color: #007bff !important;
+  color: #3b80d6  !important;
   transform: translateY(-25px);
   transition: all 150ms ease;
 }
@@ -3853,13 +3801,14 @@ input[type="range"]::-webkit-slider-thumb:after {
   font-size: 13px;
   -webkit-appearance: none;
   transition: all 250ms ease;
+  color:#f7f7f7
 }
 
 .input-style-2 textarea:focus {
   padding-top: 14px;
   line-height: 24px;
   height: 150px;
-  transition: all 250ms ease;
+  transition: all 250ms ease;  color:#f9f9f9
 }
 
 .input-style-2 select {
@@ -5743,8 +5692,8 @@ code {
 .theme-dark .card .input-style-2 span,
 .theme-dark .card.input-style span,
 .theme-dark .bg-theme {
-  background-color: #0f1117 !important;
-}
+  /* background-color: #0f1117 !important; */
+  background-color:unset}
 
 .theme-dark .menu .input-style-1 span,
 .theme-dark .menu .input-style-2 span {
@@ -5773,6 +5722,10 @@ code {
   color: #FFF !important;
   border-color: rgba(255, 255, 255, 0.05) !important;
 }
+.theme-dark input::placeholder,
+.theme-dark textarea::placeholder,
+.theme-dark select::placeholder{color:rgb(151, 151, 151) !important}
+
 .theme-dark select option{color:#000}
 
 .theme-dark .input-style-1 input,
@@ -6052,6 +6005,18 @@ code {
 {background-image: url(../images/pictures/pro2.jpg)}
 .bg-pro3
 {background-image: url(../images/pictures/pro3.jpg)}
+
+.bg-main_slide01
+{background-image: url(../images/main/main_slide01.jpg)}
+.bg-main_slide02
+{background-image: url(../images/main/main_slide02.jpg)} 
+.bg-main_slide03
+{background-image: url(../images/main/main_slide03.jpg)} 
+.bg-main_slide04
+{background-image: url(../images/main/main_slide04.jpg)} 
+.bg-main_slide05
+{background-image: url(../images/main/main_slide05.jpg)}  
+
 
 /*Demo Colors*/
 .demo-color {
@@ -6934,10 +6899,9 @@ html.lb-disable-scrolling {
   z-index: 2;
   display: block;
   font-size: 10px;
-  font-weight: 500;
+  font-weight: 400;
   margin-top: -6px;
   opacity: 0.7;
-  font-family: "Roboto", sans-serif !important;
 }
 #footer-bar a i {
   font-size: 18px;
@@ -7129,10 +7093,14 @@ html.lb-disable-scrolling {
   background-image: linear-gradient(to bottom, #1b55bf 0%, #1740bf 100%) !important;
 }
 
+
+
+
 /**************************커스텀********************************/
 .theme-dark .menu, .theme-dark .interest-check label{
 background-color: #1b1d21;}
 /*공통*/
+.txt_logo{width:13px;margin-bottom:5px}
 .badge{font-weight:400}
 /*예약*/
 /*bay선택*/
@@ -7159,4 +7127,7 @@ background-color: #1b1d21;}
 .box_agree{    overflow-y: scroll;  height: 136px;  background-color: #585858;  width: 92%;  margin: 0 auto;}
 
 /*프로상세*/
- 
+.image-fit{height: 91px;  width: 100%;  object-fit: cover;}
+
+/*이용권*/
+.collapse{border-bottom:1px solid #333}

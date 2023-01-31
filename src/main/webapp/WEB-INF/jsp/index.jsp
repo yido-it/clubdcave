@@ -26,8 +26,6 @@
 	<div class="header header-auto-show header-fixed header-logo-center ">
 		<a href="index.html" class="header-title">클럽디 청담</a>
 		<a href="#" data-menu="menu-main" class="header-icon header-icon-4"><i class="fas fa-bars"></i></a>
-		<a href="#" data-toggle-theme="" class="header-icon header-icon-1 show-on-theme-dark"><i class="fas fa-sun"></i></a>
-		<a href="#" data-toggle-theme="" class="header-icon header-icon-1 show-on-theme-light"><i class="fas fa-moon"></i></a>
 	</div>
 	<!--스크롤내리면 보이는 Header-->
 	
@@ -38,10 +36,9 @@
 	<div class="">  
 		<!--메인슬라이드-->
 		<div class="single-slider  slider-has-arrows  owl-carousel   owl-dots-over">
-			<div class="card m-0 bg-18" data-card-height="300" onClick="location.href='bay_detail.html'">
+			<div class="card m-0 bg-main_slide01" data-card-height="300" onClick="location.href='bay_detail.html'">
 				<div class="card-bottom">
-					<span class="badge bg-blue-dark px-2 py-1 ml-2 mt-2 text-uppercase">골프</span> 
-					<h3 class="color-white px-3 mb-0">B1 카브주간</h3>
+					<h1 class="color-white px-3 mb-0">CAVE<span class="badge bg-blue-dark px-2 py-1 ml-2 mt-2 text-uppercase">B1</span></h1>
 					<p class="px-3 color-white font-15 opacity-80 mb-4">
 					풀스윙에서 제공하는 골프게임을 즐겨보세요
 					</p> 
@@ -49,10 +46,10 @@
 				<div class="card-overlay bg-gradient"></div>
 			</div>
 			
-			<div class="card m-0 bg-1" data-card-height="300" onClick="location.href='bay_detail.html'">
+			<div class="card m-0 bg-main_slide02" data-card-height="300" onClick="location.href='bay_detail.html'">
 				<div class="card-bottom">
-					<span class="badge bg-highlight px-2 py-1 ml-2 mt-2 text-uppercase">게임</span> 
-					<h3 class="color-white px-3 mb-0">2F 오픈타석</h3>
+					<!-- <span class="badge bg-highlight px-2 py-1 ml-2 mt-2 text-uppercase">게임</span>  -->
+					<h1 class="color-white  px-3 mb-0">CAVE Restaurant <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">B1</span></h1>
 					<p class="px-3 color-white font-15 opacity-80 mb-4">
 					풀스윙에서 제공하는 골프게임을 즐겨보세요
 					</p>
@@ -60,10 +57,27 @@
 				<div class="card-overlay bg-gradient"></div>
 			</div>
 		
-			<div class="card m-0 bg-28" data-card-height="300" onClick="location.href='bay_detail.html'"> 
+			<div class="card m-0 bg-main_slide03" data-card-height="300" onClick="location.href='bay_detail.html'"> 
 				<div class="card-bottom">
-					<span class="badge bg-highlight px-2 py-1 ml-2 mt-2 text-uppercase">레슨</span> 
-					<h3 class="color-white px-3 mb-0">1F 카브주간</h3>
+					<h1 class="color-white px-3 mb-0">ProShop <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">1F</span></h1>
+					<p class="px-3 color-white font-15 opacity-80 mb-4">
+					풀스윙에서 제공하는 골프게임을 즐겨보세요
+					</p>
+				</div>
+				<div class="card-overlay bg-gradient"></div>
+			</div>
+				<div class="card m-0 bg-main_slide04" data-card-height="300" onClick="location.href='bay_detail.html'"> 
+				<div class="card-bottom">
+					<h1 class="color-white  px-3 mb-0">오픈타석 <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">2F</span></h1>
+					<p class="px-3 color-white font-15 opacity-80 mb-4">
+					풀스윙에서 제공하는 골프게임을 즐겨보세요
+					</p>
+				</div>
+				<div class="card-overlay bg-gradient"></div>
+			</div>
+				<div class="card m-0 bg-main_slide05" data-card-height="300" onClick="location.href='bay_detail.html'"> 
+				<div class="card-bottom">
+				<h1 class="color-white  px-3 mb-0">Lesson <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">3F</span></h1>
 					<p class="px-3 color-white font-15 opacity-80 mb-4">
 					풀스윙에서 제공하는 골프게임을 즐겨보세요
 					</p>

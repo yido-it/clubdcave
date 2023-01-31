@@ -51,9 +51,9 @@
 			<i class="fa fa-user color-magenta-dark"></i>프로정보<i class="fa fa-angle-right"></i>
 		</a>
 		
-		<a href="event.html" id="nav-pages">
+	<!-- 	<a href="event.html" id="nav-pages">
 			<i class="fa fa-gift color-green-light"></i>이벤트<i class="fa fa-angle-right"></i>
-		</a>
+		</a> -->
 		
 		<a href="board.html" id="nav-media">
 			<i class="fa fa-list color-teal-dark"></i>공지사항<i class="fa fa-angle-right"></i>
