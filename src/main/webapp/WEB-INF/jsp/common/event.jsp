@@ -5,8 +5,7 @@
 <div class="content"> 
 	<div class="mb-0">
 	
-		<h1 class="font-700">
-			<img src="images/logo_wing.png" class="txt_logo">
+		<h1 class="font-700 ml-1">
 		EVENT</h1>
 	
 		<div class="single-slider-boxed owl-carousel owl-no-dots">

@@ -4,8 +4,7 @@
 
 <div class="content ">
 	<div class="">
-		<h1 class="font-700">
-		<img src="images/logo_wing.png" class="txt_logo">
+		<h1 class="font-700  ml-1">
 		PROMOTION</h1>
 	
 		<div class="cover-slider owl-carousel owl-no-dots">

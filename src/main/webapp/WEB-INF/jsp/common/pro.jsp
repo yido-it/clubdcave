@@ -4,8 +4,7 @@
 
     <!--앰베서더-->
     <div class="content mt-3">
-         <h1 class="font-700">
-         	<img src="images/logo_wing.png" class="txt_logo">
+         <h1 class="font-700  ml-1">
          AMBASSADOR</h1>
        
          <div class="cover-slider owl-carousel owl-no-dots">
@@ -23,8 +22,7 @@
     
 <div class="content mt-3">
 	<div class="">
-		<h1 class="font-700">
-		<img src="images/logo_wing.png" class="txt_logo">
+		<h1 class="font-700  ml-1">
 		PRO GOLFER</h1>
 		
 		<div class="double-slider owl-carousel owl-no-dots mb-4" style="">

@@ -3,8 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="content mt-3 mb-0">
-	<h1 class="font-700 ">
-	 	<img src="images/logo_wing.png" class="txt_logo">
+	<h1 class="font-700  ml-1">
 		BAY</h1>
 </div>
 <a href="bay_detail.html" class="card card-style" data-card-height="120"  style="background: url(../images/gallery/8.jpg) no-repeat 0 0;background-size:cover">
@@ -22,7 +21,7 @@
 
         <a href="bay_detail.html" class="card card-style" data-card-height="120"  style="background: url(../images/main/main_slide02.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
-                <h3 class="color-white ">Restaurant <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">B1</span></h3>
+                <h3 class="color-white ">CAVE Restaurant <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">B1</span></h3>
                 <p class="color-white opacity-80 mb-0 mt-n2">
                     Full Swing은 시장에서 가장 컴팩트한 완전한
                 </p>
