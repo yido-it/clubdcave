@@ -1,9 +1,13 @@
 package com.yido.clubd.repository;
 
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import com.yido.clubd.model.DrBkHistory;
 import com.yido.clubd.model.DrVoucherUse;
 
 /**
@@ -16,7 +20,12 @@ import com.yido.clubd.model.DrVoucherUse;
 @Repository
 public interface DrVoucherUseMapper {
 
-	// 이용권사용내역 등록
+	public List<DrVoucherUse> selectList(Map<String, Object> param);
+	
+	// 사용내역 등록
 	public int insertDrVoucherUse(DrVoucherUse drVoucherUse);
+	
+	// 사용내역 삭제
+	public int deleteDrVoucherUse(DrVoucherUse drVoucherUse);
 
 }

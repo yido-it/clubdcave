@@ -1,11 +1,8 @@
 package com.yido.clubd.repository;
 
-
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-
 import com.yido.clubd.model.DrVoucherSale;
-import com.yido.clubd.model.DrVoucherSaleLog;
 
 /**
  * 회원이용권 구매내역 로그

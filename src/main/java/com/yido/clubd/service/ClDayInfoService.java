@@ -22,7 +22,23 @@ public class ClDayInfoService {
 	@Autowired
     private ClDayInfoMapper clDayInfoMapper;
 
+	/**
+	 * 지점, 베이, 회원등급에 따른 달력 조회 
+	 * 
+	 * @param map
+	 * @return
+	 */
     public List<Map<String, Object>> selectList(Map<String, Object> map) {
     	return clDayInfoMapper.selectList(map);
+    }
+    
+    /**
+     * 기본달력
+     * 
+     * @param map
+     * @return
+     */
+    public List<Map<String, Object>> selectBasicList(Map<String, Object> map) {
+    	return clDayInfoMapper.selectBasicList(map);
     }
 }

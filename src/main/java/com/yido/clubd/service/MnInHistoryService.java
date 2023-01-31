@@ -33,7 +33,7 @@ import com.yido.clubd.repository.DrBkHistoryMapper;
 import com.yido.clubd.repository.DrBkHistoryTempMapper;
 import com.yido.clubd.repository.DrBkMarkMapper;
 import com.yido.clubd.repository.DrBkMnMapMapper;
-import com.yido.clubd.repository.DrMsMaininfoMapper;
+import com.yido.clubd.repository.MemberMapper;
 import com.yido.clubd.repository.MnInHistoryMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -60,7 +60,7 @@ public class MnInHistoryService {
     private DrBkHistoryTempMapper drBkHistoryTempMapper;
 	
 	@Autowired
-    private DrMsMaininfoMapper drMsMaininfoMapper;
+    private MemberMapper memberMapper;
 	
 	@Autowired
     private MnInHistoryMapper mnInHistoryMapper;
@@ -133,7 +133,7 @@ public class MnInHistoryService {
 				
 				params.put("msNum", msNum);
 	
-				SessionVO sessionVO = drMsMaininfoMapper.selectMsSession(params);
+				SessionVO sessionVO = memberMapper.selectMsSession(params);
 				log.info("[successPayLogic] successPayLogic : " + sessionVO);
 				if(sessionVO == null) {
 					throw new Exception("회원정보가 존재하지 않습니다.");

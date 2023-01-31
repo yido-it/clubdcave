@@ -3,6 +3,7 @@ package com.yido.clubd.repository;
 import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
+import com.yido.clubd.model.DrBkHistory;
 
 
 /**
@@ -16,5 +17,5 @@ import org.springframework.stereotype.Repository;
 public interface DrBkHistoryLogMapper {
 
 	// 로그 등록
-	public int insertDrBkHistoryLog(Map<String, Object> params);
+	public int insertDrBkHistoryLog(DrBkHistory drBkHistory);
 }

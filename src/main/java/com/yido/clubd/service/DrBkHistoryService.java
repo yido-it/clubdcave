@@ -57,12 +57,12 @@ public class DrBkHistoryService {
 	 * @param params
 	 * @return
 	 */
-	public String getSerialNo(Map<String, Object> params) {
-		return drBkHistoryMapper.getSerialNo(params);
+	public String getSerialNo(Map<String, Object> param) {
+		return drBkHistoryMapper.getSerialNo(param);
 	}
 	
-	public List<DrBkHistory> selectList(Map<String, Object> params) {
-		return drBkHistoryMapper.selectList(params);
+	public List<DrBkHistory> selectList(Map<String, Object> param) {
+		return drBkHistoryMapper.selectList(param);
 	}
 
 	/**
@@ -71,8 +71,13 @@ public class DrBkHistoryService {
 	 * @param params
 	 * @return
 	 */
-	public List<Map<String, Object>> selectBkHis(Map<String, Object> params) {
-		return drBkHistoryMapper.selectBkHis(params);
+	public List<Map<String, Object>> selectBkHis(Map<String, Object> param) {
+		return drBkHistoryMapper.selectBkHis(param);
+	}
+	
+	// 가장 최근 대표예약고유번호 조회 (조건 : 회원번호)
+	public String selectCalcSNo(Map<String, Object> param) {
+		return drBkHistoryMapper.selectCalcSNo(param);
 	}
 	
 	/**
@@ -81,12 +86,28 @@ public class DrBkHistoryService {
 	 * @param drBkHistory
 	 * @return
 	 */
-	public int insertDrBkHistory(Map<String, Object> params) {
-		return drBkHistoryMapper.insertDrBkHistory(params);
+	public int insertDrBkHistory(Map<String, Object> param) {
+		return drBkHistoryMapper.insertDrBkHistory(param);
 	}
 
+	/**
+	 * 금액 변경
+	 * 
+	 * @param drBkHistory
+	 * @return
+	 */
 	public int updateBkAmount(DrBkHistory drBkHistory) {
 		return drBkHistoryMapper.updateBkAmount(drBkHistory);
+	}
+
+	/**
+	 * 상태 변경
+	 * 
+	 * @param drBkHistory
+	 * @return
+	 */
+	public int updateBkState(DrBkHistory drBkHistory) {
+		return drBkHistoryMapper.updateBkState(drBkHistory);
 	}
 	
 	/**
@@ -180,10 +201,15 @@ public class DrBkHistoryService {
 
 				// 예약 내역 insert				
 				drBkHistoryMapper.insertDrBkHistory(param);
-				
+
 				// 예약 내역 로그 insert
-				param.put("logDiv", "I");
-				drBkHistoryLogMapper.insertDrBkHistoryLog(param);
+				Map<String, Object> param2 = new HashMap<String, Object>();
+				param2.put("bkSerialNo", bkSerialNo);
+				List<DrBkHistory> bList = drBkHistoryMapper.selectList(param2);
+				DrBkHistory bkLog = bList.get(0);
+				bkLog.setLogDiv("I");
+				drBkHistoryLogMapper.insertDrBkHistoryLog(bkLog);
+				// end.
 				
 				// 예약선점 테이블 변경 (예약고유번호, 상태)
 				// 조회조건 : 지점코드, 베이코드, 일자, 시간, 아이디, 상태 Y인거 
@@ -217,8 +243,13 @@ public class DrBkHistoryService {
 			drBkHistoryMapper.insertDrBkHistory(param);
 			
 			// 예약 내역 로그 insert
-			param.put("logDiv", "I");
-			drBkHistoryLogMapper.insertDrBkHistoryLog(param);
+			Map<String, Object> param2 = new HashMap<String, Object>();
+			param2.put("bkSerialNo", bkSerialNo);
+			List<DrBkHistory> bList = drBkHistoryMapper.selectList(param2);
+			DrBkHistory bkLog = bList.get(0);
+			bkLog.setLogDiv("I");
+			drBkHistoryLogMapper.insertDrBkHistoryLog(bkLog);
+			// end.
 			
 			// 예약선점 테이블 변경 (예약고유번호, 상태)
 			// 조회조건 : 지점코드, 베이코드, 일자, 시간, 아이디, 상태 Y인거 

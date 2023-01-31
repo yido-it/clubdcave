@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,10 +40,10 @@ import com.yido.clubd.service.DrBkHistoryTempService;
 import com.yido.clubd.service.DrBkOpenTimeService;
 import com.yido.clubd.service.DrBkTimeService;
 import com.yido.clubd.service.DrCostInfoService;
-import com.yido.clubd.service.DrMsMaininfoService;
 import com.yido.clubd.service.DrVoucherCodeService;
 import com.yido.clubd.service.DrVoucherListService;
 import com.yido.clubd.service.DrVoucherSaleService;
+import com.yido.clubd.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -60,7 +62,7 @@ public class BookController {
 	private DrBkTimeService drBkTimeService;
 
 	@Autowired
-	private DrMsMaininfoService drMsMaininfoService;
+	private MemberService memberService;
 	
 	@Autowired
 	private BookService bookService;
@@ -97,29 +99,37 @@ public class BookController {
 	public String bookMain(Model model, HttpServletRequest req, @PathVariable String coDiv) {
 		HttpSession session = req.getSession();
 		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
+		String returnPage = "/book/bookMain";
 		
 		try {
-			if (sessionVO != null) {
-				// BAY 목록
-				Map<String, Object> map = new HashMap<String, Object>();
-				List<DrBayInfo> bayList = drBayInfoService.selectList(map);
-				model.addAttribute("bayList", bayList);
-				log.info("bayList size : " + bayList.size());
-				
-				// 현재 시간 기준으로 가장 마지막 오픈날짜 구하기
-				DrBkOpenTime drBkOpenTime = new DrBkOpenTime();
-				drBkOpenTime.setMsLevel(sessionVO.getMsLevel());
-				drBkOpenTime.setBayCondi("001");
-				drBkOpenTime = drBkOpenTimeService.getBkDay(drBkOpenTime);
-				model.addAttribute("maxBkDay", drBkOpenTime.getBkDay());
-			} 
+			if (sessionVO == null) return returnPage;
 			
+			// BAY 목록
+			Map<String, Object> map = new HashMap<String, Object>();
+			List<DrBayInfo> bayList = drBayInfoService.selectList(map);
+			model.addAttribute("bayList", bayList);
+			log.info("bayList size : " + bayList.size());
+			
+			// 현재 시간 기준으로 가장 마지막 오픈날짜 구하기
+			DrBkOpenTime drBkOpenTime = new DrBkOpenTime();
+			drBkOpenTime.setMsLevel(sessionVO.getMsLevel());
+			drBkOpenTime.setBayCondi("001");
+			drBkOpenTime = drBkOpenTimeService.getBkDay(drBkOpenTime);
+			model.addAttribute("maxBkDay", drBkOpenTime.getBkDay());
+		
 			model.addAttribute("coDiv", coDiv);
+			
+			// 위약 정보 ( grantYn > N : 예약불가 )
+			Map<String, Object> msMap = new HashMap<String, Object>();
+			msMap.put("msId", sessionVO.getMsId());
+			String grantYn = memberService.chkMsBkGrant(msMap);
+			model.addAttribute("grantYn", grantYn);			
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 
-		return "/book/bookMain";
+		return returnPage;
 	}
 
 	/**
@@ -136,57 +146,29 @@ public class BookController {
 		
 		log.info("[tempBook2] bookInfo : " + bInfo);
     	ResultVO result = new ResultVO();
-		LocalDateTime nowDt = LocalDateTime.now();
 		
 		HttpSession session = req.getSession();
 		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
 		String ipAddr = Utils.getClientIpAddress(req);
 		
-		String serialNo = "";
-		
 		try {
-
 			if (sessionVO == null) {
 				return result;
 			}
+			
+			bInfo.setCoDiv(coDiv);
+			bInfo.setIpAddr(ipAddr);
+			/**
+			 * 예약가능여부 체크 
+			 * --> 예약 가능하다면 예약선점 처리 + 임시테이블에 데이터 저장
+			 * --> 예약 불가하다면 중단 처리 
+			 */
+			result = bookService.chkBookLogic(bInfo);
 				
-			// 시리얼번호 생성 (YYMMDDHHMMSS)
-			// 임시 테이블 PK : 지점코드 + 시리얼번호 + 회원번호
-			serialNo = nowDt.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-			
-			// 예약시간 
-			List<Map<String, Object>> bkList = bInfo.getBkList();
-			String bkTime = "";
-			String bkTime2 = "";
-			for (Map<String, Object> bk : bkList) {
-				String tmpTime = bk.get("bkTime").toString(); // 1100
-				if (bkTime.equals("")) {
-					bkTime = tmpTime.substring(0, 2) + ":" + tmpTime.substring(2);
-					bkTime2 = tmpTime;
-				} else {
-					bkTime += ", " + tmpTime.substring(0, 2) + ":" + tmpTime.substring(2);
-					bkTime2 += ", " + tmpTime;
-				}
-			}
-			
-			DrBkHistoryTemp temp = new DrBkHistoryTemp();
-			temp.setCoDiv(coDiv);
-			temp.setSerialNo(serialNo);
-			temp.setMsNum(sessionVO.getMsNum());
-			temp.setBayCd(bInfo.getBayCondi());
-			temp.setBkDay(bInfo.getBkDay());
-			temp.setBkTime(bkTime);
-			temp.setBkTime2(bkTime2);
-			temp.setInputIp(ipAddr);
-			
-			// 임시 테이블에 데이터 저장
-			drBkHistoryTempService.insertDrBkHistoryTemp(temp);
-			result.setData(serialNo);
-			
 		} catch(Exception e) {
 			e.printStackTrace();
 			result.setCode("9999");
-			result.setData("");
+			result.setMessage("처리중 오류가 발생하였습니다.");
 		}
 		
 		return result;
@@ -292,18 +274,25 @@ public class BookController {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		
 		try {
-			if (sessionVO != null) {
+			if (sessionVO == null) return list;
 				
-				// 달력 조회
-				Map<String, Object> cMap = new HashMap<String, Object>();
-				cMap.put("coDiv", req.getParameter("coDiv"));
-				cMap.put("selYM", req.getParameter("selYM"));
-				cMap.put("msLevel", req.getParameter("msLevel"));
-				list = clDayInfoService.selectList(cMap); 
-				
-				log.info("[getCalendar] list : " + list);
-			} 
+			Map<String, Object> cMap = new HashMap<String, Object>();
+
+			cMap.put("coDiv"		, req.getParameter("coDiv"));
+			cMap.put("bayCondi"		, req.getParameter("bayCondi"));
+			cMap.put("selYM"		, req.getParameter("selYM"));
+			cMap.put("msLevel"		, req.getParameter("msLevel"));
 			
+			if (req.getParameter("bayCondi").toString().equals("")) {				
+				// 기본 달력
+				list = clDayInfoService.selectBasicList(cMap); 
+			} else {
+				// 지점, 베이, 회원등급에 따른 달력 조회 
+				list = clDayInfoService.selectList(cMap); 
+			}
+			
+			log.info("[getCalendar] list : " + list);
+		
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -322,18 +311,22 @@ public class BookController {
 	public String bookList(Model model, HttpServletRequest req, @PathVariable String coDiv) {
 		HttpSession session = req.getSession();
 		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
-
+		String returnPage =  "/book/bookList";
+		
 		try {
+			if (sessionVO == null) return returnPage;
+			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("msNum", sessionVO.getMsNum());
 			map.put("coDiv", coDiv);
 			List<Map<String, Object>> list = drBkHistoryService.selectBkHis(map);			
 			model.addAttribute("list", list);
+			model.addAttribute("coDiv", coDiv);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		
-		return "/book/bookList";
+		return returnPage;
 	}
 
 	/**
@@ -346,22 +339,28 @@ public class BookController {
 	 */
 	@RequestMapping("/bookConfirm")  
 	public String bookConfirm(Model model, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
+		String returnPage = "/book/bookConfirm";
 		
 		try {
-			if (req.getParameter("calcSerialNo") != null) {
-				// 대표 예약고유번호로 데이터 조회 
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("calcSerialNo", req.getParameter("calcSerialNo"));
-				List<Map<String, Object>> list = drBkHistoryService.selectBkHis(map);
-				model.addAttribute("bk", list.get(0));
-			}
+			if (sessionVO == null) return returnPage;
+
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("msNum", sessionVO.getMsNum());
+			String calcSerialNo = drBkHistoryService.selectCalcSNo(param);
+			
+			// 대표 예약고유번호로 데이터 조회 
+			param.put("calcSerialNo", calcSerialNo);
+			List<Map<String, Object>> list = drBkHistoryService.selectBkHis(param);
+			model.addAttribute("bk", list.get(0));
+		
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		
-		return "/book/bookConfirm";
+		return returnPage;
 	}
-
 	
 	/**
 	 * 베이별 잔여시간 조회
@@ -388,93 +387,32 @@ public class BookController {
 		
 		return timeList;
 	}
-
-	/**
-	 * 회원위약체크
-	 * 
-	 * @param req
-	 * @param params
-	 * @return
-	 */
-	@RequestMapping("/chkGrant")
-	@ResponseBody
-	public ResultVO chkGrant(HttpServletRequest req, BookInfoVO bookInfo){
-		
-		log.info("[chkGrant] bookInfo : " + bookInfo);
-    	ResultVO result = new ResultVO();
-
-		HttpSession session = req.getSession();
-		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
-		try {
-				
-			bookInfo.setMsId(sessionVO.getMsId());
-			String grantYn = drMsMaininfoService.chkMsBkGrant(bookInfo);
-			if (grantYn.equals("N")) {
-				result.setCode("9999");
-				result.setMessage("위약이 걸려있어 예약이 불가능합니다.");	
-				return result;
-			} 
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return result;
-	}
 	
 	/**
-	 * 잔여수량 체크(=예약가능여부 체크) + 예약선점 처리
+	 * 예약(결제)취소  
 	 * 
+	 * @param model
 	 * @param req
-	 * @param params
+	 * @param bInfo
 	 * @return
 	 */
-	@RequestMapping("/chkBook")
+	@RequestMapping("/bookCancel")  
 	@ResponseBody
-	public ResultVO chkBook(HttpServletRequest req, BookInfoVO bookInfo){
-		
-		log.info("[chkBook] bookInfo : " + bookInfo);
+	public ResultVO bookCancel(Model model, HttpServletRequest req, BookInfoVO bInfo) {
+
+    	ResultVO result = new ResultVO();
 		String ipAddr = Utils.getClientIpAddress(req);
-    	ResultVO result = new ResultVO();
-    	
-		HttpSession session = req.getSession();
-		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
+    	log.info("[bookCancel] bInfo: " + bInfo);
 
 		try {
-			bookInfo.setIpAddr(ipAddr);
-			bookInfo.setMsId(sessionVO.getMsId());
-			// 잔여수량 체크(=예약가능여부 체크) + 예약선점 처리			
-			result = bookService.chkBookLogic(bookInfo);
-			
+			bInfo.setIpAddr(ipAddr);
+			result = bookService.bookCancel(bInfo);
 		} catch(Exception e) {
 			e.printStackTrace();
+			result.setCode("9999");
+			result.setMessage("처리중 오류가 발생하였습니다.");
 		}
-		
+
 		return result;
 	}
-		
-	
-	/**
-	 * 예약 선점된거 풀기 
-	 * 
-	 * @param req
-	 * @param params
-	 * @return
-	 */
-	@RequestMapping("/unBkMark")
-	@ResponseBody
-	public ResultVO unBkMark(HttpServletRequest req, BookInfoVO bookInfo){
-		
-		log.info("[unBkMark] params : " + bookInfo);
-    	ResultVO result = new ResultVO();
-    	
-		try {
-			result = bookService.unBkMarkLogic(bookInfo);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return result;
-	}
-	
 }

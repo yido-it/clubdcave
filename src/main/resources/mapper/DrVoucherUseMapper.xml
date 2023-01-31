@@ -7,6 +7,19 @@
 -->
 <mapper namespace="com.yido.clubd.repository.DrVoucherUseMapper">
 
+	<select id="selectList" parameterType="hashmap" resultType="DrVoucherUse">
+		SELECT *
+		FROM DR_VOUCHER_USE
+		WHERE 1=1
+		<if test='sNoList != null'>
+		  AND BK_SERIAL_NO IN 
+		 	<foreach collection="sNoList" item="item" index="index" separator="," open="(" close=")">
+		 	#{item}
+			</foreach>
+		</if>
+
+	</select>	
+	
     <insert id="insertDrVoucherUse">
     	INSERT INTO DR_VOUCHER_USE (
 			BK_SERIAL_NO				
@@ -25,4 +38,14 @@
     	)  	
     </insert>
     
+    <update id="deleteDrVoucherUse">
+		DELETE 
+		  FROM DR_VOUCHER_USE 
+		 WHERE CO_DIV 			= #{coDiv}
+		   AND BK_SERIAL_NO 	= #{bkSerialNo}
+		   AND VC_CO_DIV 		= #{vcCoDiv}
+		   AND SALE_DAY 		= #{saleDay}
+		   AND SALE_SEQ 		= #{saleSeq}
+		   AND LIST_SEQ 		= #{listSeq}
+	</update>   
 </mapper>

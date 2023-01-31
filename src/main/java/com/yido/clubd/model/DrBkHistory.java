@@ -47,6 +47,9 @@ public class DrBkHistory {
 	// 정산용도 대표 예약고유번호 (한번에 2타임 예약시 고유번호가 2개 생기기 때문에 대표 고유번호 1개 지정해줌)
 	private String calcSerialNo;			 
 	private int bkAmount;					// 이용요금
+	
+	private int logSeq; 					// 로그순번
+	private String logDiv; 					// 로그종류(I,U,D)
 }
 
 

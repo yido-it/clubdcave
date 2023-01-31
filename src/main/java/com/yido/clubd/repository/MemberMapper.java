@@ -57,7 +57,7 @@ public interface MemberMapper {
 	public void updatePw(Map<String, Object> params) throws Exception;
 
 	// 회원 위약체크 
-	public String chkMsBkGrant(BookInfoVO bookInfo);
+	public String chkMsBkGrant(Map<String, Object> params);
 
 	public List<MemberVO> selectProList();
 

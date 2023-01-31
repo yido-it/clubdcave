@@ -7,7 +7,7 @@
 -->
 <mapper namespace="com.yido.clubd.repository.DrBkHistoryLogMapper">
     <insert id="insertDrBkHistoryLog">
-        <selectKey resultType="String" keyProperty="logSeq" order="BEFORE">
+        <selectKey resultType="Integer" keyProperty="logSeq" order="BEFORE">
 			SELECT IFNULL(CAST(MAX(LOG_SEQ) AS UNSIGNED), 0)+1 
 			  FROM DR_BK_HISTORY_LOG
         </selectKey>       	
@@ -33,6 +33,9 @@
 			, INPUT_STAFF
 			, INPUT_DATETIME
 			, INPUT_IP
+			, CALC_SERIAL_NO
+			, BK_PAY_DIV
+			, BK_AMOUNT
     	) values (
     		#{bkSerialNo}	
     		, #{logSeq}
@@ -54,7 +57,10 @@
     		, #{costCd}	
     		, 'APP'		
     		, now()
-			, #{ipAddr}			
+			, #{inputIp}	
+			, #{calcSerialNo}	
+			, #{bkPayDiv}		
+			, #{bkAmount}		
     	)  	    	
     </insert>
 </mapper>

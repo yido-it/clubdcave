@@ -14,11 +14,14 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class BookInfoVO {
 
+	private String bkSerialNo;		// 예약고유번호
+	private String calcSerialNo;	// 대표예약고유번호
 	private String coDiv;			// 지점코드
 	private String bkDay;			// 예약일자
-	private String bkTime;			// 시작시간
+	private String bkTime;			// 시작시간 (1100)
 	private String bayCondi;		// 예약BAY 구성 단위
 	private int bkAmount;			// 예약금액
+	private int oriBkAmount;		// 원래 결제금액
 	private String msLevel;			// 회원등급
 	private String userMail;		// 이메일
 	private String msId;			// 아이디

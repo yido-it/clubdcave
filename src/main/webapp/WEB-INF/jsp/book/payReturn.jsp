@@ -11,7 +11,6 @@
 	$(document).ready(function() {
 		var code = "${resultCode}";
 		var message = "${resultMessage}";
-		var calcSerialNo = "${calcSerialNo}";
 		
 		if(code == "0000") {
 			alertModal.success("결제 완료되었습니다.");

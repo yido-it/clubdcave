@@ -208,10 +208,6 @@
 </div>
 <!--//결제동의 모달-->
 
-<form id="frmBook" action="/book/bookConfirm">
-	<input type="hidden" id="calcSerialNo" name="calcSerialNo" value=""/>
-</form>
-
 </body>
 
 <jsp:include page="../common/alertModal.jsp" />  
@@ -510,13 +506,11 @@ function doPay() {
     		, data: reservationInfo
     		, contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
     		, success: function(data) {
-    			console.log(data);
     			if (data.code == '0000') {
     				// 결제완료 페이지로 이동
-    				$('#calcSerialNo').val(data.data);
-    				document.getElementById('frmBook').submit();
+    				location.href="/book/bookConfirm";
     			} else if (data.code == '9999') {
-    				alert(data.message);
+    				alertModal.fail(data.message);
     				
     			}
     		}
@@ -540,10 +534,9 @@ function doPay() {
     		, "protocol"  : "<%=Globals.protocolType%>"
     	}
 
-    	mPay.action(params, function(serialNo) {
+    	mPay.action(params, function() {
 			// 결제완료 페이지로 이동
-			$('#calcSerialNo').val(serialNo);
-			document.getElementById('frmBook').submit();
+			location.href="/book/bookConfirm";
 			
     	}, function() {
     		// 결제 실패했을때 예약 선점된거 풀기 

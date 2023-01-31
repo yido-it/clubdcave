@@ -246,8 +246,8 @@ public class MemberService {
 	 * @param params
 	 * @return
 	 */
-	public String chkMsBkGrant(BookInfoVO bookInfo) {
-		return memberMapper.chkMsBkGrant(bookInfo);
+	public String chkMsBkGrant(Map<String, Object> params) {
+		return memberMapper.chkMsBkGrant(params);
 	}
 	
 	public void updatePw(Map<String, Object> params) throws Exception {

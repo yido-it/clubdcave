@@ -25,7 +25,13 @@ public interface DrBkMarkMapper {
 	// [예약 선점용] 테이블에서 '예약 가능한 데이터만 조회'
 	public List<DrBkMark> selectAvailableData(BookInfoVO bkInfo);
 	
-	// [예약선점용] 테이블 데이터 변경
+	// [예약선점용] 테이블 데이터 변경 (예약완료되었을때)
 	public int updateDrBkMark(Map<String, Object> map);
+	
+	// [예약선점용] 선점
+	public int updateMark(Map<String, Object> map);
+	
+	// [예약선점용] 해제
+	public int updateUnMark(Map<String, Object> map);
 
 }

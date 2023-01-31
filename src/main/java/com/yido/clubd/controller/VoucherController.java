@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yido.clubd.common.utils.ResultVO;
 import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.model.BookInfoVO;
+import com.yido.clubd.model.DrBkHistory;
 import com.yido.clubd.model.DrVoucherCode;
+import com.yido.clubd.service.DrBkHistoryService;
 import com.yido.clubd.service.DrVoucherCodeService;
 import com.yido.clubd.service.DrVoucherListService;
 import com.yido.clubd.service.DrVoucherSaleService;
@@ -40,6 +42,9 @@ public class VoucherController {
 	
 	@Autowired
 	private VoucherService voucherService;
+	
+	@Autowired
+	private DrBkHistoryService drBkHistoryService;
 	
 	
 	/**
@@ -69,7 +74,7 @@ public class VoucherController {
 	}
 	
 	/**
-	 * 이용권 결제처리 (이용권 사용 후 결제금액 0원인 경우) 
+	 * 이용권 결제 (결제금액 0원) 
 	 * 
 	 * @param model
 	 * @param req
@@ -96,4 +101,31 @@ public class VoucherController {
 		return result;
 	}
 
+	/**
+	 * 이용권 결제취소 (결제금액 0원) 
+	 * 
+	 * @param model
+	 * @param req
+	 * @param bInfo
+	 * @return
+	 */
+	@RequestMapping("/vCancel")  
+	@ResponseBody
+	public ResultVO vCancel(Model model, HttpServletRequest req, BookInfoVO bInfo) {
+
+    	ResultVO result = new ResultVO();
+		String ipAddr = Utils.getClientIpAddress(req);
+    	log.info("[vCancel] bInfo: " + bInfo);
+
+		try {
+			bInfo.setIpAddr(ipAddr);
+			result = voucherService.vCancel(bInfo);
+		} catch(Exception e) {
+			e.printStackTrace();
+			result.setCode("9999");
+			result.setMessage("처리중 오류가 발생하였습니다.");
+		}
+
+		return result;
+	}
 }

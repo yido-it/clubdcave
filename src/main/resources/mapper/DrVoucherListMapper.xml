@@ -19,7 +19,10 @@
 		</if> 	  
 		<if test='saleSeq != null and saleSeq != ""'>
 		  AND SALE_SEQ = #{saleSeq}
-		</if> 	  
+		</if> 
+		<if test='listSeq != null and listSeq != ""'>
+		  AND LIST_SEQ = #{listSeq}
+		</if> 		  
 		<if test='vcState != null and vcState != ""'>
 		  AND VC_STATE = #{vcState}
 		</if> 	  

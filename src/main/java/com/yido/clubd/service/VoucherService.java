@@ -35,6 +35,9 @@ public class VoucherService {
     private DrBkHistoryService drBkHistoryService;
 	
 	@Autowired
+    private BookService bookService;
+	
+	@Autowired
     private DrVoucherSaleMapper drVoucherSaleMapper;
 	
 	@Autowired
@@ -47,7 +50,7 @@ public class VoucherService {
     private DrVoucherUseMapper drVoucherUseMapper;
 	
 	/**
-	 * 이용권 결제처리 (이용권 사용 후 결제금액 0원인 경우) 
+	 * 이용권 결제 (결제금액 0원) 
 	 *  
 	 * @param bInfo
 	 * @return
@@ -82,6 +85,7 @@ public class VoucherService {
 		param.put("bkTime"		, bInfo.getBkTime());
 		param.put("ipAddr"		, bInfo.getIpAddr());
 		param.put("bkAmount"	, bInfo.getBkAmount());
+		param.put("oriBkAmount"	, bInfo.getOriBkAmount());
 		param.put("bkPayDiv"	, 1); // 이용권 
 		param.put("isVoucherUse", "Y");	
 
@@ -124,6 +128,7 @@ public class VoucherService {
 			sale.setSaleDay(vou.get("saleDay").toString());
 			sale.setSaleSeq(Integer.parseInt(vou.get("saleSeq").toString()));
 			sale.setVcRemCnt(Integer.parseInt(vou.get("quantity").toString()));
+			sale.setGubun("M");		// 사용처리
 			drVoucherSaleMapper.updateVcRemCnt(sale);
 			
 			// 이용권 잔여수량 변경된 로그
@@ -171,5 +176,111 @@ public class VoucherService {
 				i++;
 			}			
 		}		
+	}
+	
+	/**
+	 * 이용권 결제취소 (결제금액 0원) 
+	 *  
+	 * @param bInfo
+	 * @return
+	 * @throws Exception 
+	 */
+	@Transactional
+	public ResultVO vCancel(BookInfoVO bInfo) throws Exception {	
+		ResultVO resultVO = new ResultVO();
+
+		// 예약내역 조회 (예약고유번호 획득)
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("calcSerialNo", bInfo.getCalcSerialNo());
+		List<DrBkHistory> bList = drBkHistoryService.selectList(param);		
+		log.info("[vCancel] 예약건수: " + bList.size());
+		
+		if (bList.size() <= 0) {
+			resultVO.setCode("9999");
+			resultVO.setMessage("예약 정보가 존재하지 않습니다.");
+		}
+		
+		// 이용권 사용 취소
+		this.cancelVoucher(bInfo, bList);
+		
+		// 예약 취소
+		bookService.cancelBook(bInfo, bList);
+		
+		return resultVO;
+	}	
+	
+	/**
+	 * 이용권 사용 취소 
+	 * - 사용내역 삭제
+	 * - 세부내역 상태 변경 + 로그 
+	 * - 구매내역 수량 복원 + 로그 
+	 * 
+	 * @param bInfo
+	 * @throws Exception
+	 */
+	@Transactional
+	public void cancelVoucher(BookInfoVO bInfo, List<DrBkHistory> bList) throws Exception {	
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		List<String> sNoList = new ArrayList<String>();
+		
+		for (DrBkHistory sNo : bList) {
+			sNoList.add(sNo.getBkSerialNo()); 
+		}
+		param.put("sNoList", sNoList);	
+
+		// 이용권 사용내역 조회 (지점코드, 매출일자, 매출순번 획득)
+		List<DrVoucherUse> uList = drVoucherUseMapper.selectList(param);
+		log.info("[cancelVoucher] 이용권 사용 건수: " + uList.size());
+		
+		int i = 0;
+		int preSeq = 0;
+		for (DrVoucherUse vUse : uList) {
+			
+			// 이용권 세부내역 > 지점코드, 매출일자, 매출순번으로 조회하여 수량 획득 
+			Map<String, Object> param2 = new HashMap<String, Object>();
+			param2.put("coDiv", vUse.getVcCoDiv());
+			param2.put("saleDay", vUse.getSaleDay());
+			param2.put("saleSeq", vUse.getSaleSeq());
+			param2.put("listSeq", vUse.getListSeq());
+			param2.put("vcState", "Y");						
+			List<DrVoucherList> vList = drVoucherListMapper.selectList(param2);
+			log.info("[cancelVoucher] 이용권 세부 건수: " + vList.size());
+			
+			for (DrVoucherList vou : vList) {
+
+				// 이용권 세부내역 > 상태 N 으로 변경  
+				DrVoucherList drVoucherList = new DrVoucherList();
+				drVoucherList.setVcState("N");
+				drVoucherList.setListSeq(vou.getListSeq());
+				drVoucherList.setSaleSeq(vou.getSaleSeq());
+				drVoucherListMapper.updateDrVoucherList(drVoucherList);
+			}
+			 		
+			if (preSeq != vUse.getSaleSeq()) {
+				
+				// 이용권 구매내역 잔존수량 복원 
+				DrVoucherSale drVoucherSale = new DrVoucherSale();
+				drVoucherSale.setGubun("P");				// 복원 처리
+				drVoucherSale.setVcRemCnt(vList.size());	// 위에서 조회한 이용권 사용수량만큼 복원처리 
+				drVoucherSale.setCoDiv(uList.get(i).getVcCoDiv());
+				drVoucherSale.setSaleDay(uList.get(i).getSaleDay());
+				drVoucherSale.setSaleSeq(uList.get(i).getSaleSeq());
+				drVoucherSaleMapper.updateVcRemCnt(drVoucherSale);
+				
+				drVoucherSale = drVoucherSaleMapper.getVoucherSale(drVoucherSale);
+
+				// 이용권 구매내역 로그 
+				drVoucherSale.setLogDiv("U");
+				drVoucherSale.setInputIp(bInfo.getIpAddr());
+				drVoucherSaleLogMapper.insertDrVoucherSaleLog(drVoucherSale);
+			}
+			
+			// 이용권 사용내역 삭제 
+			drVoucherUseMapper.deleteDrVoucherUse(vUse);
+
+			preSeq = vUse.getSaleSeq();	// 매출순번
+			i++;
+		}
 	}
 }

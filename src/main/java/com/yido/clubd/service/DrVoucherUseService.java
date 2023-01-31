@@ -1,8 +1,12 @@
 package com.yido.clubd.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yido.clubd.model.DrBkHistory;
 import com.yido.clubd.model.DrVoucherUse;
 import com.yido.clubd.repository.DrVoucherUseMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -20,13 +24,27 @@ public class DrVoucherUseService {
 	@Autowired
     private DrVoucherUseMapper drVoucherUseMapper;
 	
+	public List<DrVoucherUse> selectList(Map<String, Object> param) {
+		return drVoucherUseMapper.selectList(param);
+	}
+	
 	/**
-	 * 이용권사용내역 등록
+	 * 사용내역 등록
 	 * 
 	 * @param drVoucherUse
 	 * @return
 	 */
 	public int insertDrVoucherUse(DrVoucherUse drVoucherUse) {
 		return drVoucherUseMapper.insertDrVoucherUse(drVoucherUse);
+	}
+	
+	/**
+	 * 사용내역 삭제
+	 * 
+	 * @param drVoucherUse
+	 * @return
+	 */
+	public int deleteDrVoucherUse(DrVoucherUse drVoucherUse) {
+		return drVoucherUseMapper.deleteDrVoucherUse(drVoucherUse);
 	}
 }

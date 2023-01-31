@@ -76,30 +76,15 @@
 		ORDER BY BK_SEQ
     </select>
     
-    <!-- [예약 선점용] 테이블 데이터 변경 (선점할때, 해제할때, 예약완료되었을때)-->
+    <!-- [예약 선점용] 테이블 데이터 변경 (예약완료되었을때)-->
     <update id="updateDrBkMark" parameterType="hashmap">
     	UPDATE DR_BK_MARK
-    	   SET BK_TIME = BK_TIME
+    	   SET BK_TIME 			= BK_TIME
 	    	<if test='bkSerialNo != null'>
-			, BK_SERIAL_NO = #{bkSerialNo}
+			, BK_SERIAL_NO 		= #{bkSerialNo}
 			</if>	
 	    	<if test='bkState != null'>
-			, BK_STATE = #{bkState}
-			</if>	
-	    	<if test='entryMethod != null'>
-			, ENTRY_METHOD = #{entryMethod}
-			</if>	      
- 	    	<if test='updMsId != null'>
-			, ENTRY_USER = #{updMsId}
-			</if>	    
- 	    	<if test='ipAddr != null'>
-			, ENTRY_IP = #{ipAddr}
-			</if>	
-			<if test='insertEntryDt != null and insertEntryDt == "Y"'>
-			, ENTRY_DATETIME	= DATE_ADD(NOW(), INTERVAL #{entryTime} MINUTE)
-			</if>		
-			<if test='deleteEntryDt != null and deleteEntryDt == "Y"'>
-			, ENTRY_DATETIME	= NULL
+			, BK_STATE 			= #{bkState}
 			</if>	
 		 WHERE CO_DIV 			= #{coDiv}
 		   AND BAY_CONDI 		= #{bayCondi}
@@ -109,11 +94,57 @@
 		   AND BK_SEQ 			= #{bkSeq} 
 		</if>	 
 		<if test='entryUser != null and entryUser != ""'>
-		   AND ENTRY_USER 			= #{entryUser} 
+		   AND ENTRY_USER 		= #{entryUser} 
 		</if>
 		<if test='bkStateIsY != null and bkStateIsY == "Y"'>
-		   AND BK_STATE 			= 'Y'
+		   AND BK_STATE 		= 'Y'
 		</if>
     </update>
     
+    <!-- [예약 선점용] 선점 -->
+    <update id="updateMark" parameterType="hashmap">
+    	UPDATE DR_BK_MARK
+    	   SET ENTRY_METHOD 	= #{entryMethod}
+			 , ENTRY_USER 		= #{updMsId}
+			 , ENTRY_IP 		= #{ipAddr}
+			 , ENTRY_DATETIME	= DATE_ADD(NOW(), INTERVAL #{entryTime} MINUTE)			
+		 WHERE CO_DIV 			= #{coDiv}
+		   AND BAY_CONDI 		= #{bayCondi}
+		   AND BK_DAY 			= #{bkDay}
+		   AND BK_TIME 			= #{bkTime}	   
+		<if test='bkSeq != null and bkSeq != ""'>
+		   AND BK_SEQ 			= #{bkSeq} 
+		</if>	 
+		<if test='entryUser != null and entryUser != ""'>
+		   AND ENTRY_USER 		= #{entryUser} 
+		</if>
+		<if test='bkStateIsY != null and bkStateIsY == "Y"'>
+		   AND BK_STATE 		= 'Y'
+		</if>
+    </update>
+    
+
+    <!-- [예약 선점용] 해제 -->
+    <update id="updateUnMark" parameterType="hashmap">
+    	UPDATE DR_BK_MARK
+    	   SET ENTRY_METHOD 	= NULL
+			 , ENTRY_USER 		= NULL
+			 , ENTRY_IP 		= NULL
+			 , ENTRY_DATETIME	= NULL
+			 , BK_SERIAL_NO		= NULL
+			 , BK_STATE			= 'Y'
+		 WHERE CO_DIV 			= #{coDiv}
+		   AND BAY_CONDI 		= #{bayCondi}
+		   AND BK_DAY 			= #{bkDay}
+		   AND BK_TIME 			= #{bkTime}	   
+		<if test='bkSeq != null and bkSeq != ""'>
+		   AND BK_SEQ 			= #{bkSeq} 
+		</if>	 
+		<if test='entryUser != null and entryUser != ""'>
+		   AND ENTRY_USER 		= #{entryUser} 
+		</if>
+		<if test='bkStateIsY != null and bkStateIsY == "Y"'>
+		   AND BK_STATE 		= 'Y'
+		</if>
+    </update>
 </mapper>

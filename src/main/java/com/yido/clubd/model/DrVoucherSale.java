@@ -45,6 +45,7 @@ public class DrVoucherSale {
 	
 	private int logSeq; 					// 로그순번
 	private String logDiv; 					// 로그종류(I,U,D)
+	private String gubun;					// 처리구분 (P : 복원, M : 사용처리) 
 
 }
 

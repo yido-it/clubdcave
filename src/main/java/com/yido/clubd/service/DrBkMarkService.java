@@ -38,14 +38,33 @@ public class DrBkMarkService {
     	return drBkMarkMapper.selectAvailableData(bkInfo);
 	}
 	
-    
     /**
-     * [예약선점용] 테이블 데이터 변경
+     * [예약선점용] 테이블 데이터 변경 (예약완료되었을때)
      * 
      * @param map
      * @return
      */
     public int updateDrBkMark(Map<String, Object> map) {
     	return drBkMarkMapper.updateDrBkMark(map);
+    }
+    
+    /**
+     * [예약선점용] 선점
+     * 
+     * @param map
+     * @return
+     */
+    public int updateMark(Map<String, Object> map) {
+    	return drBkMarkMapper.updateMark(map);
+    }
+    
+    /**
+     * [예약선점용] 해제
+     * 
+     * @param map
+     * @return
+     */
+    public int updateUnMark(Map<String, Object> map) {
+    	return drBkMarkMapper.updateUnMark(map);
     }
 }

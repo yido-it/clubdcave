@@ -56,7 +56,6 @@
 		</if> 
     </select>
     
-    
     <insert id="insertDrVoucherSale">
         <selectKey resultType="String" keyProperty="saleSeq" order="BEFORE">
 			SELECT IFNULL(CAST(MAX(SALE_SEQ) AS UNSIGNED), 0)+1 
@@ -117,7 +116,13 @@
 	
 	<update id="updateVcRemCnt">
 		UPDATE DR_VOUCHER_SALE
-		   SET VC_REM_CNT 		= VC_REM_CNT - #{vcRemCnt} 
+		   SET 
+		<if test='gubun != null and gubun == "M"'>
+			VC_REM_CNT 		= VC_REM_CNT - #{vcRemCnt} 
+		</if> 
+		<if test='gubun != null and gubun == "P"'>
+			 VC_REM_CNT 	= VC_REM_CNT + #{vcRemCnt} 
+		</if> 
 		 WHERE CO_DIV 			= #{coDiv}
 		   AND SALE_DAY 		= #{saleDay}
 		   AND SALE_SEQ 		= #{saleSeq}

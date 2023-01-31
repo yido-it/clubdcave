@@ -3,6 +3,7 @@ package com.yido.clubd.service;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.yido.clubd.model.DrBkHistory;
 import com.yido.clubd.repository.DrBkHistoryLogMapper;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,7 +26,7 @@ public class DrBkHistoryLogService {
 	 * @param drBkHistory
 	 * @return
 	 */
-	public int insertDrBkHistoryLog(Map<String, Object> params) {
-		return drBkHistoryLogMapper.insertDrBkHistoryLog(params);
+	public int insertDrBkHistoryLog(DrBkHistory drBkHistory) {
+		return drBkHistoryLogMapper.insertDrBkHistoryLog(drBkHistory);
 	}
 }

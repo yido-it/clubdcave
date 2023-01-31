@@ -12,7 +12,31 @@
 	</select>
 	
 	<select id="selectList" parameterType="hashmap" resultType="DrBkHistory">
-		SELECT *
+		SELECT CO_DIV
+	 		 , BK_SERIAL_NO  
+			 , CALC_SERIAL_NO  
+			 , BK_DAY  
+			 , BAY_CONDI  
+			 , BK_TIME  
+			 , MS_NUM  
+			 , BK_NAME  
+			 , BK_FIRST_PHONE  
+			 , AES_DECRYPT(UNHEX(BK_MID_PHONE), 'YIDO') BK_MID_PHONE
+			 , BK_LAST_PHONE  
+			 , BK_STATE  
+			 , BK_SMS_SEND  
+			 , BK_PAY_DIV  
+			 , BK_METHOD  
+			 , COST_CO_DIV  
+			 , COST_NAME  
+			 , COST_CD  
+			 , COST_DIV  
+			 , BK_AMOUNT  
+			 , BK_DC_AMOUNT  
+			 , BK_REMARK  
+			 , INPUT_STAFF  
+			 , INPUT_DATETIME  
+			 , INPUT_IP
 		FROM DR_BK_HISTORY
 		WHERE 1=1
 		<if test='coDiv != null and coDiv != ""'>
@@ -33,6 +57,9 @@
 		<if test='bkSerialNo != null and bkSerialNo != ""'>
 		AND BK_SERIAL_NO = #{bkSerialNo}
 		</if>
+		<if test='calcSerialNo != null and calcSerialNo != ""'>
+		AND CALC_SERIAL_NO = #{calcSerialNo}
+		</if>
 	</select>	
 	
 	<select id="selectBkHis" parameterType="hashmap" resultType="hashmap">
@@ -40,12 +67,13 @@
  			 , B.CO_DIV
 			 , D.CD_TITLE1 AS BAY_NAME
 		     , BK_DAY
-		     , GROUP_CONCAT(CONCAT(LEFT(BK_TIME, 2),':', RIGHT(BK_TIME, 2)) SEPARATOR ', ') AS BK_TIME
+		     , GROUP_CONCAT(CONCAT(LEFT(BK_TIME, 2),':', RIGHT(BK_TIME, 2))  ORDER BY A.BK_TIME SEPARATOR ', ') AS BK_TIME
 		     , IFNULL(NULLIF(E.MN_AMOUNT,''),'0') AS MN_AMOUNT 
 		     , A.BK_STATE 
              , F.CD_TITLE1 AS BK_STATE_NAME
              , I.VC_NAME
              , COUNT(G.BK_SERIAL_NO) AS VC_CNT
+             , A.CALC_SERIAL_NO
 		FROM DR_BK_HISTORY A 
 			INNER JOIN CO_PLACE B ON A.CO_DIV = B.CO_DIV
 			INNER JOIN DR_BAY_INFO C ON A.CO_DIV = C.CO_DIV AND A.BAY_CONDI = C.BAY_CD 
@@ -67,6 +95,18 @@
 		</if>
 		GROUP BY B.CO_NAME, D.CD_TITLE1, BK_DAY, A.CALC_SERIAL_NO
         ORDER BY A.CALC_SERIAL_NO DESC
+	</select>
+	
+	<!-- 가장 최근 대표예약고유번호 조회 (조건 : 회원번호) -->
+	<select id="selectCalcSNo" parameterType="hashmap" resultType="String">
+		SELECT CALC_SERIAL_NO
+		FROM DR_BK_HISTORY 
+		WHERE 1=1 
+		<if test='msNum != null and msNum != ""'>
+		 AND MS_NUM = #{msNum}
+		</if>
+		ORDER BY CALC_SERIAL_NO DESC
+		LIMIT 1
 	</select>
 		
     <insert id="insertDrBkHistory" parameterType="hashmap">
@@ -119,9 +159,15 @@
     	)  	
     </insert>
     
+    <update id="updateBkState">
+		UPDATE DR_BK_HISTORY
+		   SET BK_STATE 	= #{bkState}
+		 WHERE BK_SERIAL_NO = #{bkSerialNo}
+	</update> 
+	    
     <update id="updateBkAmount">
 		UPDATE DR_BK_HISTORY
-		   SET BK_AMOUNT = #{bkAmount}
+		   SET BK_AMOUNT 	= #{bkAmount}
 		 WHERE BK_SERIAL_NO = #{bkSerialNo}
 	</update>    
 </mapper>

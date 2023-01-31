@@ -127,15 +127,17 @@
 <jsp:include page="../common/alertModal.jsp" />  
 <script type="text/javascript">
 
+var preSelectedTime 	= "";
+var preSelectedType 	= "";
 var sYear, sMonth, sDate;
 var msId 				= "<c:out value='${sessionScope.msMember.msId}'/>";
 var msLevel 			= "<c:out value='${sessionScope.msMember.msLevel}'/>";
 var msNum				= "<c:out value='${sessionScope.msMember.msNum}'/>";
 
+var grantYn 			= "<c:out value='${grantYn}'/>";		// 위약 정보 ( grantYn > N : 예약불가 )
+
 var reservationInfo 	= {};
 reservationInfo.coDiv 	= $('#coDiv').val();
-
-var bkList 				= new Array();		// 시간 선택한 거 bkList 에 넣어주기
 
 $(document).ready(function() {
 	// 페이지 로드되자마자 베이선택팝업 활성화
@@ -229,6 +231,8 @@ function doSearch(){
 					
 					var tmpCnt = parseInt(data.length / 4) ;
 					realLength = (tmpCnt + 1) * 4;	
+				} else {
+					realLength = data.length;
 				}
 				console.log('[doSearch] 실제 반복문 크기 : ', realLength);
 				// └────────── 빈칸 채우려고 하는 작업 ──────────┘
@@ -239,18 +243,27 @@ function doSearch(){
 			        	var bkTime1 = data[i].bkTime.substr(0, 2);
 			        	var bkTime2 = data[i].bkTime.substr(2, 2);
 						
-			        	if (data[i].bkRemCount > 0) {
-			        		// 예약가능
-			        		divCnt += "<label class='bkTime btn btn-secondary' id='bkTime_"+i+"' onClick='doTimeSelect(\""+data[i].bkTime+"\", "+i+")'>";
-							divCnt += "<input type='checkbox' autocomplete='off'>" + bkTime1 + ":" + bkTime2 + "<br/>";
-							divCnt += "<span>"+data[i].bkRemCount+"개 가능</span>";
-							divCnt += "</label>";
-			        	} else {
-			        		// 마감 
+			        	if (grantYn == 'N') {
+			        		 // 위약걸려있으면 예약불가
 			        		divCnt += "<label class='bkTime btn btn-secondary btn-lock'>";
 							divCnt += "<input type='checkbox' autocomplete='off' disabled='disabled'>" + bkTime1 + ":" + bkTime2 + "<br/>";
-							divCnt += "<span>마감</span>";
+							divCnt += "<span>예약불가</span>";
 							divCnt += "</label>";
+							
+			        	} else {
+			        		if (data[i].bkRemCount > 0) {
+				        		// 예약가능
+				        		divCnt += "<label class='bkTime btn btn-secondary' id='bkTime_"+bkTime1+"'>";
+								divCnt += "<input type='checkbox' autocomplete='off'>" + bkTime1 + ":" + bkTime2 + "<br/>";
+								divCnt += "<span>"+data[i].bkRemCount+"개 가능</span>";
+								divCnt += "</label>";
+				        	} else {
+				        		// 마감 
+				        		divCnt += "<label class='bkTime btn btn-secondary btn-lock'>";
+								divCnt += "<input type='checkbox' autocomplete='off' disabled='disabled'>" + bkTime1 + ":" + bkTime2 + "<br/>";
+								divCnt += "<span>마감</span>";
+								divCnt += "</label>";
+				        	}
 			        	}
 						
 					} else {
@@ -290,6 +303,7 @@ function initCalendar(year, month) {
 		, dataType: 'json'
 		, data: {
 			"coDiv" : reservationInfo.coDiv
+			, "bayCondi" : $('#bayCondi').val()
 			, "selYM" : year + month
 			, "msLevel" : msLevel
 		}
@@ -316,28 +330,33 @@ function initCalendar(year, month) {
 				// end.
 				
 				for(i=0; i<data.length; i++) {
-					
-					if(data[i].CL_SOLAR == currentDay) {
-						// 당일
-						divCnt += "<a href='#' id='day_"+data[i].DAYNUM+"' class='cal-selected' onClick='onClickDay(\""+data[i].CL_SOLAR+"\", "+data[i].DAYNUM+")'>";
-						divCnt += "<i class='fa fa-square color-highlight'></i>";
-						divCnt += "<span>" + data[i].DAYNUM + "</span></a>";
+					if ($('#bayCondi').val() == "") {
+						// 기본 달력 표출 
+						divCnt += "<a href='#' class='cal-disabled'>" + data[i].DAYNUM + "</a>";
 					} else {
-						// 당일 아닌거 
-						if ( data[i].CL_SOLAR > currentDay) {
-							// 미래 날짜 
-							if(data[i].BK_REM_COUNT <= 0) {
-								// 예약 불가한날 
-								divCnt += "<a href='#' class='cal-disabled'>" + data[i].DAYNUM + "</a>";
-							} else {
-								// 예약 가능한날
-								divCnt += "<a href='#' id='day_"+data[i].DAYNUM+"' onClick='onClickDay(\""+data[i].CL_SOLAR+"\", "+data[i].DAYNUM+")'>" + data[i].DAYNUM + "</a>";
-							}
+						//  지점, 베이, 회원등급에 따른 달력 표출 
+						if(data[i].CL_SOLAR == currentDay) {
+							// 당일
+							divCnt += "<a href='#' id='day_"+data[i].DAYNUM+"' class='cal-selected' onClick='onClickDay(\""+data[i].CL_SOLAR+"\", "+data[i].DAYNUM+")'>";
+							divCnt += "<i class='fa fa-square color-highlight'></i>";
+							divCnt += "<span>" + data[i].DAYNUM + "</span></a>";
 						} else {
-							// 과거 날짜 예약 불가 
-							divCnt += "<a href='#' class='cal-disabled'>" + data[i].DAYNUM + "</a>";
-						}		
-					} 
+							// 당일 아닌거 
+							if ( data[i].CL_SOLAR > currentDay) {
+								// 미래 날짜 
+								if(data[i].BK_REM_COUNT <= 0) {
+									// 예약 불가한날 
+									divCnt += "<a href='#' class='cal-disabled'>" + data[i].DAYNUM + "</a>";
+								} else {
+									// 예약 가능한날
+									divCnt += "<a href='#' id='day_"+data[i].DAYNUM+"' onClick='onClickDay(\""+data[i].CL_SOLAR+"\", "+data[i].DAYNUM+")'>" + data[i].DAYNUM + "</a>";
+								}
+							} else {
+								// 과거 날짜 예약 불가 
+								divCnt += "<a href='#' class='cal-disabled'>" + data[i].DAYNUM + "</a>";
+							}		
+						} 
+					}
 					document.querySelector(".calendar-body").innerHTML = divCnt;
 				}
 			} else {
@@ -399,21 +418,36 @@ function selectedBay(bayCd, bayName) {
 // 예약하기 버튼 클릭
 function doBook() {
 
+	var bkList 				= new Array();		// 시간 선택한 거 bkList 에 넣어주기
+	
 	if ($('#bayCondi').val() == "") {
 		alertModal.fail('베이를 선택해주세요.');
 		return;
 	}
-
-	console.log('[doBook] bkList: ', bkList);
-	if (bkList == null || bkList.length <= 0) {
+	
+	var matches = document.getElementsByClassName('active');
+	
+	if (matches.length <= 0) {
 		alertModal.fail('예약시간을 선택해주세요.');
 		return;
 	}
-
-	reservationInfo.bkList = bkList;
-	console.log('[doBook] reservationInfo: ', reservationInfo);
 	
-	// 다음페이지로 이동 		
+	for(i=0; i<matches.length; i++) {
+
+		var bookData = new Object();	
+		var afterStr = matches[i].id.split('_');
+		console.log("bkTime: ", afterStr[1]);
+		
+		bookData.bkTime = afterStr[1] + ":00";
+		bkList.push(bookData);
+	}
+	reservationInfo.bkList 		= bkList;
+	reservationInfo.bayCondi 	= $('#bayCondi').val();
+	reservationInfo.bkDay 		= $('#bkDay').val();
+	
+	console.log("reservationInfo: ", reservationInfo);
+
+	// 다음페이지로 이동 	
 	$.ajax({
 		url: "/book/book2/" + $('#coDiv').val()
 		, type: "post"
@@ -423,108 +457,27 @@ function doBook() {
 		, success: function(data) {
 			if (data.code == '0000') {
 				location.href="/book/book2/"+$('#coDiv').val()+"/"+data.data;
+			} else if (data.code == '9999') {
+				alertModal.fail(data.message);
+				// 마감된 시간은 마감처리 + 선택해제 + bkList 다시 구성 
+				var tList = data.data;
+
+				for(i=0; i<tList.length; i++) {
+					console.log(tList[i].substr(0, 2));
+					
+					$('#bkTime_'+tList[i].substr(0, 2)).remove('active');
+					/*
+					divCnt += "<label class='bkTime btn btn-secondary btn-lock'>";
+								divCnt += "<input type='checkbox' autocomplete='off' disabled='disabled'>" + bkTime1 + ":" + bkTime2 + "<br/>";
+								divCnt += "<span>마감</span>";
+								divCnt += "</label>";
+					*/
+				}
+				
 			}
 		}
-	});		
+	});	
 
-}
-
-// 시간선택시 호출되는 함수 
-// 시간선택 => 예약선점 , 시간선택해제 => 예약선점해제
-// 시간선택시, 예약마감 체크해서 마감이면 팝업창 띄워주고 마감으로 변경해주기 
-function doTimeSelect(bkTime, idx) {
-
-	var bookData 				= new Object();	
-	var className 				=  document.getElementById('bkTime_'+idx).className;
-	
-	reservationInfo.bayCondi 	= $('#bayCondi').val();
-	reservationInfo.bkDay 		= $('#bkDay').val();
-	reservationInfo.bkTime 		= bkTime;
-	console.log('[시간선택&해제] reservationInfo > ', reservationInfo);
-	
-	if(className.includes('active')) {
-		// 선점해제
-		console.log('선점해제');
-		
-		var json_idx = bkList.findIndex(function(key) {
-			
-			return key.timeIdx === idx
-		});
-		bkList.splice(json_idx, 1);
-		
-		chkBkMark(reservationInfo, "N");
-	} else {
-		// 선점 전에 예약가능여부 조회 (회원위약)
-		$.ajax({
-			url: "/book/chkGrant"
-			, type: "post"
-			, dataType: 'json'
-			, data: reservationInfo
-			, contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
-			, success: function(data) {
-				result = data;
-			}
-		});		
-			
-		setTimeout(function() {
-			if (result.code == '9999') {
-				alert(result.message);
-				// 위약여부 Y이면 선택된 Class 제거 
-				$('#bkTime_'+idx).removeClass('active');
-				return;
-			}
-			
-			console.log('선점');
-			
-			chkBkMark(reservationInfo, "Y");
-
-			// 선택된 시간을 bkList 에 저장 (예약하기 버튼 클릭시 필요한 정보)
-			bookData.timeIdx 	= idx;
-			bookData.bkTime 	= bkTime;
-			bkList.push(bookData);
-			
-		}, 300);	
-	}
-
-	console.log('[시간선택&해제] bkList > ', bkList);
-}
-
-// 예약선점 & 선점해제
-function chkBkMark(reservationInfo, gubun) {
-	
-	switch(gubun) {
-		case "Y" :
-			$.ajax({
-				url: "/book/chkBook"
-				, type: "post"
-				, dataType: 'json'
-				, data: reservationInfo
-				, contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
-				, success: function(result) {
-					
-					if (result.code == '9999') {
-						alert(result.message);
-	
-						// ★ 해당시간 '마감'으로 바꿔주고, 선택못하도록 변경 
-					}
-				}
-			});			
-			break;
-			
-		case "N" :	
-			$.ajax({
-				url: "/book/unBkMark"
-				, type: "post"
-				, dataType: 'json'
-				, data: reservationInfo
-				, contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
-				, success: function(data) {
-					
-					// ★ 해제 완료되면 화면에 '수량' 복원 해주어야함 (마감인 경우도 체크??)
-				}
-			});			
-			break;			
-	}
 }
 
 </script>
