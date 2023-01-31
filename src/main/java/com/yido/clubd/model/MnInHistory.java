@@ -19,7 +19,7 @@ public class MnInHistory {
 	
 	private String coDiv;				// 지점코드
 	private String mnInDay;				// 입금일자
-	private String mnSeq;				// 입금순번
+	private int mnSeq;					// 입금순번
 	private int mnShopCd;				// 업장코드
 	private String mnBeforeDiv;			// 입금구분(1:후불,2:선불)
 	private String mnPayDiv;			// 지불구분(01:현금,02:카드,03:카드수동)
@@ -44,7 +44,7 @@ public class MnInHistory {
 	private String mnOriInDay;			// 원본 입금일자
 	private int mnOriMnSeq;				// 원본 입금순번
 	private String mnOriSerialNo;		// 원본 거래고유번호
-	private int orderId;
+	private String orderId;
 	private String transactionId;
 	private String cancelkey;
 	

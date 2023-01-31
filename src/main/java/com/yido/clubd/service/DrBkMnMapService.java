@@ -21,6 +21,16 @@ public class DrBkMnMapService {
 	@Autowired
     private DrBkMnMapMapper drBkMnMapMapper;
 
+	/**
+	 * 예약번호로 결제 정보 조회
+	 * 
+	 * @param param
+	 * @return
+	 */
+	public DrBkMnMap getMnMap(DrBkMnMap drBkMnMap) {
+    	return drBkMnMapMapper.getMnMap(drBkMnMap);
+	}
+	
     public int insertDrBkMnMap(DrBkMnMap drBkMnMap) {
     	return drBkMnMapMapper.insertDrBkMnMap(drBkMnMap);
     }

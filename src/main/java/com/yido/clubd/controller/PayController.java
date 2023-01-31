@@ -29,6 +29,7 @@ import com.yido.clubd.common.utils.ResultVO;
 import com.yido.clubd.common.utils.StringUtils;
 import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.model.DrBkMnMap;
+import com.yido.clubd.model.MnInHistory;
 import com.yido.clubd.service.MnInHistoryService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +53,7 @@ public class PayController {
 	 */
     @SuppressWarnings("deprecation")
 	@RequestMapping(value = "/returnPay.bill")
-    public String returnPay(HttpServletRequest request, HttpServletResponse response, Model model) {
+    public String returnPay(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) {
     	
     	log.info("====================== return Pay ========================");
 		BufferedReader br = null; 
@@ -244,7 +245,7 @@ public class PayController {
                     // end.
                     
                 	// 결제 후 예약처리...
-                	resultVO = mnInHistoryService.successPayLogic(params, reserved2, reserved3, mnMap); 
+                	resultVO = mnInHistoryService.successPayLogic(params, reserved2, reserved3, mnMap, session); 
                 	
                 	if(resultVO.getCode().equals("0000")) {
                 		resultCode = "0000";
@@ -258,7 +259,8 @@ public class PayController {
     		
     		// 결제는 성공했지만 오류 (취소요청 해야함)
     		if(isSuccessPay) {
-    			mnInHistoryService.cancelLogic(reserved1, orderId, authAmount, transactionId, "C", cancelKey, ipAddr);
+    			MnInHistory mnHis = new MnInHistory();
+    			mnInHistoryService.cancelLogic(reserved1, orderId, authAmount, transactionId, "C", cancelKey, ipAddr, mnHis);
     		}
     	} finally {
     		try {

@@ -23,11 +23,19 @@ import com.yido.clubd.model.CdCommon;
 import com.yido.clubd.model.DrBkHistory;
 import com.yido.clubd.model.DrBkHistoryTemp;
 import com.yido.clubd.model.DrBkMark;
+import com.yido.clubd.model.DrBkMnMap;
 import com.yido.clubd.model.DrBkTime;
+import com.yido.clubd.model.DrVoucherUse;
+import com.yido.clubd.model.MnInHistory;
 import com.yido.clubd.repository.DrBkHistoryLogMapper;
 import com.yido.clubd.repository.DrBkHistoryMapper;
+import com.yido.clubd.repository.DrBkHistoryTempMapper;
 import com.yido.clubd.repository.DrBkMarkMapper;
+import com.yido.clubd.repository.DrBkMnMapMapper;
 import com.yido.clubd.repository.DrBkTimeMapper;
+import com.yido.clubd.repository.DrVoucherUseMapper;
+import com.yido.clubd.repository.MnInHistoryMapper;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -36,6 +44,9 @@ public class BookService {
 
 	@Autowired
     private DrBkHistoryService drBkHistoryService;
+	
+	@Autowired
+    private VoucherService voucherService;
 	
 	@Autowired
     private MnInHistoryService mnInHistoryService;
@@ -55,7 +66,18 @@ public class BookService {
 	@Autowired
     private CommonMapper cdCommonMapper;
 	
+	@Autowired
+    private DrBkHistoryTempMapper drBkHistoryTempMapper;
 	
+	@Autowired
+    private DrBkMnMapMapper drBkMnMapMapper;
+	
+	@Autowired
+    private MnInHistoryMapper mnInHistoryMapper;
+	
+	@Autowired
+    private DrVoucherUseMapper drVoucherUseMapper;
+
 	
 	/**
 	 * 예약가능여부 체크 
@@ -70,18 +92,20 @@ public class BookService {
     	ResultVO result = new ResultVO();
     	String serialNo = "";
 		LocalDateTime nowDt = LocalDateTime.now();
-    	
+		List<DrBkMark> markList = new ArrayList<DrBkMark>();
+		
         try {
         	log.info("[chkBookLogic] bookInfo : " + bkInfo);
+        	List<Map<String, Object>> bkList = bkInfo.getBkList();
 
         	// 예약 불가능한 시간 
         	List<String> strArr = new ArrayList<String>();
-        	for (Map<String, Object> bk : bkInfo.getBkList()) {
+        	for (Map<String, Object> bk : bkList) {
         		String bkTime = bk.get("bkTime").toString();
         		
     			// DR_BK_MARK 예약선점 데이터 체크
         		bkInfo.setBkTime(bkTime.replace(":", ""));
-    			List<DrBkMark> markList = drBkMarkMapper.selectAvailableData(bkInfo);
+    			markList = drBkMarkMapper.selectAvailableData(bkInfo);
     			log.info("[chkBookLogic] 예약선점 테이블 조회 건수 > {}", markList.size());
     			
     			if (markList == null || markList.size() == 0) {
@@ -98,11 +122,13 @@ public class BookService {
 				return result;
         	}
         	
-		/*
-				// 예약 가능한 데이터 있는 경우, 선점 처리
+        	// ┌────────────────── 선점 처리 ──────────────────┐
+        	for (Map<String, Object> bk : bkList) {
+        		
+        		String bkTime = bk.get("bkTime").toString();
 				Map<String, Object> param = new HashMap<String, Object>();
-
-				// 선점 시간 조회 
+	
+				// 선점 시간 조회 ( 15분 )
 				CdCommon common = new CdCommon();
 				common.setCoDiv(bkInfo.getCoDiv());
 				common.setCdDivision("999");
@@ -120,7 +146,7 @@ public class BookService {
 				param.put("coDiv"			, bkInfo.getCoDiv());
 				param.put("bayCondi"		, bkInfo.getBayCondi());
 				param.put("bkDay"			, bkInfo.getBkDay());
-				param.put("bkTime"			, bkInfo.getBkTime());
+				param.put("bkTime"			, bkTime.replace(":", ""));
 				
 				param.put("bkSeq"			, markList.get(0).getBkSeq());	
 				
@@ -131,44 +157,44 @@ public class BookService {
 				param.put("minusRemCnt", "Y");
 				drBkTimeMapper.updateBkRemCount(param);
 			
-						
-			
+        	}
+        	// └────────────────── 선점 처리 ──────────────────┘
+        	
+        	// ┌───────────── 임시테이블에 예약 데이터 저장 ───────────┐
 			// 시리얼번호 생성 (YYMMDDHHMMSS)
 			// 임시 테이블 PK : 지점코드 + 시리얼번호 + 회원번호
 			serialNo = nowDt.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 			
 			// 예약시간 
-			List<Map<String, Object>> bkList = bInfo.getBkList();
-			bkList.sort(
-					Comparator.comparing((Map<String, Object> map) -> (String) map.get("timeIdx"))
-				);
+			bkList.sort(Comparator.comparing((Map<String, Object> map) -> (String) map.get("bkTime")));
 			
 			String bkTime = "";
 			String bkTime2 = "";
 			for (Map<String, Object> bk : bkList) {
-				String tmpTime = bk.get("bkTime").toString(); // 1100
+				String tmpTime = bk.get("bkTime").toString(); 
 				if (bkTime.equals("")) {
-					bkTime = tmpTime.substring(0, 2) + ":" + tmpTime.substring(2);
-					bkTime2 = tmpTime;
+					bkTime = tmpTime;
+					bkTime2 = tmpTime.replace(":", "");
 				} else {
-					bkTime += ", " + tmpTime.substring(0, 2) + ":" + tmpTime.substring(2);
-					bkTime2 += ", " + tmpTime;
+					bkTime += ", " + tmpTime;
+					bkTime2 += ", " + tmpTime.replace(":", "");
 				}
 			}
 			
 			DrBkHistoryTemp temp = new DrBkHistoryTemp();
-			temp.setCoDiv(coDiv);
+			temp.setCoDiv(bkInfo.getCoDiv());
 			temp.setSerialNo(serialNo);
-			temp.setMsNum(sessionVO.getMsNum());
-			temp.setBayCd(bInfo.getBayCondi());
-			temp.setBkDay(bInfo.getBkDay());
+			temp.setMsNum(bkInfo.getMsNum());
+			temp.setBayCd(bkInfo.getBayCondi());
+			temp.setBkDay(bkInfo.getBkDay());
 			temp.setBkTime(bkTime);
 			temp.setBkTime2(bkTime2);
-			temp.setInputIp(ipAddr);
+			temp.setInputIp(bkInfo.getIpAddr());
 			
 			// 임시 테이블에 데이터 저장
-			drBkHistoryTempService.insertDrBkHistoryTemp(temp);
-			result.setData(serialNo);*/
+			drBkHistoryTempMapper.insertDrBkHistoryTemp(temp);
+			result.setData(serialNo);
+        	// └───────────── 임시테이블에 예약 데이터 저장 ───────────┘
 		} catch(Exception e) {
 			e.printStackTrace();
 			result.setCode("9999");
@@ -225,6 +251,7 @@ public class BookService {
 	 * 예약 취소 
 	 * - 결제 취소
 	 * - 예약 취소 
+	 * - 이용권 취소
 	 * 
 	 * @param bInfo
 	 * @return
@@ -233,8 +260,8 @@ public class BookService {
 	@Transactional
 	public ResultVO bookCancel(BookInfoVO bInfo) throws Exception {	
 		ResultVO resultVO = new ResultVO();
-
-		// 예약내역 조회 (예약고유번호 획득)
+		
+		// 예약정보 조회 (예약취소시 필요)
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("calcSerialNo", bInfo.getCalcSerialNo());
 		List<DrBkHistory> bList = drBkHistoryService.selectList(param);		
@@ -245,17 +272,46 @@ public class BookService {
 			resultVO.setMessage("예약 정보가 존재하지 않습니다.");
 		}
 		
-		for (DrBkHistory bk : bList) {
-			// 결제취소 (주문번호(orderId), 승인금액, 거래번호(transactionId), 취소키 필요)
-			// mnInHistoryService.cancelLogic(bInfo.getCoDiv(), orderId, authAmount, transactionId, "C", cancelKey, ipAddr);
-	
-		}
-
-
+		// 대표예약번호로 [DR_BK_MN_MAP] 조회해서 [MN_IN_HISTORY]의 MN_SEQ 획득
+		DrBkMnMap mnMap = new DrBkMnMap();
+		mnMap.setBkSerialNo(bInfo.getCalcSerialNo());
+		mnMap = drBkMnMapMapper.getMnMap(mnMap);
 		
-		// 입금내역 원본컬럼에 데이터 넣기 
+		MnInHistory mnHis = new MnInHistory();
+		mnHis.setMnSeq(mnMap.getMnSeq());
+		mnHis = mnInHistoryMapper.getMnInHistory(mnHis);
 		
+		String orderId = mnHis.getOrderId();
+		String authAmount = String.valueOf(mnHis.getMnInAmount());
+		String transactionId = mnHis.getTransactionId();
+		String cancelKey = mnHis.getCancelkey();
+		String ipAddr = bInfo.getIpAddr();
+		
+		log.info("[bookCancel] 주문번호(orderId): {}, 승인금액: {}, 거래번호(transactionId): {}, 취소키: {}"
+				, orderId, authAmount, transactionId, cancelKey);
+		
+		// PG 결제 취소 처리 
+		mnInHistoryService.cancelLogic(bInfo.getCoDiv(), orderId, authAmount, transactionId, "C", cancelKey, ipAddr, mnHis);
+
 		// 예약취소 
+		this.cancelBook(bInfo, bList);
+		
+		// 이용권 사용 여부 확인
+		voucherService.cancelVoucher(bInfo, bList);
+		/*
+		List<String> sNoList = new ArrayList<String>();
+		for (DrBkHistory bk : bList) {
+			sNoList.add(bk.getBkSerialNo()); 
+		}
+	
+		Map<String, Object> param2 = new HashMap<String, Object>();
+		param2.put("sNoList", sNoList);
+		List<DrVoucherUse> uList = drVoucherUseMapper.selectList(param2);
+				
+		if (uList.size() > 0) {
+			log.info("[bookCancel] 이용권 사용 취소");
+		}*/
+		
 		return resultVO;
 	}
 	

@@ -21,16 +21,18 @@
 			 , FLOOR(A.VC_AMOUNT / A.VC_LIMIT_CNT) AS AMOUNT
 		FROM DR_VOUCHER_SALE A 
 								INNER JOIN DR_VOUCHER_CODE B ON A.VC_CD = B.VC_CD
-		                        INNER JOIN DR_BK_TIME_VOUCHER C ON B.CO_DIV = C.CO_DIV AND B.VC_CD = C.VC_CD
+							    INNER JOIN ( 
+									SELECT E.CO_DIV, E.BK_DAY, E.BAY_CONDI, E.VC_CO_DIV, E.VC_CD
+							        FROM DR_BK_TIME_VOUCHER E
+							        WHERE E.BK_DAY = #{bkDay}
+							        GROUP BY E.CO_DIV, E.BK_DAY, E.BAY_CONDI, E.VC_CO_DIV, E.VC_CD
+							    )  C ON B.CO_DIV = C.VC_CO_DIV AND B.VC_CD = C.VC_CD 
 		WHERE 1=1 
 		<if test='coDiv != null and coDiv != ""'>
 		  AND C.CO_DIV = #{coDiv}
 		</if> 
 		<if test='bayCondi != null and bayCondi != ""'>
 		  AND C.BAY_CONDI = #{bayCondi}
-		</if> 
-		<if test='bkDay != null and bkDay != ""'>
-		  AND C.BK_DAY = #{bkDay}
 		</if> 
 		<if test='bkTime != null and bkTime != ""'>
 		  AND C.BK_TIME = #{bkTime}

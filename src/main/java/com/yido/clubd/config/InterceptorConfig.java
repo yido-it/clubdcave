@@ -39,6 +39,7 @@ public class InterceptorConfig extends HandlerInterceptorAdapter {
 		if(sessionVO != null) {			
 			log.info("=============>" + sessionVO);
 		} else {
+			log.info("============== 세션 없음 =============");
 			Cookie loginCookie = WebUtils.getCookie(req, "sessionKey");
 			if (loginCookie != null) {
 				Map<String, Object> params = new HashMap<String, Object>();			

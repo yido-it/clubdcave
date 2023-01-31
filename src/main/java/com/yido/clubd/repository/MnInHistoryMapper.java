@@ -4,6 +4,8 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import com.yido.clubd.model.MnInHistory;
+
 /**
  * 입금내역
  * 
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Repository;
 public interface MnInHistoryMapper {
 
 	public int getMnSeq(Map<String, Object> params);
+
+	public MnInHistory getMnInHistory(MnInHistory mnInHistory);
 	
 	// 입금내역 등록
 	public int insertMnInHistory(Map<String, Object> params);

@@ -18,4 +18,7 @@ public interface DrBkHistoryLogMapper {
 
 	// 로그 등록
 	public int insertDrBkHistoryLog(DrBkHistory drBkHistory);
+
+	// 금액 변경
+	public int updateBkAmount(DrBkHistory drBkHistory);
 }

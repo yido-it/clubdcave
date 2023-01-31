@@ -6,7 +6,14 @@
  * 테이블 설명 : 예약 입금 연결 정보
 -->
 <mapper namespace="com.yido.clubd.repository.DrBkMnMapMapper">
-
+	
+	<!-- 예약번호로 결제 정보 조회 -->
+	<select id="getMnMap" parameterType="DrBkMnMap" resultType="DrBkMnMap">
+		SELECT *
+		FROM DR_BK_MN_MAP 
+		WHERE BK_SERIAL_NO = #{bkSerialNo}
+	</select>
+	
     <insert id="insertDrBkMnMap">
     	INSERT INTO DR_BK_MN_MAP (
 			CO_DIV					

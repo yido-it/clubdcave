@@ -34,6 +34,11 @@ public class DrVoucherSale {
 	private int vcRemCnt;					// 잔존수량
 	private String vcRemark;				// 비고
 	private String useYn; 					// 사용가능여부
+	private int vcAmount;					// 판매금액
+	private int vcNet;						// 공급가
+	private int vcVat;						// 부가세
+	private int dcAmount;					// 할인금액
+	private int dcRemark;					// 할인비고
 
 	private String inputStaff; 				// 입력사번
 

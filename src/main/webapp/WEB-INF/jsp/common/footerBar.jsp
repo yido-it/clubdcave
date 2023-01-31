@@ -19,7 +19,7 @@
 	</a>
 	
 	<!-- 이용권 -->
-	<a href="javascript:location.href='/voucher/voucherMain';">
+	<a href="javascript:location.href='/voucher/voucherMain/001';">
 		<i class="fa fa-coins"></i><span>이용권</span>
 	</a>
 	

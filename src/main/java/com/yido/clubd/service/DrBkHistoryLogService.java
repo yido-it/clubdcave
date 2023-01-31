@@ -29,4 +29,15 @@ public class DrBkHistoryLogService {
 	public int insertDrBkHistoryLog(DrBkHistory drBkHistory) {
 		return drBkHistoryLogMapper.insertDrBkHistoryLog(drBkHistory);
 	}
+	
+	/**
+	 * 금액 변경
+	 * 
+	 * @param drBkHistory
+	 * @return
+	 */
+	public int updateBkAmount(DrBkHistory drBkHistory) {
+		return drBkHistoryLogMapper.updateBkAmount(drBkHistory);
+	}
+
 }

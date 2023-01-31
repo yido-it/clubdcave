@@ -155,7 +155,9 @@ public class BookController {
 			if (sessionVO == null) {
 				return result;
 			}
-			
+
+			bInfo.setMsId(sessionVO.getMsId());
+			bInfo.setMsNum(sessionVO.getMsNum());
 			bInfo.setCoDiv(coDiv);
 			bInfo.setIpAddr(ipAddr);
 			/**

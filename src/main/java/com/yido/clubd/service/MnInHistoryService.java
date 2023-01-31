@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ import com.yido.clubd.model.BookInfoVO;
 import com.yido.clubd.model.DrBkHistory;
 import com.yido.clubd.model.DrBkHistoryTemp;
 import com.yido.clubd.model.DrBkMnMap;
+import com.yido.clubd.model.MnInHistory;
 import com.yido.clubd.repository.DrBkHistoryMapper;
 import com.yido.clubd.repository.DrBkHistoryTempMapper;
 import com.yido.clubd.repository.DrBkMarkMapper;
@@ -75,6 +78,10 @@ public class MnInHistoryService {
 		return mnInHistoryMapper.getMnSeq(params);
 	}
 	
+	public MnInHistory getMnInHistory(MnInHistory mnInHistory) {
+		return mnInHistoryMapper.getMnInHistory(mnInHistory);
+	}
+	
 	/**
 	 * 입금내역 등록
 	 * 
@@ -116,7 +123,7 @@ public class MnInHistoryService {
 	 * @return
 	 */
 	@Transactional
-	public ResultVO successPayLogic(Map<String, Object> params, String action, String reserved, DrBkMnMap mnMap) {	
+	public ResultVO successPayLogic(Map<String, Object> params, String action, String reserved, DrBkMnMap mnMap, HttpSession session) {	
 		ResultVO resultVO = new ResultVO();
 		Gson gson = new Gson();
 		
@@ -134,9 +141,15 @@ public class MnInHistoryService {
 				params.put("msNum", msNum);
 	
 				SessionVO sessionVO = memberMapper.selectMsSession(params);
-				log.info("[successPayLogic] successPayLogic : " + sessionVO);
 				if(sessionVO == null) {
 					throw new Exception("회원정보가 존재하지 않습니다.");
+				}			
+				if (session.getAttribute("msMember") == null) {
+					log.info("=========== 세션 없음, 세션 구성 =========");
+					session.setAttribute("msMember", sessionVO);
+					session.setMaxInactiveInterval(30 * 60);
+				} else {
+					log.info("=========== 세션 있음 =========");
 				}
 				
 				JSONObject data = new JSONObject(reserved.replaceAll("&quot;", "\""));
@@ -269,7 +282,8 @@ public class MnInHistoryService {
 	 * @param ipAddr
 	 * @return
 	 */
-    public boolean cancelLogic(String coDiv, String orderId, String cancelAmount, String transactionId, String cancelType, String cancelKey, String ipAddr) { 
+    public boolean cancelLogic(String coDiv, String orderId, String cancelAmount
+    		, String transactionId, String cancelType, String cancelKey, String ipAddr, MnInHistory mnHis) { 
     	boolean resultValue = false;
     	
 		String orderDate             = "";
@@ -377,10 +391,15 @@ public class MnInHistoryService {
             params.put("mnSeq", this.getMnSeq(params)); 
             
             // 취소건 insert
-            this.insertMnInHistory(params);
+            if (mnHis != null) {
+                // 결제 취소시 원본 지점코드, 원본 입금일자, 원본 입금순번 들어가야함  
+            	params.put("mnOriCoDiv", mnHis.getCoDiv());
+            	params.put("mnOriInDay", mnHis.getMnInDay());
+            	params.put("mnOriMnSeq", mnHis.getMnSeq());
+            }
+            log.info("[cancelLogic] insertMnInHistory : " + params);
             
-            // 취소건 update (클럽디에 있던 로직인데, 클럽디 청담에는 필요없을듯함. 나중에 필요하면 다시 넣기)
-            // this.updateMnInHistory2(params);
+            this.insertMnInHistory(params);
             
             if(responseCode.equals("0000")) {
             	resultValue = true;

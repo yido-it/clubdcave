@@ -255,13 +255,13 @@ function doSearch(){
 				        		// 예약가능
 				        		divCnt += "<label class='bkTime btn btn-secondary' id='bkTime_"+bkTime1+"'>";
 								divCnt += "<input type='checkbox' autocomplete='off'>" + bkTime1 + ":" + bkTime2 + "<br/>";
-								divCnt += "<span>"+data[i].bkRemCount+"개 가능</span>";
+								divCnt += "<span id='status_"+bkTime1+"'>"+data[i].bkRemCount+"개 가능</span>";
 								divCnt += "</label>";
 				        	} else {
 				        		// 마감 
 				        		divCnt += "<label class='bkTime btn btn-secondary btn-lock'>";
 								divCnt += "<input type='checkbox' autocomplete='off' disabled='disabled'>" + bkTime1 + ":" + bkTime2 + "<br/>";
-								divCnt += "<span>마감</span>";
+								divCnt += "<span id='status_"+bkTime1+"'>마감</span>";
 								divCnt += "</label>";
 				        	}
 			        	}
@@ -418,7 +418,7 @@ function selectedBay(bayCd, bayName) {
 // 예약하기 버튼 클릭
 function doBook() {
 
-	var bkList 				= new Array();		// 시간 선택한 거 bkList 에 넣어주기
+	var bkList = new Array();		// 시간 선택한 거 bkList 에 넣어주기
 	
 	if ($('#bayCondi').val() == "") {
 		alertModal.fail('베이를 선택해주세요.');
@@ -465,14 +465,16 @@ function doBook() {
 				for(i=0; i<tList.length; i++) {
 					console.log(tList[i].substr(0, 2));
 					
-					$('#bkTime_'+tList[i].substr(0, 2)).remove('active');
-					/*
-					divCnt += "<label class='bkTime btn btn-secondary btn-lock'>";
-								divCnt += "<input type='checkbox' autocomplete='off' disabled='disabled'>" + bkTime1 + ":" + bkTime2 + "<br/>";
-								divCnt += "<span>마감</span>";
-								divCnt += "</label>";
-					*/
+					// 선택해제 
+					$('#bkTime_'+tList[i].substr(0, 2)).removeClass('active');
+					// 마감으로 변경 
+					$('#bkTime_'+tList[i].substr(0, 2)).addClass('btn-lock');
+					$('#status_'+tList[i].substr(0, 2)).text('마감');
+
+					bkList = [];
+					reservationInfo.bkList = "";
 				}
+				console.log("reservationInfo: ", reservationInfo);
 				
 			}
 		}

@@ -63,4 +63,10 @@
 			, #{bkAmount}		
     	)  	    	
     </insert>
+    
+     <update id="updateBkAmount">
+		UPDATE DR_BK_HISTORY_LOG
+		   SET BK_AMOUNT 	= #{bkAmount}
+		 WHERE BK_SERIAL_NO = #{bkSerialNo}
+	</update>  
 </mapper>

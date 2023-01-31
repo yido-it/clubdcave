@@ -71,7 +71,7 @@
 		     , IFNULL(NULLIF(E.MN_AMOUNT,''),'0') AS MN_AMOUNT 
 		     , A.BK_STATE 
              , F.CD_TITLE1 AS BK_STATE_NAME
-             , I.VC_NAME
+             ,  MAX(I.VC_NAME) AS VC_NAME 
              , COUNT(G.BK_SERIAL_NO) AS VC_CNT
              , A.CALC_SERIAL_NO
 		FROM DR_BK_HISTORY A 

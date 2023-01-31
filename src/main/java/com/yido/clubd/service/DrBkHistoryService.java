@@ -135,9 +135,7 @@ public class DrBkHistoryService {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		log.info("[actionReservation] params : " + param);
 		
-		// 이용권 사용여부 
-		String isVoucherUse = param.get("isVoucherUse").toString();
-		
+		// 이용권 사용여부 		
 		String tmpPhone = param.get("phone") != null ? param.get("phone").toString() : "";
 		if (!tmpPhone.equals("") && tmpPhone.indexOf("-") > 0) {
 			String phone[] = tmpPhone.split("-");

@@ -54,7 +54,7 @@ public class VoucherController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping("/voucherMain")  
+	@RequestMapping("/voucherMain/{coDiv}")  
 	public String voucherMain(Model model, HttpServletRequest req, DrVoucherCode drVoucherCode) {
 
 		DateTimeFormatter dateFm = DateTimeFormatter.ofPattern("yyyy-MM-dd");

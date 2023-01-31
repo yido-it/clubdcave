@@ -19,6 +19,12 @@
 		</if>			  
 	</select>
 	
+	<select id="getMnInHistory" parameterType="MnInHistory" resultType="MnInHistory">
+		SELECT *
+		FROM MN_IN_HISTORY 
+		WHERE MN_SEQ = #{mnSeq}
+	</select>
+	
 	<!-- 입금내역 등록 -->
     <insert id="insertMnInHistory">
     	INSERT INTO MN_IN_HISTORY (
@@ -28,6 +34,9 @@
 			, MN_CARD_DIV			, MN_CARD_NAME		, INPUT_STAFF		, INPUT_DATETIME	
 			, INPUT_IP				, ORDER_ID			, TRANSACTION_ID	, CANCEL_KEY
 			, MN_CANCEL_YN			, MN_REMARK
+		<if test='mnOriCoDiv != null'>
+		 	, MN_ORI_CO_DIV			, MN_ORI_IN_DAY		, MN_ORI_MN_SEQ
+		</if>				
     	) values (
     		#{coDiv}	   			, #{mnInDay}   		, #{mnSeq}			, '2'					
     		, '12'  				, #{mnRevAmount} 	, #{mnInAmount} 	, #{mnChangeAmount}
@@ -35,6 +44,9 @@
     		, #{mnCardDiv}    		, #{mnCardName}    	, 'APP'				, NOW()				
     		, #{ipAddr}				, #{orderId}		, #{transactionId}	, #{cancelKey}	
     		, #{mnCancelYn}			, #{mnRemark}
+    	<if test='mnOriCoDiv != null'>
+		 	, #{mnOriCoDiv}			, #{mnOriInDay}		, #{mnOriMnSeq}
+		</if>	
     	)  	
     </insert>
     

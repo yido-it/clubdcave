@@ -35,6 +35,9 @@ public class VoucherService {
     private DrBkHistoryService drBkHistoryService;
 	
 	@Autowired
+    private DrBkHistoryLogService drBkHistoryLogService;
+	
+	@Autowired
     private BookService bookService;
 	
 	@Autowired
@@ -173,6 +176,8 @@ public class VoucherService {
 				bkHis.setBkSerialNo(arrSerialNo.get(i).toString());
 				bkHis.setBkAmount(0);
 				drBkHistoryService.updateBkAmount(bkHis);
+				drBkHistoryLogService.updateBkAmount(bkHis);
+				
 				i++;
 			}			
 		}		
