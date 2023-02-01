@@ -127,6 +127,7 @@
 <jsp:include page="../common/alertModal.jsp" />  
 <script type="text/javascript">
 
+var dayClick			= "";	// 직접 클릭한 날짜 넣기 
 var preSelectedTime 	= "";
 var preSelectedType 	= "";
 var sYear, sMonth, sDate;
@@ -157,7 +158,7 @@ function init() {
 	var date = new Date();
 	sYear = date.yyyy();
 	sMonth = date.mm();
-	sDate = date.dd();
+	sDay = date.dd();
 	
 	// 달력 초기화
 	initCalendar(sYear, sMonth);
@@ -165,12 +166,12 @@ function init() {
 
 // 선택한 베이 + 날짜로 예약 데이터 조회 
 function onClickDay(date, num) {
+	dayClick = num;
 	
 	if ($('#bayCondi').val() == "") {
 		alertModal.fail('베이를 선택해주세요.');
 		return;
 	}
-	console.log('click day > date:' , date, ', num:', num);
 	
 	// ┌────────── 기존에 선택된거 class 제거 후 HTML 재구성 ──────────┐
 	var matches = document.getElementsByClassName('cal-selected');
@@ -200,7 +201,6 @@ function onClickDay(date, num) {
 function doSearch(){
 	
 	// 선택한 날짜 표출  
-	console.log("[doSearch] 선택한 날짜 : " , sDate);
 	var divTop = "<div class='reservation_time'><h5>" + getStringDt2(sDate) + " - 시간선택</h5>";
 	var divBottom = "</div>";
 	var divCnt = "";
@@ -217,7 +217,7 @@ function doSearch(){
     	}
         , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
         , success: function(data) {	
-        	console.log('예약 가능한 시간 : ', data);
+        	// console.log('예약 가능한 시간 : ', data);
 			
 			var divCnt = "";
 			if (data != null && data.length > 0) {
@@ -337,9 +337,13 @@ function initCalendar(year, month) {
 						//  지점, 베이, 회원등급에 따른 달력 표출 
 						if(data[i].CL_SOLAR == currentDay) {
 							// 당일
-							divCnt += "<a href='#' id='day_"+data[i].DAYNUM+"' class='cal-selected' onClick='onClickDay(\""+data[i].CL_SOLAR+"\", "+data[i].DAYNUM+")'>";
-							divCnt += "<i class='fa fa-square color-highlight'></i>";
-							divCnt += "<span>" + data[i].DAYNUM + "</span></a>";
+							if (dayClick == "") {
+								divCnt += "<a href='#' id='day_"+data[i].DAYNUM+"' class='cal-selected' onClick='onClickDay(\""+data[i].CL_SOLAR+"\", "+data[i].DAYNUM+")'>";
+								divCnt += "<i class='fa fa-square color-highlight'></i>";
+								divCnt += "<span>" + data[i].DAYNUM + "</span></a>";
+							} else {
+								divCnt += "<a href='#' id='day_"+data[i].DAYNUM+"' onClick='onClickDay(\""+data[i].CL_SOLAR+"\", "+data[i].DAYNUM+")'>" + data[i].DAYNUM + "</a>";
+							}
 						} else {
 							// 당일 아닌거 
 							if ( data[i].CL_SOLAR > currentDay) {
@@ -349,7 +353,13 @@ function initCalendar(year, month) {
 									divCnt += "<a href='#' class='cal-disabled'>" + data[i].DAYNUM + "</a>";
 								} else {
 									// 예약 가능한날
-									divCnt += "<a href='#' id='day_"+data[i].DAYNUM+"' onClick='onClickDay(\""+data[i].CL_SOLAR+"\", "+data[i].DAYNUM+")'>" + data[i].DAYNUM + "</a>";
+									if (dayClick != "" && dayClick == data[i].DAYNUM) {
+										divCnt += "<a href='#' id='day_"+data[i].DAYNUM+"' class='cal-selected' onClick='onClickDay(\""+data[i].CL_SOLAR+"\", "+data[i].DAYNUM+")'>";
+										divCnt += "<i class='fa fa-square color-highlight'></i>";
+										divCnt += "<span>" + data[i].DAYNUM + "</span></a>";
+									} else {
+										divCnt += "<a href='#' id='day_"+data[i].DAYNUM+"' onClick='onClickDay(\""+data[i].CL_SOLAR+"\", "+data[i].DAYNUM+")'>" + data[i].DAYNUM + "</a>";
+									}
 								}
 							} else {
 								// 과거 날짜 예약 불가 
@@ -364,7 +374,9 @@ function initCalendar(year, month) {
 				for(i=0; i<42; i++) {
 					divCnt += "<a href='#' class='cal-disabled'>-</a>";
 				}
-				document.querySelector(".calendar-body").innerHTML = divCnt;				
+				document.querySelector(".calendar-body").innerHTML = divCnt;	
+				
+				$('.timeTable').css('display', 'none');
 			}
 		
 		}
@@ -381,6 +393,8 @@ $('.cal-title-left').on('click', function() {
 		sMonth = (sMonth > 9 ? '' : '0') + sMonth;
 	}
 
+	dayClick = "";
+	$('.timeTable').css('display', 'none');
 	initCalendar(sYear, sMonth);
 });
 
@@ -394,6 +408,8 @@ $('.cal-title-right').on('click', function() {
 		sMonth = (sMonth > 9 ? '' : '0') + sMonth;
 	}
 
+	dayClick = "";
+	$('.timeTable').css('display', 'none');
 	initCalendar(sYear, sMonth);
 });
 
@@ -403,22 +419,25 @@ function selectedBay(bayCd, bayName) {
 	document.querySelector(".bayInfo").innerHTML = bayName;
 	$('#bayCondi').val(bayCd);
 	
-	// 선택되어있는 날짜로 예약 데이터 조회하기 
-	var matches = document.getElementsByClassName('cal-selected');
-
-	if (matches.length > 0) {
-		var afterStr = matches[0].id.split('_');
+	initCalendar(sYear, sMonth);
+	if (dayClick == "") {
+		// 최초 베이 선택시, 오늘 날짜로 [예약 데이터] 조회하기 
+		sDate = sYear + sMonth + sDay;
+	} else {
+		// 날짜 클릭 후 베이 변경시, 해당 날짜로 [예약 데이터] 조회하기 
+		var tmpDay = String(dayClick).padStart(2, "0");		
+		sDate = sYear + sMonth + tmpDay;	
 	}
 	
-	sDate = sYear + sMonth + afterStr[1];
-	console.log("[베이선택] 조회 날짜 : ", sDate);
+	console.log('베이 선택 > 날짜 : ' , sDate);
+	
 	doSearch();
 }
 
 // 예약하기 버튼 클릭
 function doBook() {
 
-	var bkList = new Array();		// 시간 선택한 거 bkList 에 넣어주기
+	var bkList = new Array();		// 선택된 시간 
 	
 	if ($('#bayCondi').val() == "") {
 		alertModal.fail('베이를 선택해주세요.');
@@ -433,10 +452,9 @@ function doBook() {
 	}
 	
 	for(i=0; i<matches.length; i++) {
-
+		// 선택된 시간 반복문
 		var bookData = new Object();	
 		var afterStr = matches[i].id.split('_');
-		console.log("bkTime: ", afterStr[1]);
 		
 		bookData.bkTime = afterStr[1] + ":00";
 		bkList.push(bookData);
@@ -447,7 +465,7 @@ function doBook() {
 	
 	console.log("reservationInfo: ", reservationInfo);
 
-	// 다음페이지로 이동 	
+	// '예약가능여부' 체크 후 다음페이지로 이동 	
 	$.ajax({
 		url: "/book/book2/" + $('#coDiv').val()
 		, type: "post"
@@ -456,15 +474,15 @@ function doBook() {
 		, contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
 		, success: function(data) {
 			if (data.code == '0000') {
+				// 다음 페이지로 이동 
 				location.href="/book/book2/"+$('#coDiv').val()+"/"+data.data;
+				
 			} else if (data.code == '9999') {
 				alertModal.fail(data.message);
 				// 마감된 시간은 마감처리 + 선택해제 + bkList 다시 구성 
 				var tList = data.data;
 
-				for(i=0; i<tList.length; i++) {
-					console.log(tList[i].substr(0, 2));
-					
+				for(i=0; i<tList.length; i++) {					
 					// 선택해제 
 					$('#bkTime_'+tList[i].substr(0, 2)).removeClass('active');
 					// 마감으로 변경 
@@ -475,7 +493,6 @@ function doBook() {
 					reservationInfo.bkList = "";
 				}
 				console.log("reservationInfo: ", reservationInfo);
-				
 			}
 		}
 	});	

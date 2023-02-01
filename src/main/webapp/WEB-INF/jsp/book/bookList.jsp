@@ -93,6 +93,12 @@
 									당일취소불가
 									</a>
 								</c:when> 
+								<c:when test="${nowDt >= bk.BK_DAY}">
+									<!-- 취소불가 -->
+									<a href="#" class="fr btn btn-border btn-sm rounded-0 text-uppercase font-900 border-yellow-dark color-yellow-dark bg-theme">
+									취소불가
+									</a>
+								</c:when> 
 								<c:otherwise>
 									<!-- 예약취소 -->
 									<a href="javascript:onClick=doCancel('${bk.CALC_SERIAL_NO}', ${bk.MN_AMOUNT})" class="fr btn btn-border btn-sm rounded-0 text-uppercase font-900 border-red-dark color-red-dark bg-theme">
