@@ -68,7 +68,7 @@
         <!--이용권보유 Tab-2-->
         <div class="tab-content" id="tab-2">
             <div class="menu-title">
-                <h3 class="my-0 py-0">보유내역
+                <h3 class="my-0 py-0 ml-2">보유내역
                 </h3>
                 <div class="float-right  mt-n4">
                  
@@ -77,6 +77,15 @@
             </div>
             <div class="divider mt-3 mb-3"></div>
             <div class="accordion" id="accordion-1">
+            
+                  <div class="mb-0">
+                    <button class="btn accordion-btn border-0 color-theme font-14" >
+                        오픈타석 10매+2 
+                        <a href="#" data-menu="voucher_cancle" class="fr btn  btn-xs  btn_accodion_voucher  rounded-0 font-900 border-red-dark color-red-dark" style="border-bottom : 1px solid #DA4453 !important">
+                        	취소</a>
+                        <p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간: 2024.03.27</p>    
+                    </button>
+                </div>
 
                 <div class="mb-0">
                     <button class="btn accordion-btn border-0 color-theme font-14" data-toggle="collapse" data-target="#collapse3">
@@ -308,6 +317,25 @@ data-menu-effect="menu-parallax" style="padding:20px">
     </div> 
 </div>
 
+
+<!--바우처캔슬 팝업 -->
+<div id="voucher_cancle" class="menu menu-box-modal rounded-0" data-menu-height="270" data-menu-width="330"
+data-menu-effect="menu-parallax">
+<h1 class="text-center mt-4"><i class="fa-solid fa-triangle-exclamation fa-2x color-red-dark"></i></h1>
+<h3 class="text-center mt-3 font-700">이용권 취소</h3>
+<p class="boxed-text-xl opacity-70">
+     이용권을 정말 취소하시겠습니까?<br/>
+  *사용중인 이용권취소는 고객센터에 연락주시기 바랍니다.  
+</p>
+<div class="row mb-0 mr-3 ml-3">
+   <div class="col-6">
+       <a href="#" class="btn close-menu btn-full btn-md bg-red-dark font-800 text-uppercase rounded-s">아니요</a>
+   </div>
+   <div class="col-6">
+       <a href="#" class="btn close-menu btn-full btn-md bg-green-dark font-800 text-uppercase rounded-s">예</a>
+   </div>
+</div>
+</div> 
   
 
 <!--   Global Footer-->

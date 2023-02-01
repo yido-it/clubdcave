@@ -1399,22 +1399,11 @@ $(document).ready(function(){
 
             //Adding Offline Alerts
             var offlineAlerts = $('.offline-message');
-            if(!offlineAlerts.length){
-                $('body').append('<p class="offline-message bg-red-dark color-white center-text uppercase ultrabold">No internet connection detected</p> ');
-                $('body').append('<p class="online-message bg-green-dark color-white center-text uppercase ultrabold">You are back online</p>');
-            }
+           
             //Offline Function Show
-            function isOffline(){
-                $('.offline-message').addClass('offline-message-active');
-                $('.online-message').removeClass('online-message-active');
-                setTimeout(function(){$('.offline-message').removeClass('offline-message-active');},2000);
-            }
+          
             //Online Function Show
-            function isOnline(){
-                $('.online-message').addClass('online-message-active');
-                $('.offline-message').removeClass('offline-message-active');
-                setTimeout(function(){$('.online-message').removeClass('online-message-active');},2000);
-            }
+           
             $('.simulate-offline').on('click',function(){isOffline();})
             $('.simulate-online').on('click',function(){isOnline();})
 

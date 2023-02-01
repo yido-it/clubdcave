@@ -156,6 +156,53 @@ h1 .badge, h2 .badge, h3 .badge, h4 .badge, h5 .badge {
   background-image: url(../images/preload-logo.png);
 }
 
+
+
+/*Accordion Settings*/
+.accordion * {
+  outline: 0 !important;
+  box-shadow: 0px !important;
+  box-shadow: none !important;
+}
+
+.accordion .collapse .py-2{}
+
+.accordion .btn:first-child {
+  width: 100%; border-bottom: 1px solid #404040 !important;  
+}
+
+.accordion .card {
+  transition: all 0ms ease !important;
+}
+
+.accordion button {
+  transition: all 0ms ease !important;
+}
+
+.accordion [data-card-height] button {
+  width: 100%;
+}
+
+.btn.accordion-btn i:first-child {
+  width: 18px;
+  text-align: center;
+}
+
+.btn.accordion-btn {
+  text-align: left !important;
+  padding: 15px 17px;
+   font-size: 13px;
+  /*font-weight: 700; */
+}
+
+.accordion-icon {
+  float: right;
+  transition: all 250ms ease;
+  margin-top: 5px;
+}
+a.btn_accodion_voucher{width:60px !important;}
+
+
 /* Generating Color Pack*/
 .color-highlight {
   color: #4A89DC !important;
@@ -2322,49 +2369,6 @@ img.mx-auto {
   display: inline-block;
 }
 
-/*Accordion Settings*/
-.accordion * {
-  outline: 0 !important;
-  box-shadow: 0px !important;
-  box-shadow: none !important;
-}
-
-.accordion .collapse .py-2{}
-
-.accordion .btn:first-child {
-  width: 100%;border-bottom: 1px solid #404040 !important;
-}
-
-.accordion .card {
-  transition: all 0ms ease !important;
-}
-
-.accordion button {
-  transition: all 0ms ease !important;
-}
-
-.accordion [data-card-height] button {
-  width: 100%;
-}
-
-.btn.accordion-btn i:first-child {
-  width: 18px;
-  text-align: center;
-}
-
-.btn.accordion-btn {
-  text-align: left !important;
-  padding: 15px 17px;
-   font-size: 13px;
-  /*font-weight: 700; */
-}
-
-.accordion-icon {
-  float: right;
-  transition: all 250ms ease;
-  margin-top: 5px;
-}
-
 [aria-expanded="true"] .fa-plus {
   transform: rotate(45deg);
 }
@@ -2382,7 +2386,7 @@ img.mx-auto {
 }
 
 /*Offline Detector*/
-.offline-message {
+/* .offline-message {
   position: fixed;
   transform: translateY(-200%);
   padding-bottom: 0px;
@@ -2411,7 +2415,7 @@ img.mx-auto {
   z-index: 9999;
   line-height: 55px;
 }
-
+ */
 .is-on-homescreen .offline-message {
   padding-top: 30px !important;
 }
