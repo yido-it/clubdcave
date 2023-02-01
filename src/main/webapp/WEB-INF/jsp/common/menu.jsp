@@ -62,7 +62,7 @@
 		
 		<!-- 개인설정 메뉴 -->
 		<p>개인설정</p>
-		<a href="ticket.html" id="nav-starters">
+		<a href="javascript:location.href='/voucher/voucherMain/001';"" id="nav-starters">
 			<i class="fa fa-ticket color-red-dark"></i>이용권<i class="fa fa-angle-right"></i>
 		</a>
 		
