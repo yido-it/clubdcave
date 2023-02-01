@@ -34,7 +34,7 @@
 	
 	<div class="menu-list">
 		<!-- 이용관련 메뉴 -->
-		<p>이용관련</p>
+		<h6 class="ml-1 font-14 font-400">이용관련</h6>
 		<a href="guide.html" id="nav-welcome">
 			<i class="fa fa-star color-yellow-dark"></i>이용안내<i class="fa fa-angle-right"></i>
 		</a>
@@ -58,12 +58,11 @@
 		<a href="board.html" id="nav-media">
 			<i class="fa fa-list color-teal-dark"></i>공지사항<i class="fa fa-angle-right"></i>
 		</a>
-		<br/>
-		
+		<div class="divider mt-3 mb-3"></div>
 		<!-- 개인설정 메뉴 -->
-		<p>개인설정</p>
+		<h6 class="ml-1 font-14 font-400">개인설정</h6>
 		<a href="javascript:location.href='/voucher/voucherMain/001';"" id="nav-starters">
-			<i class="fa fa-ticket color-red-dark"></i>이용권<i class="fa fa-angle-right"></i>
+			<i class="fa-solid fa-money-check color-red-dark"></i>이용권<i class="fa fa-angle-right"></i>
 		</a>
 		
 		<a href="javascript:location.href='member/memberModify'" id="nav-templates">
