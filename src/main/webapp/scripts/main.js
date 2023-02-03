@@ -274,6 +274,7 @@ function getStringDt(date, separator){
 }
 
 // 날짜 문자열로 반환  
+// separator 가 B 이면 년월일로 return 
 function getStringDt2(date, separator){
 
 	// 파라미터 : 20230117
@@ -281,7 +282,14 @@ function getStringDt2(date, separator){
 	var month = date.substr(4, 2);
 	var day = date.substr(6);
 	
-	return year + separator + month + separator + day;
+	var returnDate = "";
+	if (separator == "B") {
+		returnDate = year + "년 " + month + "월 " + day + "일";
+	} else {
+		returnDate =  year + separator + month + separator + day;
+	}
+	
+	return returnDate;
 }
 
 function getTimeFormat(data){
