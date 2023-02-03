@@ -20,6 +20,34 @@
 
 	</select>	
 	
+	<!-- 이용내역 (예약정보 포함) -->
+	<select id="selectUseList" parameterType="hashmap" resultType="hashmap">
+		SELECT DATE_FORMAT(B.BK_DAY,'%y.%m.%d') AS BK_DAY 
+			 , CONCAT(LEFT(B.BK_TIME, 2),':', RIGHT(B.BK_TIME, 2)) AS BK_TIME 
+		     , E.VC_NAME
+     		 , G.CD_TITLE1 AS BAY_NAME
+		FROM DR_VOUCHER_USE A 
+			INNER JOIN DR_BK_HISTORY B ON A.CO_DIV = B.CO_DIV AND A.BK_SERIAL_NO = B.BK_SERIAL_NO
+			INNER JOIN DR_VOUCHER_LIST C ON A.VC_CO_DIV = C.CO_DIV AND A.SALE_DAY = C.SALE_DAY AND A.SALE_SEQ = C.SALE_SEQ AND A.LIST_SEQ = C.LIST_SEQ
+			INNER JOIN DR_VOUCHER_SALE D ON C.CO_DIV = D.CO_DIV AND C.SALE_DAY = D.SALE_DAY AND C.SALE_SEQ = D.SALE_SEQ AND USE_YN = 'Y'
+			INNER JOIN DR_VOUCHER_CODE E ON D.VC_CD = E.VC_CD
+   			INNER JOIN DR_BAY_INFO F ON B.CO_DIV = F.CO_DIV AND B.BAY_CONDI = F.BAY_CD 
+			INNER JOIN CD_COMMON G ON F.BAY_CD = G.CD_CODE AND G.CD_DIVISION = '020' AND G.CD_USEYN = 'Y'
+		WHERE 1=1 
+		<if test='msNum != null and msNum != ""'>
+		  AND B.MS_NUM = #{msNum}
+		</if> 
+		<if test='saleDay != null and saleDay != ""'>
+		  AND D.SALE_DAY = #{saleDay}
+		</if> 
+		<if test='saleSeq != null and saleSeq != ""'>
+		  AND D.SALE_SEQ = #{saleSeq}
+		</if> 
+		<if test='vcCd != null and vcCd != ""'>
+		  AND D.VC_CD = #{vcCd}
+		</if> 
+	</select>		
+	
     <insert id="insertDrVoucherUse">
     	INSERT INTO DR_VOUCHER_USE (
 			BK_SERIAL_NO				

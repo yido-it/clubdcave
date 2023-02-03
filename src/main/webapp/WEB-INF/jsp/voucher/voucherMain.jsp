@@ -18,179 +18,100 @@
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
     
 <div id="page">
-    
-    <div class="header header-fixed header-logo-app">
-        <a href="javascript:history.back(-1)" class="header-title header-subtitle">이용권</a>
-		<jsp:include page="../common/top.jsp" />
-    </div>
-    
-    <!-- 좌측GNB-->
-	<jsp:include page="../common/menu.jsp" />
-	<!-- //좌측GNB-->
 
-    <div class="page-content header-clear-medium">
-         
+<div class="header header-fixed header-logo-app">
+<a href="javascript:history.back(-1)" class="header-title header-subtitle">이용권</a>
+<jsp:include page="../common/top.jsp" />
+</div>
 
-      <div class="content">
-        <!--탭선택-->
-        <div class="tab-controls tabs-round tab-animated tabs-medium tabs-rounded shadow-xl" data-tab-items="2" data-tab-active="bg-green-dark color-white">
-            <a href="#" data-tab-active="" data-tab="tab-1" class="bg-green-dark color-white no-click font-15" style="width: 50%;">
-                이용권구매</a>
-            <a href="#" data-tab="tab-2" style="width: 50%;" class="font-15">
-                이용권보유내역</a>
-        </div>
-        <div class="clearfix mb-3"></div>
-        <!--//탭선택-->
+<!-- 좌측GNB-->
+<jsp:include page="../common/menu.jsp" />
+<!-- //좌측GNB-->
 
-          <!--이용권구매-->
-        <div class="tab-content" id="tab-1" style="display: block;">
-        
-        <c:forEach items="${vocList}" var="voc" varStatus="status">
-        
-        <div class="d-flex <c:if test="${status.index == 0}"> mt-5 </c:if>" >
-            <div>
-                <h2 class="font-14 mb-0 line-height-m font-500">${voc.vcName} </h2>       
-                <p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간: 구매일로부터 ${voc.vcMonth}개월</p>        
-            </div>
-            <div class="ml-auto pl-3 text-right mt-2">
-                <h5><fmt:formatNumber value="${voc.vcAmount}" pattern="#,###" />원</h5>                
-            </div>
-            <button class="btn btn-primary btn-xs bg-blue-dark ml-1" onClick="location.href='payment2.html'">구매</button>
-        </div>
-        <div class="divider mt-3 mb-3"></div>
+<div class="page-content header-clear-medium">
+
+
+<div class="content">
+<!--탭선택-->
+<div class="tab-controls tabs-round tab-animated tabs-medium tabs-rounded shadow-xl" data-tab-items="2" data-tab-active="bg-green-dark color-white">
+<a href="#" data-tab-active="" data-tab="tab-1" class="bg-green-dark color-white no-click font-15" style="width: 50%;">
+이용권구매</a>
+<a href="#" data-tab="tab-2" style="width: 50%;" class="font-15">
+이용권보유내역</a>
+</div>
+<div class="clearfix mb-3"></div>
+<!--//탭선택-->
+
+<!--이용권구매-->
+<div class="tab-content" id="tab-1" style="display: block;">
+
+<c:forEach items="${vocList}" var="voc" varStatus="status">
+
+<div class="d-flex <c:if test="${status.index == 0}"> mt-5 </c:if>" >
+<div>
+<h2 class="font-14 mb-0 line-height-m font-500">${voc.vcName} </h2>       
+<p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간: 구매일로부터 ${voc.vcMonth}개월</p>        
+</div>
+<div class="ml-auto pl-3 text-right mt-2">
+<h5><fmt:formatNumber value="${voc.vcAmount}" pattern="#,###" />원</h5>                
+</div>
+<button class="btn btn-primary btn-xs bg-blue-dark ml-1" onClick="location.href='payment2.html'">구매</button>
+</div>
+<div class="divider mt-3 mb-3"></div>
+</c:forEach>
+
+</div>
+
+
+
+
+<!--이용권보유 Tab-2-->
+<div class="tab-content" id="tab-2">
+	<div class="menu-title">
+		<h3 class="my-0 py-0">보유내역</h3>
+		<div class="float-right  mt-n4">
+			<!-- 검색 버튼 -->
+			<a href="" data-menu="modal_day" class="color-white"><i class="fa-solid fa-calendar-days"></i></a>
+		</div>
+	</div>
+	<div class="divider mt-3 mb-3"></div>
+	
+	<div class="accordion" id="accordion-1">
+		<!-- 이용권 구매내역 -->
+		<c:forEach items="${sList}" var="sale" varStatus="status">
+			<fmt:parseDate value="${sale.VC_TO_DAY}" var="dateValue" pattern="yyyyMMdd"/>
+			<fmt:formatDate value="${dateValue}" var="vcToDay" pattern="yyyy.MM.dd"/>
+			<div class="mb-0">
+				<!-- 이용권명 / 잔여수량 / 유효기간 -->
+				<button class="btn accordion-btn border-0 color-theme font-14" 
+					onClick="doSearch('${sale.SALE_DAY}', ${sale.SALE_SEQ}, '${sale.VC_CD}', ${status.index})"
+					data-toggle="collapse" data-target="#collapse${status.index}">
+					${sale.VC_NAME} 
+					<span class="color-blue-dark ml-1"> 잔여 ${sale.VC_REM_CNT}매</span>
+					
+					<c:if test="${sale.VC_LIMIT_CNT == sale.VC_REM_CNT}">
+						<!-- 구매취소 -->
+						<a href="#" data-menu="voucher_cancle" class="fr btn btn-xs btn_accodion_voucher rounded-0 font-900 border-red-dark color-red-dark"
+						 		style="border-bottom : 1px solid #DA4453 !important">
+							취소
+						</a>
+					</c:if>
+					<c:if test="${sale.VC_LIMIT_CNT != sale.VC_REM_CNT}">
+						<i class="fa fa-chevron-down font-10 accordion-icon"></i>
+					</c:if>
+					<p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간:  ${vcToDay}</p>    
+				</button>
+				
+				<!-- 사용내역  -->
+				<div id="collapse${status.index}" class="collapse useList_${status.index}" data-parent="#accordion-1"></div>
+			</div>
 		</c:forEach>
+	</div>
+</div>
+</div>
+<!-- Page content ends here-->  
 
-        </div>
-
-
-
-
-        <!--이용권보유 Tab-2-->
-        <div class="tab-content" id="tab-2">
-            <div class="menu-title">
-                <h3 class="my-0 py-0 ml-2">보유내역
-                </h3>
-                <div class="float-right  mt-n4">
-                 
-                    <a href="" data-menu="modal_day" class="color-white"><i class="fa-solid fa-calendar-days"></i></a>
-                </div>
-            </div>
-            <div class="divider mt-3 mb-3"></div>
-            <div class="accordion" id="accordion-1">
-            
-                  <div class="mb-0">
-                    <button class="btn accordion-btn border-0 color-theme font-14" >
-                        오픈타석 10매+2 
-                        <a href="#" data-menu="voucher_cancle" class="fr btn  btn-xs  btn_accodion_voucher  rounded-0 font-900 border-red-dark color-red-dark" style="border-bottom : 1px solid #DA4453 !important">
-                        	취소</a>
-                        <p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간: 2024.03.27</p>    
-                    </button>
-                </div>
-
-                <div class="mb-0">
-                    <button class="btn accordion-btn border-0 color-theme font-14" data-toggle="collapse" data-target="#collapse3">
-                        오픈타석 1매 
-                        <i class="fa fa-chevron-down font-10 accordion-icon"></i>
-                        <p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간: 2024.03.27</p>    
-                    </button>
-                    <div id="collapse3" class="collapse" data-parent="#accordion-1">
-                        <div class="d-flex mt-2 mb-2 content">
-                            <div>
-                                <h2 class="font-13 mb-0 line-height-m font-500">오픈타석 <span class="badge bg-blue-dark px-2 py-1 ml-2 mt-2 text-uppercase">사용가능</span></h2>       
-                               </div>
-                            <div class="ml-auto mt-1 pl-3 text-right">
-                                <p class="mb-0 opacity-50 font-11">구매일자: 23.08.12</p>        
-                            </div>
-                        </div>
-                    </div>
-                </div>
-               
-                <div class="mb-0">
-                    <button class="btn accordion-btn border-0 color-theme collapsed font-14" data-toggle="collapse" data-target="#collapse1" aria-expanded="false"> 
-                        오픈타석 10+2회 <span class="color-blue-dark ml-1"> 잔여 4매</span>
-                        <i class="fa fa-chevron-down font-10 accordion-icon"></i>
-                        <p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간: 2024.03.27</p>    
-                    </button>
-                    <div id="collapse1" class="collapse" data-parent="#accordion-1" >
-                        <div class="d-flex mt-2 mb-2 content">
-                            <div>
-                                <h2 class="font-13 mb-0 line-height-m font-500">오픈타석 <span class="badge bg-blue-dark px-2 py-1 ml-2 mt-2 text-uppercase">사용가능</span></h2>       
-                               </div>
-                            <div class="ml-auto mt-1 pl-3 text-right">
-                                <p class="mb-0 opacity-50 font-11">구매일자: 23.08.12</p>        
-                            </div>
-                        </div>
-                        <div class="d-flex mt-2 mb-2 content">
-                            <div>
-                                <h2 class="font-13 mb-0 line-height-m font-500">오픈타석  <span class="badge bg-blue-dark px-2 py-1 ml-2 mt-2 text-uppercase">사용가능</span></h2>       
-                               </div>
-                            <div class="ml-auto mt-1 pl-3 text-right">
-                                <p class="mb-0 opacity-50 font-11">구매일자: 23.08.12</p>        
-                            </div>
-                        </div>
-                        <div class="d-flex mt-2 mb-2 content">
-                            <div>
-                                <h2 class="font-13 mb-0 line-height-m font-500">오픈타석  <span class="badge bg-blue-dark px-2 py-1 ml-2 mt-2 text-uppercase">사용가능</span></h2>       
-                               </div>
-                            <div class="ml-auto mt-1 pl-3 text-right">
-                                <p class="mb-0 opacity-50 font-11">구매일자: 23.08.12</p>        
-                            </div>
-                        </div>
-                        <div class="d-flex mt-2 mb-2 content">
-                            <div>
-                                <h2 class="font-13 mb-0 line-height-m font-500">오픈타석  <span class="badge bg-blue-dark px-2 py-1 ml-2 mt-2 text-uppercase">사용가능</span></h2>       
-                               </div>
-                            <div class="ml-auto mt-1 pl-3 text-right">
-                                <p class="mb-0 opacity-50 font-11">구매일자: 23.08.12</p>        
-                            </div>
-                        </div>
-                        <div class="d-flex mt-2 mb-2 content">
-                            <div>
-                                <h2 class="font-13 mb-0 line-height-m font-500">오픈타석  <span class="badge bg-gray-dark px-2 py-1 ml-2 mt-2 text-uppercase">사용완료</span></h2>       
-                               </div>
-                            <div class="ml-auto mt-1 pl-3 text-right">
-                                <p class="mb-0 opacity-50 font-11">구매일자: 23.08.12</p>        
-                            </div>
-                        </div>
-                        <div class="d-flex mt-2 mb-2 content">
-                            <div>
-                                <h2 class="font-13 mb-0 line-height-m font-500">오픈타석  <span class="badge bg-gray-dark px-2 py-1 ml-2 mt-2 text-uppercase">사용완료</span></h2>       
-                               </div>
-                            <div class="ml-auto mt-1 pl-3 text-right">
-                                <p class="mb-0 opacity-50 font-11">구매일자: 23.08.12</p>        
-                            </div>
-                        </div>
-                      
-                    </div> 
-                </div>
-
-                <div class="mb-0">
-                    <button class="btn accordion-btn border-0 color-theme font-14" data-toggle="collapse" data-target="#collapse2">
-                        축구게임 1매
-                        <i class="fa fa-chevron-down font-10 accordion-icon"></i>
-                        <p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간: 2024.03.27</p>    
-                    </button>
-                    <div id="collapse2" class="collapse" data-parent="#accordion-1">
-                        <div class="d-flex mt-2 mb-2 content">
-                            <div>
-                                <h2 class="font-13 mb-0 line-height-m font-500">축구게임 <span class="badge bg-blue-dark px-2 py-1 ml-2 mt-2 text-uppercase">사용가능</span></h2>       
-                               </div>
-                            <div class="ml-auto mt-1 pl-3 text-right">
-                                <p class="mb-0 opacity-50 font-11">구매일자: 23.08.12</p>        
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            
-            </div>
-
-        </div>
-        <!--//이용권보유-->
-
-       </div>
-    <!-- Page content ends here-->  
-
-	<!--  content ends -->   
+<!--  content ends -->   
 </div>   
 
 <!--내역조회 모달-->
@@ -317,7 +238,6 @@ data-menu-effect="menu-parallax" style="padding:20px">
     </div> 
 </div>
 
-
 <!--바우처캔슬 팝업 -->
 <div id="voucher_cancle" class="menu menu-box-modal rounded-0" data-menu-height="270" data-menu-width="330"
 data-menu-effect="menu-parallax">
@@ -336,7 +256,7 @@ data-menu-effect="menu-parallax">
    </div>
 </div>
 </div> 
-  
+ 
 
 <!--   Global Footer-->
 <jsp:include page="../common/footerBar.jsp" />
@@ -358,37 +278,40 @@ $(document).ready(function() {
 	}
 });
 
-// 예약취소 
-function doCancel(serialNo, amount){
-	if(confirm('예약을 취소 하시겠습니까?')) {
-		
-		var reservationInfo 			= {};
-		reservationInfo.calcSerialNo 	= serialNo;
-		reservationInfo.coDiv 			= coDiv;
-		
-		var url = "";
-		
-	    if (amount == 0) {
-	    	url = "/voucher/vCancel/";
-	    } else {	    
-	    	url = "/book/bookCancel/";
-	    }
-	    
-    	$.ajax({
-    		url: url
-    		, type: "post"
-    		, dataType: 'json'
-    		, data: reservationInfo
-    		, contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
-    		, success: function(data) {    			
-    			if (data.code == '0000') {
-    				location.reload();
-    			} else if (data.code == '9999') {
-    				alertModal.fail(data.message);
-    			}
-    		}
-    	});	      
-	}
+// 이용권 사용내역 조회 
+function doSearch(saleDay, saleSeq, vcCd, idx) {
+	
+	$.ajax({
+        url: "/voucher/useList"
+        , type: "post"
+       	, dataType: 'json'
+      	, data: { 
+           	"saleDay" 	: saleDay 
+           	, "saleSeq" : saleSeq
+           	, "vcCd" 	: vcCd
+    	}
+        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+        , success: function(data) {	
+        	console.log(data);
+        	
+			if (data != null && data.length > 0) {
+				var divCnt = '';
+				
+				for (let i=0; i<data.length; i++) {
+					divCnt += '<div class="d-flex mt-2 mb-2 content">';
+					divCnt += '<div>';
+					divCnt += '<h2 class="font-13 mb-0 line-height-m font-500">' + data[i].BAY_NAME + '</h2>'; 
+					divCnt += '</div>';
+					divCnt += '<div class="ml-auto mt-1 pl-3 text-right">';
+					divCnt += '<p class="mb-0 opacity-50 font-11">예약: '+data[i].BK_DAY + ' / ' + data[i].BK_TIME +'</p>';    
+					divCnt += '</div>';
+					divCnt += '</div>';
+				}
+				document.querySelector(".useList_"+idx).innerHTML = divCnt;
+			}
+
+        }
+	});
 }
 
 </script>

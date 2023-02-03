@@ -118,6 +118,25 @@
 </div>
 <!--//베이선택 팝업-->
 
+<!-- 예약취소 팝업 -->
+<div id="voucher_cancle" class="menu menu-box-modal rounded-0" data-menu-height="270" data-menu-width="330"
+	data-menu-effect="menu-parallax">
+	<h1 class="text-center mt-4"><i class="fa-solid fa-triangle-exclamation fa-2x color-red-dark"></i></h1>
+	<h3 class="text-center mt-3 font-700">예약 취소</h3>
+	<p class="boxed-text-xl opacity-70">
+		예약을 정말 취소하시겠습니까?
+	</p>
+	<div class="row mb-0 mr-3 ml-3">
+		<div class="col-6">
+			<a href="#" class="btn close-menu btn-full btn-md bg-red-dark font-800 text-uppercase rounded-s">아니요</a>
+		</div>
+		<div class="col-6">
+			<a href="#" class="btn close-menu btn-full btn-md bg-green-dark font-800 text-uppercase rounded-s">예</a>
+		</div>
+	</div>
+</div> 
+
+
 </body>
 
 <!--페이지 로드되자마자 베이선택팝업 활성화-->

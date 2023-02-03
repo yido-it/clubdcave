@@ -62,6 +62,7 @@
 		</if>
 	</select>	
 	
+	<!-- 예약내역 조회 -->
 	<select id="selectBkHis" parameterType="hashmap" resultType="hashmap">
 		SELECT B.CO_NAME
  			 , B.CO_DIV
@@ -93,8 +94,14 @@
 		<if test='calcSerialNo != null and calcSerialNo != ""'>
 		 AND A.CALC_SERIAL_NO = #{calcSerialNo}
 		</if>
+		<if test='strtDt != null and endDt != null'>
+		 AND A.BK_DAY BETWEEN #{strtDt} AND #{endDt}
+		</if>
 		GROUP BY B.CO_NAME, D.CD_TITLE1, BK_DAY, A.CALC_SERIAL_NO
         ORDER BY A.CALC_SERIAL_NO DESC
+		<if test='limit != null and offset != null'>
+        LIMIT #{limit} OFFSET #{offset}
+		</if>        
 	</select>
 	
 	<!-- 가장 최근 대표예약고유번호 조회 (조건 : 회원번호) -->

@@ -303,7 +303,7 @@ public class BookController {
 	}
 	
 	/**
-	 * [예약] 예약내역 조회
+	 * [예약] 예약내역 페이지
 	 * 
 	 * @param model
 	 * @param req
@@ -317,18 +317,47 @@ public class BookController {
 		
 		try {
 			if (sessionVO == null) return returnPage;
-			
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("msNum", sessionVO.getMsNum());
-			map.put("coDiv", coDiv);
-			List<Map<String, Object>> list = drBkHistoryService.selectBkHis(map);			
-			model.addAttribute("list", list);
+
 			model.addAttribute("coDiv", coDiv);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		
 		return returnPage;
+	}
+	
+	/**
+	 * [예약] 예약내역 더보기
+	 * 
+	 * @param model
+	 * @param req
+	 * @param coDiv
+	 * @return
+	 */
+	@RequestMapping("/moreBookList/{coDiv}")  
+	@ResponseBody
+	public List<Map<String, Object>> moreBookList(Model model, HttpServletRequest req, @PathVariable String coDiv) {
+		HttpSession session = req.getSession();
+		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+				
+		try {
+			// listSize : 어디서 부터 가져올지
+			int listSize = Integer.parseInt(req.getParameter("listSize").toString());
+			// 조회할 건수
+			int limit = 5; 
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("msNum", sessionVO.getMsNum());
+			map.put("coDiv", coDiv);
+			map.put("limit", limit);
+			map.put("offset", listSize);
+			list = drBkHistoryService.selectBkHis(map);		
+		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 
 	/**

@@ -27,9 +27,19 @@ public class DrVoucherSaleService {
 
 	@Autowired
     private DrVoucherSaleMapper drVoucherSaleMapper;
+
+	/**
+	 * 이용권 구매내역 조회
+	 * 
+	 * @param map
+	 * @return
+	 */
+	public List<Map<String, Object>> selectSaleList(Map<String, Object> map) {
+		return drVoucherSaleMapper.selectSaleList(map);
+	}
 	
 	/**
-	 * 이용권 구매내역 
+	 * 이용권 구매내역 조회 (예약페이지에서 필요한 정보)
 	 * 
 	 * @param map
 	 * @return

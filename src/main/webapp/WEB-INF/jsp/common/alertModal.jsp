@@ -1,6 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!-- 
 <script type="text/javascript" src="/scripts/jquery.js"></script>
 <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
+ -->
+ 
 <div id="alertPopup" class="menu menu-box-modal rounded-m" data-menu-hide="1000" data-menu-width="220" data-menu-height="160">
 	<h1 class="text-center fa-5x mt-2 pt-3 pb-2"><i class=""></i></h1>
 	<h4 class="text-center"></h4>

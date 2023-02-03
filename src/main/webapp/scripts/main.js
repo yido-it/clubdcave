@@ -192,6 +192,39 @@ function getToDay(separator){
 	return year + separator + realMonth + separator + realDate;
 }
 
+// 오늘 날짜 구하려면 -> year = 0, month = 1
+// 1달뒤 날짜 구하려면 -> year = 0, month = 2
+// 1년뒤 날짜 구하려면 -> year = 1, month = 1
+function getDaybyMonth(separator, year, month){
+	var today = new Date();   
+
+	var year;
+	if (year == 0) {
+		year = today.getFullYear(); // 년도
+	} else {
+		year = today.getFullYear() + year; // 년도
+	}
+	var month = today.getMonth() + month;  // 월
+	var date = today.getDate();  // 날짜
+	var day = today.getDay();  // 요일
+	
+	var realMonth;
+	if (month < 10) {
+		realMonth = "0" + month;
+	} else {
+		realMonth = month;
+	}
+	var realDate;
+	if (date < 10) {
+		realDate = "0" + date;
+	} else {
+		realDate = date;
+	}
+	
+	return year + separator + realMonth + separator + realDate;
+}
+
+
 //내일 날짜 반환 
 function getToTomorrow(separator){
 	var today = new Date();   
@@ -240,15 +273,15 @@ function getStringDt(date, separator){
 	return strtYear + separator + realMonth + separator + realDate;
 }
 
-//날짜 문자열로 반환 (년/월/일)
-function getStringDt2(date){
+// 날짜 문자열로 반환  
+function getStringDt2(date, separator){
 
 	// 파라미터 : 20230117
 	var year = date.substr(0, 4);
 	var month = date.substr(4, 2);
 	var day = date.substr(6);
 	
-	return year + "년 " + month + "월 " + day + "일";
+	return year + separator + month + separator + day;
 }
 
 function getTimeFormat(data){

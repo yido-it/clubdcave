@@ -27,6 +27,11 @@ public class DrVoucherUseService {
 	public List<DrVoucherUse> selectList(Map<String, Object> param) {
 		return drVoucherUseMapper.selectList(param);
 	}
+
+	// 이용내역 (예약정보 포함)
+	public List<Map<String, Object>> selectUseList(Map<String, Object> param) {
+		return drVoucherUseMapper.selectUseList(param);
+	}
 	
 	/**
 	 * 사용내역 등록

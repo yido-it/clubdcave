@@ -8,13 +8,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yido.clubd.common.utils.ResultVO;
+import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.model.BookInfoVO;
 import com.yido.clubd.model.DrBkHistory;
@@ -23,6 +27,7 @@ import com.yido.clubd.service.DrBkHistoryService;
 import com.yido.clubd.service.DrVoucherCodeService;
 import com.yido.clubd.service.DrVoucherListService;
 import com.yido.clubd.service.DrVoucherSaleService;
+import com.yido.clubd.service.DrVoucherUseService;
 import com.yido.clubd.service.VoucherService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,6 +46,9 @@ public class VoucherController {
 	private DrVoucherListService drVoucherListService;
 	
 	@Autowired
+	private DrVoucherUseService drVoucherUseService;
+	
+	@Autowired
 	private VoucherService voucherService;
 	
 	@Autowired
@@ -55,22 +63,72 @@ public class VoucherController {
 	 * @return
 	 */
 	@RequestMapping("/voucherMain/{coDiv}")  
-	public String voucherMain(Model model, HttpServletRequest req, DrVoucherCode drVoucherCode) {
-
-		DateTimeFormatter dateFm = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	public String voucherMain(Model model, HttpServletRequest req, @PathVariable String coDiv) {
+		HttpSession session = req.getSession();
+		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
+		String returnPage = "/voucher/voucherMain";
 		
 		try {
+			if (sessionVO == null) return returnPage;
 			
 			// 이용권 조회
 			List<DrVoucherCode> list = new ArrayList<DrVoucherCode>();
+			DrVoucherCode drVoucherCode = new DrVoucherCode(); 
 			list = drVoucherCodeService.selectList(drVoucherCode);
 			model.addAttribute("vocList", list);
 			
+			// 구매내역
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("msNum", sessionVO.getMsNum());
+			param.put("coDiv", coDiv);
+			List<Map<String, Object>> sList = drVoucherSaleService.selectSaleList(param);
+			model.addAttribute("sList", sList);
+				
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		
-		return "/voucher/voucherMain";
+		return returnPage;
+	}
+
+	/**
+	 * 이용권 사용내역
+	 * 
+	 * @param model
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("/useList")  
+	@ResponseBody
+	public List<Map<String, Object>> useList(Model model, HttpServletRequest req) {
+		List<Map<String, Object>> returnMap = new ArrayList<Map<String, Object>>();
+
+		HttpSession session = req.getSession();
+		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
+		
+		try {
+			
+			if (sessionVO == null || 
+					req.getParameter("saleDay") == null || req.getParameter("saleSeq") == null || req.getParameter("vcCd") == null) {
+				return returnMap;
+			}
+			String saleDay = req.getParameter("saleDay");
+			int saleSeq = Integer.parseInt(req.getParameter("saleSeq"));
+			String vcCd = req.getParameter("vcCd");
+			log.info("[이용권 사용내역] {}, {}, {}", saleDay, saleSeq, vcCd);
+			
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("saleDay", saleDay);
+			param.put("saleSeq", saleSeq);
+			param.put("vcCd", vcCd);
+			param.put("msNum", sessionVO.getMsNum());
+			returnMap = drVoucherUseService.selectUseList(param);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return returnMap;
 	}
 	
 	/**

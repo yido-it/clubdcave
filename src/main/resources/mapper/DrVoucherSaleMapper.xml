@@ -7,7 +7,28 @@
 -->
 <mapper namespace="com.yido.clubd.repository.DrVoucherSaleMapper">
 
-	<!-- 이용권 구매내역  -->
+    <!-- 이용권 구매내역 -->
+    <select id="selectSaleList" parameterType="hashmap" resultType="hashmap">
+		SELECT B.VC_NAME 
+			 , A.VC_TO_DAY
+		     , A.VC_LIMIT_CNT
+		     , A.VC_REM_CNT
+		     , A.SALE_DAY
+		     , A.SALE_SEQ
+		     , A.VC_CD
+		FROM DR_VOUCHER_SALE A 
+				INNER JOIN DR_VOUCHER_CODE B ON A.VC_CD = B.VC_CD
+		WHERE 1=1 
+		<if test='coDiv != null and coDiv != ""'>
+		  AND A.CO_DIV = #{coDiv}
+		</if> 
+		<if test='msNum != null and msNum != ""'>
+		  AND A.MS_NUM = #{msNum}
+		</if> 
+		  AND A.USE_YN = 'Y'
+    </select>
+    
+	<!-- 이용권 구매내역 (예약페이지에서 필요한 정보) -->
     <select id="selectList" parameterType="hashmap" resultType="hashmap">
     
 	    SELECT A.CO_DIV
