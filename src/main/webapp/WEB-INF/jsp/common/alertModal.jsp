@@ -39,7 +39,7 @@
 	        popup.find("h4").text(txt);
 	        popup.find("i").addClass(icon);
 	        popup.addClass('menu-active');
-	        setTimeout(this.close, 1000, popup);
+	        setTimeout(this.close, 1500, popup);
 	    },
 		close : function(popup) {
 			popup.find("i").removeClass();
