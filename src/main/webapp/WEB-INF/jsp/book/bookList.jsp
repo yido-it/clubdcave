@@ -49,7 +49,6 @@
         	더보기 <i class="fa-solid fa-chevron-down"></i>
         </a>
         
-		<br><br><br><br><br>
 	</div>  
 
 	<!--  content ends -->   
