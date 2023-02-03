@@ -4,10 +4,11 @@
 <%@ page import="com.yido.clubd.common.utils.Globals" %>
 <jsp:include page="../common/head.jsp" />
 <jsp:include page="../common/script.jsp" />
+
+<div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
 <body class="is-not-ios theme-light">
     
-<div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
-<div id="">
+<div id="page">
     <div class="header header-fixed header-logo-app header-transparent">
         <a href="#" class="color-white header-title header-subtitle">로그인</a>
         <a href="#" data-back-button class="color-white header-icon header-icon-1"><i class="fa fa-arrow-left"></i></a>
@@ -49,7 +50,7 @@
                         <a href="<c:url value='/member/agree?msLoginCd=APP'/>" class="color-highlight">회원가입</a>
                         </div>
                         <div class="col-6 text-right">
-                         <a href="<c:url value='/member/memberFind'/>" class="color-highlight">비밀번호찾기</a>
+                         <a href="<c:url value='/member/memberFind'/>" class="color-highlight">아이디/비밀번호찾기</a>
                         </div>
                     </div>
 
@@ -170,6 +171,7 @@
 				, loginAuto : saveLogin
 				, ua : getUserAgent()
 		};
+		var preUrl = document.referrer;
 		
 		$.ajax({
 			  url: "<c:url value='/member/doLogin'/>"
@@ -181,10 +183,16 @@
 				if(data.result) {
 					if(data.userInfo.msDormant == 'Y'){
 	            		if(confirm('휴면계정입니다. 휴면 상태를 해제하시겠습니까?')){
-							location.href = "<c:url value='/member/sleeper?coDiv=" +" '/>";
+							changeDormant(data.userInfo);
 	            		}
+	            	} else {
+	            		// 페이지 이동
+	            		if(preUrl.indexOf('book') > -1) {	  
+	            			location.href = preUrl;
+	            		} else {	            			
+							location.href = "<c:url value='/main'/>";
+	            		}         		
 	            	}
-					location.href = "<c:url value='/main'/>";
 				} else {
 					alertModal.fail(data.message);
 				}

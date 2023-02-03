@@ -398,9 +398,11 @@
     		, CONCAT(MS_HANDCAP, '개') AS MS_HANDCAP
     		, MS_LESSON_EXP_YN
     		, CONCAT(MS_LESSON_MINUTE, '분') AS MS_LESSON_MINUTE
-    		, CONCAT(MS_LESSON_UNIT, MS_LESSON_TREM, '회') AS MS_LESSON_TREM
-    		, CONCAT(MS_ROUND_UNIT, MS_ROUND_CNT, '회') AS MS_ROUND_CNT
-    	FROM DR_MS_BASIC
+    		, CONCAT(B.CD_TITLE1, MS_LESSON_TREM, '회') AS MS_LESSON_TREM
+    		, CONCAT(C.CD_TITLE1, MS_ROUND_CNT, '회') AS MS_ROUND_CNT
+    	FROM DR_MS_BASIC A
+    		INNER JOIN CD_COMMON B ON B.CD_CODE = MS_LESSON_UNIT AND B.CD_DIVISION = '029'
+    		INNER JOIN CD_COMMON C ON C.CD_CODE = MS_ROUND_UNIT AND C.CD_DIVISION = '029'
     	WHERE MS_NUM = #{msNum}
     </select>
     <insert id="insertMemberBasic">
@@ -500,7 +502,8 @@
     		, #{msNum}
     		, #{msCarNo}
     	)
-    </insert> 
+    </insert>
+    
 	<select id="selectFindUser" parameterType="hashmap" resultType="MemberVO">
 		SELECT 
 			  MS_NUM
@@ -520,7 +523,6 @@
 			AND NVL(MS_BLANK, 'N') = 'N'
 		 LIMIT 1
 	</select>
-
 	<select id="selectFindPw" parameterType="hashmap" resultType="MemberVO">
 		SELECT MS_NUM
 			 , CONCAT(MS_FIRST_PHONE1, AES_DECRYPT(UNHEX(MS_MID_PHONE1), 'YIDO'), MS_LAST_PHONE1 ) AS MS_PHONE

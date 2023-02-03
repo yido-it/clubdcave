@@ -21,4 +21,6 @@ public interface CoPlaceMapper {
 
 	public List<CoPlace> selectList(Map<String, Object> map);
 
+	public List<CoPlace> selectPlaceList();
+
 }

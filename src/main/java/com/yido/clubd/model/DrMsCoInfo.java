@@ -16,6 +16,7 @@ public class DrMsCoInfo {
 
 	private String coDiv;				// 지점코드
 	private String msNum; 				// 회원번호
+	private String msRegister; 			// 최초등록업장 여부
 	private String msFirstPick;			// 선호 업장
 	private String useYn;				// 사용여부
 	private int lessonWeekCnt;			// 주 레슨 횟수(일정 집계)

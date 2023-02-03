@@ -7,8 +7,8 @@
 <body class="theme-dark">
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
     
-<div class="" style="transform:translateX(0px);">
-    <div id="">
+<!-- <div class="page-content mb-0"> -->
+    <div id="page">
 		<div class="header header-fixed header-logo-app header-transparent">
 			<a href="#" class="color-white header-title header-subtitle">약관 확인하기</a>
 	    	<jsp:include page="../common/top.jsp" />
@@ -43,7 +43,8 @@
 	    </div>
     
 	</div>
-</div> <!-- Page content ends-->
+<!-- </div> -->
+<!-- Page content ends-->
 
 <!--모달-->
 <div id="modalAgree" class="menu menu-box-modal rounded-0" style="background-color: #303030;z-index:99999;padding: 15px 0;" data-backdrop="static" data-keyboard="false"

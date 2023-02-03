@@ -16,5 +16,19 @@
 		</if>       
 		AND USE_YN = 'Y'
     </select>
-    
+    <select id="selectPlaceList" resultType="CoPlace">
+    	/* coPlaceMapper.selectPlaceList - 전체 리스트 조회 */
+		SELECT *
+		  FROM CO_PLACE
+		 WHERE USE_YN = 'Y'
+		<if test='coDiv != null and coDiv != ""'>
+		  AND CO_DIV = #{coDiv}
+		</if> 	  
+		<if test='cdDivision != null and cdDivision != ""'>
+		  AND CD_DIVISION = #{cdDivision}
+		</if> 	 
+		<if test='cdCode != null and cdCode != ""'>
+		  AND CD_CODE = #{cdCode}
+		</if> 			   
+	</select>
 </mapper>

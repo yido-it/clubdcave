@@ -25,4 +25,8 @@ public class CoPlaceService {
     public List<CoPlace> selectList(Map<String, Object> map) {
     	return coPlaceMapper.selectList(map);
     }
+
+	public List<CoPlace> selectPlaceList() {
+		return coPlaceMapper.selectPlaceList();
+	}
 }

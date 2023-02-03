@@ -5,7 +5,7 @@
  * 테이블명 : PRO_NOTICE
  * 테이블 설명 : 레슨프로특이사항
 -->
-<mapper namespace="com.yido.clubd.repository.ProNoticeMapper">
+<mapper namespace="com.yido.clubd.repository.ProMapper">
    
     <insert id="insertProNotice">
     	INSERT INTO PRO_NOTICE (
@@ -32,11 +32,11 @@
 		   AND NOTICE_DIV 		= #{noticeDiv}
 	</update>
 	
-	<select id="selectProNoticeList" resultType="ProNotice">
+	<select id="selectProNoticeList" resultType="ProVO">
 		SELECT
 			  M.MS_NUM
+		    , M.MS_NAME
 			, MS_IMAGENAME
-		    , MS_NAME
 		    , NOTICE_DIV
 		    , PRO_MUST_YN
 		    , PRO_REMARK
@@ -45,9 +45,10 @@
 	    RIGHT OUTER JOIN DR_MS_MAININFO M ON N.MS_NUM = M.MS_NUM
 	    WHERE 1 = 1
 			AND M.MS_NUM = ${msNum}
-	        AND IFNULL(NULLIF(M.MS_BLANK,''),'N') = 'N';		    
+	        AND IFNULL(NULLIF(M.MS_BLANK,''),'N') = 'N'
+	        AND N.NOTICE_OPEN_YN = 'Y'    
 	</select>
-	<select id="selectProImageList" resultType="ProNotice">
+	<select id="selectProImageList" resultType="ProVO">
 		SELECT
 			  MS_NUM
 			, MS_IMG_NAME
@@ -56,5 +57,40 @@
 	    WHERE 1 = 1
 			AND MS_NUM = ${msNum}	    
 	</select>
+	<select id="selectProLicenseList" resultType="ProVO">
+		SELECT
+			  M.MS_NUM
+		    , M.MS_NAME
+			, LIC_SEQ
+		    , LIC_KIND
+		    , LIC_REMARK
+	    FROM PRO_LICENSE L
+	    RIGHT OUTER JOIN DR_MS_MAININFO M ON M.MS_NUM = L.MS_NUM
+	    INNER JOIN CD_COMMON C ON C.CD_CODE = L.LIC_KIND AND C.CD_DIVISION = '018'
+	    WHERE 1 = 1
+			AND M.MS_NUM = ${msNum}
+	        AND IFNULL(NULLIF(M.MS_BLANK,''),'N') = 'N'
+	</select>	
+	<insert id="insertProLicense">
+    	INSERT INTO PRO_LICENSE (
+			MS_NUM				
+			, LIC_SEQ			
+			, LIC_KIND			
+			, LIC_REMARK
+    	) values (
+    		#{msNum}			
+    		, #{licSeq}		
+    		, #{licKind}			
+    		, #{licRemark}	
+    	)  	
+    </insert>
+    
+ 	<update id="updateProLicense">
+		UPDATE PRO_LICENSE
+		   SET LIC_KIND 		= #{licKind}
+		     , LIC_REMARK 		= #{licRemark}
+		 WHERE MS_NUM 			= #{msNum}
+		   AND LIC_SEQ 			= #{licSeq}
+	</update>
 	
 </mapper>

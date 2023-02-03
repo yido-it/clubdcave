@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,16 +15,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.yido.clubd.common.utils.ResultVO;
+import com.yido.clubd.common.service.CommonService;
+import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
-import com.yido.clubd.model.MemberVO;
+import com.yido.clubd.model.CdCommon;
+import com.yido.clubd.model.CoPlace;
+import com.yido.clubd.model.DrMsCoInfo;
 import com.yido.clubd.model.DrProSchedule;
-import com.yido.clubd.model.ProLicense;
-import com.yido.clubd.model.ProNotice;
-import com.yido.clubd.service.MemberService;
+import com.yido.clubd.model.MemberVO;
+import com.yido.clubd.model.ProVO;
+import com.yido.clubd.service.CoPlaceService;
+import com.yido.clubd.service.DrMsCoInfoService;
 import com.yido.clubd.service.DrProScheduleService;
-import com.yido.clubd.service.ProLicenseService;
-import com.yido.clubd.service.ProNoticeService;
+import com.yido.clubd.service.MemberService;
+import com.yido.clubd.service.ProService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,173 +38,41 @@ import lombok.extern.slf4j.Slf4j;
 public class ProController {
 
 	@Autowired
-	private ProNoticeService proNoticeService;
-	
-	@Autowired
-	private ProLicenseService proLicenseService;
+	private ProService proService;	
 	
 	@Autowired
 	private DrProScheduleService drProScheduleService;
 	
 	@Autowired
-	private MemberService drMsMaininfoService;
+	private MemberService memberService;
 	
-	/**
-	 * 레슨프로 특이사항 등록
-	 * 
-	 * @param req
-	 * @param proNotice
-	 * @return
-	 */
-	@RequestMapping("/insertNotice")
-	@ResponseBody
-	public Map<String, Object> insertNotice(HttpServletRequest req, ProNotice proNotice){
-
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		try {
-			proNoticeService.insertProNotice(proNotice);
-			map.put("result",  true);
-		} catch(Exception e) {
-			e.printStackTrace();
-			map.put("result",  false);
-			map.put("message", "등록중 오류가 발생하였습니다.");
-		}
-		
-		return map;
-	}
+	@Autowired
+	private CommonService commonService;
 	
-	/**
-	 * 레슨프로 특이사항 수정
-	 * 
-	 * @param req
-	 * @param proNotice
-	 * @return
-	 */
-	@RequestMapping("/updateNotice")
-	@ResponseBody
-	public Map<String, Object> updateNotice(HttpServletRequest req, ProNotice proNotice){
-
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		try {
-			proNoticeService.updateProNotice(proNotice);
-			map.put("result",  true);
-		} catch(Exception e) {
-			e.printStackTrace();
-			map.put("result",  false);
-			map.put("message", "수정중 오류가 발생하였습니다.");
-		}
-		
-		return map;
-	}
+	@Autowired
+	private CoPlaceService coPlaceService;
 	
-	/**
-	 * 레슨프로 자격사항 등록
-	 * 
-	 * @param req
-	 * @param proLicense
-	 * @return
-	 */
-	@RequestMapping("/insertLicense")
-	@ResponseBody
-	public Map<String, Object> insertLicense(HttpServletRequest req, ProLicense proLicense){
-
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		try {
-			proLicenseService.insertProLicense(proLicense);
-			map.put("result",  true);
-		} catch(Exception e) {
-			e.printStackTrace();
-			map.put("result",  false);
-			map.put("message", "등록중 오류가 발생하였습니다.");
-		}
-		
-		return map;
-	}
-	
-	/**
-	 * 레슨프로 자격사항 수정
-	 * 
-	 * @param req
-	 * @param proLicense
-	 * @return
-	 */
-	@RequestMapping("/updateLicense")
-	@ResponseBody
-	public Map<String, Object> updateLicense(HttpServletRequest req, ProLicense proLicense){
-
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		try {
-			proLicenseService.updateProLicense(proLicense);
-			map.put("result",  true);
-		} catch(Exception e) {
-			e.printStackTrace();
-			map.put("result",  false);
-			map.put("message", "수정중 오류가 발생하였습니다.");
-		}
-		
-		return map;
-	}
-	
-	/**
-	 * 레슨프로 일정 등록
-	 * 
-	 * @param req
-	 * @param proLicense
-	 * @return
-	 */
-	@RequestMapping("/insertSchedule")
-	@ResponseBody
-	public Map<String, Object> insertSchedule(HttpServletRequest req, DrProSchedule drProSchedule){
-
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		try {
-			drProScheduleService.insertDrProSchedule(drProSchedule);
-			map.put("result",  true);
-		} catch(Exception e) {
-			e.printStackTrace();
-			map.put("result",  false);
-			map.put("message", "등록중 오류가 발생하였습니다.");
-		}
-		
-		return map;
-	}
-	
-	/**
-	 * 레슨프로 일정 수정
-	 * 
-	 * @param req
-	 * @param proLicense
-	 * @return
-	 */
-	@RequestMapping("/updateSchedule")
-	@ResponseBody
-	public Map<String, Object> updateSchedule(HttpServletRequest req, DrProSchedule drProSchedule){
-
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		try {
-			drProScheduleService.updateDrProSchedule(drProSchedule);
-			map.put("result",  true);
-		} catch(Exception e) {
-			e.printStackTrace();
-			map.put("result",  false);
-			map.put("message", "등록중 오류가 발생하였습니다.");
-		}
-		
-		return map;
-	}
+	@Autowired
+	private DrMsCoInfoService drMsCoInfoService;
 	
 	/**
 	 * 레슨프로 목록 페이지
 	 * 
 	 */	
 	@RequestMapping("/proMain")  
-	public String goProMain() {		
+	public String goProMain(Model model) {
+		try {
+			List<MemberVO> drMsMaininfoList = memberService.selectProList();
+			
+			if(drMsMaininfoList.isEmpty()) {
+				throw new Exception("조회 가능한 프로가 없습니다");
+			}
+			model.addAttribute("result", true);			
+			model.addAttribute("proList", drMsMaininfoList);			
+		} catch (Exception e) {
+			model.addAttribute("result", false);
+			model.addAttribute("message", e.getMessage());
+		}
 		return "/pro/proMain";
 	}
 	
@@ -216,7 +89,7 @@ public class ProController {
 		Map<String, Object> map = new HashMap<>();		
 		
 		try {
-			List<MemberVO> drMsMaininfoList = drMsMaininfoService.selectProList();
+			List<MemberVO> drMsMaininfoList = memberService.selectProList();
 			
 			if(drMsMaininfoList.isEmpty()) {
 				throw new Exception("조회 가능한 프로가 없습니다");
@@ -241,14 +114,250 @@ public class ProController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("msNum", msNum);
 		
-		MemberVO member = drMsMaininfoService.selectMember(map);
-		List<ProNotice> proNoticeList = proNoticeService.selectProNoticeList(map);
-		List<ProNotice> proImageList = proNoticeService.selectProImageList(map);
+		MemberVO member = memberService.selectMember(map);		
+		
+		List<ProVO> proNoticeList = proService.selectProNoticeList(map);
+		List<ProVO> proLicenseList = proService.selectProLicenseList(map);
+		List<ProVO> proImageList = proService.selectProImageList(map);
 		
 		model.addAttribute("proInfo", member);
 		model.addAttribute("proNoticeList", proNoticeList);
-		model.addAttribute("proPictureList", proImageList);
+		model.addAttribute("proLicenseList", proLicenseList);
+		model.addAttribute("proImageList", proImageList);
 		
 		return "/pro/proDetail";
 	}
+	
+	/**
+	 * 레슨프로 수정 페이지
+	 * 
+	 * @param model
+	 * @return
+	 */	
+	@RequestMapping("/proForm")  
+	public String goProForm(Model model, HttpSession session) {
+		CdCommon cdCommon = new CdCommon();
+		cdCommon.setCoDiv("001");
+		cdCommon.setCdDivision("025");
+		
+		List<CdCommon> jobList = commonService.getCommonCodeList(cdCommon);
+		List<CoPlace> placeList = coPlaceService.selectPlaceList();
+		
+		cdCommon.setCdDivision("018");
+		List<CdCommon> licenseList = commonService.getCommonCodeList(cdCommon);
+		
+		SessionVO member = (SessionVO)session.getAttribute("msMember");
+		String msNum = member.getMsNum();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("msNum", msNum);
+		
+		List<MemberVO> carList = memberService.selectMemberCarList(msNum);
+		List<ProVO> noticeList = proService.selectProNoticeList(map);
+		/*
+		 * for(ProVO notice : noticeList) { String proRemark =
+		 * notice.getProRemark().replace("<br/>", "\r\n");
+		 * notice.setProRemark(proRemark);
+		 * 
+		 * }
+		 */
+		List<ProVO> proLicList = proService.selectProLicenseList(map);
+		DrMsCoInfo drMsInfo = drMsCoInfoService.selectFirstPick(msNum);
+		
+		/* 공통 코드 */
+		model.addAttribute("jobList", jobList);
+		model.addAttribute("placeList", placeList);
+		model.addAttribute("licenseList", licenseList);
+		
+		/* 프로 프로필 정보 */
+		model.addAttribute("carList", carList);
+		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("proLicList", proLicList);
+		if(drMsInfo != null) {
+			model.addAttribute("msFirstPick", drMsInfo.getCoDiv());			
+		}else {			
+			model.addAttribute("msFirstPick", "");			
+		}		
+		
+		return "/pro/proForm";
+	}
+	
+	@RequestMapping("/saveProForm")
+	@ResponseBody
+	public Map<String, Object> saveProForm(HttpServletRequest req, Map<String, Object> params){
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		try {
+			memberService.updateMember(params);
+			memberService.saveMemberCar(params);
+			memberService.saveFirstPick(params);			
+			
+			proService.updateProNotice((ProVO)Utils.convertMaptoVO(params));
+			proService.updateProLicense((ProVO)Utils.convertMaptoVO(params));
+			map.put("result",  true);
+		} catch(Exception e) {
+			e.printStackTrace();
+			map.put("result",  false);
+			map.put("message", "수정중 오류가 발생하였습니다.");
+		}
+		
+		return map;
+	}
+	
+	@RequestMapping("/proGallery")  
+	public String goProGallery(Model model, HttpSession session) {
+		return "/pro/proGallery";
+	}
+	
+	/**
+	 * 레슨프로 특이사항 등록
+	 * 
+	 * @param req
+	 * @param proVO
+	 * @return
+	 */
+	@RequestMapping("/insertProNotice")
+	@ResponseBody
+	public Map<String, Object> insertProNotice(HttpServletRequest req, ProVO proVO){
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		try {
+			proService.insertProNotice(proVO);
+			map.put("result",  true);
+		} catch(Exception e) {
+			e.printStackTrace();
+			map.put("result",  false);
+			map.put("message", "등록중 오류가 발생하였습니다.");
+		}
+		
+		return map;
+	}
+	
+	/**
+	 * 레슨프로 특이사항 수정
+	 * 
+	 * @param req
+	 * @param proVO
+	 * @return
+	 */
+	@RequestMapping("/updateProNotice")
+	@ResponseBody
+	public Map<String, Object> updateProNotice(HttpServletRequest req, ProVO proVO){
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		try {
+			proService.updateProNotice(proVO);
+			map.put("result",  true);
+		} catch(Exception e) {
+			e.printStackTrace();
+			map.put("result",  false);
+			map.put("message", "수정중 오류가 발생하였습니다.");
+		}
+		
+		return map;
+	}
+	
+	/**
+	 * 레슨프로 자격사항 등록
+	 * 
+	 * @param req
+	 * @param proVO
+	 * @return
+	 */
+	@RequestMapping("/insertProLicense")
+	@ResponseBody
+	public Map<String, Object> insertProLicense(HttpServletRequest req, ProVO proVO){
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		try {
+			proService.insertProLicense(proVO);
+			map.put("result",  true);
+		} catch(Exception e) {
+			e.printStackTrace();
+			map.put("result",  false);
+			map.put("message", "등록중 오류가 발생하였습니다.");
+		}
+		
+		return map;
+	}
+	
+	/**
+	 * 레슨프로 자격사항 수정
+	 * 
+	 * @param req
+	 * @param proVO
+	 * @return
+	 */
+	@RequestMapping("/updateProLicense")
+	@ResponseBody
+	public Map<String, Object> updateProLicense(HttpServletRequest req, ProVO proVO){
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		try {
+			proService.updateProLicense(proVO);
+			map.put("result",  true);
+		} catch(Exception e) {
+			e.printStackTrace();
+			map.put("result",  false);
+			map.put("message", "수정중 오류가 발생하였습니다.");
+		}
+		
+		return map;
+	}
+	
+	/**
+	 * 레슨프로 일정 등록
+	 * 
+	 * @param req
+	 * @param proVO
+	 * @return
+	 */
+	@RequestMapping("/inserProSchedule")
+	@ResponseBody
+	public Map<String, Object> insertProSchedule(HttpServletRequest req, DrProSchedule drProSchedule){
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		try {
+			drProScheduleService.insertDrProSchedule(drProSchedule);
+			map.put("result",  true);
+		} catch(Exception e) {
+			e.printStackTrace();
+			map.put("result",  false);
+			map.put("message", "등록중 오류가 발생하였습니다.");
+		}
+		
+		return map;
+	}
+	
+	/**
+	 * 레슨프로 일정 수정
+	 * 
+	 * @param req
+	 * @param proVO
+	 * @return
+	 */
+	@RequestMapping("/updateProSchedule")
+	@ResponseBody
+	public Map<String, Object> updateSchedule(HttpServletRequest req, DrProSchedule drProSchedule){
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		try {
+			drProScheduleService.updateDrProSchedule(drProSchedule);
+			map.put("result",  true);
+		} catch(Exception e) {
+			e.printStackTrace();
+			map.put("result",  false);
+			map.put("message", "등록중 오류가 발생하였습니다.");
+		}
+		
+		return map;
+	}
+	
 }

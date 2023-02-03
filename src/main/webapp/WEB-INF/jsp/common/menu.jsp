@@ -65,7 +65,7 @@
 			<i class="fa-solid fa-money-check color-red-dark"></i>이용권<i class="fa fa-angle-right"></i>
 		</a>
 		
-		<a href="javascript:location.href='member/memberModify'" id="nav-templates">
+		<a href="javascript:location.href='/member/memberModify'" id="nav-templates">
 			<i class="fa fa-pen color-brown-dark"></i>정보수정<i class="fa fa-angle-right"></i>
 		</a>
 		

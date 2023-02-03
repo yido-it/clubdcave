@@ -9,7 +9,7 @@
 	</a>
 	
 	<!-- 프로소개 -->
-	<a href="javascript:location.href='/pro';">
+	<a href="javascript:location.href='/pro/proMain';">
 		<i class="fa fa-golf-ball-tee"></i><span>프로소개</span>
 	</a>
 	

@@ -286,12 +286,12 @@ public class Utils {
 	      return returnValue;
 	    }
 	    
-	    public static Map<String, Object> changeVotoMap (Object vo) {
+	    public static Map<String, Object> convertVotoMap (Object vo) {
 	    	ObjectMapper objectMapper = new ObjectMapper();
 	    	Map<String, Object> map = objectMapper.convertValue(vo, Map.class);
 	    	return map;	    	
 	    }
-	    public static Object changeMaptoVO (Map<String, Object> map) {
+	    public static Object convertMaptoVO (Map<String, Object> map) {
 	    	ObjectMapper objectMapper = new ObjectMapper();
 	    	Object vo = objectMapper.convertValue(map, Object.class);
 	    	return vo;	    	

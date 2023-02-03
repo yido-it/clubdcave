@@ -56,6 +56,5 @@ public class SessionVO {
 	private String msDormant; 			// 휴면계정구분
 	private String loginTime;			// 홈페이지로그인(일시분초)
 	private String msDi; 				// 실명인증
-	private String msJobCd; 				// 실명인증
-	
+	private String msJobCd; 			// 직업코드	
 }
