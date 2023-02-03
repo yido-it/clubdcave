@@ -220,7 +220,7 @@ function onClickDay(date, num) {
 function doSearch(){
 	
 	// 선택한 날짜 표출  
-	var divTop = "<div class='reservation_time'><h5>" + getStringDt2(sDate) + " - 시간선택</h5>";
+	var divTop = "<div class='reservation_time'><h5>" + getStringDt2(sDate, 'B') + " - 시간선택</h5>";
 	var divBottom = "</div>";
 	var divCnt = "";
 	

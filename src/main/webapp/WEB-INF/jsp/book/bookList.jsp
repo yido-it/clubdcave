@@ -144,15 +144,15 @@
 				<h5 class="col-4 text-left font-15">결제금액</h5>
 				<h5 class="col-8 text-right font-14 opacity-60 " id="popMnAmt"></h5> 
 				
-				<h5 class="col-4 text-left font-15">이용권</h5>
-				<h5 class="col-8 text-right font-14 opacity-60 " id="popBayInfo"></h5> 
+				<h5 class="col-4 text-left font-15" id="popVoucherTxt">이용권</h5>
+				<h5 class="col-8 text-right font-14 opacity-60" id="popVoucher"></h5> 
 			</div>  
 		</div>
 	
 	</div>
 	<div class="row mb-0 mr-3 ml-3 mt-5 mb-5">
 		<div class="col-12">
-			<a href="avascript:onClick=doCancel()" class="btn btn-full btn-md color-red-dark border-red-dark font-800 text-uppercase rounded-s">
+			<a href="javascript:onClick=doCancel()" class="btn btn-full btn-md color-red-dark border-red-dark font-800 text-uppercase rounded-s">
 				예약취소
 			</a>
 		</div>
@@ -184,6 +184,7 @@ $(document).ready(function() {
 	
 	init();
 	doSearch();
+
 });
 
 function init() {
@@ -203,7 +204,6 @@ function init() {
     
 	$('#strtDt').val(getDaybyMonth("-", 0, 1));		// 오늘 날짜
 	$('#endDt').val(getDaybyMonth("-", 0, 2));		// 1달뒤 날짜
-	
 }
 
 // 예약취소 확인 팝업창
@@ -213,7 +213,14 @@ function popCancel(idx){
 	$('#popBkDay').text($('#bkDay_'+idx).val());		// 방문날짜 
 	$('#popBkTime').text($('#bkTime_'+idx).val());		// 이용시간 
 	$('#popMnAmt').text($('#mnAmt_'+idx).val());		// 결제금액 
-	$('#popBayInfo').text($('#vcName_'+idx).val() + '(' + $('#vcCnt_'+idx).val() + '매 사용)');		// 이용권 
+	
+	if ( $('#vcCnt_'+idx).val() == 0 ) {
+		$('#popVoucherTxt').css('display', 'none');
+		$('#popVoucher').css('display', 'none');
+	} else {
+
+		$('#popVoucher').text($('#vcName_'+idx).val() + '(' + $('#vcCnt_'+idx).val() + '매 사용)');		// 이용권 
+	}
 	
 	cancelSerialNo = $('#serialNo_'+idx).val();			// 취소할때 필요한 serialno
 	cancelAmt = $('#mnAmt_'+idx).val();					// 취소할때 필요한 금액
@@ -296,7 +303,7 @@ function doSearch() {
 				var divCnt = '';
 				for (let i=0; i<data.length; i++) {
 					var bkDay = getStringDt2(data[i].BK_DAY, '-');
-					var mnAmt = data[i].MN_AMOUNT.toLocaleString("ko-KR")+'원';
+					var mnAmt = Number(data[i].MN_AMOUNT).toLocaleString("ko-KR")+'원';
 					
 					divCnt += '<input type="hidden" id="serialNo_'+i+'" value="'+data[i].CALC_SERIAL_NO+'">';
 					divCnt += '<input type="hidden" id="bayName_'+i+'" value="'+data[i].BAY_NAME+'">';
@@ -349,7 +356,7 @@ function doSearch() {
 								divCnt += '</a>';
 							} else {
 								// 예약취소
-								divCnt += '<a href="javascript:onClick=popCancel('+i+')" class="fr btn btn-border btn-sm rounded-0 text-uppercase font-900 border-red-dark color-red-dark bg-theme">';								
+								divCnt += '<a href="#" data-menu="modal_cancle" data-idx="'+i+'" data-page="bookList" class="fr btn btn-border btn-sm rounded-0 text-uppercase font-900 border-red-dark color-red-dark bg-theme">';								
 								divCnt += '예약취소';
 								divCnt += '</a>';
 							}
