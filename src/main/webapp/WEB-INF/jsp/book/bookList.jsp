@@ -45,11 +45,10 @@
 		<div id="bookList"></div>
 		<!-- └──────────────────────── 예약카드 ────────────────────────┘-->
 
-		 <a href="javascript:onClick=doSearch()" class="btn btn-border btn-m btn-full mb-3 rounded-xl text-uppercase font-900 border-blue-dark color-blue-dark ml-4 mr-4" id="btnMore">
+		 <a href="javascript:onClick=doSearch()" class="btn btn-border btn-m btn-full mb-10 rounded-xl text-uppercase font-900 border-blue-dark color-blue-dark ml-4 mr-4" id="btnMore">
         	더보기 <i class="fa-solid fa-chevron-down"></i>
         </a>
         
-		<br><br><br><br><br>
 	</div>  
 
 	<!--  content ends -->   

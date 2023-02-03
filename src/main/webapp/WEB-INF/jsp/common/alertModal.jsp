@@ -4,9 +4,9 @@
 <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
  -->
  
-<div id="alertPopup" class="menu menu-box-modal rounded-m" data-menu-hide="1000" data-menu-width="220" data-menu-height="160">
-	<h1 class="text-center fa-5x mt-2 pt-3 pb-2"><i class=""></i></h1>
-	<h4 class="text-center"></h4>
+<div id="alertPopup" class="menu menu-box-modal rounded-m" data-menu-hide="2000" data-menu-width="220" data-menu-height="160" style="">
+	<h2 class="text-center fa-4x mt-2 pt-3 pb-2"><i class=""></i></h2>
+	<h4 class="text-center font-15 fontnormal"></h4>
 </div>
 <script type="text/javascript">
 	var alertModal = {	

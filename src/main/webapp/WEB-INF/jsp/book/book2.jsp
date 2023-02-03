@@ -149,7 +149,7 @@
 			
 			<div class="divider"></div>
 		
-			<a data-menu="modal_pay" href=""  class="mt-1 mb-4 btn btn-md bg-blue-dark btn-full shadow-xl text-uppercase font-800 rounded-s">
+			<a data-menu="modal_pay" href=""  class="mt-1 mb-10 btn btn-md bg-blue-dark btn-full shadow-xl text-uppercase font-800 rounded-s">
 				결제진행
 			</a>
 		</div> 

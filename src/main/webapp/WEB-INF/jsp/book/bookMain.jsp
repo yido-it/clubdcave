@@ -44,7 +44,7 @@
 	        <div class="calendar">
 	            <div class="cal-header">
 	            	<!-- 년  / 월 -->
-	                <h4 class="cal-title text-center text-uppercase font-800 bg-highlight color-white" id="calHeader"></h4>
+	                <h4 class="cal-title text-center text-uppercase font-400 bg-highlight color-white" id="calHeader"></h4>
 	                <!-- 이전달 -->
 	                <h6 class="cal-title-left color-white">
 	                	<i class="fa fa-chevron-left"></i>
@@ -84,7 +84,7 @@
  			</div>
  			
  			<!-- 예약하기 버튼 -->
-			<a href="#" onClick="doBook()" class="mt-1 mb-4 btn btn-md bg-blue-dark btn-full shadow-xl text-uppercase font-800 rounded-s">
+			<a href="#" onClick="doBook()" class="mt-3 mb-10 btn btn-md bg-blue-dark btn-full shadow-xl text-uppercase font-800 rounded-s">
 			예약하기
 			</a> 
         </div>
@@ -108,7 +108,7 @@
        	<c:forEach items="${bayList}" var="bay">
        	     <a href="#" onClick="javscript:selectedBay('${bay.bayCd}', '${bay.bayName}')" class="close-menu">
                 <img class="mr-3 mt-2" src="/images/gallery/1.jpg">
-                <span>${bay.bayName}</span><i class="fa fa-angle-right"></i>
+                <span class="txt_bay_name">${bay.bayName}</span><i class="fa fa-angle-right"></i>
             </a>
        	</c:forEach>
        
