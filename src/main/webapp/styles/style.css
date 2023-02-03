@@ -1424,6 +1424,7 @@ a.btn_accodion_voucher{width:60px !important;}
   opacity: 0;
   pointer-events: none;
   transition: all 200ms ease;
+  border:1px solid #333; padding:5px
 }
 
 .menu-box-top.menu-box-detached {
@@ -1753,6 +1754,7 @@ a.btn_accodion_voucher{width:60px !important;}
   font-weight: 700;
 }
 .bold{font-weight:bold !important}
+.fontnormal{font-weight:400 !important}
 
 /*Opacity Values - Used for Contrasting Text, example opacity-30 will make the opacity 0.3*/
 .opacity-0 {
@@ -4111,7 +4113,7 @@ code {
 }
 
 .list-custom-small {
-  line-height: 50px;
+  line-height: 60px;
 }
 
 .list-custom-small .badge {
@@ -4795,7 +4797,7 @@ code {
   line-height: 35px;
   color: #FFF;
   z-index: 3;
-  font-weight: 800;
+  font-weight: 400;
 }
 
 .cal-disabled {
@@ -7111,6 +7113,7 @@ background-color: #1b1d21;}
 /*bay선택*/
 .modal_bay .list-custom-small a img{width:80px;height:auto}
 .modal_bay .list-group.list-custom-small a:hover{background-color:#333}
+.txt_bay_name{font-weight:400;margin-top:10px}
 /*체크박스*/
 [data-toggle=buttons]>.btn input[type=checkbox], [data-toggle=buttons]>.btn input[type=radio], [data-toggle=buttons]>.btn-group>.btn input[type=checkbox], [data-toggle=buttons]>.btn-group>.btn input[type=radio] {
   position: absolute;
