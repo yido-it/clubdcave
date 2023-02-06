@@ -105,8 +105,8 @@ public class VoucherController {
 	 * @param vcCd
 	 * @return
 	 */
-	@RequestMapping("/voucherPay/{coDiv}/{vcCd}")  
-	public String voucherPay(Model model, HttpServletRequest req, @PathVariable String coDiv, @PathVariable String vcCd) {
+	@RequestMapping("/voucherPay/{vcCd}")  
+	public String voucherPay(Model model, HttpServletRequest req, @PathVariable String vcCd) {
 		HttpSession session = req.getSession();
 		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
 		String returnPage = "/voucher/voucherPay";
@@ -115,22 +115,22 @@ public class VoucherController {
 		try {
 			if (sessionVO == null) return returnPage;
 			
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("coDiv" , coDiv);
-			
-			// 지점 정보 조회 
-			List<CoPlace> place = coPlaceService.selectList(map); 
-			model.addAttribute("place", place.get(0));
-			// end.
-			
 			// 이용권 조회
 			new ArrayList<DrVoucherCode>();
 			DrVoucherCode drVoucherCode = new DrVoucherCode(); 
 			drVoucherCode.setVcCd(vcCd);
 			List<DrVoucherCode> list = drVoucherCodeService.selectList(drVoucherCode);
 			drVoucherCode = list.get(0);
-			
 			model.addAttribute("voc", drVoucherCode);
+			log.info("drVoucherCode:{}", drVoucherCode);
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("coDiv" , drVoucherCode.getCoDiv());
+			
+			// 지점 정보 조회 
+			List<CoPlace> place = coPlaceService.selectList(map); 
+			model.addAttribute("place", place.get(0));
+			// end.
 			
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -120,5 +120,30 @@ public class WebController {
 	public String facility(Model model, HttpServletRequest req) {
 		return "/facility";
 	}
+	
+	@RequestMapping("/bay1")  
+	public String bay1(Model model, HttpServletRequest req) {
+		return "/bay/bay1";
+	}
+	
+	@RequestMapping("/bay2")  
+	public String bay2(Model model, HttpServletRequest req) {
+		return "/bay/bay2";
+	}
+	
+	@RequestMapping("/bay3")  
+	public String bay3(Model model, HttpServletRequest req) {
+		return "/bay/bay3";
+	}
+	
+	@RequestMapping("/bay4")  
+	public String bay4(Model model, HttpServletRequest req) {
+		return "/bay/bay4";
+	}
+	
+	@RequestMapping("/bay5")  
+	public String bay5(Model model, HttpServletRequest req) {
+		return "/bay/bay5";
+	}
 }
  	

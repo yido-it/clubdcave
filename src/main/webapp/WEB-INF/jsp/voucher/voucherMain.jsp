@@ -380,7 +380,7 @@ function doSearch(saleDay, saleSeq, vcCd, idx) {
 
 // 이용권 결제 페이지 이동 
 function doPay(vcCd) {
-	location.href='/voucher/voucherPay/' + coDiv + '/' + vcCd;
+	location.href='/voucher/voucherPay/' + vcCd;
 }
 
 </script>
