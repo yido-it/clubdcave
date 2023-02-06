@@ -11,13 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yido.clubd.common.service.CommonService;
 import com.yido.clubd.common.utils.ResultVO;
+import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
+import com.yido.clubd.model.DrBayInfo;
+import com.yido.clubd.model.DrBkOpenTime;
 
 @Controller
 @RequestMapping("/common")
@@ -43,6 +48,7 @@ public class CommonController {
 		}
 	}
 
+	 
 //	@RequestMapping(value = "/getCommonCode")
 //	public void getCommonCode(HttpServletRequest request, HttpServletResponse response,
 //			@RequestParam Map<String, Object> params) {
@@ -60,4 +66,5 @@ public class CommonController {
 //		}
 //	}
 
+	
 }

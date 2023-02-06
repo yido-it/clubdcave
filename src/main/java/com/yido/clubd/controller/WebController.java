@@ -72,5 +72,53 @@ public class WebController {
     	return "/index";
 	}
 
+
+	/**
+	 * 공지사항 목록
+	 * 
+	 * @param model
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("/noticeList")  
+	public String noticeList(Model model, HttpServletRequest req) {
+		return "/notice/noticeList";
+	}
+
+	/**
+	 * 공지사항 상세
+	 * 
+	 * @param model
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("/noticeView")  
+	public String noticeView(Model model, HttpServletRequest req) {
+		return "/notice/noticeView";
+	}
+
+	/**
+	 * 이벤트 목록
+	 * 
+	 * @param model
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("/event")  
+	public String event(Model model, HttpServletRequest req) {
+		return "/event";
+	}
+
+	/**
+	 * 시설안내
+	 * 
+	 * @param model
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("/facility")  
+	public String facility(Model model, HttpServletRequest req) {
+		return "/facility";
+	}
 }
  	
