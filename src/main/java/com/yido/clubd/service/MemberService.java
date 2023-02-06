@@ -185,24 +185,28 @@ public class MemberService {
 		
 		List<Map<String,Object>> carList = new ArrayList<Map<String,Object>>();
 		String msNum = (String) params.get("msNum");
+		int i = 0;
 		
 		if((String)params.get("msCarNo1") != null && (String)params.get("msCarNo1") != "") {
+			i += 1;
 			Map<String,Object> car = new HashMap<String,Object>();
-			car.put("carSeq", 1);
+			car.put("carSeq", i);
 			car.put("msNum", msNum);
 			car.put("msCarNo", params.get("msCarNo1"));
 			carList.add(car);
 		}
 		if((String)params.get("msCarNo2") != null && (String)params.get("msCarNo2") != "") {
+			i += 1;
 			Map<String,Object> car = new HashMap<String,Object>();
-			car.put("carSeq", 2);
+			car.put("carSeq", i);
 			car.put("msNum", msNum);
 			car.put("msCarNo", params.get("msCarNo2"));
 			carList.add(car);
 		}
 		if((String)params.get("msCarNo3") != null && (String)params.get("msCarNo3") != "") {
+			i += 1;
 			Map<String,Object> car = new HashMap<String,Object>();
-			car.put("carSeq", 3);
+			car.put("carSeq", i);
 			car.put("msNum", msNum);
 			car.put("msCarNo", params.get("msCarNo3"));
 			carList.add(car);

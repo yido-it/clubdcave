@@ -4,7 +4,6 @@
 <%@ page import="com.yido.clubd.common.utils.Globals" %>
 <jsp:include page="../common/head.jsp" />
 <jsp:include page="../common/script.jsp" />
-<!-- <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> -->
     
 <body class="theme-dark">
     
@@ -95,26 +94,14 @@
                 <div class="input-style input-style-2 input-required">
                     <span style="color:#3b80d6">생년월일</span>
                     <em><i class="fa-solid fa-calendar-days font-17"></i></em>
-                    <input type="date" id="msBirth" name="msBirth" value="${sessionScope.msMember.msBirth}">
+                    <input type="text" id="msBirth" name="msBirth" value="${sessionScope.msMember.msBirth}">
                 </div>
                 
                 <div class="input-style input-style-2  input-required">
                     <span class="color-highlight input-style-1-active">거주지(시,구,동)</span>
-                    <em><em><i class= "fas fa-search font-17 wrap1"></i></em></em>
-                    <input class="form-control" type="hidden" id="msHomezip" name="msHomezip" value="${sessionScope.msMember.msHomezip}" >
-                    <input class="form-control" type="name" placeholder="" id="msHomeaddr1" name="msHomeaddr1" value="${sessionScope.msMember.msHomeaddr1}"/>
-                </div>
-                <div class="col-12 mb-3">
-	                    <div id="wrap1" style="display:none;border:1px solid;height:300px;margin:5px 0;position:relative">
-	                    <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap1" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
-	                    </div>
-	                </div>
-                 <div class="input-style input-style-2  input-required">
-                    <span class="color-highlight input-style-1-active">상세주소</span>
                     <em></em>
-                    <input class="form-control" type="name" placeholder="" id="msHomeaddr2" name="msHomeaddr2" value="${sessionScope.msMember.msHomeaddr2}"/>
-                </div>  
-        
+                    <input class="form-control" type="name" placeholder="" id="msHomeaddr1" name="msHomeaddr1" value="${sessionScope.msMember.msHomeaddr1}"/>
+                </div>        
                 <div class="input-style input-style-2 input-required">
                     <span class="color-highlight">레슨경험</span>
                     <em><i class="fa fa-angle-down"></i></em>
@@ -176,31 +163,43 @@
                     <div class="col-12 mb-3">
                         <div class="input-style input-style-2"">
                             <span class="color-highlight input-style-1-active">직장주소</span>
-                            <em><i class= "fas fa-search font-17 wrap2"></i></em>
-                            <input class="form-control" type="hidden" id="msCompzip" name="msCompzip" value="${sessionScope.msMember.msCompzip}" >
-                            <input class="form-control" type="name" placeholder="직장주소(시,구,동)" id="msCompaddr1" name="msCompaddr1" value="${sessionScope.msMember.msCompaddr1}" readonly/>
+                            <em></em>
+                            <input class="form-control" type="name" placeholder="직장주소(시,구,동)" id="msCompaddr1" name="msCompaddr1" value="${sessionScope.msMember.msCompaddr1}"/>
                         </div> 
-                    </div>
-                    <div class="col-12 mb-3">
-	                    <div id="wrap2" style="display:none;border:1px solid;height:300px;margin:5px 0;position:relative">
-	                    	<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap2" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
-	                    </div>
-	                </div>
-                    <div class="col-12 mb-3">
-                        <div class="input-style input-style-2 input-required">
-                            <span class="color-highlight input-style-1-active">상세주소</span>
-                            <input class="form-control" type="name" placeholder="" id="msCompaddr2" name="msCompaddr2" value="${sessionScope.msMember.msCompaddr2}">
-                        </div> 
-                    </div>
-                    <div class="col-12 mb-0">
-                        <div class="input-style input-style-2 input-required" style="display:flex;">
-                            <span class="color-highlight input-style-1-active">차량번호(최대 3대)</span>                            
-                            <input class="form-control col-4" type="name" placeholder="" id="msCarNo1" name="msCarNo1" value="${carList[0].msCarNo}">
-                            <input class="form-control col-4" type="name" placeholder="" id="msCarNo2" name="msCarNo2" value="${carList[1].msCarNo}">
-                            <input class="form-control col-4" type="name" placeholder="" id="msCarNo3" name="msCarNo3" value="${carList[2].msCarNo}">
-                        </div> 
-                    </div>
-              
+                    </div>                   
+                    <div class="col-12 mb-0">               
+	              		<!--차량번호1-->
+				        <div class="row mb-0 mt-4" id="carArea1">
+				            <div class="col-12 mb-1">
+				                <div class="input-style input-style-2 input-required">
+				                    <span class="color-highlight input-style-1-active">차량번호(최대3대)</span>
+				                    <p class="font-13 color-green-dark mb-0" style="position: absolute; right: 10px;top:12px;height:30px;z-index:1;" id="btnAddCar">
+				                     <i class="fa-solid fa-plus font-12"></i> 차량추가</p>
+				                    <input class="form-control" type="name" id="msCarNo1" name="msCarNo1" value="${carList[0].msCarNo}">
+				                </div> 
+				            </div>
+				         </div>
+						<!--차량추가2-->
+				        <div class="row mb-0 mt-0" id="carArea2" style="display:none;">
+				            <div class="col-12 mb-1">
+				                <div class="input-style input-style-2 input-required">
+				                    <p class="font-13 color-red-dark mb-0" style="position: absolute; right: 10px;top:12px;height:30px;z-index:1;" id="btnDelCar2"> 
+				                    <i class="fa-solid fa-x  font-12"></i> 차량삭제</p>
+				                    <input class="form-control" type="name" id="msCarNo2" name="msCarNo2" value="${carList[1].msCarNo}">
+				                </div> 
+				            </div>
+				        </div>
+						<!--차량추가3-->
+						<div class="row mb-0 mt-0" id="carArea3" style="display:none;">
+						    <div class="col-12 mb-1">
+						        <div class="input-style input-style-2 input-required">
+						            <p class="font-13 color-red-dark mb-0" style="position: absolute; right: 10px;top:12px;height:30px;z-index:1;" id="btnDelCar3"> 
+						            <i class="fa-solid fa-x  font-12"></i> 차량삭제</p>
+						            <input class="form-control" type="name" id="msCarNo3" name="msCarNo3" value="${carList[2].msCarNo}">
+						        </div> 
+						    </div>
+						</div>
+					</div>
                 </div>
                 <div class="input-style input-style-2 input-required">
                     <span class="color-highlight">선호 업장</span>
@@ -247,6 +246,19 @@
 		}
 		
 		$().ready(function() {
+			
+		    $('#msBirth').datepicker({
+		        changeYear: true,
+		        changeMonth: true,
+		        dateFormat: 'yy-mm-dd',
+		        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+		        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+		        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+		        showMonthAfterYear: true,
+		        yearSuffix: '년',
+		        yearRange: '-100:+00',
+		    }); 
+		    
 			if($('#smsChk1').val() == 'Y') {
 				$('#chkSmsYn').prop("checked", true);
 			} else {
@@ -259,82 +271,37 @@
 			setSelectValue('msLessonExpYn');		
 			setSelectValue('msJobCd');
 			setSelectValue('coDiv');
+			
+			showCarInput();
 		})
 		
-		$('#msHomeaddr1, .wrap1').on('click', function() {
-	        element_wrap1.style.display = 'none';
-	        element_wrap2.style.display = 'none';
-			execDaumPostcode('msHome');
-		})	
-		$('#msCompaddr1, .wrap2').on('click', function() {
-			/* var sParams = String.format("searchAddr={0}", $('#msCompaddr1').val().replace(' ',''));
-			var sUrl = "<c:url value='/member/memberAddrPop'/>" + "?" + encodeURI(sParams);
-			
-			$('#memberAddrPop').load(sUrl);
-			$('#memberAddrPop').addClass('menu-active'); */
-	        element_wrap1.style.display = 'none';
-	        element_wrap2.style.display = 'none';
-			execDaumPostcode('msComp');
-		})	
-			
-    function foldDaumPostcode() {
-        // iframe을 넣은 element를 안보이게 한다.
-        element_wrap1.style.display = 'none';
-        element_wrap2.style.display = 'none';
-    }
-	
-    var themeObj = {
-    		   bgColor: "#162525", //바탕 배경색
-    		   searchBgColor: "#162525", //검색창 배경색
-    		   contentBgColor: "#162525", //본문 배경색(검색결과,결과없음,첫화면,검색서제스트)
-    		   pageBgColor: "#162525", //페이지 배경색
-    		   textColor: "#FFFFFF", //기본 글자색
-    		   queryTextColor: "#FFFFFF", //검색창 글자색
-    		   //postcodeTextColor: "", //우편번호 글자색
-    		   //emphTextColor: "", //강조 글자색
-    		   outlineColor: "#444444" //테두리
-    		};
-    
-    function execDaumPostcode(str) {
-        // 현재 scroll 위치를 저장해놓는다.
-        var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
-        
-        if(str == 'msHome') {
-        	element_wrap = element_wrap1;
-        }else {
-        	element_wrap = element_wrap2;        	
-        }
-        
-        new daum.Postcode ({
-        	theme: themeObj
-            , oncomplete: function(data) {
-                var addr = ''; // 주소 변수
-                addr = data.jibunAddress;                
+		function showCarInput() {
+			if($('#msCarNo2').val() != '' && $('#msCarNo2').val() != null) {
+				$('#carArea2').show();
+			}
+			if($('#msCarNo3').val() != '' && $('#msCarNo3').val() != null) {
+				$('#carArea3').show();
+			}
+		}
 
-                document.getElementById(str + "zip").value = data.zonecode;
-                document.getElementById(str + "addr1").value = addr;
-                document.getElementById(str + "addr2").focus();
-
-                // iframe을 넣은 element를 안보이게 한다.
-                // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
-                element_wrap.style.display = 'none';
-
-                // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
-                document.body.scrollTop = currentScroll;
-            }
-            // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
-            , onresize : function(size) {
-                element_wrap.style.height = size.height+'px';
-            }
-            , width : '100%'
-            , height : '468px'
-        }).embed(element_wrap);
-
-        // iframe을 넣은 element를 보이게 한다.
-        element_wrap.style.display = 'block';
-        
-    }
-			
+		$('#btnAddCar').on('click', function() {
+			if(!$('#carArea2').is(':visible')) {
+				$('#carArea2').show();				
+			} else {				
+				$('#carArea3').show();
+			}
+		})
+		
+		$('#btnDelCar2').on('click', function() {			
+			$('#carArea2').hide();
+			$('#msCarNo2').val('');
+		})
+		
+		$('#btnDelCar3').on('click', function() {
+			$('#carArea3').hide();
+			$('#msCarNo3').val('');		
+		})
+		
 		$('#newMsPassword').on('keyup', function() {
 			if(!$('#newMsPassword').val().match(pwdReg)) {
 				$('#pwdMsg1').html('특수문자를 포함한 영어/숫자로 8자 이상 입력해주세요.');
@@ -350,7 +317,8 @@
 				$('#pwdMsg2').html('');								
 			}
 		})		
-				
+		
+		// 인증번호 전송
 		$('#sendCode').on('click', function() {
 			if (!chkInputVal ('msPhone')) return;
 			
@@ -369,11 +337,13 @@
 		        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
 		        , success: function(data) {
 		        	if(data.result){
+			        	// [TEST] 나중에 삭제하기
+						alert('[TEST]' + verifyCode);
 			        	$('#hiddenCode').val(verifyCode);
-			        	 alertModal.send(data.message);
+			        	alertModal.send(data.message);
 		        	}else{
 		        		$('#hiddenCode').val("");
-		        		 alertModal.fail(data.message);
+		        		alertModal.fail(data.message);
 		        	}
 		        }
 		        , error: function(data) {
@@ -382,15 +352,16 @@
 		    });
 		})
 		
+		// 인증번호 확인
 		$('#verifyChk').on('click', function () {
 			if (!chkInputVal ('verifyCode')) return;
-			if($('verifyCode').val() != $('hiddenCode').val()) {
+			if($('#verifyCode').val() != $('#hiddenCode').val()) {
 				alertModal.fail('입력하신 인증번호가 일치하지 않습니다.');
 				return;
 			} else {
 				alertModal.success('인증이 완료되었습니다');
 				checkVerify = true;
-				$('verifyCode').prop('readonly', true);
+				$('#verifyCode').prop('readonly', true);
 			}
 			
 		})
@@ -408,6 +379,7 @@
 			}
 		})
 		
+		// 수정완료 클릭
 		$('#btnSave').on('click', function() {
 			
 			var result = true;
@@ -432,14 +404,14 @@
 			}			
 			
 			if (!result) return;
-			/* 
+			
 			if($('#msPhone').val() != msPhone) {
 				if(!checkVerify) {
 					alertModal.fail('본인인증이 완료되지 않았습니다.');
 					result = false;
 					return;
 				}
-			}		 */				
+			}			
 			if (!result) return;
 			
 			if ($('#msLessonTrem').val() != "") {
@@ -472,11 +444,13 @@
 					return;
 				}	
 			}
-							
+			
+			// 나중에 삭제
 			console.log($('#frmMember').serialize());
 			saveMemberModify();
 		})
 		
+		// 회원정보 수정 저장
 		function saveMemberModify() {			
 		    $.ajax({
 		          url: "/member/saveMemberModify"

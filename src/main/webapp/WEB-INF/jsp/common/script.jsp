@@ -6,6 +6,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="/scripts/dropzone.min.js"></script>
 <script type="text/javascript" src="/scripts/main.js?now=<%=new Date()%>"></script>
 
 <script type="text/javascript" src="/scripts/custom.js?now=<%=new Date()%>"></script>
@@ -16,4 +17,3 @@
 <script type="text/javascript" src="/scripts/tools.js?now=<%=new Date()%>"></script>
 <script type="text/javascript" src="/scripts/pay.js?now=<%=new Date()%>"></script>
 <script type="text/javascript" src="https://unpkg.com/@swup/preload-plugin@2"></script>
-

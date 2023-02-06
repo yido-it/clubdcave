@@ -385,3 +385,13 @@ function goAfterModal(url) {
 	}
 	setTimeout(str, time);
 }
+
+// url parameter 구하기
+function urlParam(name) {
+	var queryString = window.location.search;
+	var urlParams = new URLSearchParams(queryString);
+	if (!urlParams.has(name)) { 
+		return false;
+	} 
+	return urlParams.get(name);
+}	

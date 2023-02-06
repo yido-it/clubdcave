@@ -172,8 +172,10 @@
 		$('#sendCode').on('click', function() {
 			if (!chkInputVal ('msPhone')) return;
 			
+			checkVerify = false;
+			
 			var ran = Math.random();
-			var verifyCode = (ran.toString()).substring(2,6);
+			var verifyCode = (ran.toString()).substring(2,6);			
 			var verifyMsg = "[ClubD 청담] 본인확인 인증번호 ["+verifyCode+"]입니다."
 
 			$.ajax({
@@ -187,6 +189,8 @@
 		        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
 		        , success: function(data) {
 		        	if(data.result){
+		        		// [TEST] 나중에 삭제하기
+		        		alert('[TEST]' + verifyCode);
 			        	$('#hiddenCode').val(verifyCode);
 		        		alertModal.send(data.message);
 		        	}else{
@@ -202,13 +206,13 @@
 		
 		$('#verifyChk').on('click', function () {
 			if (!chkInputVal ('verifyCode')) return;
-			if($('verifyCode').val() != $('hiddenCode').val()) {
+			if($('#verifyCode').val() != $('#hiddenCode').val()) {
 				alertModal.fail('입력하신 인증번호가 일치하지 않습니다.');
 				return;
 			} else {
 				alertModal.success('인증이 완료되었습니다');
 				checkVerify = true;
-				$('verifyCode').prop('readonly', true);
+				$('#verifyCode').attr('readonly', true);
 			}
 			
 		})
@@ -219,9 +223,8 @@
 		})
 		
 		$('#btnSignUp').on('click', function() {
-			$('#memberAddPop').load('/member/memberAddPop');
-			$('#memberAddPop').addClass('menu-active');
-			/*if(msLoginCd == 'APP') {
+			
+			if(msLoginCd == 'APP') {
 				if(!chkInputVal('msId')) return;
 				if(!checkId) {
 					alertModal.fail('아이디 중복확인을 해주세요.');
@@ -243,7 +246,7 @@
 				return;
 			}
 			
-			doSignUp();*/			
+			doSignUp();		
 		})
 		
 		function doSignUp() {
@@ -256,8 +259,7 @@
 		        , success: function(data) {		    	
 		            if(data.result){
 		    			$('#memberAddPop').load('/member/memberAddPop');
-		    			$('#memberAddPop').addClass('menu-active');
-		            	//goAfterModal("/member/memberAddPop");		            	
+		    			$('#memberAddPop').addClass('menu-active');        	
 		            } else {
 		                alertModal.fail(data.message);                    
 		            }                

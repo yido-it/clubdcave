@@ -375,6 +375,12 @@
 			<if test='msBirth != null and msBirth != ""'>
 			, MS_BIRTH = DATE_FORMAT(#{msBirth}, '%Y%m%d')
 			</if>
+			<if test='msHomeaddr1 != null and msHomeaddr1 != ""'>
+			, MS_HOMEADDR1 = #{msHomeaddr1}
+			</if>
+			<if test='msHomeaddr2 != null and msHomeaddr2 != ""'>
+			, MS_HOMEADDR2 = #{msHomeaddr2}
+			</if>
 			<if test='msCompnm != null and msCompnm != ""'>
 			, MS_COMPNM = #{msCompnm}
 			</if>
@@ -401,8 +407,8 @@
     		, CONCAT(B.CD_TITLE1, MS_LESSON_TREM, '회') AS MS_LESSON_TREM
     		, CONCAT(C.CD_TITLE1, MS_ROUND_CNT, '회') AS MS_ROUND_CNT
     	FROM DR_MS_BASIC A
-    		INNER JOIN CD_COMMON B ON B.CD_CODE = MS_LESSON_UNIT AND B.CD_DIVISION = '029'
-    		INNER JOIN CD_COMMON C ON C.CD_CODE = MS_ROUND_UNIT AND C.CD_DIVISION = '029'
+    		LEFT OUTER JOIN CD_COMMON B ON B.CD_CODE = MS_LESSON_UNIT AND B.CD_DIVISION = '029'
+    		LEFT OUTER JOIN CD_COMMON C ON C.CD_CODE = MS_ROUND_UNIT AND C.CD_DIVISION = '029'
     	WHERE MS_NUM = #{msNum}
     </select>
     <insert id="insertMemberBasic">
@@ -454,7 +460,7 @@
     		</if>
     	)
    	</insert>
-    <update id="updateMemberBasic">
+    <update id="updateMemberBasic" >
     	UPDATE DR_MS_BASIC
     		SET MS_NUM = #{msNum}
     		<if test='msHandcap != null and msHandcap != ""'>

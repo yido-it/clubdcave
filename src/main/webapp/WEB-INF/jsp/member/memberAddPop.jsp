@@ -13,7 +13,7 @@
 	<form id="frmMemberAdd" name="frmMemberAdd">
     <div class="content mt-5">
         <!-- <h3 class="font-700">개인정보</h3> --> 
-        <input type="hidden" id="msNum" name="msNum" value="">
+        <input type="hidden" id="msNum" name="msNum" value="${sessionScope.msMember.msNum}">
         <div class="input-style input-style-2 input-required">
             <span class="color-highlight">성별 선택</span>
             <em><i class="fa fa-angle-down"></i></em>
@@ -27,20 +27,15 @@
         <div class="input-style input-style-2 input-required">
             <span style="color:#3b80d6">생년월일</span>
             <em><i class="fa-solid fa-calendar-days font-17"></i></em>
-            <input type="date" id="msBirth" name="msBirth" value="">
+            <input type="text" class="form-control" id="msBirth" name="msBirth" value="">
         </div>
 		
 		<div class="input-style input-style-2  input-required">
-                   <span class="color-highlight input-style-1-active">거주지(시,구,동)</span>
-                   <em><em><i class= "fas fa-search font-17"></i></em></em>
-                   <input class="form-control" type="hidden" id="msHomezip" name="msHomezip" >
-                   <input class="form-control" type="name" placeholder="" id="msHomeaddr1" name="msHomeaddr1" />
-               </div>
-                <div class="input-style input-style-2  input-required">
-                   <span class="color-highlight input-style-1-active">상세주소</span>
-                   <em></em>
-                   <input class="form-control" type="name" placeholder="" id="msHomeaddr2" name="msHomeaddr2"/>
-               </div>  
+            <span class="color-highlight input-style-1-active">거주지(시,구,동)</span>
+            <em></em>
+            <input class="form-control" type="hidden" id="msHomezip" name="msHomezip" >
+            <input class="form-control" type="name" placeholder="" id="msHomeaddr1" name="msHomeaddr1" />
+        </div>
                
         <div class="input-style input-style-2 input-required">
             <span class="color-highlight">레슨경험</span>
@@ -82,10 +77,11 @@
 
         <div class="row mb-0"> 
             <div class="col-6 mb-3">
-                <div class="input-style input-style-2  input-required">
-                    <span class="color-highlight input-style-1-active">직업</span>
+                <div class="input-style input-style-2 input-required">
+                    <span class="color-highlight">직업</span>
+                    <em><i class="fa fa-angle-down"></i></em>
                     <select id="msJobCd" name="msJobCd">
-		                <option value="" disabled>선택</option>
+		                <option value="" disabled>직업 선택</option>
 		                <c:forEach items="${jobList}" var="item" varStatus="status">
 		                <option value="${item.cdCode}">${item.cdTitle1}</option>
 		                </c:forEach>
@@ -101,24 +97,42 @@
             <div class="col-12 mb-3">
                 <div class="input-style input-style-2"">
                     <span class="color-highlight input-style-1-active">직장주소</span>
-                    <em><i class= "fas fa-search font-17"></i></em>
+                    <em></em>
                     <input class="form-control" type="hidden" id="msCompzip" name="msCompzip" >
                     <input class="form-control" type="name" placeholder="직장주소(시,구,동)" id="msCompaddr1" name="msCompaddr1"/>
                 </div> 
             </div>
-            <div class="col-12 mb-3">
-                <div class="input-style input-style-2 input-required">
-                    <span class="color-highlight input-style-1-active">상세주소</span>
-                    <input class="form-control" type="name" placeholder="" id="msCompaddr2" name="msCompaddr2">
-                </div> 
-            </div>
             <div class="col-12 mb-0">
-                <div class="input-style input-style-2 input-required" style="display:flex;">
-                    <span class="color-highlight input-style-1-active">차량번호(최대 3대)</span>
-                    <input class="form-control col-4" type="name" placeholder="" id="msCarNo1" name="msCarNo1">
-                    <input class="form-control col-4" type="name" placeholder="" id="msCarNo2" name="msCarNo2">
-                    <input class="form-control col-4" type="name" placeholder="" id="msCarNo3" name="msCarNo3">
-                </div> 
+                <div class="row mb-0 mt-4" id="carArea1">
+		            <div class="col-12 mb-1">
+		                <div class="input-style input-style-2 input-required">
+		                    <span class="color-highlight input-style-1-active">차량번호(최대3대)</span>
+		                    <p class="font-13 color-green-dark mb-0" style="position: absolute; right: 10px;top:12px;height:30px;z-index:1;" id="btnAddCar">
+		                     <i class="fa-solid fa-plus font-12"></i> 차량추가</p>
+		                    <input class="form-control" type="name" id="msCarNo1" name="msCarNo1">
+		                </div> 
+		            </div>
+		         </div>
+				<!--차량추가2-->
+		        <div class="row mb-0 mt-0" id="carArea2" style="display:none;">
+		            <div class="col-12 mb-1">
+		                <div class="input-style input-style-2 input-required">
+		                    <p class="font-13 color-red-dark mb-0" style="position: absolute; right: 10px;top:12px;height:30px;z-index:1;" id="btnDelCar2"> 
+		                    <i class="fa-solid fa-x  font-12"></i> 차량삭제</p>
+		                    <input class="form-control" type="name" id="msCarNo2" name="msCarNo2">
+		                </div> 
+		            </div>
+		        </div>
+				<!--차량추가3-->
+				<div class="row mb-0 mt-0" id="carArea3" style="display:none;">
+				    <div class="col-12 mb-1">
+				        <div class="input-style input-style-2 input-required">
+				            <p class="font-13 color-red-dark mb-0" style="position: absolute; right: 10px;top:12px;height:30px;z-index:1;" id="btnDelCar3"> 
+				            <i class="fa-solid fa-x  font-12"></i> 차량삭제</p>
+				            <input class="form-control" type="name" id="msCarNo3" name="msCarNo3">
+				        </div> 
+				    </div>
+				</div>
             </div>
       
         </div>
@@ -163,15 +177,84 @@
 	<!-- // 가입완료 팝업 -->
 	
 	<script type="text/javascript">
+		var frqReg = /^[월주]{1,1}[0-9]{1,3}([회]{1,1})?$/g;
+		
+		$().ready(function() {
+			
+		    $('#msBirth').datepicker({
+		        changeYear: true,
+		        changeMonth: true,
+		        dateFormat: 'yy-mm-dd',
+		        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+		        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+		        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+		        showMonthAfterYear: true,
+		        yearSuffix: '년',
+		        yearRange: '-100:+00',
+       	
+		    }); 
+		})
+		
+		$('#btnAddCar').on('click', function() {
+			if(!$('#carArea2').is(':visible')) {
+				$('#carArea2').show();				
+			} else {				
+				$('#carArea3').show();
+			}
+		})
+		
+		$('#btnDelCar2').on('click', function() {			
+			$('#carArea2').hide();
+			$('#msCarNo2').val('');
+		})
+		
+		$('#btnDelCar3').on('click', function() {
+			$('#carArea3').hide();
+			$('#msCarNo3').val('');		
+		})
 		
 		$('#btnSkip').on('click', function() {
 			$('#memberComplete').addClass('menu-active');
 		})
 		
 		$('#btnSave').on('click', function() {
-			console.log($('#frmMemberAdd').serialize());	
+			var result = true;
+
+			if ($('#msLessonTrem').val() != "") {
+				if(!$('#msLessonTrem').val().match(frqReg)) {
+					alertModal.fail('레슨빈도를 다시 입력해주세요. (주2회, 월1회..)');
+					result = false;
+					return;
+				}				
+			}		
+			if ($('#msLessonMinute').val() != "") {
+				var minReg = /^[0-9]{1,3}([분]{1,1})?$/g;
+				if(!$('#msLessonMinute').val().match(minReg)) {
+					alertModal.fail('선호레슨시간을 다시 입력해주세요. (30분, 50분..)');
+					result = false;
+					return;
+				}	
+			}
+			if ($('#msRoundCnt').val() != "") {
+				if(!$('#msRoundCnt').val().match(frqReg)) {
+					alertModal.fail('라운드빈도를 다시 입력해주세요. (주2회, 월1회..)');
+					result = false;
+					return;
+				}
+			}
+			if ($('#msHandcap').val() != "") {
+				var timeReg = /^[0-9]{1,2}([개]{1,1})?$/g;
+				if(!$('#msHandcap').val().match(timeReg)) {
+					alertModal.fail('핸디캡를 다시 입력해주세요. (0개, 2개..)');
+					result = false;
+					return;
+				}	
+			}
 			
-			//saveMemberAdd();
+			// 나중에 삭제
+			console.log($('#frmMemberAdd').serialize());
+			window.scrollTo(0, 0);
+			saveMemberAdd();
 		})		
 		function saveMemberAdd() {
 		    $.ajax({
@@ -181,9 +264,8 @@
 		        , data: $('#frmMemberAdd').serialize()
 		        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
 		        , success: function(data) {
-		            if(data.result){
+		            if(data.result){		            	
 						$('#memberComplete').addClass('menu-active');
-						$('#memberAddPop').removeClass();
 		            } else {
 		                alertModal.fail(data.message);                    
 		            }                

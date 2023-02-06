@@ -4,6 +4,7 @@
 <%@ page import="com.yido.clubd.common.utils.Globals" %>
 <jsp:include page="../common/head.jsp" />
 <jsp:include page="../common/script.jsp" />
+
 <body class="theme-dark">
     
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
@@ -33,15 +34,14 @@
                 <p>
                     세로로 긴 사진 업로드를 추천합니다.(사진크기 3MB이하)
                 </p>
-                <div class="file-data pb-5">
-                    <input type="file" id="profileUpload" class="upload-file bg-highlight shadow-s rounded-s " accept="image/*">
-                    <p class="upload-file-text color-white font-15"><i class="fa fa-camera"></i> 사진 찾기</p>
+                <div class="file-data pb-5 dropzone">
+                    <button type="button" id="profileUpload" class="btn bg-highlight upload-file-text color-white font-15" style="width:100%;height:100%">
+                    <i class="fa fa-camera"></i> 사진 찾기</button>
                 </div>
              
                 <div class="row mb-0 mt-2"> 
-                    <!--사진1-->
                     <div class="col-6 mb-3">
-                        <img id="image-data float-left" src="images/pictures/pro4.jpg" class="img-fluid"> 
+                        <img id="image-data float-left" src="/store/001/profile/pro4.jpg" class="img-fluid"> 
                         <div class="d-flex mt-1">
                             <div>
                                 <a href="#" class="border-0">
@@ -56,8 +56,7 @@
                             </div>
                         </div> 
                     </div>
-                  <!--//사진1-->
-            </div>
+            	</div>
 
             </div>
         </div>
@@ -82,7 +81,7 @@
             <div class="input-style input-style-2 input-required">
                 <span style="color:#3b80d6">생년월일</span>
                 <em><i class="fa-solid fa-calendar-days font-17"></i></em>
-                <input type="date" id="msBirth" name="msBirth" value="${sessionScope.msMember.msBirth}">
+                <input type="text" id="msBirth" name="msBirth" value="${sessionScope.msMember.msBirth}">
             </div>
             <div class="mb-3">
                 <div class="input-style input-style-2  input-required">
@@ -91,11 +90,6 @@
                     <input class="form-control" type="hidden" id="msHomezip" name="msHomezip" value="${sessionScope.msMember.msHomezip}" >
                     <input class="form-control" type="name" placeholder="" id="msHomeaddr1" name="msHomeaddr1" value="${sessionScope.msMember.msHomeaddr1}"/>
                 </div>
-                 <div class="input-style input-style-2  input-required">
-                    <span class="color-highlight input-style-1-active">상세주소</span>
-                    <em></em>
-                    <input class="form-control" type="name" placeholder="" id="msHomeaddr2" name="msHomeaddr2" value="${sessionScope.msMember.msHomeaddr2}"/>
-                </div>  
             </div>     
 
             <div class="input-style input-style-2 input-required">
@@ -111,15 +105,37 @@
             </div>     
 
             <div class="mb-3">
-                <div class="input-style input-style-2 input-required" style="display:flex;">
-                    <span class="color-highlight input-style-1-active">차량번호(최대 3대)</span>
-                    <em></em>
-                     <input class="form-control col-4" type="name" placeholder="" id="msCarNo1" name="msCarNo1" value="${carList[0].msCarNo}">
-                     <input class="form-control col-4" type="name" placeholder="" id="msCarNo2" name="msCarNo2" value="${carList[1].msCarNo}">
-                     <input class="form-control col-4" type="name" placeholder="" id="msCarNo3" name="msCarNo3" value="${carList[2].msCarNo}">
-
-                </div> 
-            </div>
+                 <div class="row mb-0 mt-4" id="carArea1">
+		            <div class="col-12 mb-1">
+		                <div class="input-style input-style-2 input-required">
+		                    <span class="color-highlight input-style-1-active">차량번호(최대3대)</span>
+		                    <p class="font-13 color-green-dark mb-0" style="position: absolute; right: 10px;top:12px;height:30px;z-index:1;" id="btnAddCar">
+		                     <i class="fa-solid fa-plus font-12"></i> 차량추가</p>
+		                    <input class="form-control" type="name" id="msCarNo1" name="msCarNo1" value="${carList[0].msCarNo}">
+		                </div> 
+		            </div>
+		         </div>
+				<!--차량추가2-->
+		        <div class="row mb-0 mt-0" id="carArea2" style="display:none;">
+		            <div class="col-12 mb-1">
+		                <div class="input-style input-style-2 input-required">
+		                    <p class="font-13 color-red-dark mb-0" style="position: absolute; right: 10px;top:12px;height:30px;z-index:1;" id="btnDelCar2"> 
+		                    <i class="fa-solid fa-x  font-12"></i> 차량삭제</p>
+		                    <input class="form-control" type="name" id="msCarNo2" name="msCarNo2" value="${carList[1].msCarNo}">
+		                </div> 
+		            </div>
+		        </div>
+				<!--차량추가3-->
+				<div class="row mb-0 mt-0" id="carArea3" style="display:none;">
+				    <div class="col-12 mb-1">
+				        <div class="input-style input-style-2 input-required">
+				            <p class="font-13 color-red-dark mb-0" style="position: absolute; right: 10px;top:12px;height:30px;z-index:1;" id="btnDelCar3"> 
+				            <i class="fa-solid fa-x  font-12"></i> 차량삭제</p>
+				            <input class="form-control" type="name" id="msCarNo3" name="msCarNo3" value="${carList[2].msCarNo}">
+				        </div> 
+				    </div>
+				</div>
+			</div>
 
             <!--레슨관련-->
             <h3 class="font-700 mt-5 mb-3">레슨가능날짜,시간</h3> 
@@ -252,9 +268,48 @@
 
 <jsp:include page="../common/alertModal.jsp" />  
 <script type="text/javascript">
+
+	$().ready(function() {
+		
+	    $('#msBirth').datepicker({
+	        changeYear: true,
+	        changeMonth: true,
+	        dateFormat: 'yy-mm-dd',
+	        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+	        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+	        showMonthAfterYear: true,
+	        yearSuffix: '년',
+	        yearRange: '-100:+00',
+        	
+	    }); 
+		
+		showCarInput();
+	})
+	
+	Dropzone.autoDiscover = false;
+	var myDropzone = new Dropzone('div.dropzone', {
+		  autoProcessQueue : false
+		, url : '/pro/uploadProImage'
+		, method : 'post'
+		, maxFiles : 1
+		, maxFilesize : 10
+		, resizeQueality : 1
+		, resizeWidth : 960
+		, dictFileTooBig : '{{filesize}}MB 이하로 업로드 해주세요.'
+		, paramName : 'file'
+		, addRemoveLinks : true
+		, acceptedFiles : "image/*"
+		, uploadMultiple : false
+		, init : function() {
+			
+		}
+	});
+
 	<c:forEach items="${proLicList}" var="item" varStatus="status">
 		$('${"#l_"}${item.licKind}').attr('checked', true);
 	</c:forEach>
+	
 	if(localStorage.getItem('frmPro') != undefined) {
 		var obj = JSON.parse(localStorage.getItem('frmPro'));
 		console.log(obj);
@@ -283,6 +338,33 @@
 		var val = $(this).val().replaceAll("<br/>", "\r\n");
 		$('#n_' + id).val(val);
 	}) 
+	
+	function showCarInput() {
+			if($('#msCarNo2').val() != '' && $('#msCarNo2').val() != null) {
+				$('#carArea2').show();
+			}
+			if($('#msCarNo3').val() != '' && $('#msCarNo3').val() != null) {
+				$('#carArea3').show();
+			}
+	}
+
+	$('#btnAddCar').on('click', function() {
+		if(!$('#carArea2').is(':visible')) {
+			$('#carArea2').show();				
+		} else {				
+			$('#carArea3').show();
+		}
+	})
+	
+	$('#btnDelCar2').on('click', function() {			
+		$('#carArea2').hide();
+		$('#msCarNo2').val('');
+	})
+	
+	$('#btnDelCar3').on('click', function() {
+		$('#carArea3').hide();
+		$('#msCarNo3').val('');		
+	})
 	
 	$('#btnMidSave').on('click', function() {
 		var midSave = new Object();

@@ -179,7 +179,7 @@ public class MemberController {
 			memberService.insertMember(member);
 			
 			DrMsCoInfo drMsCoInfo = new DrMsCoInfo();
-			drMsCoInfo.setCoDiv(member.getCoDiv());
+			drMsCoInfo.setCoDiv("001");
 			drMsCoInfo.setMsNum(member.getMsNum());
 			
 			drMsCoInfoService.insertDrMsCoInfo(drMsCoInfo);
@@ -324,6 +324,8 @@ public class MemberController {
 
 		try {
 			member = memberService.updateMember(params);
+			
+			params.put("msNum", member.getMsNum());
 			memberService.saveMemberBasic(params);
 			memberService.saveMemberCar(params);
 			memberService.saveFirstPick(params);
@@ -450,11 +452,11 @@ public class MemberController {
 			}
 			
 			if(member.getMsLoginCd().equals("KAKAO")) {
-				throw new Exception("KAKAO 간편 로그인 회원 가입자입니다. 간편로그인으로 로그인 부탁드립니다.");
+				throw new Exception("KAKAO 간편 로그인으로 로그인 부탁드립니다.");
 			}
 
 			if(member.getMsLoginCd().equals("NAVER")) {
-				throw new Exception("NAVER 간편 로그인 회원 가입자입니다. 간편로그인으로 로그인 부탁드립니다.");
+				throw new Exception("NAVER 간편 로그인으로 로그인 부탁드립니다.");
 			}
 			/* params.put("ipAddr", Utils.getClientIpAddress(request));
 			params.put("tplCd", Utils.getProperties("Globals.findId.tplCd", "00001"));
@@ -508,6 +510,8 @@ public class MemberController {
 			params.put("msPassword", newMsPassword);
 			
 			// commonService.sendSms(params); (나중)
+			// [TEST] 나중에 삭제하기
+			System.out.println("새 비밀번호 :::::::::::::::::::::::::::::::::: " + newMsPassword);
 			
 			map.put("result", true);
 		} catch (Exception e) {

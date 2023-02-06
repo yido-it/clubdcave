@@ -54,10 +54,8 @@
                                         </div> 
                                     </div>
                                     <a href="javascript:doFindId()" class="mb-4 btn btn-md bg-blue-dark btn-full shadow-xl text-uppercase 
-                                    font-800 rounded-s" data-menu="">조회하기</a> 
+                                    font-800 rounded-s">조회하기</a> 
                                 </div>
-
-
   
                                 <div class="tab-content" id="tab-pw" style="display: none;">
                                     <h2 class="text-center mt-4">비밀번호찾기</h2>
@@ -78,7 +76,7 @@
                                   
                                     </div>
                                     <a href="javascript:doFindPw()" class="mb-4 btn btn-md bg-blue-dark btn-full shadow-xl text-uppercase 
-                                    font-800 rounded-s" data-menu="">비밀번호 초기화</a>
+                                    font-800 rounded-s">비밀번호 초기화</a>
 
                                 </div>
                             </div>
@@ -162,6 +160,7 @@
 	}
 
 	function doFindId() {
+		
 		var sUrl = "<c:url value='/member/doFindId'/>";
 		var sParams = "";
 		
@@ -218,8 +217,11 @@
 		if(msPhone == "") {
 			alertModal.fail("휴대폰번호를 입력하세요.");
 			return;
-		}			
+		}	
 		
+		sParams += String.format("&msId={0}", msId);
+		sParams += String.format("&msPhone={0}", msPhone);
+				
 		$.ajax({
 	          url: sUrl
 	        , type: "post"

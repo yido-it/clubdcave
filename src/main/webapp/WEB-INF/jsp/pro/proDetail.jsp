@@ -15,8 +15,11 @@
         <h1 style="font-size:14px">
             <a href="javascript:history.back()" data-back-button class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-dark">
             <i class="fas fa fa-arrow-left"></i></a>
-        </h1> 
-        <a href="javascript:location.href='/pro/proForm'" class="page-title-icon shadow-xl bg-theme color-theme"><i class="fa fa-gear"></i></a>
+        </h1>
+        <!-- 프로 정보 수정 아이콘 -->
+        <a href="javascript:location.href='/pro/proForm'" class="page-title-icon shadow-xl bg-theme color-theme" id="btnEdit" style="display:none;">
+        	<i class="fa fa-gear"></i>
+        </a>
         <a href="#" data-menu="menu-main" class="page-title-icon shadow-xl bg-theme color-theme"><i class="fas fa-bars"></i></a>
     </div>
     <jsp:include page="../common/menu.jsp" />        
@@ -169,11 +172,12 @@
 	    
 <div class="menu-hider"><div></div></div>	
 <jsp:include page="../common/alertModal.jsp" />  
-<script type="text/javascript">	
-	$('#btnEdit').on('click', function() {
+<script type="text/javascript">
+
+	if(urlParam('msNum') == '${sessionScope.msMember.msNum}') {		
+		$('#btnEdit').show();
+	}
 		
-	})
-	
 	function getProList(){			
 	   	$.ajax({
 	             url : "/pro/getProList"
