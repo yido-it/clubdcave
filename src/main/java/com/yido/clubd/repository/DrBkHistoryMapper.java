@@ -7,7 +7,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import com.yido.clubd.model.DrBkHistory;
-import com.yido.clubd.model.ProLicense;
 
 /**
  * 예약내역
