@@ -1,7 +1,7 @@
 <!-- 
 기능 : 이용권 (이용권구매 / 이용권보유내역)
 
-작성자 :bae
+작성자 : bae
 -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -57,7 +57,7 @@
 					<h5><fmt:formatNumber value="${voc.vcAmount}" pattern="#,###" />원</h5>                
 				</div>
 				
-				<button class="btn btn-primary btn-xs bg-blue-dark ml-1" onClick="location.href='payment2.html'">
+				<button class="btn btn-primary btn-xs bg-blue-dark ml-1" onClick="javascript:onClick=doPay('${voc.vcCd}')">
 					구매
 				</button>
 			</div>
@@ -336,7 +336,7 @@ function search(value) {
 			break;
 		case '0' :
 			// 직접설정 
-			$('#strtDt').val(getToDay("-"));			// 오늘 날짜
+			$('#strtDt').val(getToDay("-"));		// 오늘 날짜
 			$('#endDt').val(getToDay("-"));			// 오늘 날짜
 			break;
 	}
@@ -376,6 +376,11 @@ function doSearch(saleDay, saleSeq, vcCd, idx) {
 
         }
 	});
+}
+
+// 이용권 결제 페이지 이동 
+function doPay(vcCd) {
+	location.href='/voucher/voucherPay/' + coDiv + '/' + vcCd;
 }
 
 </script>

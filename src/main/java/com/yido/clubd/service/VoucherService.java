@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -287,5 +288,26 @@ public class VoucherService {
 			preSeq = vUse.getSaleSeq();	// 매출순번
 			i++;
 		}
+	}
+
+
+	/**
+	 * 이용권 구매내역, 세부내역 insert
+	 * 
+	 * @param param
+	 * @param mnMap
+	 * @throws Exception
+	 */
+	@Transactional
+	public Map<String, Object> insertVouInfo(@RequestParam Map<String, Object> param, DrBkMnMap mnMap) throws Exception {
+
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		log.info("[insertVouInfo] params : " + param);
+		
+		// 이용권 구매내역 insert
+		// 이용권 구매내역 로그 insert
+		// 이용권 세부내역 insert
+		
+		return returnMap;
 	}
 }

@@ -65,31 +65,55 @@
 	
 		<div class="col-6"> 
 			<div class="form-check icon-check">
-				<input class="form-check-input" type="radio" name="searchType" value="1" id="type1" onclick='search(this.value)' checked>
-				<label class="form-check-label" for="type1">최근 1개월</label>
+				<input class="form-check-input" type="radio" name="srchPeriod" value="1" id="srchPeriod1" onclick='search(this.value)'>
+				<label class="form-check-label" for="srchPeriod1">최근 1개월</label>
 				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
 			</div>
 			<div class="form-check icon-check">
-				<input class="form-check-input" type="radio" name="searchType" value="12" id="type2" onclick='search(this.value)'>
-				<label class="form-check-label" for="type2">최근 1년</label>
+				<input class="form-check-input" type="radio" name="srchPeriod" value="12" id="srchPeriod2" onclick='search(this.value)'>
+				<label class="form-check-label" for="srchPeriod2">최근 1년</label>
 				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
 			</div> 
 		</div>
 		<div class="col-6"> 
 			<div class="form-check icon-check">
-				<input class="form-check-input" type="radio" name="searchType" value="3" id="type3" onclick='search(this.value)'>
-				<label class="form-check-label" for="type3">최근 3개월</label>
+				<input class="form-check-input" type="radio" name="srchPeriod" value="3" id="srchPeriod3" onclick='search(this.value)'>
+				<label class="form-check-label" for="srchPeriod3">최근 3개월</label>
 				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
 			</div>
 			<div class="form-check icon-check">
-				<input class="form-check-input" type="radio" name="searchType" value="0" id="type4" onclick='search(this.value)'>
-				<label class="form-check-label" for="type4">직접설정</label>
+				<input class="form-check-input" type="radio" name="srchPeriod" value="0" id="srchPeriod4" onclick='search(this.value)'>
+				<label class="form-check-label" for="srchPeriod4">직접설정</label>
 				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
 			</div> 
+		</div>
+		
+		<!-- ======================================= -->
+		<div class="col-6"> 
+			<div class="form-check icon-check">
+				<input class="form-check-input" type="radio" name="srchUseYn" value="A" id="srchUseYn1">
+				<label class="form-check-label" for="srchUseYn1">전체</label>
+				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
+				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
+			</div>
+			<div class="form-check icon-check">
+				<input class="form-check-input" type="radio" name="srchUseYn" value="Y" id="srchUseYn2">
+				<label class="form-check-label" for="srchUseYn2">사용</label>
+				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
+				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
+			</div> 
+		</div>
+		<div class="col-6"> 
+			<div class="form-check icon-check">
+				<input class="form-check-input" type="radio" name="srchUseYn" value="N" id="srchUseYn3" checked>
+				<label class="form-check-label" for="srchUseYn3">미사용</label>
+				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
+				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
+			</div>
 		</div>
 	</div>
 
@@ -98,14 +122,14 @@
 		<div class="col-6" class=""> 
 			<div class="input-style input-style-2">
 				<span style="border-radius: 5px;" class="input-style-1-active input-style-1-inactive">시작일</span>
-				<input type="text" name="strtDt" id="strtDt">
+				<input type="text" name="strtDt" id="strtDt" readonly>
 			</div>
 		</div>
 		<span style="position: absolute;left: 50%;top: 20px;">~</span>
 		<div class="col-6"> 
 			<div class="input-style input-style-2">
 				<span style="border-radius: 5px;" class="input-style-1-active input-style-1-inactive">종료일</span>
-				<input type="text" name="endDt" id="endDt">
+				<input type="text" name="endDt" id="endDt" readonly>
 			</div>
 		</div>
 	</div>
@@ -210,7 +234,7 @@ function init() {
 
 // 날짜 검색 > 조회 개월 클릭했을때 실행되는 함수 
 function search(value) {
-
+	
 	switch(value) {
 		case '1' :
 			// 1개월전
@@ -287,12 +311,21 @@ function doCancel(idx){
    	});	      
 }
 
-// 더보기 
+// 검색 
+// type > 더보기 : more , 조회 : search
 function doSearch(type) {
+	
 	if (type == "search") {
 		listSize = 0;
 	}
 	
+	var srchPeriod = "";
+	if (document.querySelector('input[name="srchPeriod"]:checked') != null) {
+		srchPeriod = document.querySelector('input[name="srchPeriod"]:checked').value;
+	}
+	
+	var srchUseYn = document.querySelector('input[name="srchUseYn"]:checked').value;
+
 	$.ajax({
         url: "/book/searchBookList/" + coDiv
         , type: "post"
@@ -301,6 +334,8 @@ function doSearch(type) {
            	"listSize" : listSize
            	, "strtDt" : $('#strtDt').val()
            	, "endDt" : $('#endDt').val()
+           	, "srchUseYn" : srchUseYn
+           	, "srchPeriod" : srchPeriod
     	}
         , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
         , success: function(data) {	
@@ -387,8 +422,16 @@ function doSearch(type) {
 				}
 				listSize += data.length;
 			} else {
-				$('#btnMore').text("더이상 조회할 내역이 없습니다.");
-				document.getElementById("btnMore").setAttribute("href", "#");
+				if (type == "search") {
+					// 조회 결과 없을때 
+					$('#btnMore').css('display','none');
+					$('#bookList').css('text-align','center');
+					document.querySelector("#bookList").innerHTML = "검색 결과가 없습니다.";
+				} else {
+					// 더보기 결과 없을때
+					$('#btnMore').text("더이상 조회할 내역이 없습니다.");
+					document.getElementById("btnMore").setAttribute("href", "#");
+				}
 			}
 
         }

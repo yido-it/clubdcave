@@ -16,6 +16,12 @@
 			 , DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.VC_MONTH MONTH), "%Y-%m-%d") AS END_DT
 	     FROM DR_VOUCHER_CODE A INNER JOIN DR_VOUCHER_COST B ON A.CO_DIV = B.CO_DIV AND A.VC_CD = B.VC_CD AND B.USE_YN = 'Y'
 		  AND A.VC_DISPLAY_YN = 'Y'
+		<if test='coDiv != null and coDiv != ""'>
+		  AND A.CO_DIV = #{coDiv}
+		</if> 
+		<if test='vcCd != null and vcCd != ""'>
+		  AND A.VC_CD = #{vcCd}
+		</if> 
 		ORDER BY VC_SORT
     </select>
 

@@ -7,6 +7,10 @@
 -->
 <mapper namespace="com.yido.clubd.repository.DrVoucherSaleMapper">
 
+	<select id="getSerialNo" parameterType="hashmap" resultType="String">
+		SELECT DR_NEXTVAL('001', 'D', 'DR_SERIAL_NO')
+	</select>
+	
     <!-- 이용권 구매내역 -->
     <select id="selectSaleList" parameterType="hashmap" resultType="hashmap">
 		SELECT B.VC_NAME 

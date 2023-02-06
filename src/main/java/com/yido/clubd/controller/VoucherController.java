@@ -21,8 +21,10 @@ import com.yido.clubd.common.utils.ResultVO;
 import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.model.BookInfoVO;
+import com.yido.clubd.model.CoPlace;
 import com.yido.clubd.model.DrBkHistory;
 import com.yido.clubd.model.DrVoucherCode;
+import com.yido.clubd.service.CoPlaceService;
 import com.yido.clubd.service.DrBkHistoryService;
 import com.yido.clubd.service.DrVoucherCodeService;
 import com.yido.clubd.service.DrVoucherListService;
@@ -54,9 +56,11 @@ public class VoucherController {
 	@Autowired
 	private DrBkHistoryService drBkHistoryService;
 	
+	@Autowired
+	private CoPlaceService coPlaceService;
 	
 	/**
-	 * 이용권 구매 페이지
+	 * [이용권] 구매/보유내역 페이지
 	 * 
 	 * @param model
 	 * @param req
@@ -84,6 +88,50 @@ public class VoucherController {
 			List<Map<String, Object>> sList = drVoucherSaleService.selectSaleList(param);
 			model.addAttribute("sList", sList);
 				
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return returnPage;
+	}
+	
+
+	/**
+	 * [이용권] 결제 페이지
+	 * 
+	 * @param model
+	 * @param req
+	 * @param coDiv
+	 * @param vcCd
+	 * @return
+	 */
+	@RequestMapping("/voucherPay/{coDiv}/{vcCd}")  
+	public String voucherPay(Model model, HttpServletRequest req, @PathVariable String coDiv, @PathVariable String vcCd) {
+		HttpSession session = req.getSession();
+		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
+		String returnPage = "/voucher/voucherPay";
+		
+		log.info("vcCd:{}", vcCd);
+		try {
+			if (sessionVO == null) return returnPage;
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("coDiv" , coDiv);
+			
+			// 지점 정보 조회 
+			List<CoPlace> place = coPlaceService.selectList(map); 
+			model.addAttribute("place", place.get(0));
+			// end.
+			
+			// 이용권 조회
+			new ArrayList<DrVoucherCode>();
+			DrVoucherCode drVoucherCode = new DrVoucherCode(); 
+			drVoucherCode.setVcCd(vcCd);
+			List<DrVoucherCode> list = drVoucherCodeService.selectList(drVoucherCode);
+			drVoucherCode = list.get(0);
+			
+			model.addAttribute("voc", drVoucherCode);
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

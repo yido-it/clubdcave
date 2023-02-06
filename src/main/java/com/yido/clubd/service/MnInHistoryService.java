@@ -50,6 +50,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class MnInHistoryService {
+	
 	@Autowired
     private VoucherService voucherService;
 	
@@ -129,29 +130,28 @@ public class MnInHistoryService {
 		
 		try {
 			log.info("[successPayLogic] action : " + action);
+
+			String orderId = StringUtils.isNullOrEmpty(params.get("orderId"), "");	// 주문번호
+			String msNum = orderId.split("_")[0];									// 회원번호
+			
+			params.put("msNum", msNum);
+
+			SessionVO sessionVO = memberMapper.selectMsSession(params);
+			if(sessionVO == null) {
+				throw new Exception("회원정보가 존재하지 않습니다.");
+			}			
+			if (session.getAttribute("msMember") == null) {
+				log.info("=========== 세션 없음, 세션 구성 =========");
+				session.setAttribute("msMember", sessionVO);
+				session.setMaxInactiveInterval(30 * 60);
+			} else {
+				log.info("=========== 세션 있음 =========");
+			}
 			
 			if(action.equals("RESERVATION")) {	// RESERVATION = 예약
 				String isVoucherUse = "N";
 				List<Map<String, Object>> vList = new ArrayList<Map<String, Object>>();
-				BookInfoVO bkInfo = new BookInfoVO();
-				
-				String orderId = StringUtils.isNullOrEmpty(params.get("orderId"), "");	// 주문번호
-				String msNum = orderId.split("_")[0];									// 회원번호
-				
-				params.put("msNum", msNum);
-	
-				SessionVO sessionVO = memberMapper.selectMsSession(params);
-				if(sessionVO == null) {
-					throw new Exception("회원정보가 존재하지 않습니다.");
-				}			
-				if (session.getAttribute("msMember") == null) {
-					log.info("=========== 세션 없음, 세션 구성 =========");
-					session.setAttribute("msMember", sessionVO);
-					session.setMaxInactiveInterval(30 * 60);
-				} else {
-					log.info("=========== 세션 있음 =========");
-				}
-				
+				BookInfoVO bkInfo = new BookInfoVO();				
 				JSONObject data = new JSONObject(reserved.replaceAll("&quot;", "\""));
 				
 				params.put("bkDay"			, Utils.getJsonValue(data, "bkDay"));
@@ -220,10 +220,19 @@ public class MnInHistoryService {
 			} else if(action.equals("VOUCHER")) {	// VOUCHER = 이용권
 				JSONObject data = new JSONObject(reserved.replaceAll("&quot;", "\""));
 				
-				params.put("vcName",        Utils.getJsonValue(data, "vcName"));
-				params.put("vcAmount",      Utils.getJsonValue(data, "vcAmount"));
+				params.put("vcCd"			, Utils.getJsonValue(data, "vcCd"));
+				params.put("vcAmount"		, Utils.getJsonValue(data, "vcAmount"));
+				params.put("msLevel"		, Utils.getJsonValue(data, "msLevel"));
+				params.put("bkName"			, Utils.getJsonValue(data, "userName"));
+				params.put("userMail"		, Utils.getJsonValue(data, "userMail"));
+				params.put("phone"			, Utils.getJsonValue(data, "phone"));
+				params.put("msId"			, Utils.getJsonValue(data, "msId"));				
 
 				log.info("[successPayLogic] 이용권 정보:" + params);
+				
+				// 이용권 구매 내역 insert 				
+				voucherService.insertVouInfo(params, mnMap);
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

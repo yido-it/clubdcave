@@ -1,9 +1,5 @@
 package com.yido.clubd.controller;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -360,6 +356,12 @@ public class BookController {
 				map.put("endDt", endDt.replace("-", ""));
 			
 			}
+			
+			// srchUseYn > 전체 : A, 사용 : U, 미사용 : U
+			if (req.getParameter("srchUseYn") != null) map.put("srchUseYn", req.getParameter("srchUseYn"));
+			// srchPeriod > 최근1개월, 최근3개월, 최근1년, 기간설정
+			if (req.getParameter("srchPeriod") != null) map.put("srchPeriod", req.getParameter("srchPeriod"));
+			
 			map.put("msNum", sessionVO.getMsNum());
 			map.put("coDiv", coDiv);
 			list = drBkHistoryService.selectBkHis(map);		

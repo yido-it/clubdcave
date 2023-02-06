@@ -1,5 +1,7 @@
 package com.yido.clubd.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,9 +9,11 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yido.clubd.common.utils.ResultVO;
 import com.yido.clubd.model.BookInfoVO;
+import com.yido.clubd.model.DrBkHistory;
 import com.yido.clubd.model.DrBkMnMap;
 import com.yido.clubd.model.DrVoucherSale;
 import com.yido.clubd.repository.DrVoucherSaleMapper;
@@ -28,6 +32,16 @@ public class DrVoucherSaleService {
 	@Autowired
     private DrVoucherSaleMapper drVoucherSaleMapper;
 
+	/**
+	 * 고유번호 채번
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public String getSerialNo(Map<String, Object> param) {
+		return drVoucherSaleMapper.getSerialNo(param);
+	}
+	
 	/**
 	 * 이용권 구매내역 조회
 	 * 
