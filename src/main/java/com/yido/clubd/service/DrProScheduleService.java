@@ -3,7 +3,6 @@ package com.yido.clubd.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yido.clubd.model.DrProSchedule;
-import com.yido.clubd.model.ProNotice;
 import com.yido.clubd.repository.DrProScheduleMapper;
 import lombok.extern.slf4j.Slf4j;
 

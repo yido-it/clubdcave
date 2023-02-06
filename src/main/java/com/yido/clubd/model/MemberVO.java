@@ -97,8 +97,11 @@ public class MemberVO {
 	private String Cmpnm;				// 회사명
 	private String Cmpaddr1;			// 회사주소
 	private String Cmpaddr2;			// 회사주소상세
-	private Integer carSeq;					// 차량순번
-	private String msCarNo;				// 차량번호
+	private Integer carSeq;				// 차량순번
+	private String msCarNo;				// 차량번호	
+	
+	private String coDiv;				// 선호업장
+	
 	
 	public String getFullMsPhone() {
 		return this.msFirstPhone1 + this.msMidPhone1 + this.msLastPhone1;

@@ -4,14 +4,14 @@
 <%@ page import="com.yido.clubd.common.utils.Globals" %>
 <jsp:include page="../common/head.jsp" />
 <jsp:include page="../common/script.jsp" />
-<body class="theme-light">
+<body class="theme-dark">
 	<div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
-    <div id="">
-        
+    <div id="page">        
         <div class="header header-fixed header-logo-app header-transparent">
             <a href="javascript:history.back(-1)" class="color-white header-title header-subtitle">회원가입</a>
             <jsp:include page="../common/top.jsp" />
         </div>
+        <jsp:include page="../common/menu.jsp" />
     
         <div class="page-content mb-0">
             
@@ -85,26 +85,10 @@
     </div> <!-- page end-->
     
     <!-- 추가 정보 입력 팝업 -->
-	<!-- <div id="memberAddPop" class="menu menu-box-bottom rounded-0 modal_bay" data-menu-height="102%" data-menu-effect="menu-parallax" style="display: block;">
-	</div>	 -->
+	<div id="memberAddPop" class="menu menu-box-bottom rounded-0 modal_bay" data-menu-height="102%" data-menu-effect="menu-parallax" style="display: block;">
+	</div>
 	<!-- // 추가 정보 입력 팝업 -->
     
-    <!-- 가입완료 팝업 -->
-	<!-- <div id="memberComplete" class="menu menu-box-modal rounded-0 " data-menu-height="310" data-menu-width="330" data-menu-effect="menu-parallax" >
-	    <h1 class="text-center mt-4"><i class="fa fa-3x fa-crown scale-box color-yellow-light shadow-xl rounded-circle"></i></h1>
-	    <h3 class="text-center mt-3 font-700">회원가입 완료!</h3>
-	    <p class="boxed-text-xl opacity-70">
-	        김이도 회원님 반갑습니다!<br/>
-	        클럽디청담 서비스 이용이 가능합니다 <br>
-	    </p>
-	    <div class="row mb-0 mr-3 ml-3">
-	     
-	        <div class="col-12">
-	            <a href="javascript:location.href='/main'" class="btn btn-full btn-md bg-blue-dark font-800 text-uppercase rounded-s">시작하기</a>
-	        </div>
-	    </div>
-	</div>	 -->
-	<!-- // 가입완료 팝업 -->
 	<div class="menu-hider"><div></div></div>
 	<jsp:include page="../common/alertModal.jsp" /> 
 	<script>
@@ -235,7 +219,8 @@
 		})
 		
 		$('#btnSignUp').on('click', function() {
-			location.href = "/member/memberAddPop";
+			$('#memberAddPop').load('/member/memberAddPop');
+			$('#memberAddPop').addClass('menu-active');
 			/*if(msLoginCd == 'APP') {
 				if(!chkInputVal('msId')) return;
 				if(!checkId) {
@@ -270,10 +255,9 @@
 		        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
 		        , success: function(data) {		    	
 		            if(data.result){
-		            	alertModal.success('가입이 완료되었습니다.');
-		    			/* $('#memberAddPop').load('/member/memberAddPop');
-		    			$('#memberAddPop').addClass('menu-active'); */
-		            	location.href = "/member/memberAddPop";
+		    			$('#memberAddPop').load('/member/memberAddPop');
+		    			$('#memberAddPop').addClass('menu-active');
+		            	//goAfterModal("/member/memberAddPop");		            	
 		            } else {
 		                alertModal.fail(data.message);                    
 		            }                

@@ -4,12 +4,13 @@
 <%@ page import="com.yido.clubd.common.utils.Globals" %>
 <jsp:include page="../common/head.jsp" />
 <jsp:include page="../common/script.jsp" />
+<!-- <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> -->
     
-<body class="theme-light">
+<body class="theme-dark">
     
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
 
-<div id="">
+<div id="page">
     
     <div class="header header-fixed header-logo-app">
         <a href="javascript:history.back(-1)" class="header-title header-subtitle">정보수정</a>
@@ -96,6 +97,23 @@
                     <em><i class="fa-solid fa-calendar-days font-17"></i></em>
                     <input type="date" id="msBirth" name="msBirth" value="${sessionScope.msMember.msBirth}">
                 </div>
+                
+                <div class="input-style input-style-2  input-required">
+                    <span class="color-highlight input-style-1-active">거주지(시,구,동)</span>
+                    <em><em><i class= "fas fa-search font-17 wrap1"></i></em></em>
+                    <input class="form-control" type="hidden" id="msHomezip" name="msHomezip" value="${sessionScope.msMember.msHomezip}" >
+                    <input class="form-control" type="name" placeholder="" id="msHomeaddr1" name="msHomeaddr1" value="${sessionScope.msMember.msHomeaddr1}"/>
+                </div>
+                <div class="col-12 mb-3">
+	                    <div id="wrap1" style="display:none;border:1px solid;height:300px;margin:5px 0;position:relative">
+	                    <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap1" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+	                    </div>
+	                </div>
+                 <div class="input-style input-style-2  input-required">
+                    <span class="color-highlight input-style-1-active">상세주소</span>
+                    <em></em>
+                    <input class="form-control" type="name" placeholder="" id="msHomeaddr2" name="msHomeaddr2" value="${sessionScope.msMember.msHomeaddr2}"/>
+                </div>  
         
                 <div class="input-style input-style-2 input-required">
                     <span class="color-highlight">레슨경험</span>
@@ -158,20 +176,26 @@
                     <div class="col-12 mb-3">
                         <div class="input-style input-style-2"">
                             <span class="color-highlight input-style-1-active">직장주소</span>
-                            <em><i class= "fas fa-search font-17"></i></em>
-                            <input class="form-control" type="name" placeholder="테헤란로5 또는 서린동154과 같이 입력 후 검색" id="msCompaddr1" name="msCompaddr1" value="${sessionScope.msMember.msCompaddr1}"/>
+                            <em><i class= "fas fa-search font-17 wrap2"></i></em>
+                            <input class="form-control" type="hidden" id="msCompzip" name="msCompzip" value="${sessionScope.msMember.msCompzip}" >
+                            <input class="form-control" type="name" placeholder="직장주소(시,구,동)" id="msCompaddr1" name="msCompaddr1" value="${sessionScope.msMember.msCompaddr1}" readonly/>
                         </div> 
                     </div>
                     <div class="col-12 mb-3">
+	                    <div id="wrap2" style="display:none;border:1px solid;height:300px;margin:5px 0;position:relative">
+	                    	<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap2" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+	                    </div>
+	                </div>
+                    <div class="col-12 mb-3">
                         <div class="input-style input-style-2 input-required">
-                            <span class="color-highlight input-style-1-active">주소상세</span>
+                            <span class="color-highlight input-style-1-active">상세주소</span>
                             <input class="form-control" type="name" placeholder="" id="msCompaddr2" name="msCompaddr2" value="${sessionScope.msMember.msCompaddr2}">
                         </div> 
                     </div>
                     <div class="col-12 mb-0">
                         <div class="input-style input-style-2 input-required" style="display:flex;">
-                            <span class="color-highlight input-style-1-active">차량번호</span>                            
-                            <input class="form-control col-4" type="name" placeholder="최대3대 등록가능" id="msCarNo1" name="msCarNo1" value="${carList[0].msCarNo}">
+                            <span class="color-highlight input-style-1-active">차량번호(최대 3대)</span>                            
+                            <input class="form-control col-4" type="name" placeholder="" id="msCarNo1" name="msCarNo1" value="${carList[0].msCarNo}">
                             <input class="form-control col-4" type="name" placeholder="" id="msCarNo2" name="msCarNo2" value="${carList[1].msCarNo}">
                             <input class="form-control col-4" type="name" placeholder="" id="msCarNo3" name="msCarNo3" value="${carList[2].msCarNo}">
                         </div> 
@@ -180,16 +204,19 @@
                 </div>
                 <div class="input-style input-style-2 input-required">
                     <span class="color-highlight">선호 업장</span>
+                    <input class="form-control" type="hidden" id="coDivVal" value="${msFirstPick}">
                     <em><i class="fa fa-angle-down"></i></em>
-                    <select>
+                    <select id="coDiv" name="coDiv" >
                         <option value="" disabled>선호하는 업장</option>
-                        <option value="chungdam">클럽디청담</option>
+                        <c:forEach items="${placeList}" var="item" varStatus="status">
+                        <option value="${item.coDiv}">${item.coName}</option>
+                        </c:forEach>
                     </select>
                 </div>            
             </div>
         
         </form>
-        <button type="button" class="mt-4 mb-4 btn btn-md bg-blue-dark btn-full shadow-xl text-uppercase font-800 rounded-s" id="btnSave">
+        <button type="button" class="col-12 mt-4 mb-4 btn btn-md bg-blue-dark btn-full shadow-xl text-uppercase font-800 rounded-s" id="btnSave">
             수정완료
         </button>
         </div>
@@ -208,8 +235,10 @@
 		var msName = "${sessionScope.msMember.msName}";
 		var msPhone = "${sessionScope.msMember.msFirstPhone1}" + "-" + "${sessionScope.msMember.msMidPhone1}" + "-" + "${sessionScope.msMember.msLastPhone1}";
 		var smsChk1 = "${sessionScope.msMember.smsChk1}";
-		$('#msPhone').val(msPhone);
-		
+		$('#msPhone').val(msPhone);		
+
+		var element_wrap1 = document.getElementById('wrap1');
+		var element_wrap2 = document.getElementById('wrap2');
 		
 		if(msLoginCd == 'APP') {	
 			$('.app').show();
@@ -225,11 +254,86 @@
 			}
 			
 			setDateValue('msBirth');
+			
 			setSelectValue('msSex');		
 			setSelectValue('msLessonExpYn');		
 			setSelectValue('msJobCd');
+			setSelectValue('coDiv');
 		})
 		
+		$('#msHomeaddr1, .wrap1').on('click', function() {
+	        element_wrap1.style.display = 'none';
+	        element_wrap2.style.display = 'none';
+			execDaumPostcode('msHome');
+		})	
+		$('#msCompaddr1, .wrap2').on('click', function() {
+			/* var sParams = String.format("searchAddr={0}", $('#msCompaddr1').val().replace(' ',''));
+			var sUrl = "<c:url value='/member/memberAddrPop'/>" + "?" + encodeURI(sParams);
+			
+			$('#memberAddrPop').load(sUrl);
+			$('#memberAddrPop').addClass('menu-active'); */
+	        element_wrap1.style.display = 'none';
+	        element_wrap2.style.display = 'none';
+			execDaumPostcode('msComp');
+		})	
+			
+    function foldDaumPostcode() {
+        // iframe을 넣은 element를 안보이게 한다.
+        element_wrap1.style.display = 'none';
+        element_wrap2.style.display = 'none';
+    }
+	
+    var themeObj = {
+    		   bgColor: "#162525", //바탕 배경색
+    		   searchBgColor: "#162525", //검색창 배경색
+    		   contentBgColor: "#162525", //본문 배경색(검색결과,결과없음,첫화면,검색서제스트)
+    		   pageBgColor: "#162525", //페이지 배경색
+    		   textColor: "#FFFFFF", //기본 글자색
+    		   queryTextColor: "#FFFFFF", //검색창 글자색
+    		   //postcodeTextColor: "", //우편번호 글자색
+    		   //emphTextColor: "", //강조 글자색
+    		   outlineColor: "#444444" //테두리
+    		};
+    
+    function execDaumPostcode(str) {
+        // 현재 scroll 위치를 저장해놓는다.
+        var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+        
+        if(str == 'msHome') {
+        	element_wrap = element_wrap1;
+        }else {
+        	element_wrap = element_wrap2;        	
+        }
+        
+        new daum.Postcode ({
+        	theme: themeObj
+            , oncomplete: function(data) {
+                var addr = ''; // 주소 변수
+                addr = data.jibunAddress;                
+
+                document.getElementById(str + "zip").value = data.zonecode;
+                document.getElementById(str + "addr1").value = addr;
+                document.getElementById(str + "addr2").focus();
+
+                // iframe을 넣은 element를 안보이게 한다.
+                // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
+                element_wrap.style.display = 'none';
+
+                // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
+                document.body.scrollTop = currentScroll;
+            }
+            // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
+            , onresize : function(size) {
+                element_wrap.style.height = size.height+'px';
+            }
+            , width : '100%'
+            , height : '468px'
+        }).embed(element_wrap);
+
+        // iframe을 넣은 element를 보이게 한다.
+        element_wrap.style.display = 'block';
+        
+    }
 			
 		$('#newMsPassword').on('keyup', function() {
 			if(!$('#newMsPassword').val().match(pwdReg)) {
@@ -375,24 +479,23 @@
 		
 		function saveMemberModify() {			
 		    $.ajax({
-		        url: "/member/saveMemberModify",
-		        type: "post",
-		        dataType: 'json',
-		        data: $('#frmMember').serialize(),
-		        contentType: 'application/x-www-form-urlencoded; charset=UTF-8', 
-		        success: function(data) {		    	
+		          url: "/member/saveMemberModify"
+		        , type: "post"
+		        , dataType: 'json'
+		        , data: $('#frmMember').serialize()
+		        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+		        , success: function(data) {		    	
 		            if(data.result){
 		            	alertModal.success('수정이 완료되었습니다.');
-						location.reload();
+		            	goAfterModal();
 		            } else {
 		            	alertModal.fail(data.message);                    
 		            }                
-		        },
-		        error: function(data) {
+		        }
+		        , error: function(data) {
 		        	alertModal.fail('[error] 오류가 발생했습니다.');
 		        }
-		    });
-		
+		    });		
 		}
 	</script>	
 </body>

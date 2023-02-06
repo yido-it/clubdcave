@@ -19,7 +19,6 @@ import com.yido.clubd.model.DrBayInfo;
 import com.yido.clubd.model.DrBkHistory;
 import com.yido.clubd.model.DrBkOpenTime;
 import com.yido.clubd.model.DrBkTime;
-import com.yido.clubd.model.ProNotice;
 import com.yido.clubd.service.DrBayInfoService;
 import com.yido.clubd.service.DrBkHistoryService;
 import com.yido.clubd.service.DrBkOpenTimeService;

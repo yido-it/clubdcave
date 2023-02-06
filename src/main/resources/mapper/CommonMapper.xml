@@ -115,7 +115,6 @@
 	   CONCAT(도로명, 건물번호본번, IF(건물번호부번 != 0, CONCAT('-', 건물번호부번), '')) LIKE CONCAT('%', #{searchAddr}, '%')
 	OR CONCAT(IFNULL(법정동명, IFNULL(리명, '')), 지번본번, IF(지번부번 != 0, CONCAT('-', 지번부번), '')) LIKE CONCAT('%', #{searchAddr}, '%')
 	</select>
-	
 
 	<update id="actionAgree" parameterType="hashmap">
 		UPDATE MS_MAININFO_DETAIL

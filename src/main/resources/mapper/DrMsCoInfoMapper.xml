@@ -6,9 +6,61 @@
  * 테이블 설명 : 회원지점연결정보
 -->
 <mapper namespace="com.yido.clubd.repository.DrMsCoInfoMapper">
-
-	<select id="selectList" resultType="DrMsCoInfo">
-       
+	<select id="selectDrMsCoInfo" resultType="DrMsCoInfo" parameterType="Map">
+    	SELECT
+    		  CO_DIV
+    		, MS_NUM
+    		, MS_REGISTER
+    		, MS_FIRST_PICK
+    		, USE_YN
+    		, LESSON_WEEK_CNT
+    		, LESSON_OUTDOOR
+    	FROM DR_MS_CO_INFO
+    	WHERE 1 = 1
+    		AND CO_DIV = #{coDiv}
+    		AND MS_NUM = #{msNum}
+    		AND USE_YN = 'Y'
     </select>
+    <select id="selectFirstPick" resultType="DrMsCoInfo" parameterType="String">
+    	SELECT
+    		  CO_DIV
+    		, MS_NUM
+    		, MS_REGISTER
+    		, MS_FIRST_PICK
+    		, USE_YN
+    		, LESSON_WEEK_CNT
+    		, LESSON_OUTDOOR
+    	FROM DR_MS_CO_INFO
+    	WHERE 1 = 1
+    		AND MS_NUM = #{msNum}
+    		AND MS_FIRST_PICK = 'Y'
+    		AND USE_YN = 'Y'
+    </select>
+    <insert id="insertDrMsCoInfo">
+    	INSERT INTO DR_MS_CO_INFO (
+    		  CO_DIV
+    		, MS_NUM
+    		, MS_REGISTER
+    		, MS_FIRST_PICK
+    		, USE_YN
+    		, LESSON_WEEK_CNT
+    		, LESSON_OUTDOOR
+    	)VALUES (
+    		  #{coDiv}
+    		, #{msNum}
+    		, 'Y'
+    		, 'N'
+    		, 'Y'
+    		, 0
+    		, NULL
+    	)
+    </insert>
+    <update id="updateFirstPickY">
+    	UPDATE DR_MS_CO_INFO
+    		SET MS_FIRST_PICK = 'Y'
+		 WHERE 1 = 1
+		 	AND MS_NUM = #{msNum}
+		 	AND CO_DIV = #{coDiv}
+    </update>  
     
 </mapper>

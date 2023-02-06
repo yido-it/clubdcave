@@ -1,6 +1,5 @@
 package com.yido.clubd.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,13 +20,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.yido.clubd.common.service.CommonService;
 import com.yido.clubd.common.utils.Globals;
 import com.yido.clubd.common.utils.KakaoRestAPI;
-import com.yido.clubd.common.utils.ResultVO;
 import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.model.CdCommon;
+import com.yido.clubd.model.CoPlace;
 import com.yido.clubd.model.DrMsBasic;
+import com.yido.clubd.model.DrMsCoInfo;
 import com.yido.clubd.model.MemberVO;
+import com.yido.clubd.service.CoPlaceService;
 import com.yido.clubd.service.DrMsBasicService;
+import com.yido.clubd.service.DrMsCoInfoService;
 import com.yido.clubd.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +48,11 @@ public class MemberController {
 	@Autowired
 	private CommonService commonService;
 	
+	@Autowired
+	private CoPlaceService coPlaceService;
+	
+	@Autowired
+	private DrMsCoInfoService drMsCoInfoService;
 	/**
 	 * 회원가입 첫 페이지 (약관 동의)
 	 * 
@@ -88,6 +95,9 @@ public class MemberController {
 		cdCommon.setCdDivision("025");
 		
 		List<CdCommon> jobList = commonService.getCommonCodeList(cdCommon);
+		List<CoPlace> placeList = coPlaceService.selectPlaceList();
+		model.addAttribute("jobList", jobList);
+		model.addAttribute("placeList", placeList);
 		return "/member/memberAddPop";
 	}
 	
@@ -99,19 +109,7 @@ public class MemberController {
 		model.addAttribute("addrList", commonService.getAddrList(params));
 		return "/member/memberAddrPop";
 	}
-	
-	/**
-	 * 회원가입 > 가입 완료 메시지
-	 * 
-	 * @param model
-	 * @param req
-	 * @return
-	 */
-	@RequestMapping("/joinComplete")  
-	public String goJoinComplete(Model model, HttpServletRequest req) {
-		return "/member/joinComplete";
-	}
-	
+		
 	@RequestMapping("/checkIdExist")
 	@ResponseBody
 	public Map<String, Object> checkIdExist (@RequestParam(required = false) String msId) throws Exception {
@@ -179,7 +177,13 @@ public class MemberController {
 		}
 		try {
 			memberService.insertMember(member);
-			memberService.loginUserInfo(req, res, session, Utils.changeVotoMap(member));
+			
+			DrMsCoInfo drMsCoInfo = new DrMsCoInfo();
+			drMsCoInfo.setCoDiv(member.getCoDiv());
+			drMsCoInfo.setMsNum(member.getMsNum());
+			
+			drMsCoInfoService.insertDrMsCoInfo(drMsCoInfo);
+			memberService.loginUserInfo(req, res, session, Utils.convertVotoMap(member));
 			
 			map.put("result",  true);
 			map.put("userInfo",  member);
@@ -322,6 +326,8 @@ public class MemberController {
 			member = memberService.updateMember(params);
 			memberService.saveMemberBasic(params);
 			memberService.saveMemberCar(params);
+			memberService.saveFirstPick(params);
+			
 			session.setAttribute("msMember", member);
 			map.put("result",  true);
 		} catch(Exception e) {
@@ -340,15 +346,25 @@ public class MemberController {
 		cdCommon.setCdDivision("025");
 		
 		List<CdCommon> jobList = commonService.getCommonCodeList(cdCommon);
+		List<CoPlace> placeList = coPlaceService.selectPlaceList();
 		
 		SessionVO member = (SessionVO)session.getAttribute("msMember");
 		String msNum = member.getMsNum();
 		MemberVO basicInfo = memberService.selectMemberBasic(msNum);
 		List<MemberVO> carList = memberService.selectMemberCarList(msNum);
+		DrMsCoInfo drMsInfo = drMsCoInfoService.selectFirstPick(msNum);
 		
 		model.addAttribute("jobList", jobList);
+		model.addAttribute("placeList", placeList);
+		
 		model.addAttribute("basicInfo", basicInfo);
 		model.addAttribute("carList", carList);
+		
+		if(drMsInfo != null) {
+			model.addAttribute("msFirstPick", drMsInfo.getCoDiv());			
+		}else {			
+			model.addAttribute("msFirstPick", "");			
+		}
 		
 		return "/member/memberModify";
 	}	
@@ -372,7 +388,8 @@ public class MemberController {
 			
 			member = memberService.updateMember(params);
 			memberService.saveMemberBasic(params);
-			memberService.saveMemberCar(params);
+			memberService.saveMemberCar(params);	
+			memberService.saveFirstPick(params);
 			
     		session.setAttribute("msMember", member);
 			map.put("result", true);

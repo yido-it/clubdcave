@@ -16,8 +16,9 @@ import org.springframework.stereotype.Service;
 import com.yido.clubd.common.utils.Globals;
 import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
-import com.yido.clubd.model.BookInfoVO;
+import com.yido.clubd.model.DrMsCoInfo;
 import com.yido.clubd.model.MemberVO;
+import com.yido.clubd.repository.DrMsCoInfoMapper;
 import com.yido.clubd.repository.MemberMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -31,13 +32,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class MemberService {
-
+	@Autowired
+	DrMsCoInfoService drMsCoInfoService;
+	
 	@Autowired
     private MemberMapper memberMapper;
 	
 	@Autowired
-	private MemberService memberService;
-	
+	private DrMsCoInfoMapper drMsCoInfoMapper;
+		
 	public MemberVO selectMember(Map<String, Object> params) {
     	return memberMapper.selectMember(params);
 	}	
@@ -82,7 +85,7 @@ public class MemberService {
 	public void insertMember(MemberVO member) throws Exception {
 		
 		/*
-		 * String msNum = memberService.makeMsNum(member);
+		 * String msNum = this.makeMsNum(member);
 		 * member.setMsNum(msNum);
 		 */
 		
@@ -140,7 +143,7 @@ public class MemberService {
 		
 		if((String)params.get("msLessonTrem") != null && (String)params.get("msLessonTrem") != "") {			
 			String msLessonTrem = ((String)params.get("msLessonTrem")).replace("회", "");
-			String msLessonUnit = msLessonTrem.substring(0,1);
+			String msLessonUnit = ("주".equals(msLessonTrem.substring(0,1)))? "01" : "02";
 			msLessonTrem = msLessonTrem.substring(1);
 			
 			params.put("msLessonTrem", msLessonTrem);
@@ -154,7 +157,7 @@ public class MemberService {
 		
 		if((String)params.get("msRoundCnt") != null && (String)params.get("msRoundCnt") != "") {		
 			String msRoundCnt = ((String)params.get("msRoundCnt")).replace("회", "");
-			String msRoundUnit = msRoundCnt.substring(0,1);
+			String msRoundUnit = ("주".equals(msRoundCnt.substring(0,1)))? "01" : "02";
 			msRoundCnt = msRoundCnt.substring(1);
 			
 			params.put("msRoundCnt", msRoundCnt);
@@ -288,7 +291,7 @@ public class MemberService {
 				res.addCookie(loginCookie);
 				
 				params.put("msSessionKey", session.getId());
-				memberService.updateMsSessionKey(params);
+				this.updateMsSessionKey(params);
 			}
 		}
 				
@@ -317,6 +320,20 @@ public class MemberService {
 		params.put("ipAddr", Utils.getClientIpAddress(req));
 
 		this.insertLoginLog(params);
+		
+	}
+
+	public void saveFirstPick(Map<String, Object> params) {
+		DrMsCoInfo result = drMsCoInfoMapper.selectDrMsCoInfo(params);
+		
+		DrMsCoInfo drMsCoInfo = new DrMsCoInfo();
+		drMsCoInfo.setCoDiv((String)params.get("coDiv"));
+		drMsCoInfo.setMsNum((String)params.get("msNum"));
+		
+		if(result == null) {			
+			drMsCoInfoMapper.insertDrMsCoInfo(drMsCoInfo);
+		}
+		drMsCoInfoService.updateFirstPickY(drMsCoInfo);
 		
 	}
 

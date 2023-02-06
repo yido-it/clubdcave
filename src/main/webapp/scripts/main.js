@@ -320,6 +320,7 @@ function randomNum(){
     return randomNum;
 }
 
+// input 입력 여부 체크
 function chkInputVal (id) {
 	var str = $('#' + id).data('name');
 	const charCode = str.charCodeAt(str.length - 1);
@@ -336,20 +337,51 @@ function chkInputVal (id) {
     return true;
 }
 
-function setSelectValue(id) {
+// select input 입력하기
+function setSelectValue(id, value) {
 	var id = "#" + id;
-	var valId = id + "Val";
-	if($(valId).val() != null && $(valId).val() != "") {		
+	
+	if(value == undefined || value == null) {
+		var valId = id + "Val";
+		if($(valId).val() != null && $(valId).val() != "") {		
+			$(id).parent().find('span').removeClass('input-style-1-inactive input-style-1-active');
+			$(id).val($(valId).val()).prop("selected", true);
+			$(id).parent().find('span').addClass('input-style-1-inactive input-style-1-active');
+		}
+	} else {
 		$(id).parent().find('span').removeClass('input-style-1-inactive input-style-1-active');
-		$(id).val($(valId).val()).prop("selected", true);
+		$(id).val(value).prop("selected", true);
 		$(id).parent().find('span').addClass('input-style-1-inactive input-style-1-active');
 	}
+	
 }
 
-function setDateValue(id) {
+// date input 입력하기
+function setDateValue(id, value) {
 	var id = "#" + id;
-	if($(id).val() != null && $(id).val() != "") {		
-		$(id).parent().find('span').removeClass('input-style-1-inactive input-style-1-active');
-		$(id).parent().find('span').addClass('input-style-1-inactive input-style-1-active');
+	if(value == undefined || value == null) {
+		if($(id).val() != null && $(id).val() != "") {		
+			$(id).parent().find('span').removeClass('input-style-1-inactive input-style-1-active');
+			$(id).parent().find('span').addClass('input-style-1-inactive input-style-1-active');
+		}
+	} else {
+			$(id).parent().find('span').removeClass('input-style-1-inactive input-style-1-active');
+			$(id).parent().find('span').addClass('input-style-1-inactive input-style-1-active');
 	}
+
+}
+
+// alertModal 후 페이지 이동
+function goAfterModal(url) {
+	var time = 1200;
+	var str = "";
+	
+	if (url != undefined && url != null && url != "") {
+		str = "location.href='" + url + "'";
+	} else if (url == "back") {
+		str = "history.back()"
+	} else {
+		str = "location.reload()";
+	}
+	setTimeout(str, time);
 }

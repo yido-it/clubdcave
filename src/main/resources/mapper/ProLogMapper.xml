@@ -29,6 +29,27 @@
     		, #{proRemark}
     		, #{noticeOpenYn}			
     	)  	
+    </insert>    
+    <insert id="insertProLicenseLog">
+        <selectKey resultType="String" keyProperty="logSeq" order="BEFORE">
+			SELECT IFNULL(CAST(MAX(LOG_SEQ) AS UNSIGNED), 0)+1 
+			  FROM PRO_LICENSE_LOG
+        </selectKey>    
+    	INSERT INTO PRO_LICENSE_LOG (
+			MS_NUM		
+			, LOG_SEQ
+			, LOG_DIV		
+			, LIC_SEQ			
+			, LIC_KIND			
+			, LIC_REMARK
+    	) values (
+    		#{msNum}		
+    		, #{logSeq}
+    		, #{logDiv}	
+    		, #{licSeq}		
+    		, #{licKind}			
+    		, #{licRemark}	
+    	)  	
     </insert>
     
 </mapper>
