@@ -192,38 +192,51 @@ function getToDay(separator){
 	return year + separator + realMonth + separator + realDate;
 }
 
-// 오늘 날짜 구하려면 -> year = 0, month = 1
-// 1달뒤 날짜 구하려면 -> year = 0, month = 2
-// 1년뒤 날짜 구하려면 -> year = 1, month = 1
-function getDaybyMonth(separator, year, month){
-	var today = new Date();   
+function searchDate(value) {
+	console.log(getToDay("-"));
+	var endDt = new Date(getToDay("-"));
+	console.log(endDt);
+	var strtDt = new Date(getToDay("-"));
+	
+	switch(value) {
+		case '1' : 
+			// 1개월전
+			strtDt.setMonth(strtDt.getMonth() - 1);
+			strtDt = dateFormatter(strtDt, endDt);
+			break;
+		case '3' :
+			// 3개월 전 
+			strtDt.setMonth(strtDt.getMonth() - 3);
+			strtDt = dateFormatter(strtDt, endDt);
+			break;
+		case '12' : 
+			// 1년전
+			strtDt.setFullYear(strtDt.getFullYear() - 1);
+			strtDt = dateFormatter(strtDt, endDt);
+			break;
+	}
+	
+	return strtDt;
+} 
 
-	var year;
-	if (year == 0) {
-		year = today.getFullYear(); // 년도
-	} else {
-		year = today.getFullYear() + year; // 년도
-	}
-	var month = today.getMonth() + month;  // 월
-	var date = today.getDate();  // 날짜
-	var day = today.getDay();  // 요일
+function dateFormatter(newDay, today) {
+	var year = newDay.getFullYear();
+	var month = newDay.getMonth() + 1;
+	var date = newDay.getDate();
 	
-	var realMonth;
-	if (month < 10) {
-		realMonth = "0" + month;
-	} else {
-		realMonth = month;
+	if (today) {
+		var todayDate = today.getDate();
+		if (date != todayDate) {
+			if (month == 0) year -=1;
+			month = (month + 11) % 12;
+			date = new Date(year, month, 0).getDate();
+		}
 	}
-	var realDate;
-	if (date < 10) {
-		realDate = "0" + date;
-	} else {
-		realDate = date;
-	}
+	month = ("0"+month).slice(-2);
+	date = ("0"+date).slice(-2);
 	
-	return year + separator + realMonth + separator + realDate;
+	return year + "-" + month + "-" + date;
 }
-
 
 //내일 날짜 반환 
 function getToTomorrow(separator){

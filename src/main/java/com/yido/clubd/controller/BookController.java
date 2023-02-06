@@ -334,23 +334,34 @@ public class BookController {
 	 * @param coDiv
 	 * @return
 	 */
-	@RequestMapping("/moreBookList/{coDiv}")  
+	@RequestMapping("/searchBookList/{coDiv}")  
 	@ResponseBody
-	public List<Map<String, Object>> moreBookList(Model model, HttpServletRequest req, @PathVariable String coDiv) {
+	public List<Map<String, Object>> searchBookList(Model model, HttpServletRequest req, @PathVariable String coDiv) {
 		HttpSession session = req.getSession();
 		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-				
+		Map<String, Object> map = new HashMap<String, Object>();
+		
 		try {
-			// listSize : 어디서 부터 가져올지
-			int listSize = Integer.parseInt(req.getParameter("listSize").toString());
-			// 조회할 건수
-			int limit = 5; 
-			Map<String, Object> map = new HashMap<String, Object>();
+			if (req.getParameter("listSize") != null) {
+				// listSize : 어디서 부터 가져올지
+				int listSize = Integer.parseInt(req.getParameter("listSize").toString());
+				// 조회할 건수
+				int limit = 5; 
+				map.put("limit", limit);
+				map.put("offset", listSize);
+			}
+			
+			if (req.getParameter("strtDt") != null && req.getParameter("endDt") != null) {
+				String strtDt = req.getParameter("strtDt").toString();
+				String endDt = req.getParameter("endDt").toString();
+				
+				map.put("strtDt", strtDt.replace("-", ""));
+				map.put("endDt", endDt.replace("-", ""));
+			
+			}
 			map.put("msNum", sessionVO.getMsNum());
 			map.put("coDiv", coDiv);
-			map.put("limit", limit);
-			map.put("offset", listSize);
 			list = drBkHistoryService.selectBkHis(map);		
 		
 		} catch(Exception e) {

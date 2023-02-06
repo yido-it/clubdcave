@@ -45,7 +45,7 @@
 		<div id="bookList"></div>
 		<!-- └──────────────────────── 예약카드 ────────────────────────┘-->
 
-		 <a href="javascript:onClick=doSearch()" class="btn btn-border btn-m btn-full mb-10 rounded-xl text-uppercase font-900 border-blue-dark color-blue-dark ml-4 mr-4" id="btnMore">
+		 <a href="javascript:onClick=doSearch('more')" class="btn btn-border btn-m btn-full mb-10 rounded-xl text-uppercase font-900 border-blue-dark color-blue-dark ml-4 mr-4" id="btnMore">
         	더보기 <i class="fa-solid fa-chevron-down"></i>
         </a>
         
@@ -65,13 +65,13 @@
 	
 		<div class="col-6"> 
 			<div class="form-check icon-check">
-				<input class="form-check-input" type="radio" name="searchType" value="30" id="type1" onclick='search(this.value)' checked>
+				<input class="form-check-input" type="radio" name="searchType" value="1" id="type1" onclick='search(this.value)' checked>
 				<label class="form-check-label" for="type1">최근 1개월</label>
 				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
 			</div>
 			<div class="form-check icon-check">
-				<input class="form-check-input" type="radio" name="searchType" value="365" id="type2" onclick='search(this.value)'>
+				<input class="form-check-input" type="radio" name="searchType" value="12" id="type2" onclick='search(this.value)'>
 				<label class="form-check-label" for="type2">최근 1년</label>
 				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
@@ -79,7 +79,7 @@
 		</div>
 		<div class="col-6"> 
 			<div class="form-check icon-check">
-				<input class="form-check-input" type="radio" name="searchType" value="90" id="type3" onclick='search(this.value)'>
+				<input class="form-check-input" type="radio" name="searchType" value="3" id="type3" onclick='search(this.value)'>
 				<label class="form-check-label" for="type3">최근 3개월</label>
 				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
@@ -107,12 +107,15 @@
 				<span style="border-radius: 5px;" class="input-style-1-active input-style-1-inactive">종료일</span>
 				<input type="text" name="endDt" id="endDt">
 			</div>
-		
 		</div>
 	</div>
 	<!--//기간달력선택-->
+	
+	<!-- 조회 버튼 -->
 	<div class="col-12 mt-3">
-		<a href="#" class="btn close-menu btn-full btn-md bg-blue-dark font-800 text-uppercase rounded-s">조회</a>
+		<a href="javascript:onClick=doSearch('search')" class="btn btn-full btn-md bg-blue-dark font-800 text-uppercase rounded-s">
+			조회
+		</a>
 	</div>
 </div>
 
@@ -201,8 +204,35 @@ function init() {
         yearSuffix: '년'     	
     });
     
-	$('#strtDt').val(getDaybyMonth("-", 0, 1));		// 오늘 날짜
-	$('#endDt').val(getDaybyMonth("-", 0, 2));		// 1달뒤 날짜
+	$('#strtDt').val(searchDate('1'));		// 1달전 날짜
+	$('#endDt').val(getToDay("-"));			// 오늘 날짜
+}
+
+// 날짜 검색 > 조회 개월 클릭했을때 실행되는 함수 
+function search(value) {
+
+	switch(value) {
+		case '1' :
+			// 1개월전
+			$('#strtDt').val(searchDate('1'));		// 1달전 날짜
+			$('#endDt').val(getToDay("-"));			// 오늘 날짜
+			break;
+		case '3' : 
+			// 3개월전
+			$('#strtDt').val(searchDate('3'));		// 3달전 날짜
+			$('#endDt').val(getToDay("-"));			// 오늘 날짜
+			break;
+		case '12': 
+			// 1년전
+			$('#strtDt').val(searchDate('12'));		// 3달전 날짜
+			$('#endDt').val(getToDay("-"));			// 오늘 날짜
+			break;
+		case '0' :
+			// 직접설정 
+			$('#strtDt').val(getToDay("-"));			// 오늘 날짜
+			$('#endDt').val(getToDay("-"));			// 오늘 날짜
+			break;
+	}
 }
 
 // 예약취소 확인 팝업창
@@ -255,44 +285,22 @@ function doCancel(idx){
    			}
    		}
    	});	      
-
-}
-
-// 예약내역 > 날짜로 검색
-function search(value){
-
-	switch(value) {
-		case '30' :
-			$('#strtDt').val(getDaybyMonth("-", 0, 1));	// 오늘 날짜
-			$('#endDt').val(getDaybyMonth("-", 0, 2));	// 1달뒤 날짜
-			break;
-		case '90' : 
-			$('#strtDt').val(getDaybyMonth("-", 0, 1));	// 오늘 날짜
-			$('#endDt').val(getDaybyMonth("-", 0, 4));	// 3달뒤 날짜
-			break;
-		case '365': 
-			$('#strtDt').val(getDaybyMonth("-", 0, 1));	// 오늘 날짜
-			$('#endDt').val(getDaybyMonth("-", 1, 1));	// 12달뒤 날짜
-			break;
-
-		case '0' :
-			$('#strtDt').val(getDaybyMonth("-", 0, 1));	// 오늘 날짜
-			$('#endDt').val(getDaybyMonth("-", 0, 1));	// 오늘 날짜
-			break;
-	}
 }
 
 // 더보기 
-function doSearch() {
-	
-	console.log('strtDt:', $('#strtDt').val(), ', endDt:', $('#endDt').val());
+function doSearch(type) {
+	if (type == "search") {
+		listSize = 0;
+	}
 	
 	$.ajax({
-        url: "/book/moreBookList/" + coDiv
+        url: "/book/searchBookList/" + coDiv
         , type: "post"
        	, dataType: 'json'
       	, data: { 
            	"listSize" : listSize
+           	, "strtDt" : $('#strtDt').val()
+           	, "endDt" : $('#endDt').val()
     	}
         , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
         , success: function(data) {	
@@ -385,6 +393,15 @@ function doSearch() {
 
         }
 	});
+	
+	if (type == "search") {
+		// 조회 팝업 닫기 
+		$('#modal_day').removeClass('menu-active');
+		$('.menu-hider').removeClass('menu-active menu-active-clear');
+		$('.header').css('transform','translate(0,0)');
+		$('.page-content').css('transform','translate(0,0)');
+		$('.menu-hider').css('transform','translate(0,0)');
+	}
 }
 
 </script>
