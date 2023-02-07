@@ -19,7 +19,8 @@
  
     <div class="page-content mb-0">
         
-        <div data-card-height="cover-card" class="card bg-1">
+       <div data-card-height="cover-card" class="card  mb-0" style="background-image:url(../images/gallery/cave_main1.jpg);background-size:cover">
+
                 <div class="card-center">
 
                     <div class="page-content header-clear"> 

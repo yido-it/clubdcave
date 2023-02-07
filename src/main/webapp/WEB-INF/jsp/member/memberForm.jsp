@@ -15,7 +15,7 @@
     
         <div class="page-content mb-0">
             
-            <div data-card-height="cover-card" class="card bg-1">
+            <div data-card-height="cover-card" class="card bg-1 mb-0">
                 <div class="card-center">
                     <div style="width:100%;text-align:center">
                         <img src="../images/logo_wing.png" class="text-center" style="width:50px;margin-bottom:10px">

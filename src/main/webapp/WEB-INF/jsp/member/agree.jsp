@@ -15,7 +15,7 @@
 	    </div>
 	    <jsp:include page="../common/menu.jsp" />
         
-	    <div data-card-height="cover-card" class="card bg-1">
+	    <div data-card-height="cover-card" class="card bg-1 mb-0">
 	        <div class="card-center">
 	            <div style="width:100%;text-align:center">
 	                <img src="../images/logo_white.png" class="text-center" style="width:200px;">
