@@ -7,6 +7,7 @@
 <jsp:include page="common/head.jsp" />
 <jsp:include page="common/script.jsp" />
 
+
 <body class="theme-dark">
     
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>

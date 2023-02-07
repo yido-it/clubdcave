@@ -10,10 +10,8 @@
 <script type="text/javascript" src="/scripts/main.js?now=<%=new Date()%>"></script>
 
 <script type="text/javascript" src="/scripts/custom.js?now=<%=new Date()%>"></script>
-<!-- <script type="text/javascript" src="/scripts/custom2.js"></script>  -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script type="text/javascript" src="<%=Globals.serviceJs%>" ></script>
 <script type="text/javascript" src="/scripts/tools.js?now=<%=new Date()%>"></script>
 <script type="text/javascript" src="/scripts/pay.js?now=<%=new Date()%>"></script>
-<script type="text/javascript" src="https://unpkg.com/@swup/preload-plugin@2"></script>
