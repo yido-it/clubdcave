@@ -108,6 +108,18 @@ public class WebController {
 	public String event(Model model, HttpServletRequest req) {
 		return "/event";
 	}
+	
+	/**
+	 * 이용안내
+	 * 
+	 * @param model
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("/guide")  
+	public String guide(Model model, HttpServletRequest req) {
+		return "/guide";
+	}
 
 	/**
 	 * 시설안내

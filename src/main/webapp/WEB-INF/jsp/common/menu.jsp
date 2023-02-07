@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div id="menu-main"  data-menu-active="nav-welcome"   class="menu menu-box-left"   data-menu-width="250" data-menu-effect="menu-parallax">
+<div id="menu-main"    class="menu menu-box-left"   data-menu-width="250" data-menu-effect="menu-parallax">
 	
 	<!-- 상단 로그인 버튼 -->
 	<div class="text-center pt-4 notch-clear">
@@ -35,7 +35,7 @@
 	<div class="menu-list">
 		<!-- 이용관련 메뉴 -->
 		<h6 class="ml-1 font-14 font-400">이용관련</h6>
-		<a href="guide.html" id="nav-welcome">
+		<a href="/guide" id="nav-welcome">
 			<i class="fa fa-star color-yellow-dark"></i>이용안내<i class="fa fa-angle-right"></i>
 		</a>
 		
@@ -47,7 +47,7 @@
 			<i class="fa fa-map-location-dot color-blue-dark"></i>오시는길<i class="fa fa-angle-right"></i>
 		</a>
 		
-		<a href="javascript:location.href='/pro/proMain'" id="nav-navigation">
+		<a href="javascript:location.href='/pro/proMain'" id="nav-pro">
 			<i class="fa fa-user color-magenta-dark"></i>프로정보<i class="fa fa-angle-right"></i>
 		</a>
 		
@@ -55,21 +55,21 @@
 			<i class="fa fa-gift color-green-light"></i>이벤트<i class="fa fa-angle-right"></i>
 		</a> -->
 		
-		<a href="noticeList" id="nav-media">
+		<a href="javascript:location.href='/noticeList'" id="nav-media">
 			<i class="fa fa-list color-teal-dark"></i>공지사항<i class="fa fa-angle-right"></i>
 		</a>
 		<div class="divider mt-3 mb-3"></div>
 		<!-- 개인설정 메뉴 -->
 		<h6 class="ml-1 font-14 font-400">개인설정</h6>
-		<a href="javascript:location.href='/voucher/voucherMain/001';"" id="nav-starters">
+		<a href="javascript:location.href='/voucher/voucherMain/001';" id="nav-ticket">
 			<i class="fa-solid fa-money-check color-red-dark"></i>이용권<i class="fa fa-angle-right"></i>
 		</a>
 		
-		<a href="javascript:location.href='/member/memberModify'" id="nav-templates">
+		<a href="javascript:location.href='/member/memberModify'" id="nav-modify">
 			<i class="fa fa-pen color-brown-dark"></i>정보수정<i class="fa fa-angle-right"></i>
 		</a>
 		
-		<a href="javascript:location.href='/book/bookList/001';" id="nav-contact">
+		<a href="javascript:location.href='/book/bookList/001';" id="nav-bookList">
 			<i class="fa fa-calendar-check color-blue-dark"></i>예약내역<i class="fa fa-angle-right"></i>
 		</a>
 	
@@ -113,5 +113,18 @@
 			location.href = '/succ-logout';
 		}
 	})
+		
+	// 메뉴 active 관련 
+	var fUrl = window.location.pathname;
+	var className = 'active-nav bg-highlight nav-item-active';
+	
+	if (fUrl.indexOf('/guide') >= 0) $('#nav-welcome').addClass(className);						// 이용안내
+	else if (fUrl.indexOf('/facility') >= 0) $('#nav-homepages').addClass(className);			// 시설안내
+	else if (fUrl.indexOf('/pro/proMain') >= 0) $('#nav-pro').addClass(className);				// 프로정보
+	else if (fUrl.indexOf('/noticeList') >= 0) $('#nav-media').addClass(className);				// 공지사항
+	else if (fUrl.indexOf('/voucher/voucherMain') >= 0) $('#nav-ticket').addClass(className);	// 이용권
+	else if (fUrl.indexOf('/member/memberModify') >= 0) $('#nav-modify').addClass(className);	// 정보수정
+	else if (fUrl.indexOf('/book/bookList') >= 0) $('#nav-bookList').addClass(className);		// 예약내역
+		
 </script>
 

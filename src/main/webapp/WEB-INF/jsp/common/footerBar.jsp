@@ -89,25 +89,11 @@
 
 <script type="text/javascript">
 
+// 하단바 active 관련 
 var fUrl = window.location.pathname;
 
-if (fUrl.indexOf('/main') >= 0) {	
-	
-	$('#footerMain').addClass('active-nav');
-	$('#footerPro').removeClass('active-nav');
-	$('#footerVoucher').removeClass('active-nav');
-	
-} else if (fUrl.indexOf('/pro/proMain') >= 0) {	
+if (fUrl.indexOf('/main') >= 0) $('#footerMain').addClass('active-nav');	// 메인
+else if (fUrl.indexOf('/pro/proMain') >= 0) $('#footerPro').addClass('active-nav');	// 프로소개
+else if (fUrl.indexOf('/voucher/voucherMain') >= 0) $('#footerVoucher').addClass('active-nav'); // 이용권
 
-	$('#footerMain').removeClass('active-nav');
-	$('#footerPro').addClass('active-nav');
-	$('#footerVoucher').removeClass('active-nav');
-	
-} else if (fUrl.indexOf('/voucher/voucherMain') >= 0) {	
-	
-	$('#footerMain').removeClass('active-nav');
-	$('#footerPro').removeClass('active-nav');
-	$('#footerVoucher').addClass('active-nav');
-	
-} 
 </script>

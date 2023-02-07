@@ -2,8 +2,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.yido.clubd.common.utils.Globals" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<c:set var="now" value="<%=new java.util.Date()%>" />
-<c:set var="nowDt"><fmt:formatDate value="${now}" pattern="yyyyMMdd" /></c:set> 
 
 <jsp:include page="../common/head.jsp" />
 <jsp:include page="../common/script.jsp" />
