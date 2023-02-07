@@ -40,5 +40,5 @@
 			</div>
 		</div>    
 	</div>	 
-	<div class="divider divider-margins"></div>
+	<div class="divider divider-margins mb-0"></div>
 </div>

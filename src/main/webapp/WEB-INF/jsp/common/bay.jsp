@@ -3,8 +3,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="content mt-3 mb-0">
-	<h1 class="font-700  ml-1">
-		BAY</h1>
+<div class="row mb-0 px-3">
+                    <div class="col-6">
+                     <h1 class="font-700">
+						BAY</h1>
+                    </div>
+                    <div class="col-6">
+                       <a href="facility" class="text-right d-block font-12 color-theme">자세히보기 <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+	<!-- <h1 class="font-700  ml-1">BAY</h1> -->
+	
+	
 </div>
 <a href="bay1" class="card card-style" data-card-height="120"  style="background: url(../images/gallery/8.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">

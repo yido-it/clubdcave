@@ -34,20 +34,21 @@
 	</div>
 	<div class="divider"></div>
 	<div class="content">
-		<div class="d-flex mb-3" style="width:100%">
+		<div class="d-flex mb-0" style="width:100%">
 			<div>
-				<img src="/images/gallery/4.jpg" height="80" class="rounded-s shadow-xl">
+				<!-- <i class="fa-solid fa-money-check fa-4x color-red-dark"></i>  -->
+				<img src="/images/icons/ticket2.png" style="width:70px">
 			</div>
 			<div class="pl-3" style="width:80%">
 				<h1 class="font-20 mb-n3">${place.coName}</h1>
-				<p class="mb-1 mt-2 color-highlight font-15">${voc.vcName}</p>
-				<!-- <p class="line-height-s font-12 font-500">서울시 청담동 청담로 988</p> -->
+				<p class="mb-1 mt-2 color-highlight font-15">${voc.vcName}</p>				
 			</div>
 		</div>
+		<p class="opacity-50 mt-1 font-13"><i class="fa-regular fa-clock"></i> 유효기간: 구매일로부터 6개월</p>
 	
 		<div class="divider mt-4"></div>
 		<div class="row">
-			<div class="col-6 mt-1"><h6 class="font-700 font-23">최종결제금액</h6></div>
+			<div class="col-6 mt-1"><h6 class="font-700 font-20">최종결제금액</h6></div>
 			<div class="col-6">
 				<h6 class="font-700 font-28">
 					<fmt:formatNumber value="${voc.vcAmount}" pattern="#,###" />원

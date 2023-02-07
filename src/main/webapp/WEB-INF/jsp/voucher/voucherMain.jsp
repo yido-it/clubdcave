@@ -186,6 +186,7 @@
 <!--//내역조회 모달-->
  
 <!--바우처캔슬 팝업 -->
+
 <div id="voucher_cancle" class="menu menu-box-modal rounded-0" data-menu-height="270" data-menu-width="330"
 	data-menu-effect="menu-parallax">
 
@@ -203,6 +204,7 @@
 	       <a href="#" onClick="doCancel()" class="btn close-menu btn-full btn-md bg-green-dark font-800 text-uppercase rounded-s">예</a>
 	   </div>
 	</div>
+
 </div> 
 <!--// 바우처캔슬 팝업 -->
  
