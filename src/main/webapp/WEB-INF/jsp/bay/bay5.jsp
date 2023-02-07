@@ -36,13 +36,13 @@
         <div class="card card-fixed" data-card-height="300">
           
                         <div class="single-slider  slider-has-arrows  owl-carousel owl-dots-over">
-                            <div class="card m-0 bg-18" data-card-height="300"  >
+                            <div class="card m-0" data-card-height="300"  style="background: url(../images/gallery/lesson_main1.jpg) no-repeat 0 0;background-size:cover">
                               
                                 <div class="card-overlay bg-gradient"></div>
                             </div>
                             
                 
-                            <div class="card m-0 bg-1" data-card-height="300"  >
+                            <div class="card m-0" data-card-height="300"  style="background: url(../images/gallery/lesson_main2.jpg) no-repeat 0 0;background-size:cover">
                                
                                 <div class="card-bottom">
                                  
@@ -50,7 +50,7 @@
                                 <div class="card-overlay bg-gradient"></div>
                             </div>
                 
-                            <div class="card m-0 bg-28" data-card-height="300"  > 
+                            <div class="card m-0" data-card-height="300"   style="background: url(../images/gallery/lesson_main3.jpg) no-repeat 0 0;background-size:cover">
                               
                                 <div class="card-overlay bg-gradient"></div>
                             
@@ -70,7 +70,7 @@
                 <div class="content">
                 <p class="mb-n1 color-highlight font-600 mb-n1">프라이빗 레슨룸 & TINO5</p>
                     <h1 class="font-26">
-                    <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">B1</span>
+                    <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">3F</span>
                     Lesson & TINO5                    
                     </h1>
                     

@@ -13,7 +13,7 @@
 <div id="page">
 	
 	<!--Header-->
-	<div class="page-title page-title-fixed" style="opacity: 1;z-index:99">
+	<div class="page-title page-title-fixed" style="opacity: 1;z-index:99;position:absolute">
 		<h1 style="font-size:20px">
 			<img src="images/logo_white.png" style="width:60px;position:absolute;top:-10px" />
 		</h1>
@@ -24,7 +24,7 @@
 
 	<!--스크롤내리면 보이는 Header-->
 	<div class="header header-auto-show header-fixed header-logo-center ">
-		<a href="index.html" class="header-title">클럽디 청담</a>
+		<a href="index.html" class="header-title">CLUBD 청담</a>
 		<a href="#" data-menu="menu-main" class="header-icon header-icon-4"><i class="fas fa-bars"></i></a>
 	</div>
 	<!--스크롤내리면 보이는 Header-->
@@ -38,7 +38,7 @@
 		<div class="single-slider  slider-has-arrows  owl-carousel   owl-dots-over">
 			<div class="card m-0 bg-main_slide01" data-card-height="300" onClick="location.href='bay_detail.html'">
 				<div class="card-bottom">
-					<h1 class="color-white px-3 mb-0">OPEN GOLF ZONE<span class="badge bg-blue-dark px-2 py-1 ml-2 mt-2 text-uppercase">B1</span></h1>
+					<h1 class="color-white px-3 mb-0">CLUBD CAVE<span class="badge bg-blue-dark px-2 py-1 ml-2 mt-2 text-uppercase">B1</span></h1>
 					<p class="px-3 color-white font-15 opacity-80 mb-4">
 					풀스윙에서 제공하는 골프게임을 즐겨보세요
 					</p> 

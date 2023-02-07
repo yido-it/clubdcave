@@ -36,13 +36,17 @@
         <div class="card card-fixed" data-card-height="300">
           
                         <div class="single-slider  slider-has-arrows  owl-carousel owl-dots-over">
-                            <div class="card m-0 bg-18" data-card-height="300"  >
+                            <div class="card m-0 " data-card-height="300"   style="background: url(../images/gallery/rest_main2.jpg) no-repeat 0 0;background-size:cover">
                               
                                 <div class="card-overlay bg-gradient"></div>
                             </div>
                             
+                              <div class="card m-0 " data-card-height="300"   style="background: url(../images/gallery/rest_main3.jpg) no-repeat 0 0;background-size:cover">
+                              
+                                <div class="card-overlay bg-gradient"></div>
+                            </div>
                 
-                            <div class="card m-0 bg-1" data-card-height="300"  >
+                            <div class="card m-0 " data-card-height="300"  style="background: url(../images/gallery/rest_main1.jpg) no-repeat 0 0;background-size:cover">
                                
                                 <div class="card-bottom">
                                  
@@ -50,11 +54,7 @@
                                 <div class="card-overlay bg-gradient"></div>
                             </div>
                 
-                            <div class="card m-0 bg-28" data-card-height="300"  > 
-                              
-                                <div class="card-overlay bg-gradient"></div>
-                            
-                </div>
+                         
             </div>    
         </div>
  
@@ -107,8 +107,7 @@
                             <div class="item" style="">
                                 <div class="card card-style mx-0 bg-pro1" data-card-height="180" style="background: url(../images/gallery/food2.jpg) no-repeat 0 0;background-size:cover">
                                     <div class="card-bottom mb-2">
-                                        <h5 class="color-white font-15 px-2">치즈버거</h5>
-                                      
+                                        <h5 class="color-white font-15 px-2">Salad</h5> 
                                     </div>
                                     <div class="card-overlay bg-gradient opacity-30"></div>
                                     <div class="card-overlay bg-gradient"></div>
@@ -117,7 +116,7 @@
                             <div class="item" style="">
                                 <div class="card card-style mx-0 bg-pro1" data-card-height="180" style="background: url(../images/gallery/food1.jpg) no-repeat 0 0;background-size:cover">
                                     <div class="card-bottom mb-2">
-                                        <h5 class="color-white font-15 px-2">맥주500CC</h5>
+                                        <h5 class="color-white font-15 px-2">Sandwich</h5>
                                     </div>
                                     <div class="card-overlay bg-gradient opacity-30"></div>
                                     <div class="card-overlay bg-gradient"></div>
@@ -126,8 +125,8 @@
                             <div class="item" style="">
                                 <div class="card card-style mx-0 bg-pro1" data-card-height="180" style="background: url(../images/gallery/food3.jpg) no-repeat 0 0;background-size:cover">
                                     <div class="card-bottom mb-2">
-                                        <h5 class="color-white font-15 px-2">페퍼로니 피자</h5>
-                                        <!-- <p class="color-white mb-0 mt-n2 font-11 opacity-70 px-2">15,000원</p> -->
+                                        <h5 class="color-white font-15 px-2">Wine</h5>
+                                       
                                     </div>
                                     <div class="card-overlay bg-gradient opacity-30"></div>
                                     <div class="card-overlay bg-gradient"></div>
@@ -137,12 +136,32 @@
                
                     <div class="divider mt-2 mb-3"></div>
 
-                    <p class="font-600 mb-n1 color-highlight">셰프</p>
+                    <p class="font-600 mb-n1 color-highlight">Chef</p>
                     <h2 class="">셰프소개</h1>
 					   <p>
 					            다양한 연령을 사로잡는 탁월한 감각과 고객 맞춤 서비스에 지역 특성의 토속적인 맛을 더 하여 최고의 맛과 서비스를 제공하겠습니다.
 					   </p>
-                    <div class="divider mt-2 mb-10"></div>
+					   <a href="#" class="card fl" data-card-height="240"  style="background: url(../images/gallery/chef_kang.jpg) no-repeat 0 0;background-size:cover;width: 48%;">
+				            <div class="card-bottom text-center bg18 px-3" >
+				                <h1 class="font-700 color-white mb-0 font-24">강민구 셰프</h1>
+				                <p class="boxed-text-xl color-white opacity-70">
+				                  미쉐린2스타 밍글스 
+				                </p>
+				            </div>
+				            <div class="card-overlay bg-gradient"></div>
+				        </a>
+				           <a href="#" class="card fl" data-card-height="240" style="background: url(../images/gallery/chef_song.jpg) no-repeat 0 0;background-size:cover;width: 48%;margin-left: 4%;">
+				            <div class="card-bottom text-center px-3"  >
+				                <h1 class="font-700 color-white mb-0 font-24">송하슬람 셰프</h1>
+				                <p class="boxed-text-xl color-white opacity-70">
+				                 코리안델리 마마리마켓 
+				                </p>
+				            </div>
+				            <div class="card-overlay bg-gradient"></div>
+				        </a>
+					   
+					   
+                    <div class=" mb-5" style="clear:left"></div>
 
                 </div>
            
@@ -150,8 +169,7 @@
        
             </div>
         </div>
-        
-        
+         
 </div>   
 </div>   
 

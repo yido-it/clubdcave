@@ -36,12 +36,7 @@
         <div class="card card-fixed" data-card-height="300">
           
                         <div class="single-slider  slider-has-arrows  owl-carousel owl-dots-over">
-                            <div class="card m-0 bg-18" data-card-height="300"  >
-                              
-                                <div class="card-overlay bg-gradient"></div>
-                            </div>
-                            
-                
+                        
                             <div class="card m-0 bg-1" data-card-height="300"  >
                                
                                 <div class="card-bottom">
@@ -49,12 +44,22 @@
                                 </div>
                                 <div class="card-overlay bg-gradient"></div>
                             </div>
-                
-                            <div class="card m-0 bg-28" data-card-height="300"  > 
+                            
+                            
+                            <div class="card m-0" data-card-height="300"  style="background: url(../images/gallery/open_main2.jpg) no-repeat 0 0;background-size:cover">
                               
                                 <div class="card-overlay bg-gradient"></div>
                             
-                </div>
+              				  </div>
+              				  
+                            <div class="card m-0 " data-card-height="300"  style="background: url(../images/gallery/4.jpg) no-repeat 0 0;background-size:cover">
+                              
+                                <div class="card-overlay bg-gradient"></div>
+                            </div>
+                            
+                
+                        
+                
             </div>    
         </div>
  
@@ -70,7 +75,7 @@
                 <div class="content">
                 <p class="mb-n1 color-highlight font-600 mb-n1"></p>
                     <h1 class="font-22">
-           <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">B1</span>         
+           <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">2F</span>         
                     오픈타석, 버추얼그린, 벙커</h1>
                     
                   

@@ -27,10 +27,10 @@
   
     <div class="page-content header-clear">
     
-        <div class="content mb-2">
-               <div style="width:100%;text-align:center">
+        <div class="content  mb-2">
+        <!--        <div style="width:100%;text-align:center">
 	                <img src="../images/logo_white.png" class="text-center" style="width:130px;">
-	         </div>
+	         </div> -->
 	   <!--       <p>
 	         클럽디 청담은 총 4개 층으로 운영되고 있습니다. 
 	     FULL SWING, 골프편집샵 TINO 5, FULL SWING Pro 스크린 골프와
@@ -40,11 +40,11 @@
 	         </p> -->
         </div>
         
-        <a href="bay1" class="card card-style" data-card-height="180"  style="background: url(../images/gallery/8.jpg) no-repeat 0 0;background-size:cover">
+        <a href="bay1" class="card card-style mt-5" data-card-height="180"  style="background: url(../images/gallery/cave_main1.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
                 <h1 class="color-white font-700">
                 <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">B1</span>
-                OPEN GOLF ZONE</h1>
+                CLUBD CAVE</h1>
                 <p class="color-white opacity-80 mb-0 mt-n2">
             FULL SWING Pro가 설치되어 있어 PGA TOUR 메이저 대회가 열리는 골프코스 라운드 뿐만 아니라 
                   다양한 스포츠 게임도 즐길 수 있습니다. 
@@ -57,7 +57,7 @@
             <div class="card-overlay bg-black opacity-50"></div>
         </a>
 
-        <a href="bay2" class="card card-style" data-card-height="180"  style="background: url(../images/gallery/8.jpg) no-repeat 0 0;background-size:cover">
+        <a href="bay2" class="card card-style" data-card-height="180"  style="background: url(../images/gallery/rest_main2.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
                 <h1 class="color-white font-700">
                 <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">B1</span>
@@ -73,7 +73,7 @@
             <div class="card-overlay bg-black opacity-50"></div>
         </a>
      
-        <a href="bay3" class="card card-style" data-card-height="180" style="background: url(../images/gallery/7.jpg) no-repeat 0 0;background-size:cover">
+        <a href="bay3" class="card card-style" data-card-height="180" style="background: url(../images/gallery/store_main2.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
                 <h1 class="color-white font-700">
                 <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">1F</span>
@@ -93,7 +93,7 @@
             <div class="card-center pl-3 pr-5">
                 <h1 class="color-white font-700 font-22">
          <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">2F</span>       
-                오픈타석, 버추얼 그린, 벙커 </h1>
+                오픈타석</h1>
                 <p class="color-white opacity-80 mb-0 mt-n2">
                  명문 골프장의 라운드 전 연습공간을 실내에 구현하였습니다.
                  실외 잔디 연습장과 같은 형식의 오픈타석에서 개방형 스크린 화면을 보고 샷을 할 수 있습니다.
@@ -104,7 +104,7 @@
             </div>
             <div class="card-overlay bg-black opacity-50"></div>
         </a>
-        <a href="bay5" class="card card-style" data-card-height="180"  style="background: url(../images/gallery/4.jpg) no-repeat 0 0;background-size:cover">
+        <a href="bay5" class="card card-style" data-card-height="180"  style="background: url(../images/gallery/lesson_main1.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
                 <h1 class="color-white font-700">
                 <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">3F</span> Lesson & TINO 5 </h1>

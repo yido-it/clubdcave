@@ -8,7 +8,9 @@
 </div>
 <a href="bay_detail.html" class="card card-style" data-card-height="120"  style="background: url(../images/gallery/8.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
-                <h3 class="color-white ">CAVE <span class="badge bg-blue-dark px-2 py-1 ml-2 mt-2 text-uppercase">B1</span></h3>
+                <h3 class="color-white ">
+                 <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">B1</span>
+                CAVE </h3>
                 <p class="color-white opacity-80 mb-0 mt-n2">
                     Full Swing은 시장에서 가장 컴팩트한 
                 </p>
@@ -21,7 +23,9 @@
 
         <a href="bay_detail.html" class="card card-style" data-card-height="120"  style="background: url(../images/main/main_slide02.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
-                <h3 class="color-white ">CAVE Restaurant <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">B1</span></h3>
+                <h3 class="color-white ">
+                <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">B1</span>
+                CAVE Restaurant </h3>
                 <p class="color-white opacity-80 mb-0 mt-n2">
                     Full Swing은 시장에서 가장 컴팩트한 완전한
                 </p>
@@ -34,7 +38,9 @@
      
         <a href="bay_detail.html" class="card card-style" data-card-height="120" style="background: url(../images/gallery/7.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
-                <h3 class="color-white ">Proshop <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">1F</span></h3>
+                <h3 class="color-white ">
+                <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">1F</span>
+                Pop-up Store</h3>
                 <p class="color-white opacity-80 mb-0 mt-n2">
                    프로그램1을 통해서 골프스코어를 대결합니다
                 </p>
@@ -47,7 +53,9 @@
        
         <a href="bay_detail.html" class="card card-style" data-card-height="120"  style="background: url(../images/gallery/1.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
-                <h3 class="color-white ">오픈타석 <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">2F</span></h3>
+                <h3 class="color-white ">
+         <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">2F</span>       
+                오픈타석 </h3>
                 <p class="color-white opacity-80 mb-0 mt-n2">
             분석을 추가하여 궁극의 경험을 만드십시오.
                 </p>
@@ -59,7 +67,9 @@
         </a>
         <a href="bay_detail.html" class="card card-style" data-card-height="120"  style="background: url(../images/gallery/4.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
-                <h3 class="color-white ">Lesson <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">3F</span></h3>
+                <h3 class="color-white ">
+                 <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">3F</span>
+                Lesson & TINO5</h3>
                 <p class="color-white opacity-80 mb-0 mt-n2">
                     추가 골프 코스, 멀티스포츠 게임 
                 </p>

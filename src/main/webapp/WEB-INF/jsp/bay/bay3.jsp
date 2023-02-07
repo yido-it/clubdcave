@@ -36,13 +36,13 @@
         <div class="card card-fixed" data-card-height="300">
           
                         <div class="single-slider  slider-has-arrows  owl-carousel owl-dots-over">
-                            <div class="card m-0 bg-18" data-card-height="300"  >
+                            <div class="card m-0 " data-card-height="300"   style="background: url(../images/gallery/store_main2.jpg) no-repeat 0 0;background-size:cover">
                               
                                 <div class="card-overlay bg-gradient"></div>
                             </div>
                             
                 
-                            <div class="card m-0 bg-1" data-card-height="300"  >
+                            <div class="card m-0 bg-1" data-card-height="300"  style="background: url(../images/gallery/store_main1.jpg) no-repeat 0 0;background-size:cover">
                                
                                 <div class="card-bottom">
                                  
@@ -50,11 +50,7 @@
                                 <div class="card-overlay bg-gradient"></div>
                             </div>
                 
-                            <div class="card m-0 bg-28" data-card-height="300"  > 
-                              
-                                <div class="card-overlay bg-gradient"></div>
-                            
-                </div>
+                      
             </div>    
         </div>
  
@@ -68,7 +64,7 @@
     
                 
                 <div class="content">
-                <p class="mb-n1 color-highlight font-600 mb-n1">안내 및 팝업</p>
+                <p class="mb-n1 color-highlight font-600 mb-n1">안내/팝업스토어</p>
                     <h1 class="font-26">
                     <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">B1</span>
                     Pop-up Store                    
@@ -82,8 +78,7 @@
                       <div class="divider mt-2 mb-3"></div>
                       <p>
                 클럽디 청담 안내 및 간단한 골프 용품들과 Full Swing Kit를 구매하실 수 있는 공간으로 구성되었습니다. 
-                <br/><br/>시즌별로 최신 트렌드를 반영한 골프관련 브랜드들의 팝업 전시가 준비되어 있습니다.
-
+                <br/><br/>시즌별로 최신 트렌드를 반영한 골프관련 브랜드들의 팝업 전시가 준비되어 있습니다. 
 
                     </p>
                     
@@ -101,9 +96,7 @@
                          <div class="divider mt-2 mb-3"></div>
 
                 </div>
-           
-
-       
+            
             </div>
         </div>
         

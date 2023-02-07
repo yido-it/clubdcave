@@ -36,6 +36,11 @@
         <div class="card card-fixed" data-card-height="300">
           
                         <div class="single-slider  slider-has-arrows  owl-carousel owl-dots-over">
+                             <div class="card m-0 bg-28" data-card-height="300"  style="background: url(../images/gallery/cave_main1.jpg) no-repeat 0 0;background-size:cover">
+                              
+                                <div class="card-overlay bg-gradient"></div>
+                            
+           				     </div>
                             <div class="card m-0 bg-18" data-card-height="300"  >
                               
                                 <div class="card-overlay bg-gradient"></div>
@@ -50,11 +55,7 @@
                                 <div class="card-overlay bg-gradient"></div>
                             </div>
                 
-                            <div class="card m-0 bg-28" data-card-height="300"  > 
-                              
-                                <div class="card-overlay bg-gradient"></div>
-                            
-                </div>
+                       
             </div>    
         </div>
  
@@ -68,10 +69,10 @@
     
                 
                 <div class="content">
-                <p class="mb-n1 color-highlight font-600 mb-n1">오픈골프존</p>
+                <p class="mb-n1 color-highlight font-600 mb-n1">클럽디카브</p>
                     <h1 class="font-26">
                     <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">B1</span>
-                     OPEN GOLF ZONE
+                    CLUBD CAVE
                     </h1>
                                       
                   

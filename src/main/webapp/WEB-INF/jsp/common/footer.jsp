@@ -2,25 +2,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="item" style="    background-color: #484848; padding: 5px;"> 
+<div class="item" style="background-color: #000; padding: 5px;"> 
 	<div class="content mb-0 pb-3">
-		<div class="d-flex">
+		<div class="d-flex" style="position:relative">
 			<div>
-				<img src="images/pictures/1s.jpg" width="50" class="rounded-xl mr-2">
+				<img src="images/logo_white.png" class="mr-2" style="width:60px;position: absolute;right: 1%;">
+				<!-- <img src="images/pictures/1s.jpg" width="50" class="rounded-xl mr-2"> -->
 			</div>
 			<div>
-				<h5 class="font-14">클럽디청담</h5>
-				<span class="font-10 mt-1 d-block">대표자 김이도</span><br/>
+				<h5 class="font-15">클럽디청담</h5>
+				<p class="font-10 mt-1 d-block">대표자 김이도</p>
 			</div>
 	
-			<div class="ml-auto mt-1">
+			<div class="divider ml-auto mt-2"> </div>
 			
-			</div>
 		</div>
 		
-		<p class="mb-3">
+		<p class="mb-3 mt-2 font-12">
 			서울시 청담동 123번지 클럽디청담<br/>
 			사업자번호: 1123-123-12332<br/>
+			통신판매업번호: 1123-123-12332<br/>
 			고객센터: 010-2323-2323<br/>
 			<br/>
 		</p>
