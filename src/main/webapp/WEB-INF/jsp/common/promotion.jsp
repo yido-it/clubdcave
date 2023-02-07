@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="content ">
+<div class="content mt-1">
 	<div class="">
 		<h1 class="font-700  ml-1">
 		PROMOTION</h1>
