@@ -36,13 +36,13 @@
         <div class="card card-fixed" data-card-height="300">
           
                         <div class="single-slider  slider-has-arrows  owl-carousel owl-dots-over">
-                            <div class="card m-0" data-card-height="300"  style="background: url(../images/gallery/lesson_main1.jpg) no-repeat 0 0;background-size:cover">
+                            <div class="card m-0" data-card-height="300"  style="background: url(/images/gallery/lesson_main1.jpg) no-repeat 0 0;background-size:cover">
                               
                                 <div class="card-overlay bg-gradient"></div>
                             </div>
                             
                 
-                            <div class="card m-0" data-card-height="300"  style="background: url(../images/gallery/lesson_main2.jpg) no-repeat 0 0;background-size:cover">
+                            <div class="card m-0" data-card-height="300"  style="background: url(/images/gallery/lesson_main2.jpg) no-repeat 0 0;background-size:cover">
                                
                                 <div class="card-bottom">
                                  
@@ -50,7 +50,7 @@
                                 <div class="card-overlay bg-gradient"></div>
                             </div>
                 
-                            <div class="card m-0" data-card-height="300"   style="background: url(../images/gallery/lesson_main3.jpg) no-repeat 0 0;background-size:cover">
+                            <div class="card m-0" data-card-height="300"   style="background: url(/images/gallery/lesson_main3.jpg) no-repeat 0 0;background-size:cover">
                               
                                 <div class="card-overlay bg-gradient"></div>
                             

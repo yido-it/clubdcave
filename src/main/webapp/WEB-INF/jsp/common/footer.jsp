@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="item" style="background-color: #000; padding: 5px;"> 
+<div class="" style="background-color: #000; padding: 5px;"> 
 	<div class="content mb-0 pb-3">
 		<div class="d-flex" style="position:relative">
 			<div>

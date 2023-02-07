@@ -46,13 +46,13 @@
                             </div>
                             
                             
-                            <div class="card m-0" data-card-height="300"  style="background: url(../images/gallery/open_main2.jpg) no-repeat 0 0;background-size:cover">
+                            <div class="card m-0" data-card-height="300"  style="background: url(/images/gallery/open_main2.jpg) no-repeat 0 0;background-size:cover">
                               
                                 <div class="card-overlay bg-gradient"></div>
                             
               				  </div>
               				  
-                            <div class="card m-0 " data-card-height="300"  style="background: url(../images/gallery/4.jpg) no-repeat 0 0;background-size:cover">
+                            <div class="card m-0 " data-card-height="300"  style="background: url(/images/gallery/4.jpg) no-repeat 0 0;background-size:cover">
                               
                                 <div class="card-overlay bg-gradient"></div>
                             </div>
