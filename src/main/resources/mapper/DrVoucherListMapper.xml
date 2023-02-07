@@ -68,10 +68,19 @@
     	)  	
     </insert>
     
-	<update id="updateDrVoucherList">
+    <!-- 상태변경 -->
+	<update id="updateState">
 		UPDATE DR_VOUCHER_LIST
 		   SET VC_STATE = #{vcState}
 		 WHERE LIST_SEQ = #{listSeq}
 		   AND SALE_SEQ = #{saleSeq}
+	</update>
+	
+	<!-- 매출순번에 대한 모든 list 상태 변경 -->
+	<update id="updateStateBySaleSeq">
+		UPDATE DR_VOUCHER_LIST
+		   SET VC_STATE = #{vcState}
+		 WHERE SALE_SEQ = #{saleSeq}
 	</update>    
+	    
 </mapper>

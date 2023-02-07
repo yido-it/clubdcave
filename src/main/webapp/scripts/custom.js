@@ -1534,6 +1534,7 @@ function showInfo(idx, page) {
 
 	switch(page) {
 		case "bookList":
+			// 예약취소
 			$('#popBayName').text($('#bayName_'+idx).val()); 	// 예약명
 			$('#popBkDay').text($('#bkDay_'+idx).val());		// 방문날짜 
 			$('#popBkTime').text($('#bkTime_'+idx).val());		// 이용시간 
@@ -1551,6 +1552,11 @@ function showInfo(idx, page) {
 			cancelAmt = $('#mnAmt_'+idx).val();					// 취소할때 필요한 금액
 			break;
 			
-			
+
+		case "vouList":
+			// 이용권 취소 
+			saleSeq = $('#saleSeq_'+idx).val();	// 취소할때 필요한 매출순번	
+			break;
+				
 	}
 }

@@ -24,6 +24,7 @@ import com.yido.clubd.model.BookInfoVO;
 import com.yido.clubd.model.CoPlace;
 import com.yido.clubd.model.DrBkHistory;
 import com.yido.clubd.model.DrVoucherCode;
+import com.yido.clubd.model.VouInfoVO;
 import com.yido.clubd.service.CoPlaceService;
 import com.yido.clubd.service.DrBkHistoryService;
 import com.yido.clubd.service.DrVoucherCodeService;
@@ -178,7 +179,7 @@ public class VoucherController {
 	}
 	
 	/**
-	 * 이용권 결제 (결제금액 0원) 
+	 * [예약] 이용권 결제 (결제금액 0원) 
 	 * 
 	 * @param model
 	 * @param req
@@ -206,7 +207,7 @@ public class VoucherController {
 	}
 
 	/**
-	 * 이용권 결제취소 (결제금액 0원) 
+	 * [예약] 이용권 결제취소 (결제금액 0원) 
 	 * 
 	 * @param model
 	 * @param req
@@ -259,5 +260,33 @@ public class VoucherController {
 		}
 		
 		return returnPage;
+	}
+	
+	/**
+	 * [이용권] 이용권 구매취소  
+	 * 
+	 * @param model
+	 * @param req
+	 * @param bInfo
+	 * @return
+	 */
+	@RequestMapping("/cancel")  
+	@ResponseBody
+	public ResultVO cancel(Model model, HttpServletRequest req, VouInfoVO vInfo) {
+
+    	ResultVO result = new ResultVO();
+		String ipAddr = Utils.getClientIpAddress(req);
+    	log.info("[cancel] vInfo : " + vInfo);
+
+		try {
+			vInfo.setIpAddr(ipAddr);
+			result = voucherService.cancel(vInfo);
+		} catch(Exception e) {
+			e.printStackTrace();
+			result.setCode("9999");
+			result.setMessage("처리중 오류가 발생하였습니다.");
+		}
+
+		return result;
 	}
 }

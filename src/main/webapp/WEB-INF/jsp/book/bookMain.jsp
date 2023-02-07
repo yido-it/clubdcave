@@ -106,7 +106,7 @@
         
         <!-- 베이목록 -->
        	<c:forEach items="${bayList}" var="bay">
-       	     <a href="#" onClick="javscript:selectedBay('${bay.bayCd}', '${bay.bayName}')" class="close-menu">
+       	     <a href="#" onClick="selectedBay('${bay.bayCd}', '${bay.bayName}')" class="close-menu">
                 <img class="mr-3 mt-2" src="/images/gallery/1.jpg">
                 <span class="txt_bay_name">${bay.bayName}</span><i class="fa fa-angle-right"></i>
             </a>

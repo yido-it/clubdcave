@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /** 
+ * 예약 관련 
+ * 
  * @author bae
  */
 @Data

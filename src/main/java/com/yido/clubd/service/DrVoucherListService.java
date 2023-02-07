@@ -40,7 +40,23 @@ public class DrVoucherListService {
 		return drVoucherListMapper.insertDrVoucherList(drVoucherList);
 	}
 	
-	public int updateDrVoucherList(DrVoucherList drVoucherList) {
-		return drVoucherListMapper.updateDrVoucherList(drVoucherList);
+	/**
+	 * 상태변경
+	 * 
+	 * @param drVoucherList
+	 * @return
+	 */
+	public int updateState(DrVoucherList drVoucherList) {
+		return drVoucherListMapper.updateState(drVoucherList);
+	}
+	
+	/**
+	 * 매출순번에 대한 모든 list 상태 변경 
+	 * 
+	 * @param drVoucherList
+	 * @return
+	 */
+	public int updateStateBySaleSeq(DrVoucherList drVoucherList) {
+		return drVoucherListMapper.updateStateBySaleSeq(drVoucherList);
 	}
 }

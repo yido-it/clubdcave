@@ -45,7 +45,7 @@
 		<div id="bookList"></div>
 		<!-- └──────────────────────── 예약카드 ────────────────────────┘-->
 
-		 <a href="javascript:onClick=doSearch('more')" class="btn btn-border btn-m btn-full mb-10 rounded-xl text-uppercase font-900 border-blue-dark color-blue-dark ml-4 mr-4" id="btnMore">
+		 <a href="#" onClick="doSearch('more')" class="btn btn-border btn-m btn-full mb-10 rounded-xl text-uppercase font-900 border-blue-dark color-blue-dark ml-4 mr-4" id="btnMore">
         	더보기 <i class="fa-solid fa-chevron-down"></i>
         </a>
         
@@ -137,7 +137,7 @@
 	
 	<!-- 조회 버튼 -->
 	<div class="col-12 mt-3">
-		<a href="javascript:onClick=doSearch('search')" class="btn btn-full btn-md bg-blue-dark font-800 text-uppercase rounded-s">
+		<a href="#" onClick="doSearch('search')" class="btn btn-full btn-md bg-blue-dark font-800 text-uppercase rounded-s">
 			조회
 		</a>
 	</div>
@@ -178,7 +178,7 @@
 	</div>
 	<div class="row mb-0 mr-3 ml-3 mt-5 mb-5">
 		<div class="col-12">
-			<a href="javascript:onClick=doCancel()" class="btn btn-full btn-md color-red-dark border-red-dark font-800 text-uppercase rounded-s">
+			<a href="#" onClick="doCancel()" class="btn btn-full btn-md color-red-dark border-red-dark font-800 text-uppercase rounded-s">
 				예약취소
 			</a>
 		</div>
