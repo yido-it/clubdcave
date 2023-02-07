@@ -38,7 +38,7 @@
 		<div class="single-slider  slider-has-arrows  owl-carousel   owl-dots-over">
 			<div class="card m-0 bg-main_slide01" data-card-height="300" onClick="location.href='bay_detail.html'">
 				<div class="card-bottom">
-					<h1 class="color-white px-3 mb-0">CAVE<span class="badge bg-blue-dark px-2 py-1 ml-2 mt-2 text-uppercase">B1</span></h1>
+					<h1 class="color-white px-3 mb-0">OPEN GOLF ZONE<span class="badge bg-blue-dark px-2 py-1 ml-2 mt-2 text-uppercase">B1</span></h1>
 					<p class="px-3 color-white font-15 opacity-80 mb-4">
 					풀스윙에서 제공하는 골프게임을 즐겨보세요
 					</p> 
@@ -59,7 +59,7 @@
 		
 			<div class="card m-0 bg-main_slide03" data-card-height="300" onClick="location.href='bay_detail.html'"> 
 				<div class="card-bottom">
-					<h1 class="color-white px-3 mb-0">ProShop <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">1F</span></h1>
+					<h1 class="color-white px-3 mb-0">Pop-up Store <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">1F</span></h1>
 					<p class="px-3 color-white font-15 opacity-80 mb-4">
 					풀스윙에서 제공하는 골프게임을 즐겨보세요
 					</p>
@@ -77,7 +77,7 @@
 			</div>
 				<div class="card m-0 bg-main_slide05" data-card-height="300" onClick="location.href='bay_detail.html'"> 
 				<div class="card-bottom">
-				<h1 class="color-white  px-3 mb-0">Lesson <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">3F</span></h1>
+				<h1 class="color-white  px-3 mb-0">Lesson & TINO5<span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">3F</span></h1>
 					<p class="px-3 color-white font-15 opacity-80 mb-4">
 					풀스윙에서 제공하는 골프게임을 즐겨보세요
 					</p>
