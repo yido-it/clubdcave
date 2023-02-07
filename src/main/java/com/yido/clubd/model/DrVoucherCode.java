@@ -41,6 +41,8 @@ public class DrVoucherCode {
 	private int vcAmount;					// 금액 
 	private String nowDt;					// 현재일자
 	private String endDt;					// 유효개월 수 계산된 종료일자
+	private int vcNet;						// 공급가
+	private int vcVat;						// 부가세
 
 }
 

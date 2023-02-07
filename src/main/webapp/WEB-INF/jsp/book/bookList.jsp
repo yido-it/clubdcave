@@ -209,7 +209,7 @@ $(document).ready(function() {
 	}
 	
 	init();
-	doSearch();
+	doSearch('search');
 
 });
 
@@ -260,6 +260,7 @@ function search(value) {
 }
 
 // 예약취소 확인 팝업창
+/*
 function popCancel(idx){
 	
 	$('#popBayName').text($('#bayName_'+idx).val()); 	// 예약명
@@ -279,6 +280,7 @@ function popCancel(idx){
 	cancelAmt = $('#mnAmt_'+idx).val();					// 취소할때 필요한 금액
     $("#modal_cancle").addClass('menu-active');			// 모달창 open 
 }
+*/
 
 // 예약취소 
 function doCancel(idx){

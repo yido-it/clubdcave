@@ -57,8 +57,8 @@ public class DrBkHistoryService {
 	 * @param params
 	 * @return
 	 */
-	public String getSerialNo(Map<String, Object> param) {
-		return drBkHistoryMapper.getSerialNo(param);
+	public String getSerialNo() {
+		return drBkHistoryMapper.getSerialNo();
 	}
 	
 	public List<DrBkHistory> selectList(Map<String, Object> param) {
@@ -191,7 +191,7 @@ public class DrBkHistoryService {
 				param.put("bkTime", sBkTime);
 				
 				// 건별로 예약번호 취득 
-				String bkSerialNo = drBkHistoryMapper.getSerialNo(param);
+				String bkSerialNo = drBkHistoryMapper.getSerialNo();
 				if ( i == 0 ) calcSerialNo = bkSerialNo;
 				param.put("bkSerialNo", bkSerialNo);
 				param.put("calcSerialNo", calcSerialNo);	
@@ -227,7 +227,7 @@ public class DrBkHistoryService {
 			// 단건 예약 
 			log.info("[actionReservation] 단건 예약");
 			
-			String bkSerialNo = drBkHistoryMapper.getSerialNo(param);
+			String bkSerialNo = drBkHistoryMapper.getSerialNo();
 			calcSerialNo = bkSerialNo;
 			param.put("bkSerialNo", bkSerialNo);
 			param.put("calcSerialNo", calcSerialNo);	// 대표 예약고유번호

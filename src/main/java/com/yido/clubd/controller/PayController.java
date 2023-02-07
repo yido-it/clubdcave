@@ -198,9 +198,6 @@ public class PayController {
                 reserved2             = URLDecoder.decode(request.getParameter("RESERVED2"));
                 reserved3             = URLDecoder.decode(request.getParameter("RESERVED3"));
                 isSuccessPay          = responseCode.equals("0000");
-
-                log.info("[returnPay] params 1 : " + params);
-                log.info("[returnPay] reserved3 : " + reserved3);
                 
                 params.put("coDiv"				, reserved1);
                 params.put("mnInDay"			, orderDate.substring(0,8));	// 입금일자
@@ -224,7 +221,7 @@ public class PayController {
                     params.put("mnCardName", StringUtils.isNullOrEmpty(cardInfo.get("cardName"), ""));	// 카드발급사명
                 }
 
-                log.info("[returnPay] params 2 : " + params);
+                log.info("[returnPay] params : " + params);
                
                 // PG 결제내역 등록 (예약, 이용권)
                 Map<String, Object> tmpMap = new HashMap<String, Object>();

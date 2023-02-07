@@ -7,8 +7,13 @@
 -->
 <mapper namespace="com.yido.clubd.repository.DrVoucherSaleMapper">
 
-	<select id="getSerialNo" parameterType="hashmap" resultType="String">
+	<select id="getSerialNo" resultType="String">
 		SELECT DR_NEXTVAL('001', 'D', 'DR_SERIAL_NO')
+	</select>
+	
+	<select id="getSaleSeq" resultType="int">
+		SELECT IFNULL(CAST(MAX(SALE_SEQ) AS UNSIGNED), 0)+1 
+		  FROM DR_VOUCHER_SALE
 	</select>
 	
     <!-- 이용권 구매내역 -->
@@ -20,6 +25,7 @@
 		     , A.SALE_DAY
 		     , A.SALE_SEQ
 		     , A.VC_CD
+		     , A.VC_AMOUNT
 		FROM DR_VOUCHER_SALE A 
 				INNER JOIN DR_VOUCHER_CODE B ON A.VC_CD = B.VC_CD
 		WHERE 1=1 
@@ -30,6 +36,33 @@
 		  AND A.MS_NUM = #{msNum}
 		</if> 
 		  AND A.USE_YN = 'Y'
+    </select>
+	
+    <!-- 최근 이용권 구매내역 -->
+    <select id="getLastSale" parameterType="hashmap" resultType="hashmap">
+		SELECT B.VC_NAME 
+			 , A.VC_TO_DAY
+		     , A.VC_LIMIT_CNT
+		     , A.VC_REM_CNT
+		     , A.SALE_DAY
+		     , A.SALE_SEQ
+		     , A.VC_CD
+		     , A.VC_AMOUNT
+		     , C.CO_NAME
+		     , C.CO_DIV
+		FROM DR_VOUCHER_SALE A 
+				INNER JOIN DR_VOUCHER_CODE B ON A.VC_CD = B.VC_CD
+				INNER JOIN CO_PLACE C ON A.CO_DIV = C.CO_DIV AND C.USE_YN = 'Y'
+		WHERE 1=1 
+		<if test='coDiv != null and coDiv != ""'>
+		  AND A.CO_DIV = #{coDiv}
+		</if> 
+		<if test='msNum != null and msNum != ""'>
+		  AND A.MS_NUM = #{msNum}
+		</if> 
+		  AND A.USE_YN = 'Y'
+		ORDER BY SALE_SEQ DESC
+		LIMIT 1
     </select>
     
 	<!-- 이용권 구매내역 (예약페이지에서 필요한 정보) -->
@@ -84,10 +117,6 @@
     </select>
     
     <insert id="insertDrVoucherSale">
-        <selectKey resultType="String" keyProperty="saleSeq" order="BEFORE">
-			SELECT IFNULL(CAST(MAX(SALE_SEQ) AS UNSIGNED), 0)+1 
-			  FROM DR_VOUCHER_SALE
-        </selectKey>    
     	INSERT INTO DR_VOUCHER_SALE (
 			CO_DIV
 			, SALE_DAY
@@ -95,17 +124,14 @@
 			, MS_NUM
 			, VC_CD
 			, DR_SERIAL_NO
-			, LK_CO_DIV
-			, LK_NUM
 			, VC_FROM_DAY
 			, VC_TO_DAY
-			, VC_STATE
 			, VC_LIMIT_CNT
 			, VC_SERVICE_CNT
-			, VC_USE_CNT
 			, VC_REM_CNT
-			, VC_REMARK
-			, USE_YN
+			, VC_AMOUNT
+			, VC_NET
+			, VC_VAT
 			, INPUT_STAFF
 			, INPUT_DATETIME
 			, INPUT_IP
@@ -115,21 +141,18 @@
     		, #{saleSeq}			
     		, #{msNum}
     		, #{vcCd}	
-    		, #{drSerialNo}	
-    		, #{lkCoDiv}		
-    		, #{lkNum}		
+    		, #{drSerialNo}		
     		, #{vcFromDay}		
-    		, #{vcToDay}		
-    		, #{vcState}		
+    		, #{vcToDay}			
     		, #{vcLimitCnt}		
-    		, #{vcServiceCnt}		
-    		, #{vcUseCnt}		
-    		, #{vcRemCnt}		
-    		, #{vcRemark}	
-    		, #{useYn}	
-    		, #{inputStaff}			
+    		, #{vcServiceCnt}	
+    		, #{vcRemCnt}	
+    		, #{vcAmount}	
+    		, #{vcNet}	
+    		, #{vcVat}	
+    		,'APP'		
     		, now()
-			, #{ipAddr}						
+			, #{inputIp}						
     	)  	
     </insert>
     

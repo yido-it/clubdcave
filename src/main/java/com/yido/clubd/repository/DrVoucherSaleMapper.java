@@ -19,10 +19,15 @@ import com.yido.clubd.model.DrVoucherSale;
 public interface DrVoucherSaleMapper {
 
 	// 고유번호 채번
-	public String getSerialNo(Map<String, Object> params);
+	public String getSerialNo();
+	
+	public int getSaleSeq();
 	
 	// 이용권 구매내역 조회
 	public List<Map<String, Object>> selectSaleList(Map<String, Object> map);
+	
+	// 최근 이용권 구매내역 
+	public Map<String, Object> getLastSale(Map<String, Object> map);
 	
 	// 이용권 구매내역 조회 (예약페이지에서 필요한 정보)
 	public List<Map<String, Object>> selectList(Map<String, Object> map);

@@ -17,7 +17,9 @@ import com.yido.clubd.model.DrVoucherList;
 @Mapper
 @Repository
 public interface DrVoucherListMapper {
-
+	
+	public int getListSeq(Map<String, Object> map);
+	
 	public List<DrVoucherList> selectList(Map<String, Object> map);
 
 	// 이용권세부내역 등록

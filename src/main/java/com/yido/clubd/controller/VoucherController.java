@@ -111,7 +111,6 @@ public class VoucherController {
 		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
 		String returnPage = "/voucher/voucherPay";
 		
-		log.info("vcCd:{}", vcCd);
 		try {
 			if (sessionVO == null) return returnPage;
 			
@@ -122,7 +121,6 @@ public class VoucherController {
 			List<DrVoucherCode> list = drVoucherCodeService.selectList(drVoucherCode);
 			drVoucherCode = list.get(0);
 			model.addAttribute("voc", drVoucherCode);
-			log.info("drVoucherCode:{}", drVoucherCode);
 			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("coDiv" , drVoucherCode.getCoDiv());
@@ -233,5 +231,33 @@ public class VoucherController {
 		}
 
 		return result;
+	}
+	
+	/**
+	 * [이용권] 결제 완료 페이지
+	 * 
+	 * @param model
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping("/voucherConfirm")  
+	public String voucherConfirm(Model model, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
+		String returnPage = "/voucher/voucherConfirm";
+		
+		try {
+			if (sessionVO == null) return returnPage;
+
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("msNum", sessionVO.getMsNum());
+			Map<String, Object> sale = drVoucherSaleService.getLastSale(param);
+			model.addAttribute("sale", sale);
+		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return returnPage;
 	}
 }

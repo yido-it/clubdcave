@@ -54,9 +54,9 @@ var mPay = function() {
 		GX_pay("payment", "popup", params.protocol);
     }
 
-	var result = function(code, serialNo) {
+	var result = function(code) {
 		if(code == "0000") {
-			fnSuccess(serialNo);
+			fnSuccess();
 		} else {
 			fnFail();
 		}

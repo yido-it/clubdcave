@@ -7,7 +7,7 @@
 -->
 <mapper namespace="com.yido.clubd.repository.DrBkHistoryMapper">
 
-	<select id="getSerialNo" parameterType="hashmap" resultType="String">
+	<select id="getSerialNo" resultType="String">
 		SELECT DR_NEXTVAL('001', 'B', 'BK_SERIAL_NO')
 	</select>
 	

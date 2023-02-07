@@ -39,7 +39,7 @@
 			<i class="fa fa-star color-yellow-dark"></i>이용안내<i class="fa fa-angle-right"></i>
 		</a>
 		
-		<a href="facility" id="nav-homepages">
+		<a href="/facility" id="nav-homepages">
 			<i class="fa fa-file color-green-dark"></i>시설안내<i class="fa fa-angle-right"></i>
 		</a>
 		

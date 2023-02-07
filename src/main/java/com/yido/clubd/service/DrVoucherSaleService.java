@@ -38,8 +38,12 @@ public class DrVoucherSaleService {
 	 * @param params
 	 * @return
 	 */
-	public String getSerialNo(Map<String, Object> param) {
-		return drVoucherSaleMapper.getSerialNo(param);
+	public String getSerialNo() {
+		return drVoucherSaleMapper.getSerialNo();
+	}
+	
+	public int getSaleSeq() {
+		return drVoucherSaleMapper.getSaleSeq();
 	}
 	
 	/**
@@ -52,6 +56,16 @@ public class DrVoucherSaleService {
 		return drVoucherSaleMapper.selectSaleList(map);
 	}
 	
+	/**
+	 * 최근 이용권 구매내역 
+	 * 
+	 * @param map
+	 * @return
+	 */
+	public Map<String, Object> getLastSale(Map<String, Object> map) {
+		return drVoucherSaleMapper.getLastSale(map);
+	}
+		
 	/**
 	 * 이용권 구매내역 조회 (예약페이지에서 필요한 정보)
 	 * 

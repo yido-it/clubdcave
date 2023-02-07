@@ -92,7 +92,7 @@
 						
 						<c:if test="${sale.VC_LIMIT_CNT == sale.VC_REM_CNT}">
 							<!-- 구매취소 -->
-							<a href="#" data-menu="voucher_cancle" class="fr btn btn-xs btn_accodion_voucher rounded-0 font-900 border-red-dark color-red-dark"
+							<a href="#" data-menu="voucher_cancle" data-idx="${status.index}" data-page="vouList" class="fr btn btn-xs btn_accodion_voucher rounded-0 font-900 border-red-dark color-red-dark"
 							 		style="border-bottom : 1px solid #DA4453 !important">
 								취소
 							</a>
@@ -276,7 +276,7 @@ data-menu-effect="menu-parallax">
 
 <!--   Global Footer-->
 <jsp:include page="../common/footerBar.jsp" />
-
+</div>
 </body>
 
 <jsp:include page="../common/alertModal.jsp" />  
@@ -356,7 +356,6 @@ function doSearch(saleDay, saleSeq, vcCd, idx) {
     	}
         , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
         , success: function(data) {	
-        	console.log(data);
         	
 			if (data != null && data.length > 0) {
 				var divCnt = '';
@@ -372,8 +371,10 @@ function doSearch(saleDay, saleSeq, vcCd, idx) {
 					divCnt += '</div>';
 				}
 				document.querySelector(".useList_"+idx).innerHTML = divCnt;
+			} else {
+				divCnt = '<p class="mb-0 opacity-50 font-11" style="text-align:center">사용전입니다.</p>'; 
+				document.querySelector(".useList_"+idx).innerHTML = divCnt;
 			}
-
         }
 	});
 }
@@ -383,5 +384,9 @@ function doPay(vcCd) {
 	location.href='/voucher/voucherPay/' + vcCd;
 }
 
+// 이용권 결제 취소 
+function doCancel() {
+	
+}
 </script>
 </html>

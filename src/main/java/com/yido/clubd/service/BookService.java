@@ -296,22 +296,9 @@ public class BookService {
 		// 예약취소 
 		this.cancelBook(bInfo, bList);
 		
-		// 이용권 사용 여부 확인
+		// 이용권 사용 취소 
 		voucherService.cancelVoucher(bInfo, bList);
-		/*
-		List<String> sNoList = new ArrayList<String>();
-		for (DrBkHistory bk : bList) {
-			sNoList.add(bk.getBkSerialNo()); 
-		}
-	
-		Map<String, Object> param2 = new HashMap<String, Object>();
-		param2.put("sNoList", sNoList);
-		List<DrVoucherUse> uList = drVoucherUseMapper.selectList(param2);
-				
-		if (uList.size() > 0) {
-			log.info("[bookCancel] 이용권 사용 취소");
-		}*/
-		
+
 		return resultVO;
 	}
 	

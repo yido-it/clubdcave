@@ -14,6 +14,10 @@
  			 , A.VC_MONTH
 			 , DATE_FORMAT(NOW(), "%Y-%m-%d") AS NOW_DT
 			 , DATE_FORMAT(DATE_ADD(NOW(), INTERVAL A.VC_MONTH MONTH), "%Y-%m-%d") AS END_DT
+			 , B.VC_NET
+			 , B.VC_VAT
+			 , A.VC_LIMIT_CNT
+			 , A.VC_DIVISION
 	     FROM DR_VOUCHER_CODE A INNER JOIN DR_VOUCHER_COST B ON A.CO_DIV = B.CO_DIV AND A.VC_CD = B.VC_CD AND B.USE_YN = 'Y'
 		  AND A.VC_DISPLAY_YN = 'Y'
 		<if test='coDiv != null and coDiv != ""'>

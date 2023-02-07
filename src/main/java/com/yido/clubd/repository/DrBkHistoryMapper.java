@@ -19,7 +19,7 @@ import com.yido.clubd.model.DrBkHistory;
 public interface DrBkHistoryMapper {
 	
 	// 예약고유번호 채번
-	public String getSerialNo(Map<String, Object> params);
+	public String getSerialNo();
 
 	public List<DrBkHistory> selectList(Map<String, Object> params);
 	

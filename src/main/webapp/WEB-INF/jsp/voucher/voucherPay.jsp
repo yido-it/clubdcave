@@ -55,7 +55,7 @@
 			</div>
 		</div>
 		<div class="divider"></div>
-		<a data-menu="modal_pay" href=""  class="mt-1 mb-4 btn btn-md bg-blue-dark btn-full shadow-xl text-uppercase font-800 rounded-s">
+		<a data-menu="modal_pay" href="" class="mt-1 mb-4 btn btn-md bg-blue-dark btn-full shadow-xl text-uppercase font-800 rounded-s">
 		결제진행
 		</a>
 	</div> 
@@ -138,7 +138,7 @@ function doPay() {
    	}
 
    	mPay.action(params, function() {
-		// 결제완료 페이지로 이동
+		// 페이지 이동
 		location.href="/voucher/voucherConfirm";
    	}, function() {
    		// 결제 실패했을때		

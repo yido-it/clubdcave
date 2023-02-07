@@ -21,6 +21,10 @@ public class DrVoucherListService {
 
 	@Autowired
     private DrVoucherListMapper drVoucherListMapper;
+
+	public int getListSeq(Map<String, Object> map) {
+    	return drVoucherListMapper.getListSeq(map);
+	}
 	
     public List<DrVoucherList> selectList(Map<String, Object> map) {
     	return drVoucherListMapper.selectList(map);

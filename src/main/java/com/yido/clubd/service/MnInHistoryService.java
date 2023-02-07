@@ -231,7 +231,7 @@ public class MnInHistoryService {
 				log.info("[successPayLogic] 이용권 정보:" + params);
 				
 				// 이용권 구매 내역 insert 				
-				voucherService.insertVouInfo(params, mnMap);
+				voucherService.insertVouInfo(params);
 				
 			}
 		} catch (Exception e) {

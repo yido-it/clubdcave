@@ -495,7 +495,6 @@ function doPay() {
     	mPay.action(params, function() {
 			// 결제완료 페이지로 이동
 			location.href="/book/bookConfirm";
-			
     	}, function() {
     		// 결제 실패했을때 예약 선점된거 풀기 
     		fnUnBkMark(reservationInfo);			

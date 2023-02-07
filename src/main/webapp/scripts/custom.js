@@ -1550,5 +1550,7 @@ function showInfo(idx, page) {
 			cancelSerialNo = $('#serialNo_'+idx).val();			// 취소할때 필요한 serialno
 			cancelAmt = $('#mnAmt_'+idx).val();					// 취소할때 필요한 금액
 			break;
+			
+			
 	}
 }

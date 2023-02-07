@@ -7,6 +7,12 @@
 -->
 <mapper namespace="com.yido.clubd.repository.DrVoucherListMapper">
 
+	<select id="getListSeq" parameterType="hashmap" resultType="int">
+		SELECT IFNULL(CAST(MAX(LIST_SEQ) AS UNSIGNED), 0)+1 
+		  FROM DR_VOUCHER_LIST
+	 	 WHERE SALE_SEQ = #{saleSeq}  
+	</select>
+	
 	<select id="selectList" parameterType="hashmap" resultType="DrVoucherList">
 		SELECT *
 	      FROM DR_VOUCHER_LIST 
@@ -33,15 +39,15 @@
     </select>
       
     <insert id="insertDrVoucherList">
-        <selectKey resultType="String" keyProperty="listSeq" order="BEFORE">
-			SELECT IFNULL(CAST(MAX(LIST_SEQ) AS UNSIGNED), 0)+1 
-			  FROM DR_VOUCHER_LIST
-        </selectKey>   
     	INSERT INTO DR_VOUCHER_LIST (
 			CO_DIV				
 			, SALE_DAY			
 			, SALE_SEQ			
 			, LIST_SEQ
+			, VC_ONE_AMOUNT
+			, VC_ONE_NET
+			, VC_ONE_VAT
+			, VC_SERVICE_YN
 			, VC_STATE	
 			, INPUT_STAFF	
 			, INPUT_DATETIME	
@@ -51,10 +57,14 @@
     		, #{saleDay}		
     		, #{saleSeq}			
     		, #{listSeq}
+    		, #{vcOneAmount}
+    		, #{vcOneNet}
+    		, #{vcOneVat}
+    		, #{vcServiceYn}
     		, #{vcState}
-    		, #{inputStaff}			
+    		, 'APP'		
     		, now()
-			, #{ipAddr}				
+			, #{inputIp}					
     	)  	
     </insert>
     
