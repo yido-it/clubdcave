@@ -10,7 +10,7 @@
 	
 	<!-- 프로소개 -->
 	<a href="javascript:location.href='/pro/proMain';" id="footerPro" class="">
-		<i class="fa fa-golf-ball-tee"></i><span>프로소개</span>
+		<i class="fa fa-golf-ball-tee"></i><span>프로소개</span><em></em>
 	</a>
 	
 	<!-- 예약 -->
@@ -20,7 +20,7 @@
 	
 	<!-- 이용권 -->
 	<a href="javascript:location.href='/voucher/voucherMain/001';" id="footerVoucher" class="">
-		<i class="fa-solid fa-money-check"></i><span>이용권</span>
+		<i class="fa-solid fa-money-check"></i><span>이용권</span><em></em>
 	</a>
 	
 	<!-- 오시는길 -->

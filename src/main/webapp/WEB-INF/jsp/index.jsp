@@ -89,7 +89,6 @@
 	
 		<!--프로모션-->
 		<jsp:include page="common/promotion.jsp" />
-		<div class="divider divider-margins"></div>
 	
 	
 		<!-- 이벤트-->
