@@ -16,7 +16,7 @@
 <div id="page">
     
     <div class="header header-fixed header-logo-app">
-        <a href="javascript:history.back(-1)" class="header-title header-subtitle">예약확인</a>
+        <a href="#" class="header-title header-subtitle">예약확인</a>
 		<jsp:include page="../common/top.jsp" />
     </div>
     
@@ -178,6 +178,33 @@ var timeAmt 	= "<c:out value='${timeAmt}'/>";	// 시간당 금액 (이용권1장
 var totAmount	= "<c:out value='${amount}'/>";		// 최종 결제할 금액
 var vAmount 	= 0;								// 총 사용할 이용권금액
 var selectedCnt = 0;								// 선택된 이용권의 총 수량
+
+var msNum			= "<c:out value='${sessionScope.msMember.msNum}'/>";
+var msLevel 		= "<c:out value='${sessionScope.msMember.msLevel}'/>";
+var msEmail 		= "<c:out value='${sessionScope.msMember.msEmail}'/>";
+var msName 			= "<c:out value='${sessionScope.msMember.msName}'/>";
+var msFirstPhone1	= "<c:out value='${sessionScope.msMember.msFirstPhone1}'/>";
+var msMidPhone1 	= "<c:out value='${sessionScope.msMember.msMidPhone1}'/>";
+var msLastPhone1 	= "<c:out value='${sessionScope.msMember.msLastPhone1}'/>";
+var msPhone 		= msFirstPhone1 + "-" + msMidPhone1 + "-" + msLastPhone1;
+
+var reservationInfo 		= {};
+reservationInfo.coDiv 		= "<c:out value='${place.coDiv}'/>";		<!-- 지점코드 -->
+reservationInfo.bayCondi 	= "<c:out value='${bay.bayCd}'/>"; 			<!-- 베이코드 -->
+reservationInfo.bkDay 		= "<c:out value='${bkHis.bkDay}'/>"; 		<!-- 예약임시테이블 -->
+reservationInfo.bkTime 		= "<c:out value='${bkHis.bkTime2}'/>"; 		<!-- 예약임시테이블 -->
+reservationInfo.serialNo	= "<c:out value='${bkHis.serialNo}'/>"; 	<!-- 예약임시테이블 -->
+reservationInfo.bkAmount 	= totAmount; 
+reservationInfo.oriBkAmount = amount; 
+reservationInfo.msLevel		= msLevel;
+reservationInfo.userMail 	= msEmail;
+reservationInfo.msNum 		= msNum;
+reservationInfo.msId 		= msId;
+reservationInfo.userName 	= msName;
+reservationInfo.phone 		= msPhone;
+
+var vList 					= new Array();		// 이용권 정보 
+
 
 timeAmt = Number(timeAmt);
 amount = Number(amount);
@@ -408,32 +435,6 @@ function doPay() {
 		alertModal.fail('환불규정 약관에 동의해주세요.');
 		return;
 	}
-	
-	var msNum			= "<c:out value='${sessionScope.msMember.msNum}'/>";
-	var msLevel 		= "<c:out value='${sessionScope.msMember.msLevel}'/>";
-	var msEmail 		= "<c:out value='${sessionScope.msMember.msEmail}'/>";
-	var msName 			= "<c:out value='${sessionScope.msMember.msName}'/>";
-	var msFirstPhone1	= "<c:out value='${sessionScope.msMember.msFirstPhone1}'/>";
-	var msMidPhone1 	= "<c:out value='${sessionScope.msMember.msMidPhone1}'/>";
-	var msLastPhone1 	= "<c:out value='${sessionScope.msMember.msLastPhone1}'/>";
-	var msPhone 		= msFirstPhone1 + "-" + msMidPhone1 + "-" + msLastPhone1;
-
-	var reservationInfo 		= {};
-	reservationInfo.coDiv 		= "<c:out value='${place.coDiv}'/>";		<!-- 지점코드 -->
-	reservationInfo.bayCondi 	= "<c:out value='${bay.bayCd}'/>"; 			<!-- 베이코드 -->
-	reservationInfo.bkDay 		= "<c:out value='${bkHis.bkDay}'/>"; 		<!-- 예약임시테이블 -->
-	reservationInfo.bkTime 		= "<c:out value='${bkHis.bkTime2}'/>"; 		<!-- 예약임시테이블 -->
-	reservationInfo.serialNo	= "<c:out value='${bkHis.serialNo}'/>"; 	<!-- 예약임시테이블 -->
-	reservationInfo.bkAmount 	= totAmount; 
-	reservationInfo.oriBkAmount = amount; 
-	reservationInfo.msLevel		= msLevel;
-	reservationInfo.userMail 	= msEmail;
-	reservationInfo.msNum 		= msNum;
-	reservationInfo.msId 		= msId;
-	reservationInfo.userName 	= msName;
-	reservationInfo.phone 		= msPhone;
-	
-	var vList 					= new Array();		// 이용권 정보 
 
 	// 이용권 정보
     const chkVou = document.getElementsByName("chkVoucher");	// 모든 이용권
@@ -497,9 +498,31 @@ function doPay() {
 			location.href="/book/bookConfirm";
     	}, function() {
     		// 결제 실패했을때 예약 선점된거 풀기 
-    		fnUnBkMark(reservationInfo);			
+    		fnUnBkMark(reservationInfo, 'reload');			
     	});   	   	
     }
 }
+
+//예약 선점된거 풀기 
+function fnUnBkMark(reservationInfo, type) {
+	var result = new Object();
+
+	$.ajax({
+		url: "/book/unBkMark"
+		, type: "post"
+		, dataType: 'json'
+		, data: reservationInfo
+		, contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+		, success: function(result) {
+			console.log(result);
+			if (result.code == '0000'){
+				if ( type == "reolad" ) location.reload();
+			}
+		}
+	});
+	
+	return result;
+}
+
 </script>
 </html>

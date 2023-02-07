@@ -459,4 +459,27 @@ public class BookController {
 
 		return result;
 	}
+	
+	/**
+	 * 예약 선점해제
+	 * 
+	 * @param req
+	 * @param params
+	 * @return
+	 */
+	@RequestMapping("/unBkMark")
+	@ResponseBody
+	public ResultVO unBkMark(HttpServletRequest req, BookInfoVO bookInfo){
+		
+		log.info("[unBkMark] bookInfo : " + bookInfo);
+    	ResultVO result = new ResultVO();
+    	
+		try {
+			result = bookService.unBkMarkLogic(bookInfo);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 }

@@ -17,7 +17,7 @@
 <div id="page">
     
     <div class="header header-fixed header-logo-app">
-        <a href="javascript:history.back(-1)" class="header-title header-subtitle">결제완료</a>
+        <a href="#" class="header-title header-subtitle">결제완료</a>
 		<jsp:include page="../common/top.jsp" />
     </div>
     

@@ -85,3 +85,17 @@
 	</div>   
 </div>
 <!--//오시는길팝업-->
+
+
+<script type="text/javascript">
+
+var url = window.location.pathname;
+console.log(url);
+if (url.indexOf('/main') > 0) {	
+	console.log('홈');
+} else if (url.indexOf('/pro/proMain') > 0) {	
+	console.log('프로소개');
+} else if (url.indexOf('/voucher/voucherMain') > 0) {	
+	console.log('이용권');
+} 
+</script>

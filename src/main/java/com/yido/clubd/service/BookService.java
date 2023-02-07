@@ -217,28 +217,64 @@ public class BookService {
 		log.info("[unBkMarkLogic] bkInfo : {}", bkInfo);
 		
     	try {
-			// 해당 아이디로 예약 선점한거 가져오기 (BK_SEQ 필요함)
-			List<DrBkMark> markList = drBkMarkMapper.selectList(bkInfo);
-			log.info("[unBkMarkLogic] 해당 아이디로 예약 선점한거 조회 > 결과 : {}", markList);
-			// end.
-	
-			if (markList != null && markList.size() > 0) {
+    		
+    		if (bkInfo.getBkTime().indexOf(",") > 0) {
+    			// 다건 예약
+    			
+        		String[] strArr = (bkInfo.getBkTime()).split(",");				
+        		bkInfo.setBkTime("");
+        		for (String str : strArr) {
+        			// 해당 아이디로 예약 선점한거 가져오기 (BK_SEQ 필요함)
+            		bkInfo.setBkTime(str.trim());
+        			List<DrBkMark> markList = drBkMarkMapper.selectList(bkInfo);
+        			log.info("[unBkMarkLogic] 해당 아이디로 예약 선점한거 조회 > 결과 : {}", markList);
+        			// end.
+        	
+        			if (markList != null && markList.size() > 0) {
 
-				Map<String, Object> param = new HashMap<String, Object>();
-								
-				param.put("coDiv"			, bkInfo.getCoDiv());
-				param.put("bayCondi"		, bkInfo.getBayCondi());
-				param.put("bkDay"			, bkInfo.getBkDay());
-				param.put("bkTime"			, bkInfo.getBkTime());
-				param.put("bkSeq"			, markList.get(0).getBkSeq());
-				
-				// 예약 선점 해제 
-				drBkMarkMapper.updateUnMark(param);
-				
-				// 잔여수량 복원 
-				param.put("addRemCnt", "Y");
-				drBkTimeMapper.updateBkRemCount(param);
-			}   	
+        				Map<String, Object> param = new HashMap<String, Object>();
+        								
+        				param.put("coDiv"			, bkInfo.getCoDiv());
+        				param.put("bayCondi"		, bkInfo.getBayCondi());
+        				param.put("bkDay"			, bkInfo.getBkDay());
+        				param.put("bkTime"			, bkInfo.getBkTime());
+        				param.put("bkSeq"			, markList.get(0).getBkSeq());
+        				
+        				// 예약 선점 해제 
+        				drBkMarkMapper.updateUnMark(param);
+        				
+        				// 잔여수량 복원 
+        				param.put("addRemCnt", "Y");
+        				drBkTimeMapper.updateBkRemCount(param);
+        			}   	      			
+        		}
+    		} else {
+    			// 단건 예약
+    			
+    			// 해당 아이디로 예약 선점한거 가져오기 (BK_SEQ 필요함)
+    			List<DrBkMark> markList = drBkMarkMapper.selectList(bkInfo);
+    			log.info("[unBkMarkLogic] 해당 아이디로 예약 선점한거 조회 > 결과 : {}", markList);
+    			// end.
+    	
+    			if (markList != null && markList.size() > 0) {
+
+    				Map<String, Object> param = new HashMap<String, Object>();
+    								
+    				param.put("coDiv"			, bkInfo.getCoDiv());
+    				param.put("bayCondi"		, bkInfo.getBayCondi());
+    				param.put("bkDay"			, bkInfo.getBkDay());
+    				param.put("bkTime"			, bkInfo.getBkTime());
+    				param.put("bkSeq"			, markList.get(0).getBkSeq());
+    				
+    				// 예약 선점 해제 
+    				drBkMarkMapper.updateUnMark(param);
+    				
+    				// 잔여수량 복원 
+    				param.put("addRemCnt", "Y");
+    				drBkTimeMapper.updateBkRemCount(param);
+    			}   	    			
+    		}
+    		
 		} catch(Exception e) {
 			e.printStackTrace();
 			result.setCode("9999");
