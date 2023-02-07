@@ -23,14 +23,18 @@ public class ProLogVO {
 	private String proRemark;		// 비고 사항
 	private String noticeOpenYn;	// 공개 여부
 	
-	/* DR_MS_PICTURE 레슨프로이미지 */
-	private String msImgName;
-	private String msImgData;
+	/* PRO_IMAGE 레슨프로 이미지/영상 */
+	private String imgDiv;
+	private String imgSeq;
+	private String imgLink;
+	private String imgFilename;
+	private String imgData;
 	
 	/* PRO_LICENSE 레슨프로자격사항 */
 	private String licSeq;			// 순번
 	private int licKind;			// 라이센스 코드
 	private String licRemark;		// 비고
+	private String licName;		// 라이센스 이름
 	
 }
 

@@ -239,7 +239,7 @@
 }
 
 .dropzone.dz-clickable {
-    cursor: pointer
+    cursor: pointer;
 }
 
 .dropzone.dz-clickable * {
@@ -305,7 +305,8 @@
 }
 
 .dropzone .dz-preview.dz-image-preview {
-    background: #fff
+    background: #fff;
+    width: fit-content;
 }
 
 .dropzone .dz-preview.dz-image-preview .dz-details {
@@ -372,9 +373,7 @@
 
 .dropzone .dz-preview .dz-details .dz-filename span,
 .dropzone .dz-preview .dz-details .dz-size span {
-    background-color: rgba(255, 255, 255, .4);
-    padding: 0 .4em;
-    border-radius: 3px
+    color: #FFF !important;
 }
 
 .dropzone .dz-preview:hover .dz-image img {

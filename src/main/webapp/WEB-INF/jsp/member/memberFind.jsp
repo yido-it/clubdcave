@@ -5,14 +5,14 @@
 <jsp:include page="../common/head.jsp" />
 <jsp:include page="../common/script.jsp" />
 
-<body class="theme-light">
+<body class="theme-dark">
     
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
     
 <div id="page">
     
     <div class="header header-fixed header-logo-app header-transparent">
-        <a href="javascript:history.back(-1)" class="header-title header-subtitle">아이디/비밀번호찾기</a>
+        <a href="javascript:history.back()" class="header-title header-subtitle">아이디/비밀번호찾기</a>
         <jsp:include page="../common/top.jsp" />
     </div>
     <jsp:include page="../common/menu.jsp" />

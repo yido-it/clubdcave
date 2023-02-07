@@ -47,7 +47,7 @@
 			// tool.js 프로그래스 모달 
 			// progressStart();
 	
-			mAjax(sUrl, sParams, function(data) {
+			/*mAjax(sUrl, sParams, function(data) {
 				if(data.resultCode == "1000") {
 					// 가입된 정보 없다면, 간편회원가입으로 이동 
 					location.href = "<c:url value='/member/agree?msLoginCd=" + type + "'/>";
@@ -57,7 +57,32 @@
 				} else {
 					alert(data.message);
 				}
-			});	
+			});*/
+			
+				$.ajax({
+					  url: "<c:url value='/member/doLoginForSocial'/>"
+					, type: "post"
+					, dataType: 'json'
+					, data: sParams
+					, contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+					, success: function(data) {
+						if(data.result) {							
+		            		// 페이지 이동
+		            		if(data.dest != null && data.dest != "") {	  
+	            				location.href = data.dest;
+	            			} else {	            			
+								location.href = "<c:url value='/main'/>";
+		            		}        		
+						} else {
+							alertModal.fail(data.message);
+						}
+					}
+					, error: function(data) {
+						alertModal.fail('[error] 오류가 발생했습니다.');
+					}
+				});
+			
+			
 		}
 	</script>
 </body>

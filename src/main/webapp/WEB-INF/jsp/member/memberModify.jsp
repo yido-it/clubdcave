@@ -12,7 +12,7 @@
 <div id="page">
     
     <div class="header header-fixed header-logo-app">
-        <a href="javascript:history.back(-1)" class="header-title header-subtitle">정보수정</a>
+        <a href="javascript:history.back()" class="header-title header-subtitle">정보수정</a>
         <jsp:include page="../common/top.jsp" />
     </div>    
 	<jsp:include page="../common/menu.jsp" />
@@ -97,11 +97,36 @@
                     <input type="text" id="msBirth" name="msBirth" value="${sessionScope.msMember.msBirth}">
                 </div>
                 
-                <div class="input-style input-style-2  input-required">
-                    <span class="color-highlight input-style-1-active">거주지(시,구,동)</span>
-                    <em></em>
-                    <input class="form-control" type="name" placeholder="" id="msHomeaddr1" name="msHomeaddr1" value="${sessionScope.msMember.msHomeaddr1}"/>
-                </div>        
+                <div class="row mb-1 mt-3">
+		            <div class="col-6 mb-1">
+		                <div class="input-style input-style-2  input-required">
+		                    <span class="color-highlight">지역(시/도)</span>
+		                    <em><i class="fa fa-angle-down"></i></em>
+		                    <input class="form-control" type="hidden" id="msHomeaddr1Val" value="${sessionScope.msMember.msHomeaddr1}" >
+		                    <select id="msHomeaddr1" name="msHomeaddr1">
+		                        <option value="" disabled>선택하세요</option>
+		                        <option value="서울시">서울시</option>
+		                        <%-- <c:forEach items="${msHomeaddr1List}" var="item" varStatus="status">
+		                        <option value="${item.cdCode}">${item.cdTitle1}</option>
+				                </c:forEach> --%>
+		                    </select>
+		                </div> 
+		            </div>
+	                <div class="col-6 mb-1">
+	                    <div class="input-style input-style-2  input-required">
+	                        <span class="color-highlight">시/군/구</span>
+	                        <em><i class="fa fa-angle-down"></i></em>
+	                        <input class="form-control" type="hidden" id="msHomeaddr2Val" value="${sessionScope.msMember.msHomeaddr2}" >
+	                        <select id="msHomeaddr2" name="msHomeaddr2">
+	                            <option value="" disabled>선택하세요</option>
+	                            <option value="강남구">강남구</option>
+	                            <%-- <c:forEach items="${msHomeaddr2List}" var="item" varStatus="status">
+		                        <option value="${item.cdCode}">${item.cdTitle1}</option>
+				                </c:forEach> --%>
+	                        </select>
+	                    </div> 
+	                </div>
+	            </div>         
                 <div class="input-style input-style-2 input-required">
                     <span class="color-highlight">레슨경험</span>
                     <em><i class="fa fa-angle-down"></i></em>
@@ -144,7 +169,8 @@
                 <div class="row mb-0"> 
                     <div class="col-6 mb-3">
                         <div class="input-style input-style-2  input-required">
-                            <span class="color-highlight input-style-1-active">직업</span>
+                            <span class="color-highlight">직업</span>
+                            <em><i class="fa fa-angle-down"></i></em>
                             <input class="form-control" type="hidden" id="msJobCdVal" value="${sessionScope.msMember.msJobCd}">
                             <select id="msJobCd" name="msJobCd" >                            
                                 <option value="" disabled>선택</option>
@@ -156,17 +182,38 @@
                     </div>
                     <div class="col-6 mb-3">
                         <div class="input-style input-style-2  input-required">
-                            <span class="color-highlight input-style-1-active">직장명</span>
+                            <span class="color-highlight">직장명</span>
                             <input class="form-control" type="name" placeholder="" id="msCompnm" name="msCompnm" value="${sessionScope.msMember.msCompnm}">
                         </div> 
                     </div>
-                    <div class="col-12 mb-3">
-                        <div class="input-style input-style-2"">
-                            <span class="color-highlight input-style-1-active">직장주소</span>
-                            <em></em>
-                            <input class="form-control" type="name" placeholder="직장주소(시,구,동)" id="msCompaddr1" name="msCompaddr1" value="${sessionScope.msMember.msCompaddr1}"/>
-                        </div> 
-                    </div>                   
+			            <div class="col-6 mb-1">
+			                <div class="input-style input-style-2  input-required">
+			                    <span class="color-highlight">지역(시/도)</span>
+			                    <em><i class="fa fa-angle-down"></i></em>
+		                    	<input class="form-control" type="hidden" id="msCompaddr1Val" value="${sessionScope.msMember.msCompaddr1}" >
+			                    <select id="msCompaddr1" name="msCompaddr1">
+			                        <option value="" disabled>선택하세요</option>
+			                        <option value="서울시">서울시</option>
+			                        <%-- <c:forEach items="${msHomeaddr1List}" var="item" varStatus="status">
+			                        <option value="${item.cdCode}">${item.cdTitle1}</option>
+					                </c:forEach> --%>
+			                    </select>
+			                </div> 
+			            </div>
+		                <div class="col-6 mb-1">
+		                    <div class="input-style input-style-2  input-required">
+		                        <span class="color-highlight">시/군/구</span>
+		                        <em><i class="fa fa-angle-down"></i></em>
+		                        <input class="form-control" type="hidden" id="msCompaddr2Val" value="${sessionScope.msMember.msCompaddr2}" >
+		                        <select id="msCompaddr2" name="msCompaddr2">
+		                            <option value="" disabled>선택하세요</option>
+		                            <option value="강남구">강남구</option>
+		                            <%-- <c:forEach items="${msHomeaddr2List}" var="item" varStatus="status">
+			                        <option value="${item.cdCode}">${item.cdTitle1}</option>
+					                </c:forEach> --%>
+		                        </select>
+		                    </div> 
+		                </div>                   
                     <div class="col-12 mb-0">               
 	              		<!--차량번호1-->
 				        <div class="row mb-0 mt-4" id="carArea1">

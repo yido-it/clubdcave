@@ -222,8 +222,9 @@ public class MemberController {
         		map.put("message",  "해당하는 사용자 정보가 없습니다.");
     		} else {
     			memberService.loginUserInfo(req, res, session, params);  
-    			  		
+    			
     			map.put("result",  true);
+    			map.put("dest",  (String)session.getAttribute("dest"));    			
         		map.put("userInfo",  userInfo);
         		
     		}
@@ -258,17 +259,18 @@ public class MemberController {
     			session.setAttribute("msLoginCd", params.get("msLoginCd"));
         		session.setMaxInactiveInterval(30 * 60);
         		
-        		map.put("resultCode",  "1000");
-				return map;
+        		map.put("result", true);
+        		map.put("dest", "/member/agree?msLoginCd='" + params.get("msLoginCd") + "'");
 				
     		} else {
     			// 기존가입 -> 로그인처리
     			memberService.loginUserInfo(req, res, session, params);
-    			map.put("resultCode",  "0000");
+    			map.put("result",  true);
+    			map.put("dest", (String)session.getAttribute("dest"));  
     		}
     	} catch (Exception e) {
     		log.debug(e.getMessage());
-    		map.put("resultCode",  "9999");
+    		map.put("result", false);
 			map.put("message", "소셜로그인 중 오류가 발생했습니다.");
     	}
     	

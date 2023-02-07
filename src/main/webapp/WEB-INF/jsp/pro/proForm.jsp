@@ -34,29 +34,10 @@
                 <p>
                     세로로 긴 사진 업로드를 추천합니다.(사진크기 3MB이하)
                 </p>
-                <div class="file-data pb-5 dropzone">
-                    <button type="button" id="profileUpload" class="btn bg-highlight upload-file-text color-white font-15" style="width:100%;height:100%">
+                <div class="dropzone" id="">
+                    <button type="button" id="profileUpload" class="btn bg-highlight color-white font-15 dz-message mb-5" style="width:100%;height:100%">
                     <i class="fa fa-camera"></i> 사진 찾기</button>
-                </div>
-             
-                <div class="row mb-0 mt-2"> 
-                    <div class="col-6 mb-3">
-                        <img id="image-data float-left" src="/store/001/profile/pro4.jpg" class="img-fluid"> 
-                        <div class="d-flex mt-1">
-                            <div>
-                                <a href="#" class="border-0">
-                                    <i class="fa-regular fa-images color-brown-dark"></i>
-                                    <span class="color-white">1.4MB</span>
-                                </a>      
-                            </div>
-                            <div class="ml-auto pl-3 text-right">
-                                <a class="color-red-dark font-14 ">
-                                    <i class="fa-regular fa-rectangle-xmark"></i> 삭제
-                                </a>    
-                            </div>
-                        </div> 
-                    </div>
-            	</div>
+                </div>        
 
             </div>
         </div>
@@ -83,14 +64,36 @@
                 <em><i class="fa-solid fa-calendar-days font-17"></i></em>
                 <input type="text" id="msBirth" name="msBirth" value="${sessionScope.msMember.msBirth}">
             </div>
-            <div class="mb-3">
-                <div class="input-style input-style-2  input-required">
-                    <span class="color-highlight input-style-1-active">거주지(시,구,동)</span>
-                    <em><em><i class= "fas fa-search font-17"></i></em></em>
-                    <input class="form-control" type="hidden" id="msHomezip" name="msHomezip" value="${sessionScope.msMember.msHomezip}" >
-                    <input class="form-control" type="name" placeholder="" id="msHomeaddr1" name="msHomeaddr1" value="${sessionScope.msMember.msHomeaddr1}"/>
+            <div class="row mb-1 mt-3">
+	            <div class="col-6 mb-1">
+	                <div class="input-style input-style-2  input-required">
+	                    <span class="color-highlight">지역(시/도)</span>
+	                    <em><i class="fa fa-angle-down"></i></em>
+	                    <input class="form-control" type="hidden" id="msHomeaddr1Val" value="${sessionScope.msMember.msHomeaddr1}" >
+	                      <select id="msHomeaddr1" name="msHomeaddr1">
+	                        <option value="" disabled>선택하세요</option>
+	                        <option value="서울시">서울시</option>
+	                        <%-- <c:forEach items="${msHomeaddr1List}" var="item" varStatus="status">
+	                        <option value="${item.cdCode}">${item.cdTitle1}</option>
+			                </c:forEach> --%>
+	                    </select>
+	                </div> 
+	            </div>
+                <div class="col-6 mb-1">
+                    <div class="input-style input-style-2  input-required">
+                        <span class="color-highlight">시/군/구</span>
+                        <em><i class="fa fa-angle-down"></i></em>
+                        <input class="form-control" type="hidden" id="msHomeaddr2Val" value="${sessionScope.msMember.msHomeaddr2}" >
+                        <select id="msHomeaddr2" name="msHomeaddr2">
+                            <option value="" disabled>선택하세요</option>
+                            <option value="강남구">강남구</option>
+                            <%-- <c:forEach items="${msHomeaddr2List}" var="item" varStatus="status">
+	                        <option value="${item.cdCode}">${item.cdTitle1}</option>
+			                </c:forEach> --%>
+                        </select>
+                    </div> 
                 </div>
-            </div>     
+            </div>    
 
             <div class="input-style input-style-2 input-required">
                 <span class="input-style-1-active input-style-1-inactive">경력사항 입력</span>
@@ -150,7 +153,7 @@
                 </div>
                 <div class="col-6 mb-1">
                     <div class="input-style input-style-2  input-required">
-                        <span class="color-highlight input-style-1-active">레슨가능횟수</span>
+                        <span class="color-highlight">레슨가능횟수</span>
                         <em><i class="fa fa-angle-down"></i></em>
                         <select>
                             <option value="" disabled>빈도 선택</option>
@@ -219,7 +222,7 @@
                 <div class="col-12 mb-3">
                     <div class="input-style input-style-2 input-required">
                         <span class="color-highlight input-style-1-active">유튜브채널 주소</span>
-                        <input class="form-control" type="name" placeholder="https://www.youtube.com/@채널명" id="n_004" name="n_003">
+                        <input class="form-control" type="name" placeholder="https://www.youtube.com/@채널명" id="n_003" name="n_003">
                     </div> 
                 </div> 
                 <div class="col-12 mb-3">
@@ -231,7 +234,7 @@
                 <div class="col-12 mb-3">
                     <div class="input-style input-style-2 input-required">
                         <span class="color-highlight input-style-1-active">카카오 오픈채팅 주소</span>
-                        <input class="form-control" type="name" placeholder="" id="msCarNo5" name="n_005">
+                        <input class="form-control" type="name" placeholder="" id="n_005" name="n_005">
                     </div> 
                 </div>             
             </div>
@@ -283,29 +286,34 @@
 	        yearRange: '-100:+00',
         	
 	    }); 
+	    
+	    setDateValue('msBirth');
 		
+	    setSelectValue('msSex');
+	    setSelectValue('coDiv');
+	    
 		showCarInput();
 	})
 	
 	Dropzone.autoDiscover = false;
-	var myDropzone = new Dropzone('div.dropzone', {
-		  autoProcessQueue : false
-		, url : '/pro/uploadProImage'
-		, method : 'post'
-		, maxFiles : 1
-		, maxFilesize : 10
-		, resizeQueality : 1
-		, resizeWidth : 960
-		, dictFileTooBig : '{{filesize}}MB 이하로 업로드 해주세요.'
-		, paramName : 'file'
-		, addRemoveLinks : true
-		, acceptedFiles : "image/*"
-		, uploadMultiple : false
-		, init : function() {
-			
-		}
-	});
-
+		var myDropzone = new Dropzone('div.dropzone', {
+			  autoProcessQueue : false
+			, url : '/pro/uploadProImage'
+			, method : 'post'
+			, maxFiles : 1
+			, maxFilesize : 10
+			, resizeQueality : 1
+			, resizeWidth : 960
+			, dictFileTooBig : '{{filesize}}MB 이하로 업로드 해주세요.'
+			, paramName : 'file'
+			, addRemoveLinks : true
+			, acceptedFiles : "image/*"
+			, uploadMultiple : false
+			, init : function() {
+				
+			}
+		});
+	
 	<c:forEach items="${proLicList}" var="item" varStatus="status">
 		$('${"#l_"}${item.licKind}').attr('checked', true);
 	</c:forEach>
@@ -316,23 +324,26 @@
 		if(obj.msNum == $('#msNum').val()) {
 			for(var key in obj) {
 				var type = $('#' + key).prop('type');
-				if(type.indexOf('text') > -1) {
-					$('#' + key).val(obj[key]);
-				}
-				if(type.indexOf('select') > -1) {
-					setSelectValue(key, obj[key]);
-				}
-				if(type == 'date') {
-					setDateValue(key, obj[key]);
-				}
-				if(type.indexOf('check') > -1) {
-					if(obj[key] == 'Y') {						
-					$('#' + key).prop('checked', true);
+				if(type != undefined) {
+					if(type.indexOf('text') > -1) {
+						$('#' + key).val(obj[key]);
+					}
+					if(type.indexOf('select') > -1) {
+						setSelectValue(key, obj[key]);
+					}
+					if(type == 'date') {
+						setDateValue(key, obj[key]);
+					}
+					if(type.indexOf('check') > -1) {
+						if(obj[key] == 'Y') {						
+						$('#' + key).prop('checked', true);
+						}
 					}
 				}
 			}	
 		}		
 	}
+	
 	 $('.hidden-notice').each(function () {
 		var id = this.id;
 		var val = $(this).val().replaceAll("<br/>", "\r\n");
@@ -378,10 +389,10 @@
 	})
 	
 	$('#btnSubmit').on('click', function() {
-		console.log($('#frmPro').serialize());
-		alertModal.success('제출이 완료되었습니다.');
-		localStorage.removeItem('frmPro');
-		//saveProForm();
+		if($(".dz-preview").length){
+        	myDropzone.processQueue();
+    	}
+		saveProForm();
 	})
 			
 	function saveProForm() {			
@@ -393,9 +404,16 @@
 	        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
 	        , success: function(data) {		    	
 	            if(data.result){
-	            	alertModal.success('제출이 완료되었습니다.');
-	            	localStorage.removeItem('frmPro');
-	            	goAfterModal();
+	            	// 사진 업로드
+                	if($(".dz-preview").length){
+	                	myDropzone.processQueue();	                	
+	                // 사진 업로드 없음
+                	}else{
+    	            	alertModal.success('제출이 완료되었습니다.');
+    	            	localStorage.removeItem('frmPro');
+    	            	
+    	            	goAfterModal();
+                	}
 	            } else {
 	            	alertModal.fail(data.message);                    
 	            }                

@@ -1,5 +1,8 @@
 package com.yido.clubd.controller;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.yido.clubd.common.service.CommonService;
 import com.yido.clubd.common.utils.SessionVO;
@@ -117,12 +121,12 @@ public class ProController {
 		MemberVO member = memberService.selectMember(map);		
 		
 		List<ProVO> proNoticeList = proService.selectProNoticeList(map);
-		List<ProVO> proLicenseList = proService.selectProLicenseList(map);
+		List<ProVO> proLicList = proService.selectProLicenseList(map);
 		List<ProVO> proImageList = proService.selectProImageList(map);
 		
 		model.addAttribute("proInfo", member);
 		model.addAttribute("proNoticeList", proNoticeList);
-		model.addAttribute("proLicenseList", proLicenseList);
+		model.addAttribute("proLicList", proLicList);
 		model.addAttribute("proImageList", proImageList);
 		
 		return "/pro/proDetail";
@@ -203,6 +207,29 @@ public class ProController {
 		}
 		
 		return map;
+	}
+	
+		@RequestMapping("/pro/uploadProImage")
+	@ResponseBody
+	public HashMap<String, Object> uploadProImage(MultipartHttpServletRequest mreq, HttpServletRequest req, MemberVO memberVO) 
+		throws IllegalStateException, IOException {
+	
+			HashMap<String, Object> map = new HashMap<String, Object>();
+
+			String yearMonth = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM"));			
+			String path = "001" + "/" + "picture" + "/" + yearMonth;
+			memberVO.setMsImgData(path);
+			
+			try {
+				//memberService.uploadMemberImage(memberVO, mreq);
+				map.put("result",  true);
+
+			} catch (Exception e) {
+					map.put("result",  false);
+				    map.put("message", "파일 업로드중 오류가 발생하였습니다.");
+					e.printStackTrace();
+			}
+			return map;	
 	}
 	
 	@RequestMapping("/proGallery")  

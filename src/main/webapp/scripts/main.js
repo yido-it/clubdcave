@@ -160,6 +160,8 @@
 
 })(jQuery);
 
+
+
 // 요일 반환 
 function getDate(sDate){ 
     var week = ['일', '월', '화', '수', '목', '금', '토'];

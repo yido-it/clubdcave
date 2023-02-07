@@ -80,13 +80,9 @@ public class MemberVO {
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime updateDatetime;								// 수정일시
 	private String updateIp; 											// 수정IP
-	
-	/* 컬럼 외  */
-	private String msPhone; 			// 핸드폰번호(full)
-	public String ipAddr;
-	
-	/* 추가 정보 */
-	private String msHandcap;				// 핸디캡
+		
+	/* DR_MS_BASIC 회원추가정보 */
+	private String msHandcap;			// 핸디캡
 	private String msLessonExpYn;		// 레슨경험유무
 	private String msLessonMinute;		// 1회레슨시 선호시간(분)
 	private String msLessonTrem;		// 레슨빈도
@@ -99,9 +95,22 @@ public class MemberVO {
 	private String Cmpaddr2;			// 회사주소상세
 	private Integer carSeq;				// 차량순번
 	private String msCarNo;				// 차량번호	
+		
+	/* DR_MS_PICTURE 회원/프로 이미지 */
+	private String msImgName;			// 이미지 이름
+	private String msImgData;			// 이미지 경로 (변경 요청함)
 	
+	public String getFileURL() {
+		return "/store/" + this.msImgData + "/" + this.msImgName; 
+	}	
+	public String getThumbURL() {
+		return "/store/thumb/" + this.msImgData + "/" + this.msImgName; 
+	}
+	
+	/* 컬럼 외  */
+	private String msPhone; 			// 핸드폰번호(full)
+	public String ipAddr;
 	private String coDiv;				// 선호업장
-	
 	
 	public String getFullMsPhone() {
 		return this.msFirstPhone1 + this.msMidPhone1 + this.msLastPhone1;

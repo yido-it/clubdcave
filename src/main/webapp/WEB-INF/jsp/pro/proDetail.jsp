@@ -53,8 +53,9 @@
                 <p class="font-600 mb-n1 color-highlight">${proInfo.msEname}</p>
                 <h1 class="font-30">${proInfo.msName} 프로</h1>
                 <p class="mb-0">
-                    <span class="badge bg-highlight px-2 py-1 mt-2 text-uppercase">KPGA 정회원</span>
-                    <span class="badge bg-highlight px-2 py-1 ml-2 mt-2 text-uppercase">KLPGA 정회원</span>
+                	<c:forEach items="${proLicList}" var="item" varStatus="status">
+                    <span class="badge bg-highlight px-2 py-1 mt-2 mr-2 text-uppercase">${item.licName}</span>
+                    </c:forEach>
                 </p>
                 <div class="">
                     <c:forEach items="${proNoticeList}" var="item" varStatus="status">
@@ -110,7 +111,7 @@
             	
                 <ul class="gallery-filter-controls mb-4 pb-1">
                     <li class="gallery-filter-active gallery-filter-all color-highlight" data-filter="all">모두</li>
-                    <li data-filter="3">영상</li>
+                    <li data-filter="2">영상</li>
                     <li data-filter="1">사진</li>
                 </ul>
             </div>
@@ -120,29 +121,8 @@
                         <a href="images/gallery/1.jpg" data-lightbox="gallery-1" class="filtr-item default-link" title="" data-category="1" >
                             <img src="images/gallery/1.jpg" data-src="images/gallery/1.jpg" class="preload-img rounded-s shadow-m" >
                         </a>
-                        <a href="images/gallery/2.jpg" data-lightbox="gallery-1" class="filtr-item default-link" title="" data-category="1" >
-                            <img src="images/gallery/2.jpg" data-src="images/gallery/2.jpg" class="preload-img rounded-s shadow-m" >
-
-                        </a>
-                        <a href="images/gallery/3.jpg" data-lightbox="gallery-1" class="filtr-item default-link" title="" data-category="1" >
-                            <img src="images/gallery/3.jpg" data-src="images/gallery/3.jpg" class="preload-img rounded-s shadow-m">
-                            
-                        </a>							
-                        <a href="images/pictures/pro4.jpg" data-lightbox="gallery-1" class="filtr-item default-link" title="레슨사진1" data-category="1" >
-                            <img src="images/pictures/pro4.jpg" data-src="images/pictures/pro4.jpg" class="preload-img rounded- shadow-m">
-                            
-                        </a>
-                        <a href="images/pictures/pro4.jpg"  data-lightbox="gallery-1" class="filtr-item default-link" title="" data-category="1" >
-                            <img src="images/pictures/pro4.jpg" data-src="images/pictures/pro4.jpg" class="preload-img rounded-s shadow-m">
-                            
-                        </a>
-                        <a href="images/gallery/6.jpg" data-lightbox="gallery-1" class="filtr-item default-link" title="" data-category="1" style="">
-                            <img src="images/gallery/6.jpg" data-src="images/gallery/6.jpg" class="preload-img rounded-s shadow-m">
-                            <h5 class="font-14 pt-2 pb-1"></h5>
-                        </a>
-                        <a href="images/gallery/6.jpg" data-menu="menu-video" class="filtr-item default-link" title="" data-category="3">
+                        <a href="images/gallery/6.jpg" data-menu="menu-video" class="filtr-item default-link" title="" data-category="2">
                             <img src="images/gallery/6.jpg" data-src="images/gallery/6.jpg" class="preload-img rounded-s shadow-m" >
-                            
                         </a>
                     </div>                
                 </div>
@@ -173,27 +153,14 @@
 <div class="menu-hider"><div></div></div>	
 <jsp:include page="../common/alertModal.jsp" />  
 <script type="text/javascript">
-
-	if(urlParam('msNum') == '${sessionScope.msMember.msNum}') {		
-		$('#btnEdit').show();
-	}
-		
-	function getProList(){			
-	   	$.ajax({
-	             url : "/pro/getProList"
-	           , type : "post"
-	           , dataType : 'json'
-	   		, contentType : 'application/x-www-form-urlencoded; charset=UTF-8'
-	   		, success : function(data) {
-	           	if(data.rows.length > 0) {
-	           		drawProList(data.rows);
-	           	}
-	           }
-	   		, error : function(data) {
-	   			
-	           }
-	       })
-	}
+	var msNum = "<c:out value='${sessionScope.msMember.msNum}'/>";
+	
+	$().ready(function() {
+		if(urlParam('msNum') == msNum) {		
+			$('#btnEdit').show();
+		}
+	});
+	
 </script>
 </body>
 </html>

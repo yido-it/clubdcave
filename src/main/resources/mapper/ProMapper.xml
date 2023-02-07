@@ -64,12 +64,14 @@
 			, LIC_SEQ
 		    , LIC_KIND
 		    , LIC_REMARK
+		    , CD_TITLE1 AS LIC_NAME
 	    FROM PRO_LICENSE L
 	    RIGHT OUTER JOIN DR_MS_MAININFO M ON M.MS_NUM = L.MS_NUM
 	    INNER JOIN CD_COMMON C ON C.CD_CODE = L.LIC_KIND AND C.CD_DIVISION = '018'
 	    WHERE 1 = 1
 			AND M.MS_NUM = ${msNum}
 	        AND IFNULL(NULLIF(M.MS_BLANK,''),'N') = 'N'
+	    ORDER BY CD_SORT
 	</select>	
 	<insert id="insertProLicense">
     	INSERT INTO PRO_LICENSE (

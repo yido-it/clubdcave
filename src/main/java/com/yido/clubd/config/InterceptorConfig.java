@@ -25,6 +25,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class InterceptorConfig extends HandlerInterceptorAdapter {
 	
+	public String[] loginEssential = {
+			  "/member/memberModify/**"
+			, "/pro/proGallery/**"
+			, "/pro/proForm/**"
+			, "/book/**"
+			};
+	
+	public String[] loginInessential = {
+			  "/"
+			, "/main"
+			, "/login/**"
+			};
+	
 	@Autowired
 	private MemberService drMsMaininfoService;
 	
@@ -36,6 +49,8 @@ public class InterceptorConfig extends HandlerInterceptorAdapter {
 		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
 		if(sessionVO != null) {			
 			log.info("=============>" + sessionVO);
+			return true;
+			
 		} else {
 			Cookie loginCookie = WebUtils.getCookie(req, "sessionKey");
 			if (loginCookie != null) {
@@ -70,10 +85,21 @@ public class InterceptorConfig extends HandlerInterceptorAdapter {
 
 					drMsMaininfoService.insertLoginLog(params);
 				}
-
+			return true;
+			
+			} else {
+				String destUri = req.getRequestURI(); 
+				String destQuery = req.getQueryString();
+				String dest = (destQuery == null) ? destUri : destUri+"?"+destQuery;
+				req.getSession().setAttribute("dest", dest);
+				 
+				res.sendRedirect("/login");
+				return false;
 			}
-		}		 
-        return true;
+			// 로그인 정보 없음
+			
+		}		
     }
+	
 
 }

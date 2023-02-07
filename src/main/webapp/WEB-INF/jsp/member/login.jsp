@@ -187,8 +187,8 @@
 	            		}
 	            	} else {
 	            		// 페이지 이동
-	            		if(preUrl.indexOf('book') > -1) {	  
-	            			location.href = preUrl;
+	            		if(data.dest != null && data.dest != "") {	  
+	            			location.href = data.dest;
 	            		} else {	            			
 							location.href = "<c:url value='/main'/>";
 	            		}         		

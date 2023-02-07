@@ -511,6 +511,7 @@
     </insert>
     
 	<select id="selectFindUser" parameterType="hashmap" resultType="MemberVO">
+		/* memberMapper.selectFindUser - 아이디/전화번호 중복체크, 아이디 유무 확인 */
 		SELECT 
 			  MS_NUM
 			, MS_ID

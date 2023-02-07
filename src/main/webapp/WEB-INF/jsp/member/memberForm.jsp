@@ -8,7 +8,7 @@
 	<div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
     <div id="page">        
         <div class="header header-fixed header-logo-app header-transparent">
-            <a href="javascript:history.back(-1)" class="color-white header-title header-subtitle">회원가입</a>
+            <a href="javascript:history.back()" class="color-white header-title header-subtitle">회원가입</a>
             <jsp:include page="../common/top.jsp" />
         </div>
         <jsp:include page="../common/menu.jsp" />

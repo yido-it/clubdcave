@@ -11,7 +11,7 @@
 <div id="page">
     
 	<div class="header header-fixed header-logo-app">
-		<a href="javascript:history.back(-1)" class="header-title header-subtitle">프로선택</a>
+		<a href="javascript:history.back()" class="header-title header-subtitle">프로선택</a>
 		<a href="#" data-back-button class="header-icon header-icon-1"><i class="fa fa-arrow-left"></i></a>
 		<a href="#" data-menu="menu-main" class="header-icon header-icon-2"><i class="fas fa-bars"></i></a>
 	</div>
@@ -43,14 +43,12 @@
             	<c:choose>
             	<c:when test="${not empty proList}">
             		<c:forEach items="${proList}" var="item" varStatus="status">
-	                <div class="col-6">
-	                    <a href="proDetail?msNum=${item.msNum }">
-		                    <div class="card card-style m-0 mb-2 rounded-m bg-pro3" data-card-height="150" style="">
-		                        <div class="card-bottom"><span class="badge bg-highlight p-1 pl-2 rounded-0">KPGA 정회원</span></div>
-		                    </div>
-		                    <p class="line-height-s color-theme mb-1">${item.msName} 프로 </p>
-		                    <p class="mb-0 font-10 pt-0 opacity-60"><i class="fa fa-clock pr-1"></i>레슨: 화/목</p> 
-	                	</a>
+	                <div class="col-6" onclick="javascript:location.href='proDetail?msNum=${item.msNum}'">
+	                    <div class="card card-style m-0 mb-2 rounded-m bg-pro3" data-card-height="150" style="">
+	                        <div class="card-bottom"><span class="badge bg-highlight p-1 pl-2 rounded-0">KPGA 정회원</span></div>
+	                    </div>
+	                    <p class="line-height-s color-theme mb-1">${item.msName} 프로 </p>
+	                    <p class="mb-0 font-10 pt-0 opacity-60"><i class="fa fa-clock pr-1"></i>레슨: 화/목</p> 
 	                </div>
 	                </c:forEach>         
             	</c:when>
@@ -70,6 +68,7 @@
 
 <jsp:include page="../common/alertModal.jsp" />  
 <script type="text/javascript">		
+
 	//getProList();
 	
 	function getProList(){		
