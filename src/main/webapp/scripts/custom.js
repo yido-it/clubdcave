@@ -286,7 +286,7 @@ $(document).ready(function(){
         	// 배은화 추가 (2023-02-07)
         	// 예약 결제 페이지에서 '뒤로가기' 할때 예약선점해제 하기 위해 추가 함 
         	var url = window.location.pathname;
-        	if (url.indexOf('/book/book2') > 0) {	
+        	if (url.indexOf('/book/book2') >= 0) {	
         		fnUnBkMark(reservationInfo, 'back');		
         	}
         	// end.

@@ -4,12 +4,12 @@
 
 <div id="footer-bar" class="footer-bar-6">
 	<!-- 홈 -->
-	<a href="javascript:location.href='/main';" class="active-nav">
+	<a href="javascript:location.href='/main';" id="footerMain" class="">
 		<i class="fa fa-home"></i><span>홈</span><em></em>
 	</a>
 	
 	<!-- 프로소개 -->
-	<a href="javascript:location.href='/pro/proMain';">
+	<a href="javascript:location.href='/pro/proMain';" id="footerPro" class="">
 		<i class="fa fa-golf-ball-tee"></i><span>프로소개</span>
 	</a>
 	
@@ -19,7 +19,7 @@
 	</a>
 	
 	<!-- 이용권 -->
-	<a href="javascript:location.href='/voucher/voucherMain/001';">
+	<a href="javascript:location.href='/voucher/voucherMain/001';" id="footerVoucher" class="">
 		<i class="fa-solid fa-money-check"></i><span>이용권</span>
 	</a>
 	
@@ -89,13 +89,25 @@
 
 <script type="text/javascript">
 
-var url = window.location.pathname;
-console.log(url);
-if (url.indexOf('/main') > 0) {	
-	console.log('홈');
-} else if (url.indexOf('/pro/proMain') > 0) {	
-	console.log('프로소개');
-} else if (url.indexOf('/voucher/voucherMain') > 0) {	
-	console.log('이용권');
+var fUrl = window.location.pathname;
+
+if (fUrl.indexOf('/main') >= 0) {	
+	
+	$('#footerMain').addClass('active-nav');
+	$('#footerPro').removeClass('active-nav');
+	$('#footerVoucher').removeClass('active-nav');
+	
+} else if (fUrl.indexOf('/pro/proMain') >= 0) {	
+
+	$('#footerMain').removeClass('active-nav');
+	$('#footerPro').addClass('active-nav');
+	$('#footerVoucher').removeClass('active-nav');
+	
+} else if (fUrl.indexOf('/voucher/voucherMain') >= 0) {	
+	
+	$('#footerMain').removeClass('active-nav');
+	$('#footerPro').removeClass('active-nav');
+	$('#footerVoucher').addClass('active-nav');
+	
 } 
 </script>
