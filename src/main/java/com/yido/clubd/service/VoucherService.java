@@ -26,6 +26,7 @@ import com.yido.clubd.model.DrVoucherCode;
 import com.yido.clubd.model.DrVoucherList;
 import com.yido.clubd.model.DrVoucherSale;
 import com.yido.clubd.model.DrVoucherUse;
+import com.yido.clubd.model.VouInfoVO;
 import com.yido.clubd.repository.DrVoucherCodeMapper;
 import com.yido.clubd.repository.DrVoucherListMapper;
 import com.yido.clubd.repository.DrVoucherSaleLogMapper;
@@ -165,7 +166,7 @@ public class VoucherService {
 			for (DrVoucherList dr : vList) {	
 						
 				dr.setVcState("Y");
-				drVoucherListMapper.updateDrVoucherList(dr);
+				drVoucherListMapper.updateState(dr);
 				
 				// 이용권 사용내역 (예약고유번호, 이용권 순번 매칭)
 				dr.setSaleSeq(Integer.parseInt(vou.get("saleSeq").toString()));
@@ -270,7 +271,7 @@ public class VoucherService {
 				drVoucherList.setVcState("N");
 				drVoucherList.setListSeq(vou.getListSeq());
 				drVoucherList.setSaleSeq(vou.getSaleSeq());
-				drVoucherListMapper.updateDrVoucherList(drVoucherList);
+				drVoucherListMapper.updateState(drVoucherList);
 			}
 			 		
 			if (preSeq != vUse.getSaleSeq()) {
@@ -302,7 +303,8 @@ public class VoucherService {
 
 
 	/**
-	 * 이용권 구매내역, 세부내역 insert
+	 * 이용권 구매
+	 * - 구매내역 insert, 구매내역로그 insert, 세부내역 insert
 	 * 
 	 * @param param
 	 * @param mnMap
@@ -426,4 +428,34 @@ public class VoucherService {
 		// end.
 		return returnMap;
 	}
+	
+	/**
+	 * 이용권 구매
+	 * - 구매내역 update, 구매내역로그 insert, 세부내역 update 
+	 * 
+	 * @param vInfo
+	 * @return
+	 * @throws Exception
+	 */
+	@Transactional
+	public ResultVO cancel(VouInfoVO vInfo) throws Exception {	
+		ResultVO resultVO = new ResultVO();
+
+		// 구매내역 상태 update 
+		DrVoucherSale dSale = new DrVoucherSale();
+		dSale.setSaleSeq(vInfo.getSaleSeq());
+		drVoucherSaleMapper.updateState(dSale);
+		
+		// 구매내역 로그 insert
+		dSale = drVoucherSaleMapper.getVoucherSale(dSale);
+		dSale.setLogDiv("U");
+		drVoucherSaleLogMapper.insertDrVoucherSaleLog(dSale);
+		
+		// 세부내역 update 
+		DrVoucherList dList = new DrVoucherList();
+		dList.setSaleSeq(vInfo.getSaleSeq());
+		drVoucherListMapper.updateStateBySaleSeq(dList);
+		
+		return resultVO;
+	}	
 }

@@ -156,14 +156,7 @@
     	)  	
     </insert>
     
-	<update id="updateDrVoucherSale">
-		UPDATE DR_VOUCHER_SALE
-		   SET VC_REM_CNT 		= #{vcRemCnt} 
-		 WHERE CO_DIV 			= #{coDiv}
-		   AND SALE_DAY 		= #{saleDay}
-		   AND SALE_SEQ 		= #{saleSeq}
-	</update>    
-	
+    <!-- 잔존수량 변경 -->
 	<update id="updateVcRemCnt">
 		UPDATE DR_VOUCHER_SALE
 		   SET 
@@ -177,4 +170,11 @@
 		   AND SALE_DAY 		= #{saleDay}
 		   AND SALE_SEQ 		= #{saleSeq}
 	</update> 
+	
+	<!-- 상태변경 -->
+	<update id="updateState">
+		UPDATE DR_VOUCHER_SALE
+		   SET VC_STATE 		= #{vcState} 
+		 WHERE SALE_SEQ 		= #{saleSeq}
+	</update>   
 </mapper>

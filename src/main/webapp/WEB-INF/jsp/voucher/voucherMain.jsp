@@ -57,7 +57,7 @@
 					<h5><fmt:formatNumber value="${voc.vcAmount}" pattern="#,###" />원</h5>                
 				</div>
 				
-				<button class="btn btn-primary btn-xs bg-blue-dark ml-1" onClick="javascript:onClick=doPay('${voc.vcCd}')">
+				<button class="btn btn-primary btn-xs bg-blue-dark ml-1" onClick="doPay('${voc.vcCd}')">
 					구매
 				</button>
 			</div>
@@ -82,6 +82,7 @@
 			<c:forEach items="${sList}" var="sale" varStatus="status">
 				<fmt:parseDate value="${sale.VC_TO_DAY}" var="dateValue" pattern="yyyyMMdd"/>
 				<fmt:formatDate value="${dateValue}" var="vcToDay" pattern="yyyy.MM.dd"/>
+				<input type="hidden" id="saleSeq_${status.index}" value="${sale.SALE_SEQ}"/>
 				<div class="mb-0">
 					<!-- 이용권명 / 잔여수량 / 유효기간 -->
 					<button class="btn accordion-btn border-0 color-theme font-14" 
@@ -108,6 +109,7 @@
 				</div>
 			</c:forEach>
 		</div>
+		
 	</div>
 	<!-- // 이용권보유내역 -->
 </div>
@@ -176,102 +178,33 @@
 	
 	<!-- 조회 버튼 -->
 	<div class="col-12 mt-3">
-		<a href="javascript:onClick=doSearch('search')" class="btn btn-full btn-md bg-blue-dark font-800 text-uppercase rounded-s">
+		<a href="#" onclick="doSearch('search')" class="btn btn-full btn-md bg-blue-dark font-800 text-uppercase rounded-s">
 			조회
 		</a>
 	</div>
 </div>
-
 <!--//내역조회 모달-->
  
-<!--예약확인팝업-->
-<div id="modal_reservation" class="menu menu-box-bottom rounded-0" style="height:101%;border-radius: 18px !important;" data-menu-effect="menu-parallax" style="display: block; height: 335px;">
-    <div class="menu-title">
-        <h1 class="my-0 py-0">예약정보확인</h1>
-        <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
-    </div>
-    <div class="divider"></div>
-    <div class="page-content">
-         
-        <div class="content">
-            <div class="row mb-3 mt-4">
-                <h5 class="col-4 text-left font-15">예약명</h5>
-                <h5 class="col-8 text-right font-14 opacity-60">1F 오픈타석</h5>
-                <h5 class="col-4 text-left font-15">이용시간</h5>
-                <h5 class="col-8 text-right font-14 opacity-60">10:00(1H)), 13:00(2H)</h5>
-                <h5 class="col-4 text-left font-15">방문날짜</h5>
-                <h5 class="col-8 text-right font-14 opacity-60">2023년 01월 04일</h5>
-                <h5 class="col-4 text-left font-15">예약장소</h5>
-                <h5 class="col-8 text-right font-14 opacity-60 ">서울시 청담동 클럽디청담</h5>
-
-          
-            </div>
-            <div class="divider"></div>
-
-            <div class="">
-                <h4 class="font-700">이용권 사용</h4>
-                <div class="input-style input-style-2 input-required mt-3">
-                    <span class="input-style-1-active input-style-1-inactive">이용권선택</span>
-                    <em><i class="fa fa-check color-green-dark"></i></em>
-                    <select class="form-control">         
-                        <option value="e">선택해주세요</option>       
-                        <option value="a">이용권1</option>
-                        <option value="b">이용권2</option>
-                    </select>
-                </div> 
-               </div>
-
-               <div class="">
-                <div class="d-flex">
-                    <div>
-                        <h1 class="font-14 mb-0 line-height-m font-500">사용된 이용권</h1>
-                    </div>
-                    <div class="ml-auto pl-3 text-right">
-                        <span class="badge bg-blue-dark color-white font-12 font-400">이용권1(50,000원)</span>
-                        <br/>
-                        <span class="badge bg-blue-dark color-white font-12 font-400">이용권1(50,000원)</span>
-                   
-                    </div>
-                </div> 
-            </div>
- 
-            <div class="divider mt-4"></div>
-            <div class="row">
-                <div class="col-6"><h6 class="font-16">결제금액</h6></div>
-                <div class="col-6"><h6 class="font-16">150,000원</h6></div>
-                <div class="w-100 pt-1"></div>
-                <div class="col-6"><h6 class="font-16 color-blue-dark">이용권사용 </h6></div>
-                <div class="col-6"><h6 class="font-16 color-blue-dark">-100,000원</h6></div>
-                <div class="w-100 pt-2"></div>
-                <div class="col-6"><h6 class="font-700 font-20">최종결제금액</h6></div>
-                <div class="col-6"><h6 class="font-700 font-26">50,000원</h6></div>
-            </div>
-            <div class="divider"></div>
-            <a data-menu="modal_pay" href=""  class="mt-1 mb-4 btn btn-md bg-blue-dark btn-full shadow-xl text-uppercase font-800 rounded-s">
-                결제진행</a>
-        </div> 
-       
-    </div> 
-</div>
-
 <!--바우처캔슬 팝업 -->
 <div id="voucher_cancle" class="menu menu-box-modal rounded-0" data-menu-height="270" data-menu-width="330"
-data-menu-effect="menu-parallax">
-<h1 class="text-center mt-4"><i class="fa-solid fa-triangle-exclamation fa-2x color-red-dark"></i></h1>
-<h3 class="text-center mt-3 font-700">이용권 취소</h3>
-<p class="boxed-text-xl opacity-70">
-     이용권을 정말 취소하시겠습니까?<br/>
-  *사용중인 이용권취소는 고객센터에 연락주시기 바랍니다.  
-</p>
-<div class="row mb-0 mr-3 ml-3">
-   <div class="col-6">
-       <a href="#" class="btn close-menu btn-full btn-md bg-red-dark font-800 text-uppercase rounded-s">아니요</a>
-   </div>
-   <div class="col-6">
-       <a href="#" class="btn close-menu btn-full btn-md bg-green-dark font-800 text-uppercase rounded-s">예</a>
-   </div>
-</div>
+	data-menu-effect="menu-parallax">
+
+	<h1 class="text-center mt-4"><i class="fa-solid fa-triangle-exclamation fa-2x color-red-dark"></i></h1>
+	<h3 class="text-center mt-3 font-700">이용권 취소</h3>
+	<p class="boxed-text-xl opacity-70">
+		 이용권을 정말 취소하시겠습니까?<br/>
+		*사용중인 이용권취소는 고객센터에 연락주시기 바랍니다.  
+	</p>
+	<div class="row mb-0 mr-3 ml-3">
+	   <div class="col-6">
+	       <a href="#" class="btn close-menu btn-full btn-md bg-red-dark font-800 text-uppercase rounded-s">아니요</a>
+	   </div>
+	   <div class="col-6">
+	       <a href="#" onClick="doCancel()" class="btn close-menu btn-full btn-md bg-green-dark font-800 text-uppercase rounded-s">예</a>
+	   </div>
+	</div>
 </div> 
+<!--// 바우처캔슬 팝업 -->
  
 
 <!--   Global Footer-->
@@ -285,6 +218,7 @@ data-menu-effect="menu-parallax">
 
 var msId 		= "<c:out value='${sessionScope.msMember.msId}'/>";
 var coDiv 		= "<c:out value='${coDiv}'/>";
+var saleSeq		= ""; // 취소할때 필요한 매출순번
 
 $(document).ready(function() {
 	if (msId == null || msId == "") {
@@ -386,7 +320,22 @@ function doPay(vcCd) {
 
 // 이용권 결제 취소 
 function doCancel() {
-	
+
+   	$.ajax({
+   		url: "/voucher/cancel/"
+   		, type: "post"
+   		, dataType: 'json'
+   		, data: { "saleSeq" : saleSeq }
+   		, contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+   		, success: function(data) {    			
+   			if (data.code == '0000') {
+   				location.reload();
+   			} else if (data.code == '9999') {
+   				alertModal.fail(data.message);
+   			}
+   		}
+   	});	      
 }
+
 </script>
 </html>

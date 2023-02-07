@@ -25,6 +25,10 @@ public interface DrVoucherListMapper {
 	// 이용권세부내역 등록
 	public int insertDrVoucherList(DrVoucherList drVoucherList);
 	
-	public int updateDrVoucherList(DrVoucherList drVoucherList);
+	// 상태변경
+	public int updateState(DrVoucherList drVoucherList);
+	
+	// 매출순번에 대한 모든 list 상태 변경 
+	public int updateStateBySaleSeq(DrVoucherList drVoucherList);
 
 }

@@ -34,13 +34,13 @@ public interface DrVoucherSaleMapper {
 	
 	public DrVoucherSale getVoucherSale(DrVoucherSale drVoucherSale);
 
-	// 회원이용권 구매내역 등록
+	// 이용권 구매내역 등록
 	public int insertDrVoucherSale(DrVoucherSale drVoucherSale);
 	
-	// 회원이용권 구매내역 수정
-	public int updateDrVoucherSale(DrVoucherSale drVoucherSale);
-	
-	// 회원이용권 잔여수량 수정
+	// 이용권 잔여수량 변경
 	public int updateVcRemCnt(DrVoucherSale drVoucherSale);
+	
+	// 이용권 상태 변경 
+	public int updateState(DrVoucherSale drVoucherSale);
 
 }

@@ -81,7 +81,7 @@ public class DrVoucherSaleService {
 	}
 	
 	/**
-	 * 회원이용권 구매내역 등록
+	 * 이용권 구매내역 등록
 	 * 
 	 * @param drVoucherSale
 	 * @return
@@ -91,23 +91,23 @@ public class DrVoucherSaleService {
 	}
 	
 	/**
-	 * 회원이용권 구매내역 수정
-	 * 
-	 * @param drVoucherSale
-	 * @return
-	 */
-	public int updateDrVoucherSale(DrVoucherSale drVoucherSale) {
-		return drVoucherSaleMapper.updateDrVoucherSale(drVoucherSale);
-	}
-	
-	/**
-	 * 회원이용권 잔여수량 수정
+	 * 이용권 잔여수량 변경
 	 * 
 	 * @param drVoucherSale
 	 * @return
 	 */
 	public int updateVcRemCnt(DrVoucherSale drVoucherSale) {
 		return drVoucherSaleMapper.updateVcRemCnt(drVoucherSale);
+	}
+	
+	/**
+	 * 이용권 상태 변경
+	 * 
+	 * @param drVoucherSale
+	 * @return
+	 */
+	public int updateState(DrVoucherSale drVoucherSale) {
+		return drVoucherSaleMapper.updateState(drVoucherSale);
 	}
 
 }
