@@ -12,7 +12,7 @@
     </div>
 	<form id="frmMemberAdd" name="frmMemberAdd">
     <div class="content mt-5">
-        <!-- <h3 class="font-700">개인정보</h3> --> 
+       <h4 class="font-700 mt-5 mb-3">개인정보</h4>
         <input type="hidden" id="msNum" name="msNum" value="${sessionScope.msMember.msNum}">
         <div class="input-style input-style-2 input-required">
             <span class="color-highlight">성별 선택</span>
@@ -27,10 +27,10 @@
         <div class="input-style input-style-2 input-required">
             <span style="color:#3b80d6">생년월일</span>
             <em><i class="fa-solid fa-calendar-days font-17"></i></em>
-            <input type="text" class="form-control" id="msBirth" name="msBirth" value="">
+            <input type="text" class="form-control" id="msBirth" name="msBirth" value="" readonly style="height: 50px;">
         </div>
 		
-		<div class="input-style input-style-2  input-required">
+		<div class="row mt-3 mb-0">
             <div class="col-6 mb-1">
                 <div class="input-style input-style-2  input-required">
                     <span class="color-highlight">지역(시/도)</span>
@@ -56,9 +56,53 @@
               			 </c:forEach> --%>
                     </select>
                 </div> 
-            </div>
+            </div> 
         </div>
-               
+          
+               <div class="row mb-0 mt-2" id="carArea1">
+		            <div class="col-12 mb-1">
+		                <div class="input-style input-style-2 input-required">
+		                    <span class="color-highlight input-style-1-active">차량번호(최대3대)</span>
+		                    <p class="font-13 color-green-dark mb-0" style="position: absolute; right: 10px;top:12px;height:30px;z-index:1;" id="btnAddCar">
+		                     <i class="fa-solid fa-plus font-12"></i> 차량추가</p>
+		                    <input class="form-control" type="name" id="msCarNo1" name="msCarNo1">
+		                </div> 
+		            </div>
+		         </div>
+				<!--차량추가2-->
+		        <div class="row mb-0 mt-0" id="carArea2" style="display:none;">
+		            <div class="col-12 mb-1">
+		                <div class="input-style input-style-2 input-required">
+		                    <p class="font-13 color-red-dark mb-0" style="position: absolute; right: 10px;top:12px;height:30px;z-index:1;" id="btnDelCar2"> 
+		                    <i class="fa-solid fa-x  font-12"></i> 차량삭제</p>
+		                    <input class="form-control" type="name" id="msCarNo2" name="msCarNo2">
+		                </div> 
+		            </div>
+		        </div>
+				<!--차량추가3-->
+				<div class="row mb-0 mt-0" id="carArea3" style="display:none;">
+				    <div class="col-12 mb-1">
+				        <div class="input-style input-style-2 input-required">
+				            <p class="font-13 color-red-dark mb-0" style="position: absolute; right: 10px;top:12px;height:30px;z-index:1;" id="btnDelCar3"> 
+				            <i class="fa-solid fa-x  font-12"></i> 차량삭제</p>
+				            <input class="form-control" type="name" id="msCarNo3" name="msCarNo3">
+				        </div> 
+				    </div>
+				</div>
+            
+           <div class="input-style input-style-2 input-required">
+            <span class="color-highlight">선호 업장</span>
+            <em><i class="fa fa-angle-down"></i></em>
+             <select id="coDiv" name="coDiv">
+                 <option value="" disabled>선호하는 업장</option>
+                 <c:forEach items="${placeList}" var="item" varStatus="status">
+                 <option value="${item.coDiv}">${item.coName}</option>
+                 </c:forEach>
+             </select>
+        </div>
+             
+         
+         <h4 class="font-700 mt-5 mb-3">레슨정보</h4>  
         <div class="input-style input-style-2 input-required">
             <span class="color-highlight">레슨경험</span>
             <em><i class="fa fa-angle-down"></i></em>
@@ -97,6 +141,9 @@
             </div>
         </div>
 
+		
+		<h4 class="font-700 mt-1 mb-3">직장정보</h4>
+		
         <div class="row mb-0"> 
             <div class="col-6 mb-3">
                 <div class="input-style input-style-2 input-required">
@@ -116,7 +163,7 @@
                     <input class="form-control" type="name" placeholder="" id="msCompnm" name="msCompnm">
                 </div> 
             </div>
-            <div class="row mb-1 mt-3">
+         <%--    <div class="row mb-1 mt-3">
 	            <div class="col-6 mb-1">
 	                <div class="input-style input-style-2  input-required">
 	                    <span class="color-highlight">지역(시/도)</span>
@@ -124,9 +171,9 @@
 							<select id="msHomeaddr1" name="msHomeaddr1">
 		                        <option value="" disabled>선택하세요</option>
 		                        <option value="서울시" disabled>서울시</option>
-		                        <%-- <c:forEach items="${msHomeaddr1List}" var="item" varStatus="status">
+		                        <c:forEach items="${msHomeaddr1List}" var="item" varStatus="status">
 		                        <option value="${item.cdCode}">${item.cdTitle1}</option>
-				                </c:forEach> --%>
+				                </c:forEach>
 							</select>
 		                </div> 
 		            </div>
@@ -137,58 +184,22 @@
 	                        <select id="msHomeaddr2" name="msHomeaddr2">
 	                            <option value="">선택하세요</option>
 	                            <option value="강남구">강남구</option>
-	                            <%-- <c:forEach items="${msHomeaddr2List}" var="item" varStatus="status">
+	                            <c:forEach items="${msHomeaddr2List}" var="item" varStatus="status">
 		                        <option value="${item.cdCode}">${item.cdTitle1}</option>
-				                </c:forEach> --%>
+				                </c:forEach>
 	                        </select>
 	                    </div> 
 	                </div>
-	            </div> 
-            <div class="col-12 mb-0">
-                <div class="row mb-0 mt-4" id="carArea1">
-		            <div class="col-12 mb-1">
-		                <div class="input-style input-style-2 input-required">
-		                    <span class="color-highlight input-style-1-active">차량번호(최대3대)</span>
-		                    <p class="font-13 color-green-dark mb-0" style="position: absolute; right: 10px;top:12px;height:30px;z-index:1;" id="btnAddCar">
-		                     <i class="fa-solid fa-plus font-12"></i> 차량추가</p>
-		                    <input class="form-control" type="name" id="msCarNo1" name="msCarNo1">
-		                </div> 
-		            </div>
-		         </div>
-				<!--차량추가2-->
-		        <div class="row mb-0 mt-0" id="carArea2" style="display:none;">
-		            <div class="col-12 mb-1">
-		                <div class="input-style input-style-2 input-required">
-		                    <p class="font-13 color-red-dark mb-0" style="position: absolute; right: 10px;top:12px;height:30px;z-index:1;" id="btnDelCar2"> 
-		                    <i class="fa-solid fa-x  font-12"></i> 차량삭제</p>
-		                    <input class="form-control" type="name" id="msCarNo2" name="msCarNo2">
-		                </div> 
-		            </div>
-		        </div>
-				<!--차량추가3-->
-				<div class="row mb-0 mt-0" id="carArea3" style="display:none;">
-				    <div class="col-12 mb-1">
-				        <div class="input-style input-style-2 input-required">
-				            <p class="font-13 color-red-dark mb-0" style="position: absolute; right: 10px;top:12px;height:30px;z-index:1;" id="btnDelCar3"> 
-				            <i class="fa-solid fa-x  font-12"></i> 차량삭제</p>
-				            <input class="form-control" type="name" id="msCarNo3" name="msCarNo3">
-				        </div> 
-				    </div>
-				</div>
-            </div>
-      
-        </div>
-        <div class="input-style input-style-2 input-required">
-            <span class="color-highlight">선호 업장</span>
-            <em><i class="fa fa-angle-down"></i></em>
-             <select id="coDiv" name="coDiv">
-                 <option value="" disabled>선호하는 업장</option>
-                 <c:forEach items="${placeList}" var="item" varStatus="status">
-                 <option value="${item.coDiv}">${item.coName}</option>
-                 </c:forEach>
-             </select>
-        </div>
-
+	            </div>  --%>
+	            
+	            <div class="col-12 mb-3">
+                        <div class="input-style input-style-2  input-required">
+                            <span class="color-highlight input-style-1-active">직장주소</span>
+                            <input class="form-control" type="name" placeholder="">
+                        </div> 
+                    </div> 
+       	 </div>
+       
     </div>
 	</form>
     <div class="content mb-0 ">

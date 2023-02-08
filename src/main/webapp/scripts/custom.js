@@ -965,7 +965,7 @@ $(document).ready(function(){
             local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
             return local.toJSON().slice(0,10);
         });
-        $('input[type="date"]').val(new Date().toDateInputValue());
+        // $('input[type="date"]').val(new Date().toDateInputValue());  //인풋date삭제
 
         //QR Generator
         var generateQR = $('.generate-qr-result, .generate-qr-auto');

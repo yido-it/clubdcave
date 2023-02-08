@@ -5746,7 +5746,7 @@ code {
 .theme-dark input,
 .theme-dark textarea,
 .theme-dark select {
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.15) !important;
 }
 
 .theme-dark .input-style-1 input:focus,
@@ -7143,3 +7143,11 @@ background-color: #1b1d21;}
 
 /*이용권*/
 .collapse{border-bottom:1px solid #333}
+
+/*달력*/
+.ui-datepicker td {
+    background-color: #d7d7d7 !important;}
+.ui-datepicker table{
+    background-color: #fff !important;}
+.ui-datepicker th {
+background-color: #242424 !important;}
