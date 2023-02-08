@@ -94,5 +94,5 @@
 		 WHERE MS_NUM 			= #{msNum}
 		   AND LIC_SEQ 			= #{licSeq}
 	</update>
-	
+		
 </mapper>

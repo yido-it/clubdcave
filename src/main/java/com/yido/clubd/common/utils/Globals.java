@@ -1,5 +1,7 @@
 package com.yido.clubd.common.utils;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class Globals {	
 	public static String serverIpAddress;
 	public static String fileUploadPath;

@@ -27,8 +27,7 @@ public class WebController {
 	 * 메인페이지
 	 * 
 	 * @param model
-	 * @param assetUser
-	 * @param request
+	 * @param req
 	 * @return
 	 */
 	@RequestMapping("/main")
@@ -36,6 +35,14 @@ public class WebController {
 		return "/index";
 	}
 
+	/**
+	 * 로그인 페이지
+	 * 
+	 * @param error
+	 * @param req
+	 * @param model
+	 * @return
+	 */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(@RequestParam(required = false) String error, HttpServletRequest req, Model model) throws IOException {
      
@@ -53,8 +60,16 @@ public class WebController {
         return "/member/login";
     }  
     
+    /**
+	 * 로그아웃 처리
+	 * 
+	 * @param model
+	 * @param req
+	 * @param model
+	 * @return
+	 */
     @RequestMapping("/succ-logout")
-	public String successLogout(Model model, Principal principal, HttpServletRequest req, HttpServletResponse res) {
+	public String successLogout(Model model, HttpServletRequest req, HttpServletResponse res) {
 
 		//세션 invalidate
     	req.getSession().invalidate();

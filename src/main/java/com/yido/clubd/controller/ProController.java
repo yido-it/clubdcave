@@ -36,6 +36,12 @@ import com.yido.clubd.service.ProService;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 레슨프로
+ * 
+ * @author YOO
+ *
+ */
 @Controller
 @Slf4j
 @RequestMapping("/pro")
@@ -60,9 +66,11 @@ public class ProController {
 	private DrMsCoInfoService drMsCoInfoService;
 	
 	/**
-	 * 레슨프로 목록 페이지
+	 * 프로 목록 페이지
 	 * 
-	 */	
+	 * @param req
+	 * @return
+	 */
 	@RequestMapping("/proMain")  
 	public String goProMain(Model model) {
 		try {
@@ -81,15 +89,14 @@ public class ProController {
 	}
 	
 	/**
-	 * 레슨프로 목록 페이지
+	 * 프로 목록 조회
 	 * 
-	 * @param model
-	 * @param req
+	 * @param res
 	 * @return
 	 */	
 	@RequestMapping("/getProList")
 	@ResponseBody
-	public Map<String, Object> getProList(HttpServletResponse response) {
+	public Map<String, Object> getProList(HttpServletResponse res) {
 		Map<String, Object> map = new HashMap<>();		
 		
 		try {
@@ -108,9 +115,11 @@ public class ProController {
 	}
 	
 	/**
-	 * 레슨프로 상세 페이지
+	 * 프로 상세 페이지
 	 * 
 	 * @param model
+	 * @param req
+	 * @param mmsNum
 	 * @return
 	 */	
 	@RequestMapping("/proDetail")  
@@ -122,20 +131,21 @@ public class ProController {
 		
 		List<ProVO> proNoticeList = proService.selectProNoticeList(map);
 		List<ProVO> proLicList = proService.selectProLicenseList(map);
-		List<ProVO> proImageList = proService.selectProImageList(map);
+		MemberVO proProfile = memberService.selectProfileImg(map);
 		
 		model.addAttribute("proInfo", member);
 		model.addAttribute("proNoticeList", proNoticeList);
 		model.addAttribute("proLicList", proLicList);
-		model.addAttribute("proImageList", proImageList);
+		model.addAttribute("proProfile", proProfile);
 		
 		return "/pro/proDetail";
 	}
 	
 	/**
-	 * 레슨프로 수정 페이지
+	 * 프로 정보수정 페이지
 	 * 
 	 * @param model
+	 * @param session
 	 * @return
 	 */	
 	@RequestMapping("/proForm")  
@@ -186,6 +196,13 @@ public class ProController {
 		return "/pro/proForm";
 	}
 	
+	/**
+	 * 프로 정보수정 저장
+	 * 
+	 * @param req
+	 * @param params
+	 * @return map
+	 */	
 	@RequestMapping("/saveProForm")
 	@ResponseBody
 	public Map<String, Object> saveProForm(HttpServletRequest req, Map<String, Object> params){
@@ -209,19 +226,26 @@ public class ProController {
 		return map;
 	}
 	
-		@RequestMapping("/pro/uploadProImage")
+	/**
+	 * 프로 프로필 이미지 업로드
+	 * 
+	 * @param mreq
+	 * @param params
+	 * @return map
+	 */	
+	@RequestMapping("/pro/uploadProfileImg")
 	@ResponseBody
-	public HashMap<String, Object> uploadProImage(MultipartHttpServletRequest mreq, HttpServletRequest req, MemberVO memberVO) 
+	public Map<String, Object> uploadProfileImg(MultipartHttpServletRequest mreq, Map<String, Object> params) 
 		throws IllegalStateException, IOException {
 	
-			HashMap<String, Object> map = new HashMap<String, Object>();
+			Map<String, Object> map = new HashMap<String, Object>();
 
 			String yearMonth = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM"));			
-			String path = "001" + "/" + "picture" + "/" + yearMonth;
-			memberVO.setMsImgData(path);
+			String path = "001" + "/" + "profile" + "/" + yearMonth;
+			params.put("msImgData", path);
 			
 			try {
-				//memberService.uploadMemberImage(memberVO, mreq);
+				memberService.uploadProfileImg(params, mreq);
 				map.put("result",  true);
 
 			} catch (Exception e) {
@@ -232,109 +256,16 @@ public class ProController {
 			return map;	
 	}
 	
+	/**
+	 * 프로 갤러리 페이지
+	 * 
+	 * @param model
+	 * @param session
+	 * @return
+	 */	
 	@RequestMapping("/proGallery")  
 	public String goProGallery(Model model, HttpSession session) {
 		return "/pro/proGallery";
-	}
-	
-	/**
-	 * 레슨프로 특이사항 등록
-	 * 
-	 * @param req
-	 * @param proVO
-	 * @return
-	 */
-	@RequestMapping("/insertProNotice")
-	@ResponseBody
-	public Map<String, Object> insertProNotice(HttpServletRequest req, ProVO proVO){
-
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		try {
-			proService.insertProNotice(proVO);
-			map.put("result",  true);
-		} catch(Exception e) {
-			e.printStackTrace();
-			map.put("result",  false);
-			map.put("message", "등록중 오류가 발생하였습니다.");
-		}
-		
-		return map;
-	}
-	
-	/**
-	 * 레슨프로 특이사항 수정
-	 * 
-	 * @param req
-	 * @param proVO
-	 * @return
-	 */
-	@RequestMapping("/updateProNotice")
-	@ResponseBody
-	public Map<String, Object> updateProNotice(HttpServletRequest req, ProVO proVO){
-
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		try {
-			proService.updateProNotice(proVO);
-			map.put("result",  true);
-		} catch(Exception e) {
-			e.printStackTrace();
-			map.put("result",  false);
-			map.put("message", "수정중 오류가 발생하였습니다.");
-		}
-		
-		return map;
-	}
-	
-	/**
-	 * 레슨프로 자격사항 등록
-	 * 
-	 * @param req
-	 * @param proVO
-	 * @return
-	 */
-	@RequestMapping("/insertProLicense")
-	@ResponseBody
-	public Map<String, Object> insertProLicense(HttpServletRequest req, ProVO proVO){
-
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		try {
-			proService.insertProLicense(proVO);
-			map.put("result",  true);
-		} catch(Exception e) {
-			e.printStackTrace();
-			map.put("result",  false);
-			map.put("message", "등록중 오류가 발생하였습니다.");
-		}
-		
-		return map;
-	}
-	
-	/**
-	 * 레슨프로 자격사항 수정
-	 * 
-	 * @param req
-	 * @param proVO
-	 * @return
-	 */
-	@RequestMapping("/updateProLicense")
-	@ResponseBody
-	public Map<String, Object> updateProLicense(HttpServletRequest req, ProVO proVO){
-
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		try {
-			proService.updateProLicense(proVO);
-			map.put("result",  true);
-		} catch(Exception e) {
-			e.printStackTrace();
-			map.put("result",  false);
-			map.put("message", "수정중 오류가 발생하였습니다.");
-		}
-		
-		return map;
 	}
 	
 	/**

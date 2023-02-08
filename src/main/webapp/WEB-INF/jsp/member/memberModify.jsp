@@ -234,7 +234,7 @@
                     </div>
                     <div class="col-6 mb-3">
                         <div class="input-style input-style-2  input-required">
-                            <span class="color-highlight">직장명</span>
+                            <span class="color-highlight input-style-1-active">직장명</span>
                             <input class="form-control" type="name" placeholder="" id="msCompnm" name="msCompnm" value="${sessionScope.msMember.msCompnm}">
                         </div> 
                     </div>
@@ -242,40 +242,9 @@
                     <div class="col-12 mb-3">
                         <div class="input-style input-style-2  input-required">
                             <span class="color-highlight input-style-1-active">직장주소</span>
-                            <input class="form-control" type="name" placeholder="">
+                            <input class="form-control" type="name" placeholder="" id="msCompnm" name="msCompAddr1" value="${sessionScope.msMember.msCompAddr1}">
                         </div> 
                     </div>
-                    
-                    
-			          <%--   <div class="col-6 mb-1">
-			                <div class="input-style input-style-2  input-required">
-			                    <span class="color-highlight">지역(시/도)</span>
-			                    <em><i class="fa fa-angle-down"></i></em>
-		                    	<input class="form-control" type="hidden" id="msCompaddr1Val" value="${sessionScope.msMember.msCompaddr1}" >
-			                    <select id="msCompaddr1" name="msCompaddr1">
-			                        <option value="" disabled>선택하세요</option>
-			                        <option value="서울시">서울시</option>
-			                        <c:forEach items="${msHomeaddr1List}" var="item" varStatus="status">
-			                        <option value="${item.cdCode}">${item.cdTitle1}</option>
-					                </c:forEach>
-			                    </select>
-			                </div> 
-			            </div>
-		                <div class="col-6 mb-1">
-		                    <div class="input-style input-style-2  input-required">
-		                        <span class="color-highlight">시/군/구</span>
-		                        <em><i class="fa fa-angle-down"></i></em>
-		                        <input class="form-control" type="hidden" id="msCompaddr2Val" value="${sessionScope.msMember.msCompaddr2}" >
-		                        <select id="msCompaddr2" name="msCompaddr2">
-		                            <option value="" disabled>선택하세요</option>
-		                            <option value="강남구">강남구</option>
-		                            <c:forEach items="${msHomeaddr2List}" var="item" varStatus="status">
-			                        <option value="${item.cdCode}">${item.cdTitle1}</option>
-					                </c:forEach>
-		                        </select>
-		                    </div> 
-		                </div>         --%>           
-              
                 </div>
             
             </div>
@@ -337,6 +306,11 @@
 			setSelectValue('msLessonExpYn');		
 			setSelectValue('msJobCd');
 			setSelectValue('coDiv');
+			
+			setSelectValue('msHomeaddr1');
+			setSelectValue('msHomeaddr2');
+			setSelectValue('msCompaddr1');
+			setSelectValue('msCompaddr2');
 			
 			showCarInput();
 		})

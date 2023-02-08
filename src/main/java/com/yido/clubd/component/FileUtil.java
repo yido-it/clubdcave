@@ -33,15 +33,9 @@ public class FileUtil {
 	 * 파일 업로드
 	 */
     public static void uploadObject(String projectNm, String folderName, String objectName, String filePath) throws IOException {
-    	//projectNm = "safed";
-    	//folderName = "AA00" + "/" + 1 + "/" + 202004 + "/" + "eval";
-    	//objectName = System.currentTimeMillis() + extName;
-    	//filePath = convFile.getAbsolutePath();
 
     	String fullPath = null;
-//    	folderName = folderName.replaceAll("/", "\\\\");
 		fullPath = folderName + "/" + objectName;
-//		fullPath = fullPath.replaceAll("/", "\\\\");
 
 		makeDir(folderName);
 		log.debug(folderName);
@@ -55,7 +49,7 @@ public class FileUtil {
 		log.debug(ext);
 
 		if (ext.equals(".png") || ext.equals(".jpg") || ext.equals(".jpeg")) {
-			ImageUtil.reduceImg(rootDir + folderName + "/", rootDir + "/thumb/" + folderName + "/", ext, objectName);
+			ImageUtil.reduceImg(rootDir + folderName + "/", rootDir + folderName + "/thumb/", ext, objectName);
 		}
 
     }

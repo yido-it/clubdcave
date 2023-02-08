@@ -39,5 +39,6 @@ public interface ProMapper {
 	// 레슨프로자격사항 수정
 	public int updateProLicense(ProVO proVO);
 
+	public void insertProImage(Map<String, Object> params);
 
 }

@@ -362,7 +362,13 @@ function setSelectValue(id, value) {
 function setDateValue(id, value) {
 	var id = "#" + id;
 	if(value == undefined || value == null) {
-		if($(id).val() != null && $(id).val() != "") {		
+		value = $(id).val();
+		if(value != null && value != "") {
+			$(id).val(value);		
+			$(id).parent().find('span').removeClass('input-style-1-inactive input-style-1-active');
+			$(id).parent().find('span').addClass('input-style-1-inactive input-style-1-active');
+		} else {
+			$(id).val(getToDay("-"));			
 			$(id).parent().find('span').removeClass('input-style-1-inactive input-style-1-active');
 			$(id).parent().find('span').addClass('input-style-1-inactive input-style-1-active');
 		}
