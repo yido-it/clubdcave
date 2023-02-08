@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.yido.clubd.common.service.CommonService;
 import com.yido.clubd.common.utils.ResultVO;
 import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.model.BookInfoVO;
+import com.yido.clubd.model.CdCommon;
 import com.yido.clubd.model.CoPlace;
 import com.yido.clubd.model.DrBayInfo;
 import com.yido.clubd.model.DrBkHistory;
@@ -84,6 +87,9 @@ public class BookController {
 	@Autowired
 	private DrVoucherListService drVoucherListService;
 	
+	@Autowired
+	private CommonService commonService;
+	
 	/**
 	 * [예약] 예약페이지
 	 * 
@@ -120,6 +126,20 @@ public class BookController {
 			msMap.put("msId", sessionVO.getMsId());
 			String grantYn = memberService.chkMsBkGrant(msMap);
 			model.addAttribute("grantYn", grantYn);			
+			
+			// 예약 갯수 조회 (조건 : 회원번호 & 상태 : 취소,노쇼,정산완료 아닌 것)
+			int bkCnt = drBkHistoryService.getBkCnt(sessionVO.getMsNum());
+			model.addAttribute("bkCnt", bkCnt);		
+			
+			// 예약 최대 개수 
+			CdCommon common = new CdCommon();
+			common.setCdDivision("002");
+			common.setCdCode("11");
+			common = commonService.getCommonCode(common);
+			int maxBkCnt = common != null && common.getCdLength() != null && !common.getCdLength().equals("") 
+					? Integer.parseInt(common.getCdLength()) : 4;
+			model.addAttribute("maxBkCnt", maxBkCnt);
+			// end.
 			
 		} catch(Exception e) {
 			e.printStackTrace();

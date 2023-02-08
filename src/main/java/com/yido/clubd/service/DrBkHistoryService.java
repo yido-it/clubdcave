@@ -75,10 +75,27 @@ public class DrBkHistoryService {
 		return drBkHistoryMapper.selectBkHis(param);
 	}
 	
-	// 가장 최근 대표예약고유번호 조회 (조건 : 회원번호)
+	/**
+	 * 가장 최근 대표예약고유번호 조회 (조건 : 회원번호)
+	 * 
+	 * @param param
+	 * @return
+	 */
 	public String selectCalcSNo(Map<String, Object> param) {
 		return drBkHistoryMapper.selectCalcSNo(param);
 	}
+	
+
+	/**
+	 * 예약 갯수 조회 (조건 : 회원번호 & 상태 : 취소,노쇼,정산완료 아닌 것) 
+	 * 
+	 * @param drBkHistory
+	 * @return
+	 */
+	public int getBkCnt(String msNum) {
+		return drBkHistoryMapper.getBkCnt(msNum);
+	}
+	
 	
 	/**
 	 * 예약내역 등록

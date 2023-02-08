@@ -153,7 +153,8 @@ var sYear, sMonth, sDate;
 var msId 				= "<c:out value='${sessionScope.msMember.msId}'/>";
 var msLevel 			= "<c:out value='${sessionScope.msMember.msLevel}'/>";
 var msNum				= "<c:out value='${sessionScope.msMember.msNum}'/>";
-
+var bkCnt				= "<c:out value='${bkCnt}'/>";			// 현재까지 예약한 갯수
+var maxBkCnt			= "<c:out value='${maxBkCnt}'/>";		// 최대 예약가능 갯수
 var grantYn 			= "<c:out value='${grantYn}'/>";		// 위약 정보 ( grantYn > N : 예약불가 )
 
 var reservationInfo 	= {};
@@ -455,18 +456,25 @@ function selectedBay(bayCd, bayName) {
 
 // 예약하기 버튼 클릭
 function doBook() {
+	var matches = document.getElementsByClassName('active');
+	
+	if (matches.length <= 0) {
+		alertModal.fail('예약시간을 선택해주세요.');
+		return;
+	}
+
+	// 예약 최대 개수 체크 
+	var totBkCnt = Number(bkCnt) + matches.length;
+	if (maxBkCnt < totBkCnt) {
+		alertModal.fail('최대 예약 가능 개수는 ' + maxBkCnt + "건 입니다. 이미 " + bkCnt + "건을 예약 하셨습니다.");
+		return;
+	}
+	// end.
 
 	var bkList = new Array();		// 선택된 시간 
 	
 	if ($('#bayCondi').val() == "") {
 		alertModal.fail('베이를 선택해주세요.');
-		return;
-	}
-	
-	var matches = document.getElementsByClassName('active');
-	
-	if (matches.length <= 0) {
-		alertModal.fail('예약시간을 선택해주세요.');
 		return;
 	}
 	

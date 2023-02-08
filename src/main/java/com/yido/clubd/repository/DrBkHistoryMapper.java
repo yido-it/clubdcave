@@ -29,6 +29,9 @@ public interface DrBkHistoryMapper {
 	// 가장 최근 대표예약고유번호 조회 (조건 : 회원번호)
 	public String selectCalcSNo(Map<String, Object> param);
 	
+	// 예약 갯수 조회 (조건 : 회원번호 & 상태 : 취소,노쇼,정산완료 아닌 것)
+	public int getBkCnt(String msNum);
+	
 	// 예약내역 등록
 	public int insertDrBkHistory(Map<String, Object> params);
 	

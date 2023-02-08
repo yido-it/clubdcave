@@ -125,6 +125,15 @@
 		LIMIT 1
 	</select>
 		
+	<!-- 예약 갯수 조회 (조건 : 회원번호 & 상태 : 취소,노쇼,정산완료 아닌 것) -->
+	<select id="getBkCnt" parameterType="String" resultType="int">
+		SELECT COUNT(*) BK_CNT
+		FROM DR_BK_HISTORY
+		WHERE BK_STATE NOT IN (2,3,7) 
+		  AND BK_DAY >= DATE_FORMAT(NOW(), '%Y%m%d%H')
+		  AND MS_NUM = #{msNum}
+	</select>
+	
     <insert id="insertDrBkHistory" parameterType="hashmap">
     	INSERT INTO DR_BK_HISTORY (
 			BK_SERIAL_NO
