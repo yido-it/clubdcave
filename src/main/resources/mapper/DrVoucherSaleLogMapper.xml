@@ -38,8 +38,6 @@
 			, INPUT_STAFF
 			, INPUT_DATETIME
 			, INPUT_IP
-			, LK_CO_DIV
-			, LK_NUM
     	) values (
     		#{coDiv}			
     		, #{saleDay}		
@@ -65,9 +63,7 @@
     		, #{dcRemark}
     		, 'APP'			
     		, now()
-			, #{inputIp}	
-			, '001'
-			, '1234'					
+			, #{inputIp}					
     	)  	
     </insert>
     

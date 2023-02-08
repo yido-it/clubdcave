@@ -380,16 +380,29 @@ function doSearchList(type) {
 				for (let i=0; i<data.length; i++) {
 
 					var toDay = getStringDt2(data[i].VC_TO_DAY, '-');
+				
+					var isCancel = false;
+					if (data[i].VC_LIMIT_CNT == data[i].VC_REM_CNT) {
+						isCancel = true;	// 사용전이므로 [구매취소] 가능  
+					} 
 					
 					divCnt += '<input type="hidden" id="saleSeq_'+i+'" value="'+data[i].SALE_SEQ+'"/>';
 					divCnt += '<div class="mb-0" id=saleList_'+(listSize+i)+'>';
-					// 이용권명 / 잔여수량 / 유효기간
-					divCnt += '<button class="btn accordion-btn border-0 color-theme font-14"';
-					divCnt += '			onClick="doSearch(\''+data[i].SALE_DAY+'\', '+data[i].SALE_SEQ+', \''+data[i].VC_CD+'\', '+i+')"';
-					divCnt += '			data-toggle="collapse" data-target="#collapse'+i+'">';
+				
+					if (isCancel) {
+						// 사용전이므로 [구매취소] 가능  
+						divCnt += '<button class="btn accordion-btn border-0 color-theme font-14">';
+					} else {
+						// [구매취소] 불가 + 상세내역 조회 
+						divCnt += '<button class="btn accordion-btn border-0 color-theme font-14"';
+						divCnt += '			onClick="doSearch(\''+data[i].SALE_DAY+'\', '+data[i].SALE_SEQ+', \''+data[i].VC_CD+'\', '+i+')"';
+						divCnt += '			data-toggle="collapse" data-target="#collapse'+i+'">';						
+					}
+
 					divCnt += data[i].SALE_SEQ + "/" + data[i].VC_NAME ;
 					divCnt += '<span class="color-blue-dark ml-1"> 잔여 '+data[i].VC_REM_CNT+'매</span>';
-					if (data[i].VC_LIMIT_CNT == data[i].VC_REM_CNT) {
+					
+					if (isCancel) {
 						// 구매취소 
 						divCnt += '<a href="#" data-menu="voucher_cancle" data-idx="'+i+'" data-page="vouList" class="fr btn btn-xs btn_accodion_voucher rounded-0 font-900 border-red-dark color-red-dark"';
 						divCnt += '		style="border-bottom : 1px solid #DA4453 !important">';
