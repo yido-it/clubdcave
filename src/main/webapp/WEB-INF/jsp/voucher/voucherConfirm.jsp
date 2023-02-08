@@ -33,23 +33,30 @@
         <div class="divider mt-4"></div>
         
         <div class="content">
-			<div class="row mb-3 mt-4">
-				<div class="d-flex mb-3 pl-2" style="width:100%">
-			
-					<div class="pl-1" style="width:80%">
-						<h1 class="font-20 mb-n3">${sale.CO_NAME} </h1>
-						<p class="mb-1 mt-2 color-highlight font-15">${sale.VC_NAME}</p>
-						<!-- <p class="line-height-s font-12 font-500">서울시 청담동 청담로 988</p> -->
-					</div>
-				</div> 
-	 
-				<!-- 결제금액 -->
-				<h5 class="col-4 text-left font-15">결제금액</h5>
-				<h5 class="col-8 text-right font-14 opacity-60 ">
-					<fmt:formatNumber value="${sale.VC_AMOUNT}" pattern="#,###" />원
-				</h5>
-				
-			</div>
+			<div class="d-flex mb-0" style="width:100%">
+				<div>
+					<!-- <i class="fa-solid fa-money-check fa-4x color-red-dark"></i>  -->
+					<img src="/images/icons/ticket2.png" style="width:70px">
+				</div>
+				<div class="pl-3" style="width:80%">
+					<h1 class="font-20 mb-n3">${sale.CO_NAME} </h1>
+					<p class="mb-1 mt-2 color-highlight font-15">${sale.VC_NAME}</p>
+					<!-- <p class="line-height-s font-12 font-500">서울시 청담동 청담로 988</p> -->
+				</div>
+			</div> 
+			<p class="opacity-50 mt-1 font-13"><i class="fa-regular fa-clock"></i> 유효기간: 구매일로부터 ${sale.VC_MONTH}개월</p>
+
+
+			<div class="divider mt-4"></div>
+			<div class="row">
+				<div class="col-6 mt-1"><h6 class="font-700 font-20">결제금액</h6></div>
+				<div class="col-6">
+					<h6 class="font-700 font-28">
+						<fmt:formatNumber value="${sale.VC_AMOUNT}" pattern="#,###" />원
+					</h6>
+				</div>
+			</div>	 
+		
 			
 			<div class="divider"></div>
 			

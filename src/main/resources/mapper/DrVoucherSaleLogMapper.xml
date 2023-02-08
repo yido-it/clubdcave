@@ -26,9 +26,15 @@
 			, VC_STATE
 			, VC_LIMIT_CNT
 			, VC_SERVICE_CNT
+			, VC_USE_CNT
+			, VC_REM_CNT
+			, VC_REMARK
+			, USE_YN
 			, VC_AMOUNT
 			, VC_NET
 			, VC_VAT
+			, DC_AMOUNT
+			, DC_REMARK
 			, INPUT_STAFF
 			, INPUT_DATETIME
 			, INPUT_IP
@@ -47,10 +53,16 @@
     		, #{vcToDay}		
     		, #{vcState}		
     		, #{vcLimitCnt}		
-    		, #{vcServiceCnt}		
+    		, #{vcServiceCnt}	
+    		, #{vcUseCnt}
+    		, #{vcRemCnt}
+    		, #{vcRemark}
+    		, #{useYn}	
     		, #{vcAmount}
     		, #{vcNet}
     		, #{vcVat}
+    		, #{dcAmount}
+    		, #{dcRemark}
     		, 'APP'			
     		, now()
 			, #{inputIp}	

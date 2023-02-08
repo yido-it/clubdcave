@@ -44,7 +44,7 @@
 				<p class="mb-1 mt-2 color-highlight font-15">${voc.vcName}</p>				
 			</div>
 		</div>
-		<p class="opacity-50 mt-1 font-13"><i class="fa-regular fa-clock"></i> 유효기간: 구매일로부터 6개월</p>
+		<p class="opacity-50 mt-1 font-13"><i class="fa-regular fa-clock"></i> 유효기간: 구매일로부터 ${voc.vcMonth}개월</p>
 	
 		<div class="divider mt-4"></div>
 		<div class="row">

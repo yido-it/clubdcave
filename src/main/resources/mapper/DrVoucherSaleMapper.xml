@@ -26,6 +26,8 @@
 		     , A.SALE_SEQ
 		     , A.VC_CD
 		     , A.VC_AMOUNT
+		     , A.VC_STATE
+		     , A.MS_NUM
 		FROM DR_VOUCHER_SALE A 
 				INNER JOIN DR_VOUCHER_CODE B ON A.VC_CD = B.VC_CD
 		WHERE 1=1 
@@ -35,7 +37,23 @@
 		<if test='msNum != null and msNum != ""'>
 		  AND A.MS_NUM = #{msNum}
 		</if> 
+		<if test='srchPeriod != null and srchPeriod != "" and strtDt != null and endDt != null'>
+		 AND A.SALE_DAY BETWEEN #{strtDt} AND #{endDt}
+		</if>
+		<choose> 
+			<when test='srchUseYn != null and srchUseYn == "Y"'>
+			  AND (A.VC_REM_CNT = 0 OR A.VC_STATE != 1)
+			</when> 
+			<when test='srchUseYn != null and srchUseYn == "N"'>
+			  AND (A.VC_REM_CNT > 0 AND A.VC_STATE = 1)
+			</when> 
+			<otherwise></otherwise>
+		</choose> 
 		  AND A.USE_YN = 'Y'
+        ORDER BY A.VC_REM_CNT, A.VC_TO_DAY, A.SALE_SEQ
+		<if test='limit != null and offset != null'>
+        LIMIT #{limit} OFFSET #{offset}
+		</if>        
     </select>
 	
     <!-- 최근 이용권 구매내역 -->
@@ -50,6 +68,7 @@
 		     , A.VC_AMOUNT
 		     , C.CO_NAME
 		     , C.CO_DIV
+		     , B.VC_MONTH
 		FROM DR_VOUCHER_SALE A 
 				INNER JOIN DR_VOUCHER_CODE B ON A.VC_CD = B.VC_CD
 				INNER JOIN CO_PLACE C ON A.CO_DIV = C.CO_DIV AND C.USE_YN = 'Y'

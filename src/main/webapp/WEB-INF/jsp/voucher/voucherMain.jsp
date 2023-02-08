@@ -77,39 +77,14 @@
 		</div>
 		<div class="divider mt-3 mb-3"></div>
 		
-		<div class="accordion" id="accordion-1">
-			<!-- 구매내역 -->
-			<c:forEach items="${sList}" var="sale" varStatus="status">
-				<fmt:parseDate value="${sale.VC_TO_DAY}" var="dateValue" pattern="yyyyMMdd"/>
-				<fmt:formatDate value="${dateValue}" var="vcToDay" pattern="yyyy.MM.dd"/>
-				<input type="hidden" id="saleSeq_${status.index}" value="${sale.SALE_SEQ}"/>
-				<div class="mb-0">
-					<!-- 이용권명 / 잔여수량 / 유효기간 -->
-					<button class="btn accordion-btn border-0 color-theme font-14" 
-						onClick="doSearch('${sale.SALE_DAY}', ${sale.SALE_SEQ}, '${sale.VC_CD}', ${status.index})"
-						data-toggle="collapse" data-target="#collapse${status.index}">
-						${sale.VC_NAME} 
-						<span class="color-blue-dark ml-1"> 잔여 ${sale.VC_REM_CNT}매</span>
-						
-						<c:if test="${sale.VC_LIMIT_CNT == sale.VC_REM_CNT}">
-							<!-- 구매취소 -->
-							<a href="#" data-menu="voucher_cancle" data-idx="${status.index}" data-page="vouList" class="fr btn btn-xs btn_accodion_voucher rounded-0 font-900 border-red-dark color-red-dark"
-							 		style="border-bottom : 1px solid #DA4453 !important">
-								취소
-							</a>
-						</c:if>
-						<c:if test="${sale.VC_LIMIT_CNT != sale.VC_REM_CNT}">
-							<i class="fa fa-chevron-down font-10 accordion-icon"></i>
-						</c:if>
-						<p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간:  ${vcToDay}</p>    
-					</button>
-					
-					<!-- 사용내역  -->
-					<div id="collapse${status.index}" class="collapse useList_${status.index}" data-parent="#accordion-1"></div>
-				</div>
-			</c:forEach>
-		</div>
+		<!-- ┌──────────────────────── 구매내역 ────────────────────────┐-->
+		<div class="accordion" id="accordion-1"></div>
+		<!-- └──────────────────────── 구매내역 ────────────────────────┘-->
 		
+		<a href="#" onClick="doSearchList('more')" class="btn btn-border btn-m btn-full mb-10 rounded-xl text-uppercase font-900 border-blue-dark color-blue-dark ml-4 mr-4" id="btnMore">
+        	더보기 <i class="fa-solid fa-chevron-down"></i>
+        </a>
+        
 	</div>
 	<!-- // 이용권보유내역 -->
 </div>
@@ -136,16 +111,16 @@
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
 			</div>
 			<div class="form-check icon-check">
-				<input class="form-check-input" type="radio" name="srchUseYn" value="Y" id="srchUseYn2">
-				<label class="form-check-label" for="srchUseYn2">미사용 이용권</label>
+				<input class="form-check-input" type="radio" name="srchUseYn" value="N" id="srchUseYn2" checked>
+				<label class="form-check-label" for="srchUseYn2">사용중</label>
 				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
 			</div> 
 		</div>
 		<div class="col-6"> 
 			<div class="form-check icon-check">
-				<input class="form-check-input" type="radio" name="srchUseYn" value="N" id="srchUseYn3" checked>
-				<label class="form-check-label" for="srchUseYn3">사용된 이용권</label>
+				<input class="form-check-input" type="radio" name="srchUseYn" value="Y" id="srchUseYn3">
+				<label class="form-check-label" for="srchUseYn3">사용완료</label>
 				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
 			</div>
@@ -153,7 +128,7 @@
 		
 	</div>
 		<div class="divider mb-3 mt-3"></div>
-	 <h3 class="ml-3 mt-4">기간설정</h3>
+	 <h3 class="ml-3 mt-4">구매일자 조회</h3>
 	 
 	<div class="row mb-0 mr-1 ml-1 mt-2">
 	
@@ -208,7 +183,7 @@
 	
 	<!-- 조회 버튼 -->
 	<div class="col-12 mt-3">
-		<a href="#" onclick="doSearch('search')" class="btn btn-full btn-md bg-blue-dark font-800 text-uppercase rounded-s">
+		<a href="#" onclick="doSearchList('search')" class="btn btn-full btn-md bg-blue-dark font-800 text-uppercase rounded-s">
 			조회
 		</a>
 	</div>
@@ -216,7 +191,6 @@
 <!--//내역조회 모달-->
  
 <!--바우처캔슬 팝업 -->
-
 <div id="voucher_cancle" class="menu menu-box-modal rounded-0" data-menu-height="" data-menu-width="330"
 	data-menu-effect="menu-parallax">
 
@@ -248,6 +222,7 @@
 
 <script type="text/javascript">
 
+var listSize	= 0;	
 var msId 		= "<c:out value='${sessionScope.msMember.msId}'/>";
 var coDiv 		= "<c:out value='${coDiv}'/>";
 var saleSeq		= ""; // 취소할때 필요한 매출순번
@@ -260,6 +235,7 @@ $(document).ready(function() {
 	}
 	
 	init();
+	doSearchList('search');
 });
 
 function init() {
@@ -367,6 +343,107 @@ function doCancel() {
    			}
    		}
    	});	      
+}
+
+//검색 
+//type > 더보기 : more , 조회 : search
+function doSearchList(type) {
+	
+	if (type == "search") {
+		listSize = 0;
+	}
+	
+	var srchPeriod = "";
+	if (document.querySelector('input[name="srchPeriod"]:checked') != null) {
+		srchPeriod = document.querySelector('input[name="srchPeriod"]:checked').value;
+	}
+	
+	var srchUseYn = document.querySelector('input[name="srchUseYn"]:checked').value;
+
+	$.ajax({
+     url: "/voucher/vouSaleList/" + coDiv
+     , type: "post"
+    	, dataType: 'json'
+   	, data: { 
+        	"listSize" : listSize
+        	, "strtDt" : $('#strtDt').val()
+        	, "endDt" : $('#endDt').val()
+        	, "srchUseYn" : srchUseYn
+        	, "srchPeriod" : srchPeriod
+ 	}
+     , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+     , success: function(data) {	
+     	console.log(data);
+     	
+			if (data != null && data.length > 0) {
+				var divCnt = '';
+				for (let i=0; i<data.length; i++) {
+
+					var toDay = getStringDt2(data[i].VC_TO_DAY, '-');
+					
+					divCnt += '<input type="hidden" id="saleSeq_'+i+'" value="'+data[i].SALE_SEQ+'"/>';
+					divCnt += '<div class="mb-0" id=saleList_'+(listSize+i)+'>';
+					// 이용권명 / 잔여수량 / 유효기간
+					divCnt += '<button class="btn accordion-btn border-0 color-theme font-14"';
+					divCnt += '			onClick="doSearch(\''+data[i].SALE_DAY+'\', '+data[i].SALE_SEQ+', \''+data[i].VC_CD+'\', '+i+')"';
+					divCnt += '			data-toggle="collapse" data-target="#collapse'+i+'">';
+					divCnt += data[i].SALE_SEQ + "/" + data[i].VC_NAME ;
+					divCnt += '<span class="color-blue-dark ml-1"> 잔여 '+data[i].VC_REM_CNT+'매</span>';
+					if (data[i].VC_LIMIT_CNT == data[i].VC_REM_CNT) {
+						// 구매취소 
+						divCnt += '<a href="#" data-menu="voucher_cancle" data-idx="'+i+'" data-page="vouList" class="fr btn btn-xs btn_accodion_voucher rounded-0 font-900 border-red-dark color-red-dark"';
+						divCnt += '		style="border-bottom : 1px solid #DA4453 !important">';
+						divCnt += '취소';
+						divCnt += '</a>';
+					} else {
+						divCnt += '<i class="fa fa-chevron-down font-10 accordion-icon"></i>';
+					}
+					
+					divCnt += '<p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간:  '+toDay+'</p>'; 
+					divCnt += '</button>';
+					
+					// 사용내역 
+					divCnt += '<div id="collapse'+i+'" class="collapse useList_'+i+'" data-parent="#accordion-1"></div>';
+					divCnt += '</div>';
+				}
+				
+				if (listSize == 0) {
+				 	document.querySelector("#accordion-1").innerHTML = divCnt;
+				} else {
+					var tmp = listSize - 1;
+					var sTmp = String(tmp);
+					$("#saleList_"+ sTmp).after(divCnt);
+				}
+				listSize += data.length;
+				
+				if (data.length < 5) {
+					$('#btnMore').text("더이상 조회할 내역이 없습니다.");
+					document.getElementById("btnMore").setAttribute("href", "#");
+				}
+			} else {
+				if (type == "search") {
+					// 조회 결과 없을때 
+					$('#btnMore').css('display','none');
+					$('#accordion-1').css('text-align','center');
+					document.querySelector("#accordion-1").innerHTML = "검색 결과가 없습니다.";
+				} else {
+					// 더보기 결과 없을때
+					$('#btnMore').text("더이상 조회할 내역이 없습니다.");
+					document.getElementById("btnMore").setAttribute("href", "#");
+				}
+			}
+
+     }
+	});
+	
+	if (type == "search") {
+		// 조회 팝업 닫기 
+		$('#modal_day').removeClass('menu-active');
+		$('.menu-hider').removeClass('menu-active menu-active-clear');
+		$('.header').css('transform','translate(0,0)');
+		$('.page-content').css('transform','translate(0,0)');
+		$('.menu-hider').css('transform','translate(0,0)');
+	}
 }
 
 </script>

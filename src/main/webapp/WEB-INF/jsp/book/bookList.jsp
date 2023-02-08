@@ -72,8 +72,8 @@
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
 			</div>
 			<div class="form-check icon-check">
-				<input class="form-check-input" type="radio" name="srchUseYn" value="Y" id="srchUseYn2">
-				<label class="form-check-label" for="srchUseYn2">진행중인예약</label>
+				<input class="form-check-input" type="radio" name="srchUseYn" value="Y" id="srchUseYn2" >
+				<label class="form-check-label" for="srchUseYn2">지난예약내역</label>
 				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
 			</div> 
@@ -81,7 +81,7 @@
 		<div class="col-6"> 
 			<div class="form-check icon-check">
 				<input class="form-check-input" type="radio" name="srchUseYn" value="N" id="srchUseYn3" checked>
-				<label class="form-check-label" for="srchUseYn3">지난예약내역</label>
+				<label class="form-check-label" for="srchUseYn3">진행중인예약</label>
 				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
 			</div>
@@ -90,7 +90,7 @@
 	</div>
 		<div class="divider mb-3 mt-3"></div>
 		
-		 <h3 class="ml-3 mt-4">기간설정</h3>
+		 <h3 class="ml-3 mt-4">예약일자 조회</h3>
 		<div class="row mb-0 mr-1 ml-1 mt-2">
 		<div class="col-6"> 
 			<div class="form-check icon-check">
@@ -362,7 +362,7 @@ function doSearch(type) {
 					divCnt += '<input type="hidden" id="bkTime_'+i+'" value="'+data[i].BK_TIME+'">';
 					divCnt += '<input type="hidden" id="vcName_'+i+'" value="'+data[i].VC_NAME+'">';
 					divCnt += '<input type="hidden" id="vcCnt_'+i+'" value="'+data[i].VC_CNT+'">';
-					divCnt += '<input type="hidden" id="mnAmt_'+i+'" value="'+mnAmt+'">';
+					divCnt += '<input type="hidden" id="mnAmt_'+i+'" value="'+data[i].MN_AMOUNT+'">';
 					
 					divCnt += '<div class="card card-style" id=bookList_'+(listSize+i)+'>';
 					divCnt += '<div class="content mb-3">';
@@ -430,6 +430,11 @@ function doSearch(type) {
 					$("#bookList_"+ sTmp).after(divCnt);
 				}
 				listSize += data.length;
+				
+				if (data.length < 5) {
+					$('#btnMore').text("더이상 조회할 내역이 없습니다.");
+					document.getElementById("btnMore").setAttribute("href", "#");
+				}
 			} else {
 				if (type == "search") {
 					// 조회 결과 없을때 

@@ -343,7 +343,7 @@ public class BookController {
 	}
 	
 	/**
-	 * [예약] 예약내역 더보기
+	 * [예약] 예약내역 조회 + 더보기 
 	 * 
 	 * @param model
 	 * @param req
@@ -377,7 +377,7 @@ public class BookController {
 			
 			}
 			
-			// srchUseYn > 전체 : A, 사용 : U, 미사용 : U
+			// srchUseYn > 전체 : A, 지난예약내역 : Y, 진행중인예약 : N
 			if (req.getParameter("srchUseYn") != null) map.put("srchUseYn", req.getParameter("srchUseYn"));
 			// srchPeriod > 최근1개월, 최근3개월, 최근1년, 기간설정
 			if (req.getParameter("srchPeriod") != null) map.put("srchPeriod", req.getParameter("srchPeriod"));

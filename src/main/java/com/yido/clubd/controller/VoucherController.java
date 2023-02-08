@@ -81,13 +81,6 @@ public class VoucherController {
 			DrVoucherCode drVoucherCode = new DrVoucherCode(); 
 			list = drVoucherCodeService.selectList(drVoucherCode);
 			model.addAttribute("vocList", list);
-			
-			// 구매내역
-			Map<String, Object> param = new HashMap<String, Object>();
-			param.put("msNum", sessionVO.getMsNum());
-			param.put("coDiv", coDiv);
-			List<Map<String, Object>> sList = drVoucherSaleService.selectSaleList(param);
-			model.addAttribute("sList", sList);
 				
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -96,7 +89,57 @@ public class VoucherController {
 		return returnPage;
 	}
 	
-
+	/**
+	 * [이용권] 구매내역 조회 + 더보기 
+	 * 
+	 * @param model
+	 * @param req
+	 * @param coDiv
+	 * @return
+	 */
+	@RequestMapping("/vouSaleList/{coDiv}")  
+	@ResponseBody
+	public List<Map<String, Object>> vouSaleList(Model model, HttpServletRequest req, @PathVariable String coDiv) {
+		HttpSession session = req.getSession();
+		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		try {
+			if (req.getParameter("listSize") != null) {
+				// listSize : 어디서 부터 가져올지
+				int listSize = Integer.parseInt(req.getParameter("listSize").toString());
+				// 조회할 건수
+				int limit = 5; 
+				map.put("limit", limit);
+				map.put("offset", listSize);
+			}
+			
+			if (req.getParameter("strtDt") != null && req.getParameter("endDt") != null) {
+				String strtDt = req.getParameter("strtDt").toString();
+				String endDt = req.getParameter("endDt").toString();
+				
+				map.put("strtDt", strtDt.replace("-", ""));
+				map.put("endDt", endDt.replace("-", ""));
+			
+			}
+			
+			// srchUseYn > 전체 : A, 사용완료 : Y, 사용중 : N
+			if (req.getParameter("srchUseYn") != null) map.put("srchUseYn", req.getParameter("srchUseYn"));
+			// srchPeriod > 최근1개월, 최근3개월, 최근1년, 기간설정
+			if (req.getParameter("srchPeriod") != null) map.put("srchPeriod", req.getParameter("srchPeriod"));
+			
+			map.put("msNum", sessionVO.getMsNum());
+			map.put("coDiv", coDiv);
+			list = drVoucherSaleService.selectSaleList(map);		
+		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
 	/**
 	 * [이용권] 결제 페이지
 	 * 

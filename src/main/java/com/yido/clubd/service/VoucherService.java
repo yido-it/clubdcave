@@ -342,7 +342,7 @@ public class VoucherService {
 				Integer.parseInt(sNowDt.substring(0, 4))
 				, Integer.parseInt(sNowDt.substring(4, 6))
 				, Integer.parseInt(sNowDt.substring(6, 8)));
-		LocalDate toDay = fromDay.plusMonths(6);
+		LocalDate toDay = fromDay.plusMonths(drCode.getVcMonth());
 		
 		String sToDay = toDay.format(DateTimeFormatter.ofPattern("yyyyMMdd"));		// 이용권 종료일자 
 		String drSerialNo = drVoucherSaleMapper.getSerialNo();						// 고유번호채번
@@ -366,6 +366,7 @@ public class VoucherService {
 		sale.setVcVat(drCode.getVcVat());				// 부가세 
 		sale.setVcState("01");							// 상태 (01: 정상)
 		sale.setInputIp(ipAddr);// 입력IP
+		sale.setUseYn("Y");
 		
 		drVoucherSaleMapper.insertDrVoucherSale(sale);
 		// end.
