@@ -59,10 +59,39 @@
 	data-menu-height="auto" 
 	data-menu-width="330"
 	data-menu-effect="menu-parallax" style="padding:20px">
-	<h3 class="text-center mt-3 font-600">예약내역 기간조회</h3>
-	<div class="divider mb-3 mt-3"></div>
+<!-- 	<h3 class="text-center mt-3 font-600">예약내역 기간조회</h3> -->
+	<h3 class="ml-3 mt-3">예약내역 조회</h3>
 	<div class="row mb-0 mr-1 ml-1 mt-2">
 	
+	<!-- ======================================= -->
+		<div class="col-6"> 
+			<div class="form-check icon-check">
+				<input class="form-check-input" type="radio" name="srchUseYn" value="A" id="srchUseYn1">
+				<label class="form-check-label" for="srchUseYn1">전체보기</label>
+				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
+				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
+			</div>
+			<div class="form-check icon-check">
+				<input class="form-check-input" type="radio" name="srchUseYn" value="Y" id="srchUseYn2">
+				<label class="form-check-label" for="srchUseYn2">진행중인예약</label>
+				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
+				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
+			</div> 
+		</div>
+		<div class="col-6"> 
+			<div class="form-check icon-check">
+				<input class="form-check-input" type="radio" name="srchUseYn" value="N" id="srchUseYn3" checked>
+				<label class="form-check-label" for="srchUseYn3">지난예약내역</label>
+				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
+				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
+			</div>
+		</div>
+		
+	</div>
+		<div class="divider mb-3 mt-3"></div>
+		
+		 <h3 class="ml-3 mt-4">기간설정</h3>
+		<div class="row mb-0 mr-1 ml-1 mt-2">
 		<div class="col-6"> 
 			<div class="form-check icon-check">
 				<input class="form-check-input" type="radio" name="srchPeriod" value="1" id="srchPeriod1" onclick='search(this.value)'>
@@ -92,29 +121,7 @@
 			</div> 
 		</div>
 		
-		<!-- ======================================= -->
-		<div class="col-6"> 
-			<div class="form-check icon-check">
-				<input class="form-check-input" type="radio" name="srchUseYn" value="A" id="srchUseYn1">
-				<label class="form-check-label" for="srchUseYn1">전체</label>
-				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
-				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
-			</div>
-			<div class="form-check icon-check">
-				<input class="form-check-input" type="radio" name="srchUseYn" value="Y" id="srchUseYn2">
-				<label class="form-check-label" for="srchUseYn2">사용</label>
-				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
-				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
-			</div> 
-		</div>
-		<div class="col-6"> 
-			<div class="form-check icon-check">
-				<input class="form-check-input" type="radio" name="srchUseYn" value="N" id="srchUseYn3" checked>
-				<label class="form-check-label" for="srchUseYn3">미사용</label>
-				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
-				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
-			</div>
-		</div>
+		
 	</div>
 
 	<!--기간달력선택 -->
@@ -136,7 +143,7 @@
 	<!--//기간달력선택-->
 	
 	<!-- 조회 버튼 -->
-	<div class="col-12 mt-3">
+	<div class="col-12 mt-1">
 		<a href="#" onClick="doSearch('search')" class="btn btn-full btn-md bg-blue-dark font-800 text-uppercase rounded-s">
 			조회
 		</a>

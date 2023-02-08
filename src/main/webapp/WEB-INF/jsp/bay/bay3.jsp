@@ -64,7 +64,7 @@
                 <div class="content">
                 <p class="mb-n1 color-highlight font-600 mb-n1">안내/팝업스토어</p>
                     <h1 class="font-26">
-                    <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">B1</span>
+                    <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">1F</span>
                     Pop-up Store                    
                     </h1>
                     

@@ -123,8 +123,38 @@
 	data-menu-height="auto" 
 	data-menu-width="330"
 	data-menu-effect="menu-parallax" style="padding:20px">
-	<h3 class="text-center mt-3 font-600">예약내역 기간조회</h3>
-	<div class="divider mb-3 mt-3"></div>
+	<!-- <h3 class="text-center mt-3 font-600">예약내역 기간조회</h3> -->
+	<h3 class="ml-3 mt-3">이용권 내역조회</h3>
+		<div class="row mb-0 mr-1 ml-1 mt-2">
+	
+	<!-- ======================================= -->
+		<div class="col-6"> 
+			<div class="form-check icon-check">
+				<input class="form-check-input" type="radio" name="srchUseYn" value="A" id="srchUseYn1">
+				<label class="form-check-label" for="srchUseYn1">전체보기</label>
+				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
+				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
+			</div>
+			<div class="form-check icon-check">
+				<input class="form-check-input" type="radio" name="srchUseYn" value="Y" id="srchUseYn2">
+				<label class="form-check-label" for="srchUseYn2">미사용 이용권</label>
+				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
+				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
+			</div> 
+		</div>
+		<div class="col-6"> 
+			<div class="form-check icon-check">
+				<input class="form-check-input" type="radio" name="srchUseYn" value="N" id="srchUseYn3" checked>
+				<label class="form-check-label" for="srchUseYn3">사용된 이용권</label>
+				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
+				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
+			</div>
+		</div>
+		
+	</div>
+		<div class="divider mb-3 mt-3"></div>
+	 <h3 class="ml-3 mt-4">기간설정</h3>
+	 
 	<div class="row mb-0 mr-1 ml-1 mt-2">
 	
 		<div class="col-6"> 
