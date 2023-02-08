@@ -27,8 +27,9 @@
         <div class="input-style input-style-2 input-required">
             <span style="color:#3b80d6">생년월일</span>
             <em><i class="fa-solid fa-calendar-days font-17"></i></em>
-            <input type="text" class="form-control" id="msBirth" name="msBirth" value="" readonly style="height: 50px;">
+            <input type="text" class="form-control" id="msBirth" name="msBirth" value="" readonly style="    height: 50px;">
         </div>
+        
 		
 		<div class="row mt-3 mb-0">
             <div class="col-6 mb-1">
