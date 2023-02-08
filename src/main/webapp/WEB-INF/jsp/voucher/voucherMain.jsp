@@ -81,7 +81,7 @@
 		<div class="accordion" id="accordion-1"></div>
 		<!-- └──────────────────────── 구매내역 ────────────────────────┘-->
 		
-		<a href="#" onClick="doSearchList('more')" class="btn btn-border btn-m btn-full mb-10 rounded-xl text-uppercase font-900 border-blue-dark color-blue-dark ml-4 mr-4" id="btnMore">
+		<a href="#" onClick="doSearchList('more')" class="btn btn-border btn-m btn-full mt-4 mb-10 rounded-xl text-uppercase font-900 border-blue-dark color-blue-dark ml-4 mr-4" id="btnMore">
         	더보기 <i class="fa-solid fa-chevron-down"></i>
         </a>
         
