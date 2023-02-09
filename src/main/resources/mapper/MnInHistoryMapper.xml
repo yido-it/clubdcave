@@ -22,7 +22,7 @@
 	<select id="getMnInHistory" parameterType="MnInHistory" resultType="MnInHistory">
 		SELECT *
 		FROM MN_IN_HISTORY 
-		WHERE 
+		WHERE 1=1 
 		<if test='mnSeq != null and mnSeq != ""'>
 		  AND MN_SEQ = #{mnSeq}
 		</if>	

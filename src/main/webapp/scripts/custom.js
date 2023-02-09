@@ -77,7 +77,7 @@ $(document).ready(function(){
 
             //Menu Deploy Click
             menuDeployer.on('click',function(){
-            	
+     
                 menu.removeClass('menu-active');
                 menuHider.addClass('menu-active');
                 var menuData = $(this).data('menu');
@@ -85,15 +85,7 @@ $(document).ready(function(){
                 var menuEffect = $('#'+menuData).data('menu-effect');
                 var menuWidth = menuID.data('menu-width');
                 var menuHeight = menuID.data('menu-height');
-                
-                // 배은화 추가 (2023-02-03)
-                if ($(this).data('idx') != undefined) {
-                	var idx = $(this).data('idx');
-                	var page = $(this).data('page');                    
-                    showInfo(idx, page);
-                }
-                // end.
-                
+        
                 $('body').addClass('modal-open');
                 if(menuID.hasClass('menu-header-clear')){menuHider.addClass('menu-active-clear');}
                 function menuActivate(){menuID = 'menu-active' ? menuID.addClass('menu-active') : menuID.removeClass('menu-active');}
@@ -1528,38 +1520,3 @@ $(document).ready(function(){
         }
     }
 });
-
-// 모달창에 정보 표출해주기위한 용도의 함수 - 배은화 (2023-02-03)
-function showInfo(idx, page) {
-
-	switch(page) {
-		case "bookList":
-			// 예약취소
-			var pMnAmt = Number($('#mnAmt_'+idx).val()).toLocaleString("ko-KR")+'원';
-			
-			$('#popBayName').text($('#bayName_'+idx).val()); 	// 예약명
-			$('#popBkDay').text($('#bkDay_'+idx).val());		// 방문날짜 
-			$('#popBkTime').text($('#bkTime_'+idx).val());		// 이용시간 
-			$('#popMnAmt').text(pMnAmt);						// 결제금액 
-			
-			if ( $('#vcCnt_'+idx).val() == 0 ) {
-				$('#popVoucherTxt').css('display', 'none');
-				$('#popVoucher').css('display', 'none');
-			} else {
-
-				$('#popVoucher').text($('#vcName_'+idx).val() + '(' + $('#vcCnt_'+idx).val() + '매 사용)');		// 이용권 
-			}
-			
-			cancelSerialNo 	= $('#serialNo_'+idx).val();			// 취소할때 필요한 serialno
-			cancelAmt 		= $('#mnAmt_'+idx).val();					// 취소할때 필요한 금액
-			break;
-			
-
-		case "vouList":
-			// 이용권 취소 
-			saleSeq 	= $('#saleSeq_'+idx).val();		// 취소할때 필요한 매출순번	
-			drSerialNo	= $('#drSerialNo'+idx).val();	// 취소할때 필요한 이용권 매출 고유번호
-			break;
-				
-	}
-}

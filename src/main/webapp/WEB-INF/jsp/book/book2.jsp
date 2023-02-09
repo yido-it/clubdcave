@@ -88,7 +88,7 @@
 							</div>
 							
 							<!-- 유효기간 -->
-							<p class="mb-0 mt-n2 pl-4 color-red-dark font-10 opacity-80">유효기간:${vc.VC_TO_DAY}까지</p>
+							<p class="mb-0 mt-n2 pl-4 color-red-dark font-10 opacity-80">유효기간: ${vc.VC_TO_DAY}까지</p>
 						</div>
 						
 						<div class="ml-auto text-right">

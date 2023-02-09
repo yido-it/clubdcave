@@ -138,7 +138,7 @@ public class BookService {
 						Integer.parseInt(common.getCdLength()) : 15;
 				// end.
 				
-				param.put("entryMethod"		, "모바일");	
+				param.put("entryMethod"		, "M");		// M: 모바일	
 				param.put("updMsId"			, bkInfo.getMsId());		
 				param.put("ipAddr"			, bkInfo.getIpAddr());		
 				param.put("entryTime"		, eTime);			
@@ -275,7 +275,7 @@ public class BookService {
     			}   	    			
     		}
     		
-    		if (bkInfo.getTempDelYn().equals("Y")) {
+    		if (bkInfo.getTempDelYn() != null && bkInfo.getTempDelYn().equals("Y")) {
     			// 임시테이블 데이터 삭제
     			DrBkHistoryTemp bkTemp = new DrBkHistoryTemp();
     			bkTemp.setSerialNo(bkInfo.getTempSerialNo());

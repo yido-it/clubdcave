@@ -395,6 +395,7 @@ public class MnInHistoryService {
             params.put("transactionId"		, transactionId);				// 거래번호
             params.put("mnCancelYn"			, "Y");							// 취소여부 
             params.put("ipAddr"             , ipAddr);
+            params.put("mnSerialNo"			, mnHis.getMnSerialNo());		// 이용권 매출 고유번호 
             
             // MN_IN_HISTORY 테이블 조회 (주문번호에 해당하는 마지막 mnSeq 조회)
             params.put("mnSeq", this.getMnSeq(params)); 

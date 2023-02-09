@@ -51,7 +51,7 @@
 			<div class="d-flex <c:if test="${status.index == 0}"> mt-5 </c:if>" >
 				<div>
 					<h2 class="font-14 mb-0 line-height-m font-500">${voc.vcName} </h2>       
-					<p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간: 구매일로부터 ${voc.vcMonth}개월</p>        
+					<p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간: 구매일로부터 ${voc.vcMonth}개월</p>
 				</div>
 				<div class="ml-auto pl-3 text-right mt-2">
 					<h5><fmt:formatNumber value="${voc.vcAmount}" pattern="#,###" />원</h5>                
@@ -218,6 +218,8 @@ $(document).ready(function() {
 	
 	init();
 	doSearchList('search');
+	
+
 });
 
 function init() {
@@ -337,7 +339,7 @@ function doSearchList(type) {
 	
 	if (type == "search") {
 		listSize = 0;
-	}
+	} 
 	
 	var srchPeriod = "";
 	if (document.querySelector('input[name="srchPeriod"]:checked') != null) {
@@ -364,25 +366,27 @@ function doSearchList(type) {
 			if (data != null && data.length > 0) {
 				var divCnt = '';
 				for (let i=0; i<data.length; i++) {
-
+	
+					var lastIdx = Number(listSize);
 					var toDay = getStringDt2(data[i].VC_TO_DAY, '-');
+					var saleDay = getStringDt2(data[i].SALE_DAY, '-');
 				
 					var isCancel = false;
 					if (data[i].VC_LIMIT_CNT == data[i].VC_REM_CNT) {
 						isCancel = true;	// 사용전이므로 [구매취소] 가능  
 					} 
 					
-					divCnt += '<input type="hidden" id="saleSeq_'+i+'" value="'+data[i].SALE_SEQ+'"/>';
-					divCnt += '<input type="hidden" id="drSerialNo'+i+'" value="'+data[i].DR_SERIAL_NO+'"/>';
-					divCnt += '<div class="mb-0" id=saleList_'+(listSize+i)+'>';
+					divCnt += '<input type="hidden" id="saleSeq_'+(lastIdx+i)+'" value="'+data[i].SALE_SEQ+'"/>';
+					divCnt += '<input type="hidden" id="drSerialNo'+(lastIdx+i)+'" value="'+data[i].DR_SERIAL_NO+'"/>';
+					divCnt += '<div class="mb-0" id=saleList_'+(lastIdx+i)+'>';
 				
 					if (isCancel) {
 						// 사용전이므로 [구매취소] 가능  
-						divCnt += '<button class="btn accordion-btn border-0 color-theme font-14">';
+						divCnt += '<button class="btn accordion-btn border-0 color-theme font-14 accodion-padding">';
 					} else {
 						// [구매취소] 불가 + 상세내역 조회 
-						divCnt += '<button class="btn accordion-btn border-0 color-theme font-14"';
-						divCnt += '			onClick="doSearch(\''+data[i].SALE_DAY+'\', '+data[i].SALE_SEQ+', \''+data[i].VC_CD+'\', '+i+')"';
+						divCnt += '<button class="btn accordion-btn border-0 color-theme font-14 accodion-padding"';
+						divCnt += '			onClick="doSearch(\''+data[i].SALE_DAY+'\', '+data[i].SALE_SEQ+', \''+data[i].VC_CD+'\', '+(lastIdx+i)+')"';
 						divCnt += '			data-toggle="collapse" data-target="#collapse'+i+'">';						
 					}
 
@@ -391,7 +395,7 @@ function doSearchList(type) {
 					
 					if (isCancel) {
 						// 구매취소 
-						divCnt += '<a href="#" data-menu="voucher_cancle" data-idx="'+i+'" data-page="vouList" class="fr btn btn-xs btn_accodion_voucher rounded-0 font-900 border-red-dark color-red-dark"';
+						divCnt += '<a href="javascript:void(0);" onClick="showModal('+(lastIdx+i)+')" class="fr btn btn-xs btn_accodion_voucher rounded-0 font-900 border-red-dark color-red-dark"';
 						divCnt += '		style="border-bottom : 1px solid #DA4453 !important">';
 						divCnt += '취소';
 						divCnt += '</a>';
@@ -399,11 +403,14 @@ function doSearchList(type) {
 						divCnt += '<i class="fa fa-chevron-down font-10 accordion-icon"></i>';
 					}
 					
-					divCnt += '<p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간:  '+toDay+'</p>';
+
+					divCnt += '<p class="opacity-50 font-11 mt-1 mb-1"><i class="fa-regular fa-clock"></i>유효기간: '+toDay+'</p>'; 
+					divCnt += '<p class="opacity-50 font-11"><i class="fa-regular fa-calendar"></i></i>결제날짜: '+saleDay+'</p>';	 					        
+
 					divCnt += '</button>';
 					
 					// 사용내역 
-					divCnt += '<div id="collapse'+i+'" class="collapse useList_'+i+'" data-parent="#accordion-1"></div>';
+					divCnt += '<div id="collapse'+(lastIdx+i)+'" class="collapse useList_'+(lastIdx+i)+'" data-parent="#accordion-1"></div>';
 					divCnt += '</div>';
 				}
 				
@@ -432,8 +439,7 @@ function doSearchList(type) {
 					document.getElementById("btnMore").setAttribute("href", "#");
 				}
 			}
-
-     }
+		}
 	});
 	
 	if (type == "search") {
@@ -444,6 +450,17 @@ function doSearchList(type) {
 		$('.page-content').css('transform','translate(0,0)');
 		$('.menu-hider').css('transform','translate(0,0)');
 	}
+}
+
+// 이용권 취소 모달창 표출
+function showModal(idx){
+	
+	saleSeq 	= $('#saleSeq_'+idx).val();		// 취소할때 필요한 매출순번	
+	drSerialNo	= $('#drSerialNo'+idx).val();	// 취소할때 필요한 이용권 매출 고유번호
+	
+	$('#voucher_cancle').addClass('menu-active');
+	$('.menu-hider').addClass('menu-active');
+	
 }
 
 </script>

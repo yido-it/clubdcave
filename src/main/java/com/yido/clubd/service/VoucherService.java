@@ -478,6 +478,7 @@ public class VoucherService {
 		// 구매내역 상태 update 
 		DrVoucherSale dSale = new DrVoucherSale();
 		dSale.setSaleSeq(vInfo.getSaleSeq());
+		dSale.setVcState("99");	// 이용권 상태 > 99 : 삭제
 		drVoucherSaleMapper.updateState(dSale);
 		
 		// 구매내역 로그 insert
@@ -487,6 +488,7 @@ public class VoucherService {
 		
 		// 세부내역 update 
 		DrVoucherList dList = new DrVoucherList();
+		dList.setVcState("X");	// X : 사용불가
 		dList.setSaleSeq(vInfo.getSaleSeq());
 		drVoucherListMapper.updateStateBySaleSeq(dList);
 		

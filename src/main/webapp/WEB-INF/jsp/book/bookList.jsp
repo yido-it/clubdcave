@@ -224,14 +224,17 @@ function search(value) {
 	}
 }
 
-// 예약취소 확인 팝업창
-/*
-function popCancel(idx){
+
+//예약 취소 모달창 표출
+function showModal(idx){
+	
+	// 예약취소
+	var pMnAmt = Number($('#mnAmt_'+idx).val()).toLocaleString("ko-KR")+'원';
 	
 	$('#popBayName').text($('#bayName_'+idx).val()); 	// 예약명
 	$('#popBkDay').text($('#bkDay_'+idx).val());		// 방문날짜 
 	$('#popBkTime').text($('#bkTime_'+idx).val());		// 이용시간 
-	$('#popMnAmt').text($('#mnAmt_'+idx).val());		// 결제금액 
+	$('#popMnAmt').text(pMnAmt);						// 결제금액 
 	
 	if ( $('#vcCnt_'+idx).val() == 0 ) {
 		$('#popVoucherTxt').css('display', 'none');
@@ -241,11 +244,13 @@ function popCancel(idx){
 		$('#popVoucher').text($('#vcName_'+idx).val() + '(' + $('#vcCnt_'+idx).val() + '매 사용)');		// 이용권 
 	}
 	
-	cancelSerialNo = $('#serialNo_'+idx).val();			// 취소할때 필요한 serialno
-	cancelAmt = $('#mnAmt_'+idx).val();					// 취소할때 필요한 금액
-    $("#modal_cancle").addClass('menu-active');			// 모달창 open 
+	cancelSerialNo 	= $('#serialNo_'+idx).val();			// 취소할때 필요한 serialno
+	cancelAmt 		= $('#mnAmt_'+idx).val();				// 취소할때 필요한 금액
+	
+	$('#modal_cancle').addClass('menu-active');
+	$('.menu-hider').addClass('menu-active');
+	
 }
-*/
 
 // 예약취소 
 function doCancel(idx){
@@ -311,18 +316,20 @@ function doSearch(type) {
 			if (data != null && data.length > 0) {
 				var divCnt = '';
 				for (let i=0; i<data.length; i++) {
+					
+					var lastIdx = Number(listSize);
 					var bkDay = getStringDt2(data[i].BK_DAY, '-');
 					var mnAmt = Number(data[i].MN_AMOUNT).toLocaleString("ko-KR")+'원';
 					
-					divCnt += '<input type="hidden" id="serialNo_'+i+'" value="'+data[i].CALC_SERIAL_NO+'">';
-					divCnt += '<input type="hidden" id="bayName_'+i+'" value="'+data[i].BAY_NAME+'">';
-					divCnt += '<input type="hidden" id="bkDay_'+i+'" value="'+bkDay+'">';
-					divCnt += '<input type="hidden" id="bkTime_'+i+'" value="'+data[i].BK_TIME+'">';
-					divCnt += '<input type="hidden" id="vcName_'+i+'" value="'+data[i].VC_NAME+'">';
-					divCnt += '<input type="hidden" id="vcCnt_'+i+'" value="'+data[i].VC_CNT+'">';
-					divCnt += '<input type="hidden" id="mnAmt_'+i+'" value="'+data[i].MN_AMOUNT+'">';
+					divCnt += '<input type="hidden" id="serialNo_'+(lastIdx+i)+'" value="'+data[i].CALC_SERIAL_NO+'">';
+					divCnt += '<input type="hidden" id="bayName_'+(lastIdx+i)+'" value="'+data[i].BAY_NAME+'">';
+					divCnt += '<input type="hidden" id="bkDay_'+(lastIdx+i)+'" value="'+bkDay+'">';
+					divCnt += '<input type="hidden" id="bkTime_'+(lastIdx+i)+'" value="'+data[i].BK_TIME+'">';
+					divCnt += '<input type="hidden" id="vcName_'+(lastIdx+i)+'" value="'+data[i].VC_NAME+'">';
+					divCnt += '<input type="hidden" id="vcCnt_'+(lastIdx+i)+'" value="'+data[i].VC_CNT+'">';
+					divCnt += '<input type="hidden" id="mnAmt_'+(lastIdx+i)+'" value="'+data[i].MN_AMOUNT+'">';
 					
-					divCnt += '<div class="card card-style" id=bookList_'+(listSize+i)+'>';
+					divCnt += '<div class="card card-style" id=bookList_'+(lastIdx+i)+'>';
 					divCnt += '<div class="content mb-3">';
 					divCnt += '<div class="d-flex mb-3" style="width:100%">';
 					divCnt += '<div>';
@@ -365,7 +372,7 @@ function doSearch(type) {
 								divCnt += '</span>';
 							} else {
 								// 예약취소
-								divCnt += '<a href="#" data-menu="modal_cancle" data-idx="'+i+'" data-page="bookList" class="fr btn btn-border btn-sm rounded-0 text-uppercase font-900 border-red-dark color-red-dark bg-theme">';								
+								divCnt += '<a href="javascript:void(0);" onClick="showModal('+(lastIdx+i)+')" class="fr btn btn-border btn-sm rounded-0 text-uppercase font-900 border-red-dark color-red-dark bg-theme">';								
 								divCnt += '예약취소';
 								divCnt += '</a>';
 							}
@@ -418,6 +425,5 @@ function doSearch(type) {
 		$('.menu-hider').css('transform','translate(0,0)');
 	}
 }
-
 </script>
 </html>

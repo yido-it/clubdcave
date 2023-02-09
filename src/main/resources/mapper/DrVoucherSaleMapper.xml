@@ -51,7 +51,7 @@
 			<otherwise></otherwise>
 		</choose> 
 		  AND A.USE_YN = 'Y'
-        ORDER BY A.VC_TO_DAY, A.VC_REM_CNT
+        ORDER BY A.VC_TO_DAY, A.VC_REM_CNT, A.SALE_SEQ
 		<if test='limit != null and offset != null'>
         LIMIT #{limit} OFFSET #{offset}
 		</if>        
@@ -119,7 +119,7 @@
 		  AND A.MS_NUM = #{msNum}
 		</if> 
 		  AND A.USE_YN = 'Y'
-        ORDER BY A.VC_TO_DAY, A.VC_REM_CNT
+        ORDER BY A.VC_TO_DAY, A.VC_REM_CNT, A.SALE_SEQ
     </select>
     
     <select id="getVoucherSale" resultType="DrVoucherSale">
