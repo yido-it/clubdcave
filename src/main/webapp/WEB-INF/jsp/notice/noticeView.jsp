@@ -41,7 +41,7 @@
         		<img src="/images/event/notice.jpg" style="width:100%">
         	</div>
         	
-	        <p class="mt-1">
+	        <p class="mt-2">
 		       	이도와 카카오VX는 20일 서울 중구 이도 본사 씨티스퀘어 빌딩에서 온·오프라인 플랫폼 활용을 통한 골프 사업 활성화 협약을 했다고 밝혔다.
 				
 				이도는 퍼블릭 골프 클럽 브랜드 클럽디(Club D)를 운영하는 골프장 통합관리운영 전문회사다.<Br/><Br/>

@@ -8,7 +8,7 @@
 		PROMOTION</h1>
 	
 		<div class="cover-slider owl-carousel owl-no-dots">
-			<div class="item" onclick="location.href='event_detail.html'">
+			<div class="item" onclick="location.href='event'">
 				<div class="card card-style mx-0 bg-9" data-card-height="150" style="background-image: url(/images/event/promotion.jpg);">
 					<div class="card-bottom m-3">
 						<p class="color-white mb-0 opacity-90">02/01~02/03</p>

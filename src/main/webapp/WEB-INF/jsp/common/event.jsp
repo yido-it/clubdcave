@@ -9,7 +9,7 @@
 		EVENT</h1>
 	
 		<div class="single-slider-boxed owl-carousel owl-no-dots">
-			<div class="item">
+			<div class="item" onclick="location.href='event'">
 				<div class="card card-style mx-0 bg-9" data-card-height="250" style="background-image: url(/images/event/1.jpg);">
 					<div class="card-bottom m-3">
 						<p class="color-white mb-0 opacity-80">02/01~02/03</p>
@@ -19,7 +19,7 @@
 				</div>
 			</div>
 		
-			<div class="item">
+			<div class="item" onclick="location.href='event'">
 				<div class="card card-style mx-0 bg-10" data-card-height="250" style="background-image: url(/images/event/2.jpg);">
 					<div class="card-bottom m-3">
 						<p class="color-white mb-0 opacity-80">02/01~02/03</p>
@@ -29,7 +29,7 @@
 				</div>
 			</div>
 		
-			<div class="item">
+			<div class="item" onclick="location.href='event'">
 				<div class="card card-style mx-0 bg-7" data-card-height="250" style="">
 					<div class="card-bottom m-3">
 						<p class="color-white mb-0 opacity-80">01/01~01/03</p>

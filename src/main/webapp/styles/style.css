@@ -19,6 +19,8 @@ body {
   background-color: #fcfcfc;
   max-width:550px;margin:0 auto;
 }
+.header{ max-width:550px;margin:0 auto;}
+.footer-bar-6{max-width:550px;margin:0 auto !important}
 h1, h2, h3, h4, h5, h6, .btn{
 font-family:'AppleSDGothicNeo', "Poppins", "Roboto", 'Noto Sans KR',   "Microsoft NeoGothic",  "Droid sans", sans-serif !important; }
 
@@ -7152,3 +7154,7 @@ background-color: #1b1d21;}
     background-color: #fff !important;}
 .ui-datepicker th {
 background-color: #242424 !important;}
+
+/*공지사항*/
+.div_notice a{}
+.div_notice .d-flex:active, .div_notice .d-flex:focus{background-color:#666 !important}
