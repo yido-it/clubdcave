@@ -17,7 +17,9 @@ import lombok.EqualsAndHashCode;
 public class VouInfoVO {
 
 	private int saleSeq; 			// 이용권 매출순번 
+	private String coDiv;
 	private String ipAddr;			// ip
+	private String drSerialNo;		// 이용권 매출 고유번호
 }
 
 

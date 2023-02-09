@@ -28,6 +28,7 @@
 		     , A.VC_AMOUNT
 		     , A.VC_STATE
 		     , A.MS_NUM
+		     , A.DR_SERIAL_NO
 		FROM DR_VOUCHER_SALE A 
 				INNER JOIN DR_VOUCHER_CODE B ON A.VC_CD = B.VC_CD
 		WHERE 1=1 
@@ -50,7 +51,7 @@
 			<otherwise></otherwise>
 		</choose> 
 		  AND A.USE_YN = 'Y'
-        ORDER BY A.VC_REM_CNT, A.VC_TO_DAY, A.SALE_SEQ
+        ORDER BY A.VC_TO_DAY, A.VC_REM_CNT
 		<if test='limit != null and offset != null'>
         LIMIT #{limit} OFFSET #{offset}
 		</if>        
@@ -118,6 +119,7 @@
 		  AND A.MS_NUM = #{msNum}
 		</if> 
 		  AND A.USE_YN = 'Y'
+        ORDER BY A.VC_TO_DAY, A.VC_REM_CNT
     </select>
     
     <select id="getVoucherSale" resultType="DrVoucherSale">
@@ -164,7 +166,7 @@
     		, #{vcFromDay}		
     		, #{vcToDay}			
     		, #{vcLimitCnt}		
-    		, #{vcServiceCnt}	
+    		, 0	
     		, #{vcRemCnt}	
     		, #{vcAmount}	
     		, #{vcNet}	

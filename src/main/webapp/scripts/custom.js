@@ -1550,14 +1550,15 @@ function showInfo(idx, page) {
 				$('#popVoucher').text($('#vcName_'+idx).val() + '(' + $('#vcCnt_'+idx).val() + '매 사용)');		// 이용권 
 			}
 			
-			cancelSerialNo = $('#serialNo_'+idx).val();			// 취소할때 필요한 serialno
-			cancelAmt = $('#mnAmt_'+idx).val();					// 취소할때 필요한 금액
+			cancelSerialNo 	= $('#serialNo_'+idx).val();			// 취소할때 필요한 serialno
+			cancelAmt 		= $('#mnAmt_'+idx).val();					// 취소할때 필요한 금액
 			break;
 			
 
 		case "vouList":
 			// 이용권 취소 
-			saleSeq = $('#saleSeq_'+idx).val();	// 취소할때 필요한 매출순번	
+			saleSeq 	= $('#saleSeq_'+idx).val();		// 취소할때 필요한 매출순번	
+			drSerialNo	= $('#drSerialNo'+idx).val();	// 취소할때 필요한 이용권 매출 고유번호
 			break;
 				
 	}

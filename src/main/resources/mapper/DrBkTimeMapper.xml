@@ -29,7 +29,7 @@
 		WHERE A.CO_DIV = #{coDiv} 
 		  AND A.BAY_CONDI = #{bayCondi} 
 		  AND A.BK_DAY = #{bkDay} 
-		  AND DATE_FORMAT(NOW(), '%Y%m%d%H') BETWEEN CONCAT(BK_FROM_DAY, BK_START_TIME) AND CONCAT(BK_TO_DAY, BK_END_TIME);       
+		  AND DATE_FORMAT(NOW(), '%Y%m%d%H%i') BETWEEN CONCAT(BK_FROM_DAY, BK_START_TIME) AND CONCAT(BK_TO_DAY, BK_END_TIME);       
     </select>
     
 	<select id="getBkTime" parameterType="hashmap" resultType="DrBkTime">

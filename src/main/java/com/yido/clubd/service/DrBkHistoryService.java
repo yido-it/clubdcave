@@ -269,6 +269,7 @@ public class DrBkHistoryService {
 			// 예약선점 테이블 변경 (예약고유번호, 상태)
 			// 조회조건 : 지점코드, 베이코드, 일자, 시간, 아이디, 상태 Y인거 
 			map2.put("bkSerialNo", bkSerialNo);
+			map2.put("bkTime", param.get("bkTime"));
 			drBkMarkMapper.updateDrBkMark(map2);	
 
 			if (mnMap != null && mnMap.getMnInDay() != null) {

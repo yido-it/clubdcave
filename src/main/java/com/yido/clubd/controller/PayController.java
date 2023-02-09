@@ -30,6 +30,7 @@ import com.yido.clubd.common.utils.StringUtils;
 import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.model.DrBkMnMap;
 import com.yido.clubd.model.MnInHistory;
+import com.yido.clubd.service.DrVoucherSaleService;
 import com.yido.clubd.service.MnInHistoryService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +42,9 @@ public class PayController {
 	
 	@Autowired
 	private MnInHistoryService mnInHistoryService;
+	
+	@Autowired
+	private DrVoucherSaleService drVoucherSaleService;
 	
 	/**
 	 * 가맹점 결과 처리 함수 
@@ -227,6 +231,13 @@ public class PayController {
                 Map<String, Object> tmpMap = new HashMap<String, Object>();
                 int mnSeq = mnInHistoryService.getMnSeq(tmpMap);
                 params.put("mnSeq", mnSeq);
+                
+                // 이용권 구매시 [이용권 매출 고유번호 -> MN_SERIAL_NO] insert  
+                if (reserved2.equals("VOUCHER")) {
+                	String drSerialNo = drVoucherSaleService.getSerialNo(); // 이용권 매출 고유번호 채번					
+                	params.put("drSerialNo", drSerialNo);
+                	params.put("mnSerialNo", drSerialNo);
+                }
                 mnInHistoryService.insertMnInHistory(params);
                 // end.
                 

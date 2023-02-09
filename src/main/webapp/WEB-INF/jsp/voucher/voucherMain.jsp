@@ -207,6 +207,7 @@ var listSize	= 0;
 var msId 		= "<c:out value='${sessionScope.msMember.msId}'/>";
 var coDiv 		= "<c:out value='${coDiv}'/>";
 var saleSeq		= ""; // 취소할때 필요한 매출순번
+var drSerialNo	= ""; // 취소할때 필요한 이용권 매출 고유번호
 
 $(document).ready(function() {
 	if (msId == null || msId == "") {
@@ -314,7 +315,11 @@ function doCancel() {
    		url: "/voucher/cancel/"
    		, type: "post"
    		, dataType: 'json'
-   		, data: { "saleSeq" : saleSeq }
+   		, data: { 
+   			"coDiv"			: coDiv
+   			, "saleSeq" 	: saleSeq 
+   			, "drSerialNo" 	: drSerialNo
+   		}
    		, contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
    		, success: function(data) {    			
    			if (data.code == '0000') {
@@ -368,6 +373,7 @@ function doSearchList(type) {
 					} 
 					
 					divCnt += '<input type="hidden" id="saleSeq_'+i+'" value="'+data[i].SALE_SEQ+'"/>';
+					divCnt += '<input type="hidden" id="drSerialNo'+i+'" value="'+data[i].DR_SERIAL_NO+'"/>';
 					divCnt += '<div class="mb-0" id=saleList_'+(listSize+i)+'>';
 				
 					if (isCancel) {
@@ -380,7 +386,7 @@ function doSearchList(type) {
 						divCnt += '			data-toggle="collapse" data-target="#collapse'+i+'">';						
 					}
 
-					divCnt += data[i].SALE_SEQ + "/" + data[i].VC_NAME ;
+					divCnt += data[i].VC_NAME ;
 					divCnt += '<span class="color-blue-dark ml-1"> 잔여 '+data[i].VC_REM_CNT+'매</span>';
 					
 					if (isCancel) {
@@ -393,7 +399,7 @@ function doSearchList(type) {
 						divCnt += '<i class="fa fa-chevron-down font-10 accordion-icon"></i>';
 					}
 					
-					divCnt += '<p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간:  '+toDay+'</p>'; 
+					divCnt += '<p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간:  '+toDay+'</p>';
 					divCnt += '</button>';
 					
 					// 사용내역 

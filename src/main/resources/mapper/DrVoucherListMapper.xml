@@ -60,7 +60,7 @@
     		, #{vcOneAmount}
     		, #{vcOneNet}
     		, #{vcOneVat}
-    		, #{vcServiceYn}
+    		, 'N'
     		, #{vcState}
     		, 'APP'		
     		, now()

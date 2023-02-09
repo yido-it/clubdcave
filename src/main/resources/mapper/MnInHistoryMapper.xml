@@ -22,7 +22,13 @@
 	<select id="getMnInHistory" parameterType="MnInHistory" resultType="MnInHistory">
 		SELECT *
 		FROM MN_IN_HISTORY 
-		WHERE MN_SEQ = #{mnSeq}
+		WHERE 
+		<if test='mnSeq != null and mnSeq != ""'>
+		  AND MN_SEQ = #{mnSeq}
+		</if>	
+		<if test='mnSerialNo != null and mnSerialNo != ""'>
+		  AND MN_SERIAL_NO = #{mnSerialNo}
+		</if>		
 	</select>
 	
 	<!-- 입금내역 등록 -->
@@ -36,7 +42,10 @@
 			, MN_CANCEL_YN			, MN_REMARK
 		<if test='mnOriCoDiv != null'>
 		 	, MN_ORI_CO_DIV			, MN_ORI_IN_DAY		, MN_ORI_MN_SEQ
-		</if>				
+		</if>			
+		<if test='mnSerialNo != null'>
+		 	, MN_SERIAL_NO
+		</if>	
     	) values (
     		#{coDiv}	   			, #{mnInDay}   		, #{mnSeq}			, '2'					
     		, '12'  				, #{mnRevAmount} 	, #{mnInAmount} 	, #{mnChangeAmount}
@@ -46,6 +55,9 @@
     		, #{mnCancelYn}			, #{mnRemark}
     	<if test='mnOriCoDiv != null'>
 		 	, #{mnOriCoDiv}			, #{mnOriInDay}		, #{mnOriMnSeq}
+		</if>		
+		<if test='mnSerialNo != null'>
+		 	, #{mnSerialNo}
 		</if>	
     	)  	
     </insert>

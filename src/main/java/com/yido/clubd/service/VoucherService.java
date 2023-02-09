@@ -27,6 +27,7 @@ import com.yido.clubd.model.DrVoucherCode;
 import com.yido.clubd.model.DrVoucherList;
 import com.yido.clubd.model.DrVoucherSale;
 import com.yido.clubd.model.DrVoucherUse;
+import com.yido.clubd.model.MnInHistory;
 import com.yido.clubd.model.VouInfoVO;
 import com.yido.clubd.repository.DrBkHistoryTempMapper;
 import com.yido.clubd.repository.DrVoucherCodeMapper;
@@ -34,6 +35,7 @@ import com.yido.clubd.repository.DrVoucherListMapper;
 import com.yido.clubd.repository.DrVoucherSaleLogMapper;
 import com.yido.clubd.repository.DrVoucherSaleMapper;
 import com.yido.clubd.repository.DrVoucherUseMapper;
+import com.yido.clubd.repository.MnInHistoryMapper;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,6 +54,9 @@ public class VoucherService {
     private BookService bookService;
 	
 	@Autowired
+    private MnInHistoryService mnInHistoryService;
+	
+	@Autowired
     private DrVoucherSaleMapper drVoucherSaleMapper;
 	
 	@Autowired
@@ -68,6 +73,9 @@ public class VoucherService {
 	
 	@Autowired
     private DrBkHistoryTempMapper drBkHistoryTempMapper;
+	
+	@Autowired
+    private MnInHistoryMapper mnInHistoryMapper;
 	
 	/**
 	 * 이용권 결제 (결제금액 0원) 
@@ -353,11 +361,11 @@ public class VoucherService {
 				Integer.parseInt(sNowDt.substring(0, 4))
 				, Integer.parseInt(sNowDt.substring(4, 6))
 				, Integer.parseInt(sNowDt.substring(6, 8)));
-		LocalDate toDay = fromDay.plusMonths(drCode.getVcMonth());
+		LocalDate toDay 	= fromDay.plusMonths(drCode.getVcMonth());
 		
-		String sToDay = toDay.format(DateTimeFormatter.ofPattern("yyyyMMdd"));		// 이용권 종료일자 
-		String drSerialNo = drVoucherSaleMapper.getSerialNo();						// 고유번호채번
-		int saleSeq = drVoucherSaleMapper.getSaleSeq();						// 고유번호채번
+		String sToDay 		= toDay.format(DateTimeFormatter.ofPattern("yyyyMMdd"));	// 이용권 종료일자 
+		String drSerialNo 	= param.get("drSerialNo").toString();						// 이용권 매출 고유번호
+		int saleSeq			= drVoucherSaleMapper.getSaleSeq();							// 매출순번 채번
 		
 		// 이용권 구매내역 insert
 		DrVoucherSale sale = new DrVoucherSale();
@@ -370,7 +378,6 @@ public class VoucherService {
 		sale.setVcFromDay(sNowDt);						// 이용시작일자 
 		sale.setVcToDay(sToDay);						// 이용종료일자 
 		sale.setVcLimitCnt(drCode.getVcLimitCnt());		// 총수량 
-		// sale.setVcServiceCnt(); 						// 서비스수량 
 		sale.setVcRemCnt(drCode.getVcLimitCnt());
 		sale.setVcAmount(drCode.getVcAmount());			// 판매금액
 		sale.setVcNet(drCode.getVcNet());				// 공급가
@@ -430,7 +437,6 @@ public class VoucherService {
 				dList.setVcOneAmount(oneAmt); 		// 장당 판매금액
 				dList.setVcOneNet(oneNet); 			// 장당 공급가
 				dList.setVcOneVat(oneVat); 			// 장당 부가세 
-				dList.setVcServiceYn("N");			// 서비스 쿠폰 여부
 				dList.setVcState("N");				// 미사용
 				dList.setInputIp(ipAddr);			// 입력IP
 				
@@ -442,7 +448,7 @@ public class VoucherService {
 	}
 	
 	/**
-	 * 이용권 구매
+	 * 이용권 구매 취소
 	 * - 구매내역 update, 구매내역로그 insert, 세부내역 update 
 	 * 
 	 * @param vInfo
@@ -452,6 +458,22 @@ public class VoucherService {
 	@Transactional
 	public ResultVO cancel(VouInfoVO vInfo) throws Exception {	
 		ResultVO resultVO = new ResultVO();
+		
+		MnInHistory mnHis = new MnInHistory();
+		mnHis.setMnSerialNo(vInfo.getDrSerialNo());
+		mnHis = mnInHistoryMapper.getMnInHistory(mnHis);
+		
+		String orderId = mnHis.getOrderId();
+		String authAmount = String.valueOf(mnHis.getMnInAmount());
+		String transactionId = mnHis.getTransactionId();
+		String cancelKey = mnHis.getCancelkey();
+		String ipAddr = vInfo.getIpAddr();
+		
+		log.info("[이용권 구매 취소] 주문번호(orderId): {}, 승인금액: {}, 거래번호(transactionId): {}, 취소키: {}"
+				, orderId, authAmount, transactionId, cancelKey);
+		
+		// PG 결제 취소 처리 
+		mnInHistoryService.cancelLogic(vInfo.getCoDiv(), orderId, authAmount, transactionId, "C", cancelKey, ipAddr, mnHis);
 
 		// 구매내역 상태 update 
 		DrVoucherSale dSale = new DrVoucherSale();

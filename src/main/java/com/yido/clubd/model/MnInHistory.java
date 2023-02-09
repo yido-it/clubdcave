@@ -47,6 +47,7 @@ public class MnInHistory {
 	private String orderId;
 	private String transactionId;
 	private String cancelkey;
+	private String mnSerialNo;			// 이용권 구매시 이용권 고유번호 insert
 	
 	private String inputStaff; 			// 입력사번
 
