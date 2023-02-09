@@ -98,7 +98,7 @@
             <div class="input-style input-style-2 input-required">
                 <span class="input-style-1-active input-style-1-inactive">경력사항 입력</span>
                 <em></em>
-               	<textarea class="form-control" placeholder="ex)대학교/전공, 투어경력, 방송활동, 레슨경력" id="n_001" name="n_001">
+               	<textarea class="form-control" placeholder="ex)학력, 투어경력, 방송활동, 레슨경력" style="height: 110px;padding: 10px;line-height: unset;" id="n_001" name="n_001">
                		<c:forEach items="${noticeList}" var="item" varStatus="status">
                		<c:if test="${item.noticeDiv == '001'}">
 	        			${item.proRemark}
@@ -148,7 +148,8 @@
                     <div class="input-style input-style-2 input-required">
                         <span class="input-style-1-active input-style-1-inactive">레슨계획 입력</span>
                         <em></em>
-                        <textarea class="form-control" id="n_002" name="n_002" placeholder="자유롭게 기술"></textarea>
+                        <textarea class="form-control" placeholder="자유롭게 기술" style="height: 110px;padding: 10px;line-height: unset;" id="n_002" name="n_002">
+                        </textarea>
                     </div>
                 </div>
                 <div class="col-6 mb-1">
@@ -292,13 +293,16 @@
 	    setSelectValue('msSex');
 	    setSelectValue('coDiv');
 	    
+		setSelectValue('msHomeaddr1');
+		setSelectValue('msHomeaddr2');
+	    
 		showCarInput();
 	})
 	
 	Dropzone.autoDiscover = false;
 		var myDropzone = new Dropzone('div.dropzone', {
 			  autoProcessQueue : false
-			, url : '/pro/uploadProImage'
+			, url : '/pro/uploadProfileImg'
 			, method : 'post'
 			, maxFiles : 1
 			, maxFilesize : 10
@@ -392,7 +396,7 @@
 		if($(".dz-preview").length){
         	myDropzone.processQueue();
     	}
-		saveProForm();
+		//saveProForm();
 	})
 			
 	function saveProForm() {			

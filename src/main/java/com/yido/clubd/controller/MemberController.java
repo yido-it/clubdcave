@@ -34,6 +34,12 @@ import com.yido.clubd.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 회원정보 (회원/프로)
+ * 
+ * @author YOO
+ *
+ */
 @Controller
 @Slf4j
 @RequestMapping("/member")
@@ -43,9 +49,6 @@ public class MemberController {
 	private MemberService memberService;
 	
 	@Autowired
-	private DrMsBasicService drMsBasicService;
-	
-	@Autowired
 	private CommonService commonService;
 	
 	@Autowired
@@ -53,11 +56,12 @@ public class MemberController {
 	
 	@Autowired
 	private DrMsCoInfoService drMsCoInfoService;
+	
 	/**
 	 * 회원가입 첫 페이지 (약관 동의)
 	 * 
-	 * @param model
 	 * @param req
+	 * @param model
 	 * @return
 	 */
 	@RequestMapping("/agree")  
@@ -67,10 +71,10 @@ public class MemberController {
 	}
 	
 	/**
-	 * 회원가입 > 기본정보 입력
+	 * 회원가입 > 필수정보 입력 페이지
 	 * 
-	 * @param model
 	 * @param req
+	 * @param model
 	 * @return
 	 */
 	@RequestMapping("/memberForm")  
@@ -81,15 +85,13 @@ public class MemberController {
 	}
 	
 	/**
-	 * 회원가입 > 선택사항 입력
+	 * 회원가입 > 회원 추가정보 팝업
 	 * 
 	 * @param model
-	 * @param req
 	 * @return
-	 * @throws Exception 
 	 */
 	@RequestMapping("/memberAddPop")  
-	public String goMemberAddPop(Model model, HttpServletRequest req) throws Exception {
+	public String goMemberAddPop(Model model) throws Exception {
 		CdCommon cdCommon = new CdCommon();
 		cdCommon.setCoDiv("001");
 		cdCommon.setCdDivision("025");
@@ -101,15 +103,21 @@ public class MemberController {
 		return "/member/memberAddPop";
 	}
 	
-	@RequestMapping("/memberAddrPop")  
+	/*@RequestMapping("/memberAddrPop")  
 	public String goMemberAddrPop(Model model, HttpServletRequest req) throws Exception {
 		String searchAddr = (String) req.getParameter("searchAddr");
 		Map<String, Object> params = new HashMap<>();
 		params.put("searchAddr", searchAddr);
 		model.addAttribute("addrList", commonService.getAddrList(params));
 		return "/member/memberAddrPop";
-	}
+	}*/
 		
+	/**
+	 * 회원가입 > 아이디 중복확인
+	 * 
+	 * @param msId
+	 * @return map
+	 */
 	@RequestMapping("/checkIdExist")
 	@ResponseBody
 	public Map<String, Object> checkIdExist (@RequestParam(required = false) String msId) throws Exception {
@@ -126,6 +134,12 @@ public class MemberController {
 		return map;
 	}
 	
+	/**
+	 * 회원가입 > 인증번호 전송
+	 * 
+	 * @param params
+	 * @return map
+	 */
 	@RequestMapping(value = "/verifybyCode")
 	@ResponseBody
 	public Map<String, Object> verifybyCode(@RequestParam Map<String, Object> params) {
@@ -152,12 +166,13 @@ public class MemberController {
 	}	
 	
 	/**
-	 * 회원가입 > 기본정보 입력
-	 *  
+	 * 회원가입
+	 * 
 	 * @param req
-	 * @param member
-	 * @return
-	 * @throws Exception 
+	 * @param res
+	 * @param session
+	 * @param memberVO
+	 * @return map
 	 */
 	@RequestMapping("/doSignUp")
 	@ResponseBody
@@ -198,8 +213,9 @@ public class MemberController {
 	
 	/**
      * 일반 로그인
-     * @param request
-     * @param response
+     * 
+     * @param req
+     * @param res
      * @param session
      * @param params
      * @return
@@ -227,6 +243,7 @@ public class MemberController {
     			map.put("dest",  (String)session.getAttribute("dest"));    			
         		map.put("userInfo",  userInfo);
         		
+        		session.removeAttribute("dest");
     		}
     	} catch (Exception e) {
     		map.put("result",  false);
@@ -238,11 +255,12 @@ public class MemberController {
     
     /**
      * 소셜 로그인
-     * @param request
-     * @param response
+     * 
+     * @param req
+     * @param res
      * @param session
      * @param params ( 로그인타입 : msLoginCd, 이름 : msName )
-     * @return
+     * @return map
      */
     @RequestMapping(value = "/doLoginForSocial")
     @ResponseBody
@@ -260,13 +278,15 @@ public class MemberController {
         		session.setMaxInactiveInterval(30 * 60);
         		
         		map.put("result", true);
-        		map.put("dest", "/member/agree?msLoginCd='" + params.get("msLoginCd") + "'");
+        		map.put("dest", "/member/agree?msLoginCd=" + params.get("msLoginCd"));
 				
     		} else {
     			// 기존가입 -> 로그인처리
     			memberService.loginUserInfo(req, res, session, params);
     			map.put("result",  true);
-    			map.put("dest", (String)session.getAttribute("dest"));  
+    			map.put("dest", (String)session.getAttribute("dest")); 
+    			
+    			session.removeAttribute("dest");
     		}
     	} catch (Exception e) {
     		log.debug(e.getMessage());
@@ -278,23 +298,24 @@ public class MemberController {
     }
     
     /**
-	 * 네이버 로그인 동의하기 콜백 함수
+	 * 네이버 로그인 동의하기 콜백 페이지
 	 * 
-	 * @param request
-	 * @param response
+	 * @param req
+	 * @param res
 	 * @return
 	 */
     @RequestMapping(value = "/succNaverLogin")
-    public String goNaverCallbackPage(HttpServletRequest request, HttpServletResponse response) {
+    public String goNaverCallbackPage(HttpServletRequest req, HttpServletResponse res) {
     	// 프로필 조회 페이지로 이동
         return "/member/succNaverLogin";
     }
     
     /**
-     * 카카오 로그인 동의하기 콜백 함수
+     * 카카오 로그인 동의하기 콜백 페이지
      * 
-     * @param request
-     * @param response
+     * @param code
+     * @param req
+     * @param model
      * @return
      */
     @RequestMapping(value = "/succKakaoLogin")
@@ -311,11 +332,11 @@ public class MemberController {
     }
     
     /**
-	 * 회원추가정보 등록
+	 * 회원 추가정보 저장
 	 * 
-	 * @param req
-	 * @param drMsBasic
-	 * @return
+	 * @param session
+	 * @param params
+	 * @return map
 	 */
 	
 	@RequestMapping("/saveMemberAdd")
@@ -343,6 +364,13 @@ public class MemberController {
 		return map;
 	}
     
+    /**
+	 * 회원정보 수정 페이지
+	 * 
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/memberModify")  
 	public String goMemberModify(Model model, HttpSession session) throws Exception {
 		CdCommon cdCommon = new CdCommon();
@@ -373,6 +401,13 @@ public class MemberController {
 		return "/member/memberModify";
 	}	
 	
+	/**
+	 * 회원정보 수정 저장
+	 * 
+	 * @param session
+	 * @param params
+	 * @return map
+	 */
 	@RequestMapping("/saveMemberModify")
 	@ResponseBody
 	public Map<String, Object> saveMemberModify(HttpSession session, @RequestParam Map<String, Object> params) {
@@ -405,32 +440,7 @@ public class MemberController {
 	}		
 		
 	/**
-	 * 회원추가정보 수정
-	 * 
-	 * @param req
-	 * @param drMsBasic
-	 * @return
-	 */
-	@RequestMapping("/updateBasicInfo")
-	@ResponseBody
-	public Map<String, Object> updateBasicInfo(HttpServletRequest req, DrMsBasic drMsBasic){
-
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		try {
-			drMsBasicService.updateDrMsBasic(drMsBasic);
-			map.put("result",  true);
-		} catch(Exception e) {
-			e.printStackTrace();
-			map.put("result",  false);
-			map.put("message", "추가정보 수정중 오류가 발생했습니다.");
-		}
-		
-		return map; 
-	}    
-	
-	/**
-	 * 아이디/비밀번호 찾기
+	 * 아이디/비밀번호 찾기 페이지
 	 * 
 	 * @param model
 	 * @param req
@@ -441,10 +451,15 @@ public class MemberController {
 		return "/member/memberFind";
 	}
 	
+	/**
+	 * 아이디 찾기
+	 * 
+	 * @param params
+	 * @return map
+	 */	
 	@RequestMapping(value = "/doFindId")
 	@ResponseBody
-	public Map<String, Object> doFindId(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-			@RequestParam Map<String, Object> params) {
+	public Map<String, Object> doFindId(@RequestParam Map<String, Object> params) {
 			Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			MemberVO member = memberService.selectFindUser(params);
@@ -460,7 +475,7 @@ public class MemberController {
 			if(member.getMsLoginCd().equals("NAVER")) {
 				throw new Exception("NAVER 간편 로그인으로 로그인 부탁드립니다.");
 			}
-			/* params.put("ipAddr", Utils.getClientIpAddress(request));
+			/* params.put("ipAddr", Utils.getClientIpAddress(req));
 			params.put("tplCd", Utils.getProperties("Globals.findId.tplCd", "00001"));
 			params.put("msId", member.getMsId());
 			commonService.sendSms(params); */
@@ -475,10 +490,16 @@ public class MemberController {
 		return map;
 	}
 
+	/**
+	 * 비밀번호 초기화
+	 * 
+	 * @param req
+	 * @param params
+	 * @return map
+	 */
 	@RequestMapping(value = "/doFindPw")
 	@ResponseBody
-	public Map<String, Object>  doFindPw(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-			@RequestParam Map<String, Object> params) {
+	public Map<String, Object>  doFindPw(HttpServletRequest req, @RequestParam Map<String, Object> params) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			MemberVO member = memberService.selectFindUser(params);
@@ -504,9 +525,9 @@ public class MemberController {
 			params.put("msNum", member.getMsNum());
 			params.put("newMsPassword", newMsPassword.toString());
 
-			memberService.updatePw(params);
+			memberService.updatePassword(params);
 
-			params.put("ipAddr", Utils.getClientIpAddress(request));
+			params.put("ipAddr", Utils.getClientIpAddress(req));
 			params.put("tplCd", Utils.getProperties("Globals.findPw.tplCd", "00001"));
 			params.put("msPhone", (params.get("msPhone")).toString().replace("-", ""));
 			params.put("msPassword", newMsPassword);

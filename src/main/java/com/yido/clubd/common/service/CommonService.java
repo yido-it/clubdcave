@@ -1,12 +1,17 @@
 package com.yido.clubd.common.service;
 
+import java.io.File;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.yido.clubd.common.repository.CommonMapper;
+import com.yido.clubd.component.FileUtil;
 import com.yido.clubd.model.CdCommon;
 
 
@@ -43,5 +48,6 @@ public class CommonService {
 	public void actionAgree(Map<String, Object> params) throws Exception {
 		commonMapper.actionAgree(params);
 	}
+
 
 }

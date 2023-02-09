@@ -1,7 +1,13 @@
 package com.yido.clubd.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,12 +18,16 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.yido.clubd.common.utils.Globals;
 import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
+import com.yido.clubd.component.FileUtil;
 import com.yido.clubd.model.DrMsCoInfo;
 import com.yido.clubd.model.MemberVO;
+import com.yido.clubd.model.ProVO;
 import com.yido.clubd.repository.DrMsCoInfoMapper;
 import com.yido.clubd.repository.MemberMapper;
 
@@ -50,12 +60,17 @@ public class MemberService {
 	 * 
 	 * @param params
 	 * @return
-     * @throws Exception 
 	 */
     public MemberVO selectLoginUser(Map<String, Object> params) throws Exception {
     	return memberMapper.selectLoginUser(params);
     }
     
+    /**
+     * MS_ID로 MS_NUM 조회
+     * 
+     * @param params
+     * @return SesseionVO
+     */
     public String selectMsNum(Map<String, Object> params) throws Exception {
     	return memberMapper.selectMsNum(params);
     }
@@ -64,8 +79,7 @@ public class MemberService {
      * 회원/프로 정보 가져와서 세션에 저장
      * 
      * @param params
-     * @return
-     * @throws Exception 
+     * @return SesseionVO
      */
     public SessionVO selectMsSession(Map<String, Object> params) throws Exception {
     	return memberMapper.selectMsSession(params);
@@ -76,11 +90,10 @@ public class MemberService {
     }
     
     /**
-     * 회원/프로 등록 
+     * 회원 등록 
      * 
      * @param member
      * @return
-     * @throws Exception 
      */
 	public void insertMember(MemberVO member) throws Exception {
 		
@@ -119,11 +132,10 @@ public class MemberService {
 	}
 	
 	/**
-     * 회원/프로 수정 
+     * 회원 수정 
      * 
-     * @param member
-     * @return
-	 * @throws Exception 
+     * @param params
+     * @return SessionVO
      */
 	public SessionVO updateMember(Map<String, Object> params) throws Exception {
 		
@@ -139,6 +151,12 @@ public class MemberService {
 		return member;
 	}
 	
+	/**
+     * 회원 추가정보 저장
+     * 
+     * @param params
+     * @return 
+     */	
 	public void saveMemberBasic(Map<String, Object> params) {
 		
 		if((String)params.get("msLessonTrem") != null && (String)params.get("msLessonTrem") != "") {			
@@ -177,10 +195,22 @@ public class MemberService {
 		}
 	}
 	
+	/**
+     * 회원 추가정보 조회
+     * 
+     * @param msNum
+     * @return MemberVO
+     */	
 	public MemberVO selectMemberBasic(String msNum) {
 		return memberMapper.selectMemberBasic(msNum);
 	}
-
+	
+	/**
+     * 회원 차량정보 저장
+     * 
+     * @param params
+     * @return
+     */	
 	public void saveMemberCar(Map<String, Object> params) {
 		
 		List<Map<String,Object>> carList = new ArrayList<Map<String,Object>>();
@@ -226,6 +256,12 @@ public class MemberService {
 		
 	}
 	
+	/**
+     * 회원 차량정보 리스트 조회
+     * 
+     * @param msNum
+     * @return List<MemberVO>
+     */	
 	public List<MemberVO> selectMemberCarList(String msNum) {
 		return memberMapper.selectMemberCarList(msNum);
 	}
@@ -234,17 +270,11 @@ public class MemberService {
 	 * 아이디/전화번호 중복체크, 아이디 찾기 
 	 * 
 	 * @param params
-	 * @return
-	 * @throws Exception 
+	 * @return MemberVO
 	 */
 	public MemberVO selectFindUser(Map<String, Object> params) throws Exception {
 		return memberMapper.selectFindUser(params);
 	}
-
-	public MemberVO selectFindPw(Map<String, Object> params) throws Exception {
-		return memberMapper.selectFindPw(params);
-	}
-
 	
 	/**
 	 * 회원 위약체크 
@@ -257,23 +287,56 @@ public class MemberService {
 		return memberMapper.chkMsBkGrant(params);
 	}
 	
-	public void updatePw(Map<String, Object> params) throws Exception {
-		memberMapper.updatePw(params);
+	/**
+	 * 비밀번호 초기화
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public void updatePassword(Map<String, Object> params) throws Exception {
+		memberMapper.updatePassword(params);
 	}
 
+	/**
+	 * 프로 목록 조회
+	 * 
+	 * @param
+	 * @return MemberVO
+	 */
 	public List<MemberVO> selectProList() {
 		return memberMapper.selectProList();
 	}
 
+	/**
+	 * 회원정보에 세션키 등록 (자동 로그인)
+	 * 
+	 * @param params
+	 * @return
+	 */
 	public void updateMsSessionKey(Map<String, Object> params) {
 		memberMapper.updateMsSessionKey(params);
 		
 	}
 
+	/**
+	 * 세션키로 회원정보 조회 (자동 로그인)
+	 * 
+	 * @param params
+	 * @return SessionVO
+	 */
 	public SessionVO selectSessionLoginUser(Map<String, Object> params) {
 		return memberMapper.selectSessionLoginUser(params);
 	}
 
+	/**
+	 * 로그인 (세션 저장, 자동로그인, 로그 처리)
+	 * 
+	 * @param req
+	 * @param res
+	 * @param session
+	 * @param params
+	 * @return 
+	 */
 	public void loginUserInfo(HttpServletRequest req, HttpServletResponse res, HttpSession session,
 			Map<String, Object> params) throws Exception {
 		String msNum = this.selectMsNum(params);
@@ -326,7 +389,13 @@ public class MemberService {
 		this.insertLoginLog(params);
 		
 	}
-
+	
+	/**
+	 * 선호업장 저장
+	 * 
+	 * @param params
+	 * @return 
+	 */
 	public void saveFirstPick(Map<String, Object> params) {
 		DrMsCoInfo result = drMsCoInfoMapper.selectDrMsCoInfo(params);
 		
@@ -339,6 +408,52 @@ public class MemberService {
 		}
 		drMsCoInfoService.updateFirstPickY(drMsCoInfo);
 		
+	}
+	
+	/**
+	 * 회원/프로 프로필 이미지 등록
+	 * 
+	 * @param params
+	 * @param mreq
+	 * @return 
+	 */
+	public void uploadProfileImg(Map<String, Object> params, MultipartHttpServletRequest mreq) throws IllegalStateException, IOException {
+		Iterator<String> iter = mreq.getFileNames();	
+		while(iter.hasNext()) {
+			
+			// 다음 file[n] 값을 Multipartfile 객체로 생성
+			MultipartFile mFile = mreq.getFile(iter.next());
+			
+			// mFile의 파일이름 가져옴
+			String orgFileNm = mFile.getOriginalFilename();
+			String extNm = orgFileNm.substring(orgFileNm.lastIndexOf(".") + 1, orgFileNm.length()).toLowerCase();
+			
+			
+			File sameFile = new File(orgFileNm);					// 똑같은 이름의 파일 객체 생성 (file_name.jpg)
+			String filePath = sameFile.getAbsolutePath();			// 실행 중인 working directory + File에 전달한 경로값 (C:\folder_name\file_name.jpg)
+			File tmpFile = new File(filePath);						// 절대경로로 다시 파일 객체 생성
+			mFile.transferTo(tmpFile);								// 임시파일 객체에 mFile을 복사하면 해당 경로에 파일이 만들어짐
+			
+			Path srcPath = Paths.get(filePath);						// String을 Path 객체로 만들어줌
+		    String mimeType = Files.probeContentType(srcPath);		// 파일 경로에 있는 Content-Type(파일 유형) 확인
+		    mimeType = (mimeType == null ? "" : mimeType);			// 확장자가 없는 경우 null을 반환
+			
+			String newFileNm = System.currentTimeMillis() + "." + extNm;
+			String newFolderNm = (String)params.get("msImgData");				 // 업로드 할 경로
+			FileUtil.uploadObject("clubdcave", newFolderNm, newFileNm, filePath); // 프로젝트명, 업로드 경로, 새 파일 이름, 복사될 파일 경로
+			
+			// 업로드 후 임시파일 삭제
+			if(tmpFile.exists()) tmpFile.delete();
+			
+			params.put("msImgName", newFileNm);
+			memberMapper.insertDrMsPicture(params);
+			
+		}
+		
+	}
+
+	public MemberVO selectProfileImg(Map<String, Object> map) {
+		return memberMapper.selectDrMsPicture(map);
 	}
 
 }
