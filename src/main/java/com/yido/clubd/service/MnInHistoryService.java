@@ -164,8 +164,8 @@ public class MnInHistoryService {
 				params.put("userMail"		, Utils.getJsonValue(data, "userMail"));
 				params.put("phone"			, Utils.getJsonValue(data, "phone"));
 				params.put("msId"			, Utils.getJsonValue(data, "msId"));	
-				params.put("vList"			, Utils.getJsonValue(data, "vList"));		// vList : 이용권 고유번호, 이용권 금액, 사용수량 등
-				params.put("serialNo"		, Utils.getJsonValue(data, "serialNo"));	// serialNo : 예약 임시테이블 고유번호 (결제 완료 후 임시테이블 데이터 삭제 해야함)
+				params.put("vList"			, Utils.getJsonValue(data, "vList"));			// vList : 이용권 고유번호, 이용권 금액, 사용수량 등
+				params.put("serialNo"		, Utils.getJsonValue(data, "tempSerialNo"));	// tempSerialNo : 예약 임시테이블 고유번호 (결제 완료 후 임시테이블 데이터 삭제 해야함)
 				params.put("isVoucherUse"	, isVoucherUse);
 			
 				// vList : 이용권  

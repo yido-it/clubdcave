@@ -21,12 +21,14 @@ import com.google.gson.reflect.TypeToken;
 import com.yido.clubd.common.utils.ResultVO;
 import com.yido.clubd.model.BookInfoVO;
 import com.yido.clubd.model.DrBkHistory;
+import com.yido.clubd.model.DrBkHistoryTemp;
 import com.yido.clubd.model.DrBkMnMap;
 import com.yido.clubd.model.DrVoucherCode;
 import com.yido.clubd.model.DrVoucherList;
 import com.yido.clubd.model.DrVoucherSale;
 import com.yido.clubd.model.DrVoucherUse;
 import com.yido.clubd.model.VouInfoVO;
+import com.yido.clubd.repository.DrBkHistoryTempMapper;
 import com.yido.clubd.repository.DrVoucherCodeMapper;
 import com.yido.clubd.repository.DrVoucherListMapper;
 import com.yido.clubd.repository.DrVoucherSaleLogMapper;
@@ -63,6 +65,9 @@ public class VoucherService {
 	
 	@Autowired
     private DrVoucherUseMapper drVoucherUseMapper;
+	
+	@Autowired
+    private DrBkHistoryTempMapper drBkHistoryTempMapper;
 	
 	/**
 	 * 이용권 결제 (결제금액 0원) 
@@ -109,6 +114,12 @@ public class VoucherService {
 		// 이용권 사용 처리 
 		this.useVoucher(bInfo, returnMap);
 		resultVO.setData(returnMap.get("calcSerialNo"));	// 결제완료 페이지 이동시 필요한 대표예약고유번호
+		
+		// 예약 임시테이블 데이터 삭제
+		DrBkHistoryTemp temp = new DrBkHistoryTemp();
+		temp.setSerialNo(bInfo.getTempSerialNo());
+		drBkHistoryTempMapper.deleteHistoryTemp(temp);
+		// end.
 		
 		return resultVO;
 	}

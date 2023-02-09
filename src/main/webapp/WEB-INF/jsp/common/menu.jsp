@@ -115,16 +115,15 @@
 	})
 		
 	// 메뉴 active 관련 
-	var fUrl = window.location.pathname;
 	var className = 'active-nav bg-highlight nav-item-active';
 	
-	if (fUrl.indexOf('/guide') >= 0) $('#nav-welcome').addClass(className);						// 이용안내
-	else if (fUrl.indexOf('/facility') >= 0) $('#nav-homepages').addClass(className);			// 시설안내
-	else if (fUrl.indexOf('/pro/proMain') >= 0) $('#nav-pro').addClass(className);				// 프로정보
-	else if (fUrl.indexOf('/noticeList') >= 0) $('#nav-media').addClass(className);				// 공지사항
-	else if (fUrl.indexOf('/voucher/voucherMain') >= 0) $('#nav-ticket').addClass(className);	// 이용권
-	else if (fUrl.indexOf('/member/memberModify') >= 0) $('#nav-modify').addClass(className);	// 정보수정
-	else if (fUrl.indexOf('/book/bookList') >= 0) $('#nav-bookList').addClass(className);		// 예약내역
+	if (pUrl.indexOf('/guide') >= 0) $('#nav-welcome').addClass(className);						// 이용안내
+	else if (pUrl.indexOf('/facility') >= 0) $('#nav-homepages').addClass(className);			// 시설안내
+	else if (pUrl.indexOf('/pro/proMain') >= 0) $('#nav-pro').addClass(className);				// 프로정보
+	else if (pUrl.indexOf('/noticeList') >= 0) $('#nav-media').addClass(className);				// 공지사항
+	else if (pUrl.indexOf('/voucher/voucherMain') >= 0) $('#nav-ticket').addClass(className);	// 이용권
+	else if (pUrl.indexOf('/member/memberModify') >= 0) $('#nav-modify').addClass(className);	// 정보수정
+	else if (pUrl.indexOf('/book/bookList') >= 0) $('#nav-bookList').addClass(className);		// 예약내역
 		
 </script>
 

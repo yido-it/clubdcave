@@ -118,6 +118,27 @@
 </div>
 <!--//베이선택 팝업-->
 
+
+<!-- 예약개수 초과 모달 -->
+<div id="modal_overBkCnt" class="menu menu-box-modal rounded-0" data-menu-height="" data-menu-width="330"
+	data-menu-effect="menu-parallax">
+
+	<h1 class="text-center mt-2"><i class="fa-solid fa-triangle-exclamation fa-2x color-red-dark"></i></h1>
+	<p class="boxed-text-xl opacity-70">
+		최대 예약 가능 개수는 ${maxBkCnt}건 입니다.<BR>
+		이미 ${bkCnt}건을 예약 하셨습니다.
+		
+	</p>
+	<div class="row mb-0 mr-3 ml-3 mb-3">
+
+	   <div class="col-12">
+	  	 <a href="#" class="btn close-menu btn-full btn-md bg-red-dark font-800 text-uppercase rounded-s">확인</a>
+	   </div>
+	</div>
+
+</div> 
+<!--//예약개수 초과 모달 -->
+
 <!-- 예약취소 팝업 -->
 <div id="voucher_cancle" class="menu menu-box-modal rounded-0" data-menu-height="270" data-menu-width="330"
 	data-menu-effect="menu-parallax">
@@ -466,7 +487,7 @@ function doBook() {
 	// 예약 최대 개수 체크 
 	var totBkCnt = Number(bkCnt) + matches.length;
 	if (maxBkCnt < totBkCnt) {
-		alertModal.fail('최대 예약 가능 개수는 ' + maxBkCnt + "건 입니다. 이미 " + bkCnt + "건을 예약 하셨습니다.");
+		$('#modal_overBkCnt').addClass('menu-active');
 		return;
 	}
 	// end.
@@ -525,7 +546,11 @@ function doBook() {
 	});	
 
 }
+ 
+$('.selectedDate').on('click', function() {
 
+	window.scrollTo({top:200, behavior:'smooth'});
+});
 </script>
 
 </html>

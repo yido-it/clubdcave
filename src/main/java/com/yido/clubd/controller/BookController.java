@@ -496,6 +496,7 @@ public class BookController {
     	
 		try {
 			result = bookService.unBkMarkLogic(bookInfo);
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

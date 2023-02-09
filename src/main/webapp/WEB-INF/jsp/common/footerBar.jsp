@@ -14,7 +14,7 @@
 	</a>
 	
 	<!-- 예약 -->
-	<a href="javascript:location.href='/book/bookMain/001';" class="circle-nav">
+	<a href="javascript:location.href='/book/bookMain/001';" class="circle-nav" id="footerBook">
 		<i class="fa fa-calendar-check"></i><span>예약</span><strong><u></u></strong>
 	</a>
 	
@@ -35,26 +35,26 @@
 		<h3 class="ml-3">오시는길</h3>
 		<a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
 	</div>
-	
+		
 	<!-- * 카카오맵 - 지도퍼가기 -->
-<!-- 1. 지도 노드 -->
-<div id="daumRoughmapContainer1675227331010" class="root_daum_roughmap root_daum_roughmap_landing" style="width:100%"></div>
-
-<!--
-	2. 설치 스크립트
-	* 지도 퍼가기 서비스를 2개 이상 넣을 경우, 설치 스크립트는 하나만 삽입합니다.
--->
-<script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
-
-<!-- 3. 실행 스크립트 -->
-<script charset="UTF-8">
-	new daum.roughmap.Lander({
-		"timestamp" : "1675227331010",
-		"key" : "2dktw",
-		"mapWidth" : "",
-		"mapHeight" : "200"
-	}).render();
-</script>
+	<!-- 1. 지도 노드 -->
+	<div id="daumRoughmapContainer1675227331010" class="root_daum_roughmap root_daum_roughmap_landing" style="width:100%"></div>
+	
+	<!--
+		2. 설치 스크립트
+		* 지도 퍼가기 서비스를 2개 이상 넣을 경우, 설치 스크립트는 하나만 삽입합니다.
+	-->
+	<script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
+	
+	<!-- 3. 실행 스크립트 -->
+	<script charset="UTF-8">
+		new daum.roughmap.Lander({
+			"timestamp" : "1675227331010",
+			"key" : "2dktw",
+			"mapWidth" : "",
+			"mapHeight" : "200"
+		}).render();
+	</script>
 
 	<!-- <div class='responsive-iframe max-iframe mb-n3'>
 		<iframe src='https://maps.google.com/?ie=UTF8&ll=47.595131,-122.330414&spn=0.006186,0.016512&t=h&z=17&output=embed' frameborder='0' allowfullscreen></iframe>
@@ -90,10 +90,9 @@
 <script type="text/javascript">
 
 // 하단바 active 관련 
-var fUrl = window.location.pathname;
 
-if (fUrl.indexOf('/main') >= 0) $('#footerMain').addClass('active-nav');	// 메인
-else if (fUrl.indexOf('/pro/proMain') >= 0) $('#footerPro').addClass('active-nav');	// 프로소개
-else if (fUrl.indexOf('/voucher/voucherMain') >= 0) $('#footerVoucher').addClass('active-nav'); // 이용권
+if (pUrl.indexOf('/main') >= 0) $('#footerMain').addClass('active-nav');	// 메인
+else if (pUrl.indexOf('/pro/proMain') >= 0) $('#footerPro').addClass('active-nav');	// 프로소개
+else if (pUrl.indexOf('/voucher/voucherMain') >= 0) $('#footerVoucher').addClass('active-nav'); // 이용권
 
 </script>

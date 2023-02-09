@@ -153,18 +153,15 @@
 				결제진행
 			</a>
 		</div> 
-		
 	</div>  
-
 	<!--  content ends -->   
 </div>   
 
-<!--결제동의 모달-->
-<jsp:include page="../common/pop/payAgree.jsp" />
+<!-- 모달-->
+<jsp:include page="../common/pop/modal.jsp" />
 
 <!-- 하단바 -->
 <jsp:include page="../common/footerBar.jsp" />
-
 
 </body>
 
@@ -188,22 +185,22 @@ var msMidPhone1 	= "<c:out value='${sessionScope.msMember.msMidPhone1}'/>";
 var msLastPhone1 	= "<c:out value='${sessionScope.msMember.msLastPhone1}'/>";
 var msPhone 		= msFirstPhone1 + "-" + msMidPhone1 + "-" + msLastPhone1;
 
-var reservationInfo 		= {};
-reservationInfo.coDiv 		= "<c:out value='${place.coDiv}'/>";		<!-- 지점코드 -->
-reservationInfo.bayCondi 	= "<c:out value='${bay.bayCd}'/>"; 			<!-- 베이코드 -->
-reservationInfo.bkDay 		= "<c:out value='${bkHis.bkDay}'/>"; 		<!-- 예약임시테이블 -->
-reservationInfo.bkTime 		= "<c:out value='${bkHis.bkTime2}'/>"; 		<!-- 예약임시테이블 -->
-reservationInfo.serialNo	= "<c:out value='${bkHis.serialNo}'/>"; 	<!-- 예약임시테이블 -->
-reservationInfo.bkAmount 	= totAmount; 
-reservationInfo.oriBkAmount = amount; 
-reservationInfo.msLevel		= msLevel;
-reservationInfo.userMail 	= msEmail;
-reservationInfo.msNum 		= msNum;
-reservationInfo.msId 		= msId;
-reservationInfo.userName 	= msName;
-reservationInfo.phone 		= msPhone;
+var reservationInfo 			= {};
+reservationInfo.coDiv 			= "<c:out value='${place.coDiv}'/>";		<!-- 지점코드 -->
+reservationInfo.bayCondi 		= "<c:out value='${bay.bayCd}'/>"; 			<!-- 베이코드 -->
+reservationInfo.bkDay 			= "<c:out value='${bkHis.bkDay}'/>"; 		<!-- 예약임시테이블 -->
+reservationInfo.bkTime 			= "<c:out value='${bkHis.bkTime2}'/>"; 		<!-- 예약임시테이블 -->
+reservationInfo.tempSerialNo	= "<c:out value='${bkHis.serialNo}'/>"; 	<!-- 예약임시테이블 -->
+reservationInfo.bkAmount 		= totAmount; 
+reservationInfo.oriBkAmount	 	= amount; 
+reservationInfo.msLevel			= msLevel;
+reservationInfo.userMail 		= msEmail;
+reservationInfo.msNum 			= msNum;
+reservationInfo.msId 			= msId;
+reservationInfo.userName 		= msName;
+reservationInfo.phone 			= msPhone;
 
-var vList 					= new Array();		// 이용권 정보 
+var vList 						= new Array();		// 이용권 정보 
 
 
 timeAmt = Number(timeAmt);
@@ -215,6 +212,13 @@ $(document).ready(function() {
 		location.href = "/login";	
 		return;
 	}
+	
+	// 하단바 [예약] 버튼 클릭시 모달창 뜨도록 
+	document.getElementById('footerBook').setAttribute( 'data-menu', 'modal_btnBook' );
+	// 좌측 상단 [뒤로가기] 클릭시 모달창 뜨도록 
+	$('#topGoBack').removeClass('back-button');
+	document.getElementById('topGoBack').setAttribute( 'data-menu', 'modal_back' );
+	
 });
 
 // 이용권 체크박스 선택
@@ -503,10 +507,12 @@ function doPay() {
     }
 }
 
-//예약 선점된거 풀기 
+// 예약 선점된거 풀기 + 예약 임시테이블 데이터 삭제 
 function fnUnBkMark(reservationInfo, type) {
 	var result = new Object();
-
+	
+	reservationInfo.tempDelYn = 'Y';
+	
 	$.ajax({
 		url: "/book/unBkMark"
 		, type: "post"
@@ -524,5 +530,10 @@ function fnUnBkMark(reservationInfo, type) {
 	return result;
 }
 
+// 뒤로가기 
+function goBack() {
+	fnUnBkMark(reservationInfo, 'back');
+	setTimeout(function() { window.history.go(-1); }, 50);
+}
 </script>
 </html>

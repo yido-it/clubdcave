@@ -282,14 +282,6 @@ $(document).ready(function(){
         //Back Button in Header
         var backButton = $('.back-button, [data-back-button]');
         backButton.on('click', function() {
-        	
-        	// 배은화 추가 (2023-02-07)
-        	// 예약 결제 페이지에서 '뒤로가기' 할때 예약선점해제 하기 위해 추가 함 
-        	var url = window.location.pathname;
-        	if (url.indexOf('/book/book2') >= 0) {	
-        		fnUnBkMark(reservationInfo, 'back');		
-        	}
-        	// end.
         	window.history.go(-1);
         });
 
@@ -1543,10 +1535,12 @@ function showInfo(idx, page) {
 	switch(page) {
 		case "bookList":
 			// 예약취소
+			var pMnAmt = Number($('#mnAmt_'+idx).val()).toLocaleString("ko-KR")+'원';
+			
 			$('#popBayName').text($('#bayName_'+idx).val()); 	// 예약명
 			$('#popBkDay').text($('#bkDay_'+idx).val());		// 방문날짜 
 			$('#popBkTime').text($('#bkTime_'+idx).val());		// 이용시간 
-			$('#popMnAmt').text($('#mnAmt_'+idx).val());		// 결제금액 
+			$('#popMnAmt').text(pMnAmt);						// 결제금액 
 			
 			if ( $('#vcCnt_'+idx).val() == 0 ) {
 				$('#popVoucherTxt').css('display', 'none');

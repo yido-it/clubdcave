@@ -275,6 +275,12 @@ public class BookService {
     			}   	    			
     		}
     		
+    		if (bkInfo.getTempDelYn().equals("Y")) {
+    			// 임시테이블 데이터 삭제
+    			DrBkHistoryTemp bkTemp = new DrBkHistoryTemp();
+    			bkTemp.setSerialNo(bkInfo.getTempSerialNo());
+    			drBkHistoryTempMapper.deleteHistoryTemp(bkTemp);
+    		}
 		} catch(Exception e) {
 			e.printStackTrace();
 			result.setCode("9999");

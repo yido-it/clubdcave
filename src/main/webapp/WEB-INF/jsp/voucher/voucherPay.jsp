@@ -61,9 +61,10 @@
 		</a>
 	</div> 
 </div>  
+</div>  
 
-<!--결제동의 모달-->
-<jsp:include page="../common/pop/payAgree.jsp" />
+<!-- 모달-->
+<jsp:include page="../common/pop/modal.jsp" />
 
 <!-- 하단바 -->
 <jsp:include page="../common/footerBar.jsp" />

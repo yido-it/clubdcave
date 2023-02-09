@@ -160,7 +160,7 @@
 
 })(jQuery);
 
-
+var pUrl = window.location.pathname;
 
 // 요일 반환 
 function getDate(sDate){ 

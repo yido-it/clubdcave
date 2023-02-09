@@ -189,32 +189,13 @@
 	</div>
 </div>
 <!--//내역조회 모달-->
- 
-<!--바우처캔슬 팝업 -->
-<div id="voucher_cancle" class="menu menu-box-modal rounded-0" data-menu-height="" data-menu-width="330"
-	data-menu-effect="menu-parallax">
 
-	<h1 class="text-center mt-2"><i class="fa-solid fa-triangle-exclamation fa-2x color-red-dark"></i></h1>
-	<h3 class="text-center mt-3 font-700">이용권 취소</h3>
-	<p class="boxed-text-xl opacity-70">
-		 이용권을 정말 취소하시겠습니까?<br/>
-		*사용중인 이용권취소는 고객센터에 연락부탁드립니다.  
-	</p>
-	<div class="row mb-0 mr-3 ml-3 mb-3">
-	   <div class="col-6">
-	       <a href="#" class="btn close-menu btn-full btn-md bg-red-dark font-800 text-uppercase rounded-s">아니요</a>
-	   </div>
-	   <div class="col-6">
-	       <a href="#" onClick="doCancel()" class="btn close-menu btn-full btn-md bg-green-dark font-800 text-uppercase rounded-s">예</a>
-	   </div>
-	</div>
+<!-- 모달-->
+<jsp:include page="../common/pop/modal.jsp" />
 
-</div> 
-<!--// 바우처캔슬 팝업 -->
- 
-
-<!--   Global Footer-->
+<!-- 하단바 -->
 <jsp:include page="../common/footerBar.jsp" />
+
 </div>
 </body>
 
@@ -429,7 +410,7 @@ function doSearchList(type) {
 				}
 				listSize += data.length;
 				
-				if (data.length < 5) {
+				if (data.length < 10) {
 					$('#btnMore').text("더이상 조회할 내역이 없습니다.");
 					document.getElementById("btnMore").setAttribute("href", "#");
 				}

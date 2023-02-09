@@ -63,7 +63,6 @@
 	<h3 class="ml-3 mt-3">예약내역 조회</h3>
 	<div class="row mb-0 mr-1 ml-1 mt-2">
 	
-	<!-- ======================================= -->
 		<div class="col-6"> 
 			<div class="form-check icon-check">
 				<input class="form-check-input" type="radio" name="srchUseYn" value="A" id="srchUseYn1">
@@ -120,8 +119,6 @@
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
 			</div> 
 		</div>
-		
-		
 	</div>
 
 	<!--기간달력선택 -->
@@ -149,51 +146,12 @@
 		</a>
 	</div>
 </div>
-
 <!--//내역조회 모달-->
- 
-<!-- 예약취소 모달 -->
-<div id="modal_cancle" class="menu menu-box-bottom rounded-0 " data-menu-height="500" data-menu-effect="menu-parallax" style="display: block; height: 510px;">
-	<h1 class="text-center mt-4">
-		<i class="fa fa-2x fa-check-circle scale-box color-red-dark shadow-xl rounded-circle"></i> 
-	</h1>
-	<h3 class="text-center mt-2 font-700">예약취소</h3>
-	<p class="boxed-text-xl opacity-70">
-		정말 취소하시겠습니까?
-	</p>
-	<div class="divider mt-2 mb-2"></div>
-	<div class="content" >
-		<div class="mb-0">
-			<div class="row mb-3 mt-4">
-				<h5 class="col-4 text-left font-15">예약명</h5>
-				<h5 class="col-8 text-right font-14 opacity-60" id="popBayName"></h5>
-				
-				<h5 class="col-4 text-left font-15">방문날짜</h5>
-				<h5 class="col-8 text-right font-14 opacity-60" id="popBkDay"></h5>
-				
-				<h5 class="col-4 text-left font-15">이용시간</h5>
-				<h5 class="col-8 text-right font-14 opacity-60" id="popBkTime"></h5>
-				
-				<h5 class="col-4 text-left font-15">결제금액</h5>
-				<h5 class="col-8 text-right font-14 opacity-60 " id="popMnAmt"></h5> 
-				
-				<h5 class="col-4 text-left font-15" id="popVoucherTxt">이용권</h5>
-				<h5 class="col-8 text-right font-14 opacity-60" id="popVoucher"></h5> 
-			</div>  
-		</div>
-	
-	</div>
-	<div class="row mb-0 mr-3 ml-3 mt-5 mb-5">
-		<div class="col-12">
-			<a href="#" onClick="doCancel()" class="btn btn-full btn-md color-red-dark border-red-dark font-800 text-uppercase rounded-s">
-				예약취소
-			</a>
-		</div>
-	</div>
-</div>
-<!--//예약취소 모달 -->
 
-<!-- Global Footer -->
+<!-- 모달-->
+<jsp:include page="../common/pop/modal.jsp" />
+
+<!-- 하단바 -->
 <jsp:include page="../common/footerBar.jsp" />
 
 </body>
@@ -397,14 +355,14 @@ function doSearch(type) {
 						case '1' : 
 							if ( ${nowDt} == data[i].BK_DAY ) {
 								// 당일취소불가
-								divCnt += '<a href="#" class="fr btn btn-border btn-sm rounded-0 text-uppercase font-900 border-yellow-dark color-yellow-dark bg-theme">';
+								divCnt += '<span class="fr btn btn-border btn-sm rounded-0 text-uppercase font-900 border-yellow-dark color-yellow-dark bg-theme">';
 								divCnt += '당일취소불가';
-								divCnt += '</a>';
+								divCnt += '</span>';
 							} else if ( ${nowDt} > data[i].BK_DAY ) {
 								// 취소불가
-								divCnt += '<a href="#" class="fr btn btn-border btn-sm rounded-0 text-uppercase font-900 border-yellow-dark color-yellow-dark bg-theme">';
+								divCnt += '<span class="fr btn btn-border btn-sm rounded-0 text-uppercase font-900 border-yellow-dark color-yellow-dark bg-theme">';
 								divCnt += '취소불가';
-								divCnt += '</a>';
+								divCnt += '</span>';
 							} else {
 								// 예약취소
 								divCnt += '<a href="#" data-menu="modal_cancle" data-idx="'+i+'" data-page="bookList" class="fr btn btn-border btn-sm rounded-0 text-uppercase font-900 border-red-dark color-red-dark bg-theme">';								
@@ -413,9 +371,9 @@ function doSearch(type) {
 							}
 							break;
 						case '3' :	
-							divCnt += '<a href="#" class="fr btn btn-border btn-sm rounded-0 text-uppercase font-900 border-yellow-dark color-yellow-dark bg-theme">';
+							divCnt += '<span class="fr btn btn-border btn-sm rounded-0 text-uppercase font-900 border-yellow-dark color-yellow-dark bg-theme">';
 							divCnt += data[i].BK_STATE_NAME+' 된 예약';
-							divCnt += '</a>';
+							divCnt += '</span>';
 							break;
 					}
 					divCnt += '</div>';

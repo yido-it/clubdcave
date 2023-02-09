@@ -33,6 +33,9 @@ public class BookInfoVO {
 	private String phone; 			// 전화번호
 	private String bkState; 		// 예약상태
 	
+	private String tempDelYn;		// 임시테이블 데이터 삭제 여부
+	private String tempSerialNo;	// 임시테이블 serialNo
+	
 	private String availableYn;		// (예약선점용 조회할때 사용) Y이면 예약 가능한 데이터 조회
 	
 	private List<Map<String, Object>> bkList;		// [{"bkTime":"08:00","amount":50000},{"bkTime":"13:00","amount":50000}]

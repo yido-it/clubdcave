@@ -110,7 +110,7 @@ public class VoucherController {
 				// listSize : 어디서 부터 가져올지
 				int listSize = Integer.parseInt(req.getParameter("listSize").toString());
 				// 조회할 건수
-				int limit = 5; 
+				int limit = 10; 
 				map.put("limit", limit);
 				map.put("offset", listSize);
 			}
