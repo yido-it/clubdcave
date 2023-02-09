@@ -51,7 +51,7 @@
 			<div class="d-flex <c:if test="${status.index == 0}"> mt-5 </c:if>" >
 				<div>
 					<h2 class="font-14 mb-0 line-height-m font-500">${voc.vcName} </h2>       
-					<p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간: 구매일로부터 ${voc.vcMonth}개월</p>        
+					<p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간: 구매일로부터 ${voc.vcMonth}개월</p>
 				</div>
 				<div class="ml-auto pl-3 text-right mt-2">
 					<h5><fmt:formatNumber value="${voc.vcAmount}" pattern="#,###" />원</h5>                
@@ -391,10 +391,10 @@ function doSearchList(type) {
 				
 					if (isCancel) {
 						// 사용전이므로 [구매취소] 가능  
-						divCnt += '<button class="btn accordion-btn border-0 color-theme font-14">';
+						divCnt += '<button class="btn accordion-btn border-0 color-theme font-14 accodion-padding">';
 					} else {
 						// [구매취소] 불가 + 상세내역 조회 
-						divCnt += '<button class="btn accordion-btn border-0 color-theme font-14"';
+						divCnt += '<button class="btn accordion-btn border-0 color-theme font-14 accodion-padding"';
 						divCnt += '			onClick="doSearch(\''+data[i].SALE_DAY+'\', '+data[i].SALE_SEQ+', \''+data[i].VC_CD+'\', '+i+')"';
 						divCnt += '			data-toggle="collapse" data-target="#collapse'+i+'">';						
 					}
@@ -412,7 +412,8 @@ function doSearchList(type) {
 						divCnt += '<i class="fa fa-chevron-down font-10 accordion-icon"></i>';
 					}
 					
-					divCnt += '<p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간:  '+toDay+'</p>'; 
+					divCnt += '<p class="opacity-50 font-11 mt-1 mb-1"><i class="fa-regular fa-clock"></i>유효기간:  '+toDay+'</p>'; 
+					divCnt += '<p class="opacity-50 font-11"><i class="fa-regular fa-calendar"></i></i>결제날짜: 23.01.14</p>';	 					        
 					divCnt += '</button>';
 					
 					// 사용내역 

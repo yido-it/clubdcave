@@ -7143,6 +7143,7 @@ background-color: #1b1d21;}
 
 /*이용권*/
 .collapse{border-bottom:1px solid #333}
+.accodion-padding{padding: 12px 8px !important}
 
 /*달력*/
 .ui-datepicker td {
