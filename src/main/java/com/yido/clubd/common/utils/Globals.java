@@ -30,4 +30,7 @@ public class Globals {
 	public static String NaverKey;
 	public static String NaverCallbackUrl;
 	public static String NaverDomain;
+	
+	// KaKao Map 
+	public static String MapKey;
 }

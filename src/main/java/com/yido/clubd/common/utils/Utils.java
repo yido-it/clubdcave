@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -119,8 +122,51 @@ public class Utils {
 	    	String returnValue = null;
 	        
 	        try{            
+	        	
 	            String propFile = new ClassPathResource("application.properties").getURI().getPath();
+	          
+	            Properties props = new Properties();
+	             
+	            FileInputStream fis = new FileInputStream(propFile);
+	             
+	            props.load(new java.io.BufferedInputStream(fis));           
+	            
+	            returnValue = props.getProperty(key) ;
+	        }catch(Exception e){
+	            e.printStackTrace();
+	        }
+	        
+	        return returnValue == null ? defaultValue : returnValue;
+	    }
+	    
+	    public static String getPropertiesByDev(String key, String defaultValue) {
+	    	String returnValue = null;
+	        
+	        try{            
+	        	
+	            String propFile = new ClassPathResource("application-develop.properties").getURI().getPath();
+	          
+	            Properties props = new Properties();
+	             
+	            FileInputStream fis = new FileInputStream(propFile);
+	             
+	            props.load(new java.io.BufferedInputStream(fis));           
+	            
+	            returnValue = props.getProperty(key) ;
+	        }catch(Exception e){
+	            e.printStackTrace();
+	        }
+	        
+	        return returnValue == null ? defaultValue : returnValue;
+	    }
 
+	    public static String getPropertiesByPro(String key, String defaultValue) {
+	    	String returnValue = null;
+	        
+	        try{            
+	        	
+	            String propFile = new ClassPathResource("application-production.properties").getURI().getPath();
+	          
 	            Properties props = new Properties();
 	             
 	            FileInputStream fis = new FileInputStream(propFile);

@@ -118,6 +118,7 @@
 		<if test='msNum != null and msNum != ""'>
 		  AND A.MS_NUM = #{msNum}
 		</if> 
+		  AND (A.VC_REM_CNT > 0 AND A.VC_STATE = 1)
 		  AND A.USE_YN = 'Y'
         ORDER BY A.VC_TO_DAY, A.VC_REM_CNT, A.SALE_SEQ
     </select>

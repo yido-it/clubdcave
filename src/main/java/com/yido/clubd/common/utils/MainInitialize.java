@@ -2,6 +2,8 @@ package com.yido.clubd.common.utils;
 
 import java.net.InetAddress;
 import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.yido.clubd.controller.BookController;
 
@@ -10,7 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class MainInitialize {
-	
+
+	@Value("${spring.profiles.active}")
+	public String activeType;
+
 	@PostConstruct
 	public void init() {
 		try {
@@ -59,6 +64,13 @@ public class MainInitialize {
 			Globals.NaverCallbackUrl  = Utils.getProperties("Globals.Naver.Callback.Url", "");
 			Globals.NaverDomain  = Utils.getProperties("Globals.Naver.Domain", "");
 			log.info("======================= SNS Info Finish =======================");
+			
+			if (activeType.equals("develop")) {
+				Globals.MapKey  = Utils.getPropertiesByDev("Globals.Map.Key", "");
+			} else {
+				Globals.MapKey  = Utils.getPropertiesByPro("Globals.Map.Key", "");
+			}
+			log.info("======================= MapKey : " + Globals.MapKey);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
