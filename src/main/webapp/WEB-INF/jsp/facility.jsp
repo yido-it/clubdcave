@@ -25,18 +25,6 @@
   
     <div class="page-content header-clear">
     
-        <div class="content  mb-2">
-        <!--        <div style="width:100%;text-align:center">
-	                <img src="../images/logo_white.png" class="text-center" style="width:130px;">
-	         </div> -->
-	   <!--       <p>
-	         클럽디 청담은 총 4개 층으로 운영되고 있습니다. 
-	     FULL SWING, 골프편집샵 TINO 5, FULL SWING Pro 스크린 골프와
-	     클럽디 카브 골프 & 비스트로를 경험하실 수 있습니다. 
-		또한 KPGA, KLPGA 프로들의 골프레슨과 이벤트에 참여할 수 있습니다.
-	         
-	         </p> -->
-        </div>
         
         <a href="bay1" class="card card-style mt-5" data-card-height="180"  style="background: url(/images/gallery/cave_main1.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
@@ -49,9 +37,12 @@
 
                 </p>
             </div>
-            <div class="card-bottom">
-                <i class="fa fa-arrow-right color-white font-18 float-right mb-3 pr-3 opacity-80"></i>
+             <div class="card-center">
+                <span class="icon icon-s fr bg-theme  me-3 rounded-xl"><i class="fa fa-arrow-right"></i></span>
             </div>
+         <!--    <div class="card-bottom">
+                <i class="fa fa-arrow-right color-white font-18 float-right mb-3 pr-3 opacity-80"></i>
+            </div> -->
             <div class="card-overlay bg-black opacity-50"></div>
         </a>
 
@@ -65,8 +56,8 @@
 
                 </p>
             </div>
-            <div class="card-bottom">
-                <i class="fa fa-arrow-right color-white font-18 float-right mb-3 pr-3 opacity-80"></i>
+           <div class="card-center">
+                <span class="icon icon-s fr bg-theme  me-3 rounded-xl"><i class="fa fa-arrow-right"></i></span>
             </div>
             <div class="card-overlay bg-black opacity-50"></div>
         </a>
@@ -77,13 +68,13 @@
                 <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">1F</span>
                 Pop-up store </h1>
                 <p class="color-white opacity-80 mb-0 mt-n2">
-          	시즌별로 최신 트렌드를 반영한 골프관련 브랜드들의 팝업 전시가 준비되어 있습니다.
-
+          	시즌별로 최신 트렌드를 반영한 골프관련 브랜드들의 팝업 전시가 준비되어 있습니다. 
                 </p>
             </div>
-            <div class="card-bottom">
-                <i class="fa fa-arrow-right color-white font-18 float-right mb-3 pr-3 opacity-80"></i>
+            <div class="card-center">
+                <span class="icon icon-s fr bg-theme  me-3 rounded-xl"><i class="fa fa-arrow-right"></i></span>
             </div>
+        
             <div class="card-overlay bg-black opacity-50"></div>
         </a>
        
@@ -97,8 +88,8 @@
                  실외 잔디 연습장과 같은 형식의 오픈타석에서 개방형 스크린 화면을 보고 샷을 할 수 있습니다.
                 </p>
             </div>
-            <div class="card-bottom">
-                <i class="fa fa-arrow-right color-white font-18 float-right mb-3 pr-3 opacity-80"></i>
+            <div class="card-center">
+                <span class="icon icon-s fr bg-theme  me-3 rounded-xl"><i class="fa fa-arrow-right"></i></span>
             </div>
             <div class="card-overlay bg-black opacity-50"></div>
         </a>
@@ -110,8 +101,8 @@
                  국내 최고의 프로골퍼들에게 1:1 개인레슨을 받을 수 있는  프라이빗 레슨룸이 설치되어 있습니다. 
                 </p>
             </div>
-            <div class="card-bottom">
-                <i class="fa fa-arrow-right color-white font-18 float-right mb-3 pr-3 opacity-80"></i>
+           <div class="card-center">
+                <span class="icon icon-s fr bg-theme  me-3 rounded-xl"><i class="fa fa-arrow-right"></i></span>
             </div>
             <div class="card-overlay bg-black opacity-60"></div>
         </a>

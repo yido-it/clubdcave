@@ -27,9 +27,9 @@
 			Full Swing은 시장에서 가장 컴팩트한 
 		</p>
 	</div>
-	<div class="card-bottom">
-		<i class="fa fa-arrow-right color-white font-18 float-right mb-3 pr-3 opacity-80"></i>
-	</div>
+ <div class="card-center">
+         <span class="icon icon-s fr bg-theme  me-3 rounded-xl opacity-80"><i class="fa fa-arrow-right"></i></span>
+    </div>
 	<div class="card-overlay bg-black opacity-60"></div>
 </a>
 
@@ -43,9 +43,9 @@
 		<p class="color-white opacity-80 mb-0 mt-n2">
 		</p>
 	</div>
-	<div class="card-bottom">
-		<i class="fa fa-arrow-right color-white font-18 float-right mb-3 pr-3 opacity-80"></i>
-	</div>
+ <div class="card-center">
+         <span class="icon icon-s fr bg-theme  me-3 rounded-xl opacity-80"><i class="fa fa-arrow-right"></i></span>
+    </div>
 	<div class="card-overlay bg-black opacity-60"></div>
 </a>
 
@@ -59,9 +59,9 @@
 		<p class="color-white opacity-80 mb-0 mt-n2">
 		</p>
 	</div>
-	<div class="card-bottom">
-		<i class="fa fa-arrow-right color-white font-18 float-right mb-3 pr-3 opacity-80"></i>
-	</div>
+ <div class="card-center">
+         <span class="icon icon-s fr bg-theme  me-3 rounded-xl opacity-80"><i class="fa fa-arrow-right"></i></span>
+    </div>
 	<div class="card-overlay bg-black opacity-60"></div>
 </a>
 
@@ -75,9 +75,9 @@
 		<p class="color-white opacity-80 mb-0 mt-n2">
 		</p>
 	</div>
-	<div class="card-bottom">
-		<i class="fa fa-arrow-right color-white font-18 float-right mb-3 pr-3 opacity-80"></i>
-	</div>
+ <div class="card-center">
+         <span class="icon icon-s fr bg-theme  me-3 rounded-xl opacity-80"><i class="fa fa-arrow-right"></i></span>
+    </div>
 	<div class="card-overlay bg-black opacity-60"></div>
 </a>
 
@@ -91,9 +91,9 @@
 		<p class="color-white opacity-80 mb-0 mt-n2">
 		</p>
 	</div>
-	<div class="card-bottom">
-		<i class="fa fa-arrow-right color-white font-18 float-right mb-3 pr-3 opacity-80"></i>
-	</div>
+ <div class="card-center">
+         <span class="icon icon-s fr bg-theme  me-3 rounded-xl opacity-80"><i class="fa fa-arrow-right"></i></span>
+    </div>
 	<div class="card-overlay bg-black opacity-60"></div>
 </a>
 
