@@ -85,12 +85,11 @@
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
 			</div>
 		</div>
-		
 	</div>
-		<div class="divider mb-3 mt-3"></div>
+	<div class="divider mb-3 mt-3"></div>
 		
-		 <h3 class="ml-3 mt-4">예약일자 조회</h3>
-		<div class="row mb-0 mr-1 ml-1 mt-2">
+	<h3 class="ml-3 mt-4">예약일자 조회</h3>
+	<div class="row mb-0 mr-1 ml-1 mt-2">
 		<div class="col-6"> 
 			<div class="form-check icon-check">
 				<input class="form-check-input" type="radio" name="srchPeriod" value="1" id="srchPeriod1" onclick='search(this.value)'>
@@ -120,7 +119,7 @@
 			</div> 
 		</div>
 	</div>
-
+	
 	<!--기간달력선택 -->
 	<div class="row mt-3 mb-0" style="padding:10px;position:relative;" id="calendar">
 		<div class="col-6" class=""> 
@@ -311,7 +310,6 @@ function doSearch(type) {
     	}
         , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
         , success: function(data) {	
-        	console.log(data);
         	
 			if (data != null && data.length > 0) {
 				var divCnt = '';

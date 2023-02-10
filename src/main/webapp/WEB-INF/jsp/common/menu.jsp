@@ -35,11 +35,11 @@
 	<div class="menu-list">
 		<!-- 이용관련 메뉴 -->
 		<h6 class="ml-1 font-14 font-400">이용관련</h6>
-		<a href="/guide" id="nav-welcome">
+		<a href="javascript:location.href='/guide'" id="nav-welcome">
 			<i class="fa fa-star color-yellow-dark"></i>이용안내<i class="fa fa-angle-right"></i>
 		</a>
 		
-		<a href="/facility" id="nav-homepages">
+		<a href="javascript:location.href='/facility'" id="nav-homepages">
 			<i class="fa fa-file color-green-dark"></i>시설안내<i class="fa fa-angle-right"></i>
 		</a>
 		

@@ -18,80 +18,81 @@
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
     
 <div id="page">
-
-<div class="header header-fixed header-logo-app">
-<a href="javascript:history.back(-1)" class="header-title header-subtitle">이용권</a>
-<jsp:include page="../common/top.jsp" />
-</div>
-
-<!-- 좌측GNB-->
-<jsp:include page="../common/menu.jsp" />
-<!-- //좌측GNB-->
-
-<div class="page-content header-clear-medium">
-
-
-<div class="content">
-	<!-- 탭선택 -->
-	<div class="tab-controls tabs-round tab-animated tabs-medium tabs-rounded shadow-xl" data-tab-items="2" data-tab-active="bg-green-dark color-white">
-		<a href="#" data-tab-active="" data-tab="tab-1" class="bg-green-dark color-white no-click font-15" style="width: 50%;">
-			이용권구매
-		</a>
-		
-		<a href="#" data-tab="tab-2" style="width: 50%;" class="font-15">
-			이용권보유내역
-		</a>
+	
+	<div class="header header-fixed header-logo-app">
+	<a href="javascript:history.back(-1)" class="header-title header-subtitle">이용권</a>
+	<jsp:include page="../common/top.jsp" />
 	</div>
-	<div class="clearfix mb-3"></div>
-	<!--//탭선택 -->
 
-	<!-- 이용권구매 -->
-	<div class="tab-content" id="tab-1" style="display: block;">
-		<c:forEach items="${vocList}" var="voc" varStatus="status">
-			<div class="d-flex <c:if test="${status.index == 0}"> mt-5 </c:if>" >
-				<div>
-					<h2 class="font-14 mb-0 line-height-m font-500">${voc.vcName} </h2>       
-					<p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간: 구매일로부터 ${voc.vcMonth}개월</p>
+	<!-- 좌측GNB-->
+	<jsp:include page="../common/menu.jsp" />
+	<!-- //좌측GNB-->
+	
+	<div class="page-content header-clear-medium">
+	
+	
+	<div class="content">
+		<!-- 탭선택 -->
+		<div class="tab-controls tabs-round tab-animated tabs-medium tabs-rounded shadow-xl" data-tab-items="2" data-tab-active="bg-green-dark color-white">
+			<a href="#" data-tab-active="" data-tab="tab-1" class="bg-green-dark color-white no-click font-15" style="width: 50%;">
+				이용권구매
+			</a>
+			
+			<a href="#" data-tab="tab-2" style="width: 50%;" class="font-15">
+				이용권보유내역
+			</a>
+		</div>
+		<div class="clearfix mb-3"></div>
+		<!--//탭선택 -->
+	
+		<!-- 이용권구매 -->
+		<div class="tab-content" id="tab-1" style="display: block;">
+			<c:forEach items="${vocList}" var="voc" varStatus="status">
+				<div class="d-flex <c:if test="${status.index == 0}"> mt-5 </c:if>" >
+					<div>
+						<h2 class="font-14 mb-0 line-height-m font-500">${voc.vcName} </h2>       
+						<p class="opacity-50 font-11"><i class="fa-regular fa-clock"></i>유효기간: 구매일로부터 ${voc.vcMonth}개월</p>
+					</div>
+					<div class="ml-auto pl-3 text-right mt-2">
+						<h5><fmt:formatNumber value="${voc.vcAmount}" pattern="#,###" />원</h5>                
+					</div>
+					
+					<button class="btn btn-primary btn-xs bg-blue-dark ml-1" onClick="doPay('${voc.vcCd}')">
+						구매
+					</button>
 				</div>
-				<div class="ml-auto pl-3 text-right mt-2">
-					<h5><fmt:formatNumber value="${voc.vcAmount}" pattern="#,###" />원</h5>                
+				<div class="divider mt-3 mb-3"></div>
+			</c:forEach>
+		</div>
+		<!-- // 이용권구매 -->
+	
+		<!-- 이용권보유내역 -->
+		<div class="tab-content" id="tab-2">
+			<div class="menu-title">
+				<h3 class="my-0 py-0">보유내역</h3>
+				<div class="float-right  mt-n4">
+					<!-- 검색 버튼 -->
+					<a href="" data-menu="modal_day" class="color-white"><i class="fa-solid fa-calendar-days"></i></a>
 				</div>
-				
-				<button class="btn btn-primary btn-xs bg-blue-dark ml-1" onClick="doPay('${voc.vcCd}')">
-					구매
-				</button>
 			</div>
 			<div class="divider mt-3 mb-3"></div>
-		</c:forEach>
-	</div>
-	<!-- // 이용권구매 -->
-
-	<!-- 이용권보유내역 -->
-	<div class="tab-content" id="tab-2">
-		<div class="menu-title">
-			<h3 class="my-0 py-0">보유내역</h3>
-			<div class="float-right  mt-n4">
-				<!-- 검색 버튼 -->
-				<a href="" data-menu="modal_day" class="color-white"><i class="fa-solid fa-calendar-days"></i></a>
-			</div>
+			
+			<!-- ┌──────────────────────── 구매내역 ────────────────────────┐-->
+			<div class="accordion" id="accordion-1"></div>
+			<!-- └──────────────────────── 구매내역 ────────────────────────┘-->
+			
+			<a href="#" onClick="doSearchList('more')" class="btn btn-border btn-m btn-full mt-4 mb-10 rounded-xl text-uppercase font-900 border-blue-dark color-blue-dark ml-4 mr-4" id="btnMore">
+	        	더보기 <i class="fa-solid fa-chevron-down"></i>
+	        </a>
+	        
 		</div>
-		<div class="divider mt-3 mb-3"></div>
-		
-		<!-- ┌──────────────────────── 구매내역 ────────────────────────┐-->
-		<div class="accordion" id="accordion-1"></div>
-		<!-- └──────────────────────── 구매내역 ────────────────────────┘-->
-		
-		<a href="#" onClick="doSearchList('more')" class="btn btn-border btn-m btn-full mt-4 mb-10 rounded-xl text-uppercase font-900 border-blue-dark color-blue-dark ml-4 mr-4" id="btnMore">
-        	더보기 <i class="fa-solid fa-chevron-down"></i>
-        </a>
-        
+		<!-- // 이용권보유내역 -->
 	</div>
-	<!-- // 이용권보유내역 -->
-</div>
-<!-- Page content ends here-->  
+	<!-- Page content ends here-->  
 
 <!--  content ends -->   
 </div>   
+</div>
 
 <!-- 내역조회 모달 -->
 <div id="modal_day" class="menu menu-box-modal rounded-0"  style="background-color: #303030;z-index:99999;padding: 15px 0;"
@@ -129,33 +130,31 @@
 	</div>
 		<div class="divider mb-3 mt-3"></div>
 	 <h3 class="ml-3 mt-4">구매일자 조회</h3>
-	 
 	<div class="row mb-0 mr-1 ml-1 mt-2">
-	
 		<div class="col-6"> 
 			<div class="form-check icon-check">
-				<input class="form-check-input" type="radio" name="searchType" value="1" id="type1" onclick='search(this.value)' checked>
-				<label class="form-check-label" for="type1">최근 1개월</label>
+				<input class="form-check-input" type="radio" name="srchPeriod" value="1" id="srchPeriod1" onclick='search(this.value)'>
+				<label class="form-check-label" for="srchPeriod1">최근 1개월</label>
 				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
 			</div>
 			<div class="form-check icon-check">
-				<input class="form-check-input" type="radio" name="searchType" value="12" id="type2" onclick='search(this.value)'>
-				<label class="form-check-label" for="type2">최근 1년</label>
+				<input class="form-check-input" type="radio" name="srchPeriod" value="12" id="srchPeriod2" onclick='search(this.value)'>
+				<label class="form-check-label" for="srchPeriod2">최근 1년</label>
 				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
 			</div> 
 		</div>
 		<div class="col-6"> 
 			<div class="form-check icon-check">
-				<input class="form-check-input" type="radio" name="searchType" value="3" id="type3" onclick='search(this.value)'>
-				<label class="form-check-label" for="type3">최근 3개월</label>
+				<input class="form-check-input" type="radio" name="srchPeriod" value="3" id="srchPeriod3" onclick='search(this.value)'>
+				<label class="form-check-label" for="srchPeriod3">최근 3개월</label>
 				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
 			</div>
 			<div class="form-check icon-check">
-				<input class="form-check-input" type="radio" name="searchType" value="0" id="type4" onclick='search(this.value)'>
-				<label class="form-check-label" for="type4">직접설정</label>
+				<input class="form-check-input" type="radio" name="srchPeriod" value="0" id="srchPeriod4" onclick='search(this.value)'>
+				<label class="form-check-label" for="srchPeriod4">직접설정</label>
 				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
 			</div> 
@@ -196,7 +195,6 @@
 <!-- 하단바 -->
 <jsp:include page="../common/footerBar.jsp" />
 
-</div>
 </body>
 
 <jsp:include page="../common/alertModal.jsp" />  
@@ -361,8 +359,6 @@ function doSearchList(type) {
  	}
      , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
      , success: function(data) {	
-     	console.log(data);
-     	
 			if (data != null && data.length > 0) {
 				var divCnt = '';
 				for (let i=0; i<data.length; i++) {
@@ -405,7 +401,7 @@ function doSearchList(type) {
 					
 
 					divCnt += '<p class="opacity-50 font-11 mt-1 mb-1"><i class="fa-regular fa-clock"></i>유효기간: '+toDay+'</p>'; 
-					divCnt += '<p class="opacity-50 font-11"><i class="fa-regular fa-calendar"></i></i>결제날짜: '+saleDay+'</p>';	 					        
+					divCnt += '<p class="opacity-50 font-11"><i class="fa-regular fa-calendar"></i></i>결제일자: '+saleDay+'</p>';	 					        
 
 					divCnt += '</button>';
 					

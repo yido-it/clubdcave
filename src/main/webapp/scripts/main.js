@@ -195,9 +195,7 @@ function getToDay(separator){
 }
 
 function searchDate(value) {
-	console.log(getToDay("-"));
 	var endDt = new Date(getToDay("-"));
-	console.log(endDt);
 	var strtDt = new Date(getToDay("-"));
 	
 	switch(value) {
