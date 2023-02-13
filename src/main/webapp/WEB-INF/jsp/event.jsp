@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="divider mb-3"></div>
-        
+            
         </div>
         <div class="content">
         	<div>
