@@ -54,6 +54,10 @@ public class MemberService {
 	public MemberVO selectMember(Map<String, Object> params) {
     	return memberMapper.selectMember(params);
 	}	
+	
+	public List<MemberVO> selectMemberList(Map<String, Object> params) {
+    	return memberMapper.selectMemberList(params);
+	}	
     
     /**
 	 * 로그인

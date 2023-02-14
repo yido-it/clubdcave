@@ -1,5 +1,6 @@
 package com.yido.clubd.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -543,6 +544,34 @@ public class MemberController {
 		}
 		return map;
 	}
+	
+	/**
+	 * 회원 조회
+	 * 
+	 * @param req
+	 * @param params
+	 * @return
+	 */
+	@RequestMapping(value = "/searchMemberList")
+	@ResponseBody
+	public List<MemberVO> memberList(HttpServletRequest req, @RequestParam Map<String, Object> params) {
+		List<MemberVO> mList = new ArrayList<MemberVO>();		
+		log.info("[searchMemberList] params : " + params);
+		
+		
+		try {
+			if (params.get("searchType") == null || params.get("searchTxt") == null ) {
+				return mList;
+			}
+			
+			mList = memberService.selectMemberList(params);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mList;
+	}
+	
 
 	/*@RequestMapping(value = "/checkPhoneNumber")
 	public void checkPhoneNumber(HttpServletRequest request, HttpServletResponse response, HttpSession session,

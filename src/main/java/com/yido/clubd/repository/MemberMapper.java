@@ -23,6 +23,9 @@ public interface MemberMapper {
 	// MS_ID 또는 MS_NUM으로 회원정보 조회 (정보 수정)
 	public MemberVO selectMember(Map<String, Object> params);
 	
+	// 회원 목록 조회 
+	public List<MemberVO> selectMemberList(Map<String, Object> params);
+	
 	// 아이디/비밀번호로 회원정보 조회 (로그인)
 	public MemberVO selectLoginUser(Map<String, Object> params) throws Exception;
 

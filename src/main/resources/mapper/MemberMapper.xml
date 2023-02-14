@@ -76,6 +76,22 @@
 		 	AND IFNULL(NULLIF(MS_BLANK,''),'N') = 'N'
     </select>
     
+    <select id="selectMemberList" resultType="MemberVO">
+		SELECT *
+		  FROM DR_MS_MAININFO
+		 WHERE IFNULL(NULLIF(MS_BLANK,''),'N') = 'N'
+		<choose> 
+		<when test='searchType != null and searchType == "name"'>
+		   AND MS_NAME LIKE CONCAT(#{searchTxt}, '%') 
+		</when> 
+		<when test='searchType != null and searchType == "id"'>
+		   AND MS_ID LIKE CONCAT(#{searchTxt}, '%') 
+		</when> 
+		<otherwise></otherwise>
+		</choose> 		
+    </select>
+    
+    
     <select id="selectLoginUser" resultType="MemberVO">
     	/* memberMapper.selectLoginUser - 아이디/비밀번호로 회원정보 조회 (로그인) */
         SELECT

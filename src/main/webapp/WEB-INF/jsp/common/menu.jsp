@@ -73,6 +73,12 @@
 			<i class="fa fa-calendar-check color-blue-dark"></i>예약내역<i class="fa fa-angle-right"></i>
 		</a>
 	
+		<c:if test="${sessionScope.msMember.msId == 'admin'}">
+			<a href="javascript:location.href='/admin/userLogin'" id="nav-userLogin">
+				<i class="fa fa-user color-magenta-dark"></i>사용자 로그인<i class="fa fa-angle-right"></i>
+			</a>
+		</c:if>	
+		
 		<c:if test="${!empty sessionScope.msMember.msId}">
 			<!-- 로그인 상태 일때-->
 			<a href="#" class="" id="btnLogout">
