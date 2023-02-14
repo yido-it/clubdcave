@@ -39,12 +39,12 @@
 			, MN_IN_NO				, MN_CARD_APPROVAL	, MN_MONTH			, MN_APP_DATE
 			, MN_CARD_DIV			, MN_CARD_NAME		, INPUT_STAFF		, INPUT_DATETIME	
 			, INPUT_IP				, ORDER_ID			, TRANSACTION_ID	, CANCEL_KEY
-			, MN_CANCEL_YN			, MN_REMARK
+			, MN_CANCEL_YN			, MN_REMARK			, MN_IN_NAME		, MS_NUM
 		<if test='mnOriCoDiv != null'>
 		 	, MN_ORI_CO_DIV			, MN_ORI_IN_DAY		, MN_ORI_MN_SEQ
-		</if>			
+		</if>	
 		<if test='mnSerialNo != null'>
-		 	, MN_SERIAL_NO
+		 	, MN_SERIAL_NO			, MN_ORI_SERIAL_NO
 		</if>	
     	) values (
     		#{coDiv}	   			, #{mnInDay}   		, #{mnSeq}			, '2'					
@@ -52,13 +52,13 @@
     		, #{mnInNo}	    		, #{mnCardApproval} , #{mnMonth}   		, #{mnAppDate}
     		, #{mnCardDiv}    		, #{mnCardName}    	, 'APP'				, NOW()				
     		, #{ipAddr}				, #{orderId}		, #{transactionId}	, #{cancelKey}	
-    		, #{mnCancelYn}			, #{mnRemark}
+    		, #{mnCancelYn}			, #{mnRemark}		, #{mnInName}		, #{msNum}
     	<if test='mnOriCoDiv != null'>
 		 	, #{mnOriCoDiv}			, #{mnOriInDay}		, #{mnOriMnSeq}
 		</if>		
 		<if test='mnSerialNo != null'>
-		 	, #{mnSerialNo}
-		</if>	
+		 	, #{mnSerialNo}			, #{mnOriSerialNo}
+		</if>			
     	)  	
     </insert>
     

@@ -331,7 +331,7 @@ function doSearch(type) {
 					divCnt += '<div class="content mb-3">';
 					divCnt += '<div class="d-flex mb-3" style="width:100%">';
 					divCnt += '<div>';
-					divCnt += '<img src="/images/gallery/4.jpg" height="80" class="rounded-s shadow-xl">';
+					divCnt += '<img src="/images/gallery/'+data[i].BAY_CD+'.jpg" height="80" class="rounded-s shadow-xl">';
 					divCnt += '</div>';
 					divCnt += '<div class="pl-3" style="width:80%">';
 					divCnt += '<h1 class="font-20 mb-n3">'+data[i].CO_NAME+'</h1>';
@@ -349,7 +349,11 @@ function doSearch(type) {
 					if (data[i].VC_CNT > 0) {
 						divCnt += '<h5 class="col-4 text-left font-15">이용권</h5>';
 						divCnt += '<h5 class="col-8 text-right font-14 opacity-60 ">';
-						divCnt += data[i].VC_NAME+'('+data[i].VC_CNT+'매 사용)';
+						if (data[i].VC_MULTI_CNT > 1) {
+							divCnt += data[i].VC_NAME+' 외 '+ (data[i].VC_MULTI_CNT-1) +'건 ('+data[i].VC_CNT+'매 사용)';
+						} else {
+							divCnt += data[i].VC_NAME+'('+data[i].VC_CNT+'매 사용)';
+						}
 						divCnt += '</h5>';
 					}
 				

@@ -85,7 +85,8 @@ public class PayController {
 		String reserved1             = "";
 		String reserved2             = "";
 		String reserved3             = "";
-      
+		String mnDay				 = ""; 		// 입금일자
+		
 		String ipAddr = Utils.getClientIpAddress(request);
 		
     	try {
@@ -162,7 +163,7 @@ public class PayController {
                 // JSONObject result = (JSONObject) parser.parse(sb.toString()); 
                 JSONObject result = new JSONObject(sb.toString());
 
-                log.info("[returnPay] result : " + result);
+                log.debug("[returnPay] result : " + result);
                 
             	log.info("===================승인 결과 시작===================");
             	log.info("가맹점 아이디 (SERVICE_ID) : " + StringUtils.isNullOrEmpty(result.get("SERVICE_ID"), ""));				
@@ -202,9 +203,10 @@ public class PayController {
                 reserved2             = URLDecoder.decode(request.getParameter("RESERVED2"));
                 reserved3             = URLDecoder.decode(request.getParameter("RESERVED3"));
                 isSuccessPay          = responseCode.equals("0000");
+                mnDay 				  = orderDate.substring(0,8);
                 
                 params.put("coDiv"				, reserved1);
-                params.put("mnInDay"			, orderDate.substring(0,8));	// 입금일자
+                params.put("mnInDay"			, mnDay);						// 입금일자
                 params.put("mnRevAmount"		, authAmount);					// 총입금액
                 params.put("mnInAmount"			, authAmount);					// 결제금액
                 params.put("mnChangeAmount"		, 0);							// 반환금액
@@ -225,35 +227,19 @@ public class PayController {
                     params.put("mnCardName", StringUtils.isNullOrEmpty(cardInfo.get("cardName"), ""));	// 카드발급사명
                 }
 
-                log.info("[returnPay] params : " + params);
-               
-                // PG 결제내역 등록 (예약, 이용권)
-                Map<String, Object> tmpMap = new HashMap<String, Object>();
-                int mnSeq = mnInHistoryService.getMnSeq(tmpMap);
-                params.put("mnSeq", mnSeq);
-                
-                // 이용권 구매시 [이용권 매출 고유번호 -> MN_SERIAL_NO] insert  
-                if (reserved2.equals("VOUCHER")) {
-                	String drSerialNo = drVoucherSaleService.getSerialNo(); // 이용권 매출 고유번호 채번					
-                	params.put("drSerialNo", drSerialNo);
-                	params.put("mnSerialNo", drSerialNo);
-                }
-                mnInHistoryService.insertMnInHistory(params);
-                // end.
-                
+                log.debug("[returnPay] params : " + params);
+
                 // 결제 성공
                 if(responseCode.equals("0000")) {
-                	// 예약-입금 연결 정보 
-                    DrBkMnMap mnMap = new DrBkMnMap();
-                    mnMap.setCoDiv(reserved1);
-                    mnMap.setMnSeq(mnSeq);
-                    mnMap.setMnCoDiv(reserved1);
-                    mnMap.setMnInDay(orderDate.substring(0,8));
-                    mnMap.setMnAmount(Integer.parseInt(authAmount));
-                    // end.
-                    
+        	        
+                	 if (reserved2.equals("VOUCHER")) {
+        	            // 이용권 구매시 [이용권 매출 고유번호 -> MN_SERIAL_NO] insert  
+        	        	String drSerialNo = drVoucherSaleService.getSerialNo(); // 이용권 매출 고유번호 채번					
+        	        	params.put("drSerialNo", drSerialNo);
+        	        	params.put("mnSerialNo", drSerialNo);
+        	        }
                 	// 결제 후 예약처리...
-                	resultVO = mnInHistoryService.successPayLogic(params, reserved2, reserved3, mnMap, session); 
+                	resultVO = mnInHistoryService.successPayLogic(params, reserved2, reserved3, session); 
                 	
                 	if(resultVO.getCode().equals("0000")) {
                 		resultCode = "0000";
@@ -268,7 +254,16 @@ public class PayController {
     		// 결제는 성공했지만 오류 (취소요청 해야함)
     		if(isSuccessPay) {
     			MnInHistory mnHis = new MnInHistory();
-    			mnInHistoryService.cancelLogic(reserved1, orderId, authAmount, transactionId, "C", cancelKey, ipAddr, mnHis);
+    			Map<String, Object> cMap = new HashMap<String, Object>();
+    			cMap.put("coDiv", reserved1);
+    			cMap.put("orderId", orderId);
+    			cMap.put("authAmount", authAmount);
+    			cMap.put("transactionId", transactionId);
+    			cMap.put("cancelKey", cancelKey);
+    			cMap.put("ipAddr", ipAddr);
+    			cMap.put("cancelType", "C");
+    			cMap.put("mnHis", mnHis);
+    			mnInHistoryService.cancelLogic(cMap);
     		}
     	} finally {
     		try {

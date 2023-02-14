@@ -33,7 +33,7 @@
             <div class="d-flex mb-3" style="width:100%">
                 <div>
                 	<!-- 베이 이미지 -->
-                    <img src="/images/gallery/4.jpg" height="80" class="rounded-s shadow-xl">
+                    <img src="/images/gallery/${bay.bayCd}.jpg" height="80" class="rounded-s shadow-xl">
                 </div>
                 <div class="pl-3" style="width:80%">
                 	<!-- 지점 -->
@@ -137,7 +137,7 @@
 			
 				<!-- 최종결제금액 -->
 				<div class="col-6 mt-1">
-					<h6 class="font-700 font-23">최종결제금액</h6>
+					<h6 class="font-700 font-23">최종결제금액 </h6>
 				</div>
 				<div class="col-6">
 					<h6 class="font-700 font-28 txtTotAmt">
@@ -180,11 +180,12 @@ var msNum			= "<c:out value='${sessionScope.msMember.msNum}'/>";
 var msLevel 		= "<c:out value='${sessionScope.msMember.msLevel}'/>";
 var msEmail 		= "<c:out value='${sessionScope.msMember.msEmail}'/>";
 var msName 			= "<c:out value='${sessionScope.msMember.msName}'/>";
+/*
 var msFirstPhone1	= "<c:out value='${sessionScope.msMember.msFirstPhone1}'/>";
 var msMidPhone1 	= "<c:out value='${sessionScope.msMember.msMidPhone1}'/>";
 var msLastPhone1 	= "<c:out value='${sessionScope.msMember.msLastPhone1}'/>";
 var msPhone 		= msFirstPhone1 + "-" + msMidPhone1 + "-" + msLastPhone1;
-
+*/
 var reservationInfo 			= {};
 reservationInfo.coDiv 			= "<c:out value='${place.coDiv}'/>";		<!-- 지점코드 -->
 reservationInfo.bayCondi 		= "<c:out value='${bay.bayCd}'/>"; 			<!-- 베이코드 -->
@@ -193,12 +194,14 @@ reservationInfo.bkTime 			= "<c:out value='${bkHis.bkTime2}'/>"; 		<!-- 예약�
 reservationInfo.tempSerialNo	= "<c:out value='${bkHis.serialNo}'/>"; 	<!-- 예약임시테이블 -->
 reservationInfo.bkAmount 		= totAmount; 
 reservationInfo.oriBkAmount	 	= amount; 
+/*
 reservationInfo.msLevel			= msLevel;
 reservationInfo.userMail 		= msEmail;
 reservationInfo.msNum 			= msNum;
 reservationInfo.msId 			= msId;
 reservationInfo.userName 		= msName;
 reservationInfo.phone 			= msPhone;
+*/
 
 var vList 						= new Array();		// 이용권 정보 
 

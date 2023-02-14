@@ -222,7 +222,7 @@ public class VoucherController {
 	}
 	
 	/**
-	 * [예약] 이용권 결제 (결제금액 0원) 
+	 * [예약] 이용권 결제 (결제금액 0원인 경우) 
 	 * 
 	 * @param model
 	 * @param req
@@ -232,14 +232,15 @@ public class VoucherController {
 	@RequestMapping("/vPay")  
 	@ResponseBody
 	public ResultVO vPay(Model model, HttpServletRequest req, BookInfoVO bInfo) {
-
+		HttpSession session = req.getSession();
+		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
     	ResultVO result = new ResultVO();
 		String ipAddr = Utils.getClientIpAddress(req);
     	log.info("[vPay] bInfo: " + bInfo);
     	
 		try {
 			bInfo.setIpAddr(ipAddr);
-			result = voucherService.vPay(bInfo);
+			voucherService.vPay(bInfo, sessionVO);
 		} catch(Exception e) {
 			e.printStackTrace();
 			result.setCode("9999");
@@ -250,7 +251,7 @@ public class VoucherController {
 	}
 
 	/**
-	 * [예약] 이용권 결제취소 (결제금액 0원) 
+	 * [예약] 이용권 결제취소 (결제금액 0원인 경우) 
 	 * 
 	 * @param model
 	 * @param req

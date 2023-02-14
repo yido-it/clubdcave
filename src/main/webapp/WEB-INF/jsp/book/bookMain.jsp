@@ -107,7 +107,7 @@
         <!-- 베이목록 -->
        	<c:forEach items="${bayList}" var="bay">
        	     <a href="#" onClick="selectedBay('${bay.bayCd}', '${bay.bayName}')" class="close-menu">
-                <img class="mr-3 mt-2" src="/images/gallery/1.jpg">
+                <img class="mr-3 mt-2" src="/images/gallery/${bay.bayCd}.jpg">
                 <span class="txt_bay_name">${bay.bayName}</span><i class="fa fa-angle-right"></i>
             </a>
        	</c:forEach>
@@ -124,11 +124,7 @@
 	data-menu-effect="menu-parallax">
 
 	<h1 class="text-center mt-2"><i class="fa-solid fa-triangle-exclamation fa-2x color-red-dark"></i></h1>
-	<p class="boxed-text-xl opacity-70">
-		최대 예약 가능 개수는 ${maxBkCnt}건 입니다.<BR>
-		이미 ${bkCnt}건을 예약 하셨습니다.
-		
-	</p>
+	<p class="boxed-text-xl opacity-70" id="overBkTxt"></p>
 	<div class="row mb-0 mr-3 ml-3 mb-3">
 
 	   <div class="col-12">
@@ -487,6 +483,18 @@ function doBook() {
 	// 예약 최대 개수 체크 
 	var totBkCnt = Number(bkCnt) + matches.length;
 	if (maxBkCnt < totBkCnt) {
+		
+		var overBkTxt = "";
+		if (bkCnt == 0) {
+			// 기존에 예약한 내역이 없다면 
+			overBkTxt = "최대 예약 가능 개수는 " + maxBkCnt + "건 입니다.";
+		} else {
+			// 기존에 예약한 내역이 있다면 
+			overBkTxt = "최대 예약 가능 개수는 " + maxBkCnt + "건 입니다.<BR>";
+			overBkTxt += "이미 " + bkCnt + "건을 예약 하셨습니다.";
+		}
+		
+		document.getElementById('overBkTxt').innerHTML = overBkTxt;
 		$('#modal_overBkCnt').addClass('menu-active');
 		return;
 	}

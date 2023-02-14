@@ -416,9 +416,15 @@ public class BookController {
 			
 			// 대표 예약고유번호로 데이터 조회 
 			param.put("calcSerialNo", calcSerialNo);
+			
+			// 예약정보 
 			List<Map<String, Object>> list = drBkHistoryService.selectBkHis(param);
 			model.addAttribute("bk", list.get(0));
-		
+			
+			// 이용권 사용내역 
+			//List<Map<String, Object>> vList = drBkHistoryService.selectVoucherList(param);
+			//model.addAttribute("vList", vList); 
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

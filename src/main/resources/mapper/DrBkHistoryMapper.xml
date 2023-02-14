@@ -67,12 +67,14 @@
 		SELECT B.CO_NAME
  			 , B.CO_DIV
 			 , D.CD_TITLE1 AS BAY_NAME
+             , C.BAY_CD
 		     , BK_DAY
 		     , GROUP_CONCAT(CONCAT(LEFT(BK_TIME, 2),':', RIGHT(BK_TIME, 2))  ORDER BY A.BK_TIME SEPARATOR ', ') AS BK_TIME
 		     , IFNULL(NULLIF(E.MN_AMOUNT,''),'0') AS MN_AMOUNT 
 		     , A.BK_STATE 
              , F.CD_TITLE1 AS BK_STATE_NAME
-             ,  MAX(I.VC_NAME) AS VC_NAME 
+    		 , COUNT(DISTINCT(H.SALE_SEQ)) AS VC_MULTI_CNT
+             , MAX(I.VC_NAME) AS VC_NAME 
              , COUNT(G.BK_SERIAL_NO) AS VC_CNT
              , A.CALC_SERIAL_NO
 		FROM DR_BK_HISTORY A 
@@ -111,6 +113,28 @@
 		<if test='limit != null and offset != null'>
         LIMIT #{limit} OFFSET #{offset}
 		</if>        
+	</select>
+	
+	<!-- 예약내역 > 이용권 사용내역 -->
+	<select id="selectVoucherList" parameterType="hashmap" resultType="hashmap">
+		SELECT D.VC_CD, D.VC_NAME, COUNT(*) AS VC_CNT
+		FROM DR_BK_HISTORY A 
+			LEFT JOIN DR_VOUCHER_USE B ON A.CO_DIV = B.CO_DIV AND A.BK_SERIAL_NO = B.BK_SERIAL_NO 
+		    LEFT JOIN DR_VOUCHER_SALE C ON B.VC_CO_DIV = C.CO_DIV AND B.SALE_DAY = C.SALE_DAY AND B.SALE_SEQ = C.SALE_SEQ 
+		    LEFT JOIN DR_VOUCHER_CODE D ON C.CO_DIV = D.CO_DIV AND C.VC_CD = D.VC_CD AND D.USE_YN = 'Y' 
+			LEFT JOIN DR_VOUCHER_LIST E ON B.VC_CO_DIV = E.CO_DIV AND B.SALE_DAY = E.SALE_DAY AND B.SALE_SEQ = E.SALE_SEQ AND B.LIST_SEQ = E.LIST_SEQ 
+			WHERE 1=1 
+		<if test='coDiv != null and coDiv != ""'>
+		 AND A.CO_DIV = #{coDiv}
+		</if>
+		<if test='msNum != null and msNum != ""'>
+		 AND A.MS_NUM = #{msNum}
+		</if>
+		<if test='calcSerialNo != null and calcSerialNo != ""'>
+		 AND A.CALC_SERIAL_NO = #{calcSerialNo}
+		</if>
+		GROUP BY D.VC_CD, VC_NAME
+        ORDER BY D.VC_CD DESC   
 	</select>
 	
 	<!-- 가장 최근 대표예약고유번호 조회 (조건 : 회원번호) -->

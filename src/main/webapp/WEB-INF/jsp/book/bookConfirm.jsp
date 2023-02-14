@@ -6,6 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.yido.clubd.common.utils.Globals" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <jsp:include page="../common/head.jsp" />
 <jsp:include page="../common/script.jsp" />
@@ -38,7 +39,7 @@
 			<div class="row mb-3 mt-4">
 				<div class="d-flex mb-3 pl-2" style="width:100%">
 					<div>
-						<img src="/images/gallery/4.jpg" height="80" class="rounded-s shadow-xl">
+						<img src="/images/gallery/${bk.BAY_CD}.jpg" height="80" class="rounded-s shadow-xl">
 					</div>
 					<div class="pl-3" style="width:80%">
 						<h1 class="font-20 mb-n3">${bk.CO_NAME} </h1>
@@ -65,10 +66,15 @@
 				</h5>
 				<!-- 이용권 -->
 				<c:if test="${bk.VC_CNT > 0}">
-					<h5 class="col-4 text-left font-15">이용권</h5>
-					<h5 class="col-8 text-right font-14 opacity-60 ">
-						${bk.VC_NAME} (${bk.VC_CNT} 매 사용)
-					</h5>
+				<h5 class="col-4 text-left font-15">이용권</h5>
+				<h5 class="col-8 text-right font-14 opacity-60 ">
+					<c:if test="${bk.VC_MULTI_CNT > 1}">
+						${bk.VC_NAME} 외 ${bk.VC_MULTI_CNT -1}건 (${bk.VC_CNT} 매) <BR>
+					</c:if>
+					<c:if test="${bk.VC_MULTI_CNT <= 1}">
+						${bk.VC_NAME} (${bk.VC_CNT} 매) <BR>
+					</c:if>
+				</h5>
 				</c:if>
 			</div>
 			

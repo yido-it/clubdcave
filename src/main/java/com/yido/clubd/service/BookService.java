@@ -95,7 +95,7 @@ public class BookService {
 		List<DrBkMark> markList = new ArrayList<DrBkMark>();
 		
         try {
-        	log.info("[chkBookLogic] bookInfo : " + bkInfo);
+        	log.debug("[chkBookLogic] bookInfo : " + bkInfo);
         	List<Map<String, Object>> bkList = bkInfo.getBkList();
 
         	// 예약 불가능한 시간 
@@ -106,14 +106,14 @@ public class BookService {
     			// DR_BK_MARK 예약선점 데이터 체크
         		bkInfo.setBkTime(bkTime.replace(":", ""));
     			markList = drBkMarkMapper.selectAvailableData(bkInfo);
-    			log.info("[chkBookLogic] 예약선점 테이블 조회 건수 > {}", markList.size());
+    			log.debug("[chkBookLogic] 예약선점 테이블 조회 건수 > {}", markList.size());
     			
     			if (markList == null || markList.size() == 0) {
     				// 예약 가능한 데이터 없을 경우
     				strArr.add(bkTime);
     			} 
 			}
-			log.info("[chkBookLogic] strArr : {}", strArr);
+			log.info("[chkBookLogic] 예약 불가능한 시간 : {}", strArr);
 			
         	if (strArr.size() > 0) {
         		result.setCode("9999");
@@ -214,7 +214,7 @@ public class BookService {
     public ResultVO unBkMarkLogic(BookInfoVO bkInfo) throws Exception  {
     	ResultVO result = new ResultVO();
 
-		log.info("[unBkMarkLogic] bkInfo : {}", bkInfo);
+    	log.debug("[unBkMarkLogic] bkInfo : {}", bkInfo);
 		
     	try {
     		
@@ -227,7 +227,7 @@ public class BookService {
         			// 해당 아이디로 예약 선점한거 가져오기 (BK_SEQ 필요함)
             		bkInfo.setBkTime(str.trim());
         			List<DrBkMark> markList = drBkMarkMapper.selectList(bkInfo);
-        			log.info("[unBkMarkLogic] 해당 아이디로 예약 선점한거 조회 > 결과 : {}", markList);
+        			log.debug("[unBkMarkLogic] 해당 아이디로 예약 선점한거 조회 > 결과 : {}", markList);
         			// end.
         	
         			if (markList != null && markList.size() > 0) {
@@ -253,7 +253,7 @@ public class BookService {
     			
     			// 해당 아이디로 예약 선점한거 가져오기 (BK_SEQ 필요함)
     			List<DrBkMark> markList = drBkMarkMapper.selectList(bkInfo);
-    			log.info("[unBkMarkLogic] 해당 아이디로 예약 선점한거 조회 > 결과 : {}", markList);
+    			log.debug("[unBkMarkLogic] 해당 아이디로 예약 선점한거 조회 > 결과 : {}", markList);
     			// end.
     	
     			if (markList != null && markList.size() > 0) {
@@ -307,7 +307,7 @@ public class BookService {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("calcSerialNo", bInfo.getCalcSerialNo());
 		List<DrBkHistory> bList = drBkHistoryService.selectList(param);		
-		log.info("[bookCancel] 예약건수: " + bList.size());
+		log.debug("[bookCancel] 예약건수: " + bList.size());
 		
 		if (bList.size() <= 0) {
 			resultVO.setCode("9999");
@@ -329,14 +329,30 @@ public class BookService {
 		String cancelKey = mnHis.getCancelkey();
 		String ipAddr = bInfo.getIpAddr();
 		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coDiv"		, bInfo.getCoDiv());
+		map.put("orderId"	, orderId);
+		int mnSeq = mnInHistoryMapper.getMnSeq(map);
+		
 		log.info("[bookCancel] 주문번호(orderId): {}, 승인금액: {}, 거래번호(transactionId): {}, 취소키: {}"
 				, orderId, authAmount, transactionId, cancelKey);
 		
 		// PG 결제 취소 처리 
-		mnInHistoryService.cancelLogic(bInfo.getCoDiv(), orderId, authAmount, transactionId, "C", cancelKey, ipAddr, mnHis);
+		Map<String, Object> cMap = new HashMap<String, Object>();
+		cMap.put("coDiv", bInfo.getCoDiv());
+		cMap.put("orderId", orderId);
+		cMap.put("mnSeq", mnSeq);
+		cMap.put("authAmount", authAmount);
+		cMap.put("transactionId", transactionId);
+		cMap.put("cancelKey", cancelKey);
+		cMap.put("ipAddr", ipAddr);
+		cMap.put("cancelType", "C");
+		cMap.put("mnHis", mnHis);
+		
+		mnInHistoryService.cancelLogic(cMap);
 
 		// 예약취소 
-		this.cancelBook(bInfo, bList);
+		this.cancelBook(bInfo, bList, cMap);
 		
 		// 이용권 사용 취소 
 		voucherService.cancelVoucher(bInfo, bList);
@@ -349,15 +365,20 @@ public class BookService {
 	 * - 상태 변경 + 로그
 	 * - 예약타임 수량 복원
 	 * - 예약선점 데이터 초기화 
+	 * - 예약연결정보 insert 
 	 * 
 	 * @param bInfo
 	 * @param bList
 	 * @throws Exception
 	 */
 	@Transactional
-	public void cancelBook(BookInfoVO bInfo, List<DrBkHistory> bList) throws Exception {	
+	public void cancelBook(BookInfoVO bInfo, List<DrBkHistory> bList, Map<String, Object> cMap) throws Exception {	
 
-		Map<String, Object> param = new HashMap<String, Object>();
+		MnInHistory mnHis = (MnInHistory) cMap.get("mnHis");
+		int mnSeq = 0;
+		if (cMap.get("mnSeq") != null) {
+			mnSeq = Integer.parseInt(cMap.get("mnSeq").toString());
+		}
 		
 		// 예약내역 상태 변경 
 		for (DrBkHistory bk : bList) {
@@ -374,8 +395,20 @@ public class BookService {
 			bInfo.setBkTime(bk.getBkTime());
 			// 예약타임 수량 복원 + 예약선점 데이터 초기화 
 			this.unBkMarkLogic(bInfo);
+			
+            // 예약연결정보 insert
+			if (cMap.get("mnSeq") != null) {
+	            DrBkMnMap mnMap = new DrBkMnMap();
+	            mnMap.setCoDiv(bk.getCoDiv());
+	            mnMap.setBkSerialNo(bk.getBkSerialNo());
+	            mnMap.setMnCoDiv(mnHis.getCoDiv());
+	            mnMap.setMnInDay(mnHis.getMnInDay());
+	            mnMap.setMnSeq(mnSeq);
+	            mnMap.setMnAmount(-mnHis.getMnInAmount());
+	            drBkMnMapMapper.insertDrBkMnMap(mnMap);
+			}
+            // end.
+            
 		}
 	}
-	
-
 }

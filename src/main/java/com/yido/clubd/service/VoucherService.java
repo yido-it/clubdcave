@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yido.clubd.common.utils.ResultVO;
+import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.model.BookInfoVO;
 import com.yido.clubd.model.DrBkHistory;
 import com.yido.clubd.model.DrBkHistoryTemp;
@@ -78,27 +79,16 @@ public class VoucherService {
     private MnInHistoryMapper mnInHistoryMapper;
 	
 	/**
-	 * 이용권 결제 (결제금액 0원) 
+	 * [예약] 이용권 결제 (결제금액 0원인 경우) 
 	 *  
 	 * @param bInfo
 	 * @return
 	 * @throws Exception 
 	 */
 	@Transactional
-	public ResultVO vPay(BookInfoVO bInfo) throws Exception {	
-		ResultVO resultVO = new ResultVO();
-		
-		/*
-		 * bInfo 
-		 * 
-		 * coDiv=001, bkDay=20230131, bkTime=1100, 1300, bayCondi=001, bkAmount=0, msLevel=11
-		 * , userMail=, msId=baeean, userName=배은화, ipAddr=null, phone=010-9989-9655, bkState=null
-		 * , availableYn=null, bkList=null
-		 * , vList=[{coDiv=001, quantity=1, saleDay=20230119, saleSeq=3}
-		 * 		, {coDiv=001, quantity=1, saleDay=20230119, saleSeq=4}], timeList=null)
-		 * 
-		 * */
-		
+	public void vPay(BookInfoVO bInfo, SessionVO sessionVO) throws Exception {	
+	
+		log.debug("[vPay] param > bInfo : " + bInfo);
 		
 		// 예약 내역 insert 
 		Map<String, Object> param = new HashMap<String, Object>();
@@ -106,10 +96,6 @@ public class VoucherService {
 		param.put("bayCondi"	, bInfo.getBayCondi());
 		param.put("bkDay"		, bInfo.getBkDay());
 		param.put("bkTime"		, bInfo.getBkTime());
-		param.put("msId"		, bInfo.getMsId());
-		param.put("msNum"		, bInfo.getMsNum());
-		param.put("bkName"		, bInfo.getUserName());
-		param.put("phone"		, bInfo.getPhone());
 		param.put("bkTime"		, bInfo.getBkTime());
 		param.put("ipAddr"		, bInfo.getIpAddr());
 		param.put("bkAmount"	, bInfo.getBkAmount());
@@ -117,19 +103,18 @@ public class VoucherService {
 		param.put("bkPayDiv"	, 1); // 이용권 
 		param.put("isVoucherUse", "Y");	
 
-		Map<String, Object> returnMap = drBkHistoryService.actionReservation(param, new DrBkMnMap());
+		// 예약 처리 
+		Map<String, Object> returnMap = drBkHistoryService.actionReservation(param, sessionVO);
 
 		// 이용권 사용 처리 
 		this.useVoucher(bInfo, returnMap);
-		resultVO.setData(returnMap.get("calcSerialNo"));	// 결제완료 페이지 이동시 필요한 대표예약고유번호
-		
+	
 		// 예약 임시테이블 데이터 삭제
 		DrBkHistoryTemp temp = new DrBkHistoryTemp();
 		temp.setSerialNo(bInfo.getTempSerialNo());
 		drBkHistoryTempMapper.deleteHistoryTemp(temp);
 		// end.
 		
-		return resultVO;
 	}
 	
 	/**
@@ -141,17 +126,8 @@ public class VoucherService {
 	 */
 	@Transactional
 	public void useVoucher(BookInfoVO bInfo, Map<String, Object> returnMap) throws Exception {	
-		
-		/*
-		 * bInfo 
-		 * 
-		 * coDiv=001, bkDay=20230131, bkTime=1100, 1300, bayCondi=001, bkAmount=0, msLevel=11
-		 * , userMail=, msId=baeean, userName=배은화, ipAddr=null, phone=010-9989-9655, bkState=null
-		 * , availableYn=null, bkList=null
-		 * , vList=[{coDiv=001, quantity=1, saleDay=20230119, saleSeq=3}
-		 * 		, {coDiv=001, quantity=1, saleDay=20230119, saleSeq=4}], timeList=null)
-		 * 
-		 * */
+
+		log.debug("[useVoucher] param > bInfo : " + bInfo);
 		
 		int i = 0;
 		for (Map<String, Object> vou : bInfo.getVList()) {
@@ -199,7 +175,6 @@ public class VoucherService {
 				
 				List<Object> arrSerialNo = (List<Object>) returnMap.get("arrSerialNo");
 				vUse.setBkSerialNo(arrSerialNo.get(i).toString());
-				log.info("[이용권 사용내역 등록] serialno : {}, {}", i, arrSerialNo.get(i).toString());
 				drVoucherUseMapper.insertDrVoucherUse(vUse);
 
 				// 이용권 사용한거에 대한 예약 이용금액은 0원으로 UPDATE 
@@ -215,7 +190,7 @@ public class VoucherService {
 	}
 	
 	/**
-	 * 이용권 결제취소 (결제금액 0원) 
+	 * [예약] 이용권 결제취소 (결제금액 0원인 경우) 
 	 *  
 	 * @param bInfo
 	 * @return
@@ -229,7 +204,7 @@ public class VoucherService {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("calcSerialNo", bInfo.getCalcSerialNo());
 		List<DrBkHistory> bList = drBkHistoryService.selectList(param);		
-		log.info("[vCancel] 예약건수: " + bList.size());
+		log.debug("[vCancel] 예약건수: " + bList.size());
 		
 		if (bList.size() <= 0) {
 			resultVO.setCode("9999");
@@ -240,7 +215,8 @@ public class VoucherService {
 		this.cancelVoucher(bInfo, bList);
 		
 		// 예약 취소
-		bookService.cancelBook(bInfo, bList);
+		Map<String, Object> cMap = new HashMap<String, Object>();
+		bookService.cancelBook(bInfo, bList, cMap);
 		
 		return resultVO;
 	}	
@@ -267,10 +243,9 @@ public class VoucherService {
 
 		// 이용권 사용내역 조회 (지점코드, 매출일자, 매출순번 획득)
 		List<DrVoucherUse> uList = drVoucherUseMapper.selectList(param);
-		log.info("[cancelVoucher] 이용권 사용 건수: " + uList.size());
+		log.debug("[cancelVoucher] 이용권 사용 건수: " + uList.size());
 		
 		int i = 0;
-		int preSeq = 0;
 		for (DrVoucherUse vUse : uList) {
 			
 			// 이용권 세부내역 > 지점코드, 매출일자, 매출순번으로 조회하여 수량 획득 
@@ -281,7 +256,7 @@ public class VoucherService {
 			param2.put("listSeq", vUse.getListSeq());
 			param2.put("vcState", "Y");						
 			List<DrVoucherList> vList = drVoucherListMapper.selectList(param2);
-			log.info("[cancelVoucher] 이용권 세부 건수: " + vList.size());
+			log.debug("[cancelVoucher] 이용권 세부 건수: " + vList.size());
 			
 			for (DrVoucherList vou : vList) {
 
@@ -293,57 +268,43 @@ public class VoucherService {
 				drVoucherListMapper.updateState(drVoucherList);
 			}
 			 		
-			if (preSeq != vUse.getSaleSeq()) {
-				
-				// 이용권 구매내역 잔존수량 복원 
-				DrVoucherSale drVoucherSale = new DrVoucherSale();
-				drVoucherSale.setGubun("P");				// 복원 처리
-				drVoucherSale.setVcRemCnt(vList.size());	// 위에서 조회한 이용권 사용수량만큼 복원처리 
-				drVoucherSale.setCoDiv(uList.get(i).getVcCoDiv());
-				drVoucherSale.setSaleDay(uList.get(i).getSaleDay());
-				drVoucherSale.setSaleSeq(uList.get(i).getSaleSeq());
-				drVoucherSaleMapper.updateVcRemCnt(drVoucherSale);
-				
-				drVoucherSale = drVoucherSaleMapper.getVoucherSale(drVoucherSale);
-
-				// 이용권 구매내역 로그 
-				drVoucherSale.setLogDiv("U");
-				drVoucherSale.setInputIp(bInfo.getIpAddr());
-				drVoucherSaleLogMapper.insertDrVoucherSaleLog(drVoucherSale);
-			}
+			// 이용권 구매내역 잔존수량 복원 
+			DrVoucherSale drVoucherSale = new DrVoucherSale();
+			drVoucherSale.setGubun("P");				// 복원 처리
+			drVoucherSale.setVcRemCnt(vList.size());	// 위에서 조회한 이용권 사용수량만큼 복원처리 
+			drVoucherSale.setCoDiv(uList.get(i).getVcCoDiv());
+			drVoucherSale.setSaleDay(uList.get(i).getSaleDay());
+			drVoucherSale.setSaleSeq(uList.get(i).getSaleSeq());
+			drVoucherSaleMapper.updateVcRemCnt(drVoucherSale);
 			
+			drVoucherSale = drVoucherSaleMapper.getVoucherSale(drVoucherSale);
+
+			// 이용권 구매내역 로그 
+			drVoucherSale.setLogDiv("U");
+			drVoucherSale.setInputIp(bInfo.getIpAddr());
+			drVoucherSaleLogMapper.insertDrVoucherSaleLog(drVoucherSale);
+					
 			// 이용권 사용내역 삭제 
 			drVoucherUseMapper.deleteDrVoucherUse(vUse);
 
-			preSeq = vUse.getSaleSeq();	// 매출순번
 			i++;
 		}
 	}
-
-
 	/**
 	 * 이용권 구매
 	 * - 구매내역 insert, 구매내역로그 insert, 세부내역 insert
+	 * - PG결제내역 insert 
 	 * 
 	 * @param param
 	 * @param mnMap
 	 * @throws Exception
 	 */
 	@Transactional
-	public Map<String, Object> insertVouInfo(@RequestParam Map<String, Object> param) throws Exception {
-		/*
-		 * param
-		 * 
-		 * ipAddr=127.0.0.1, SERVICE_CODE=0900, SERVICE_ID=glx_api, ORDER_ID=123456789177_20230206173341
-		 * , ORDER_DATE=20230206173341, PAY_MESSAGE=xxx
-		 * , coDiv=001, mnInDay=20230206, mnRevAmount=220000, mnInAmount=220000, mnChangeAmount=0, mnInNo=52414400****085*
-		 * , mnCardApproval=06173402, mnMonth=0, mnAppDate=20230206, cardCompanyCode=0084, orderId=123456789177_20230206173341
-		 * , transactionId=2023020617TT000782, cancelKey=9f54e5c00682aef153b58acde40b62c9ee16b110, mnCancelYn=N, mnSeq=14
-		 * , msNum=123456789177, vcCd=003, vcAmount=220000, msLevel=10, bkName=테스트, userMail=, phone=010--9655, msId=test}
-		 * */
+	public Map<String, Object> insertVouInfo(@RequestParam Map<String, Object> param, SessionVO session) throws Exception {
+
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		LocalDateTime nowDt = LocalDateTime.now();
-		log.info("[insertVouInfo] params : " + param);
+		log.debug("[insertVouInfo] params : " + param);
 		
 		// 이용권 조회
 		DrVoucherCode drCode = new DrVoucherCode();
@@ -398,8 +359,6 @@ public class VoucherService {
 		// vcDivision > 001 : 기간권, 002 : 쿠폰 
 		if (drCode.getVcDivision().equals("001")) {
 		
-			log.info("[insertVouInfo] 기간권 등록 ");
-			
 			DrVoucherList dList = new DrVoucherList();
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("saleSeq", saleSeq);
@@ -422,8 +381,6 @@ public class VoucherService {
 			int oneNet = drCode.getVcNet() / drCode.getVcLimitCnt();	// 장당 공급가
 			int oneVat = drCode.getVcVat() / drCode.getVcLimitCnt();	// 장당 공급가
 			
-			log.info("금액계산: {}, {}, {}", drCode.getVcAmount() , drCode.getVcLimitCnt() , oneAmt );
-			log.info("[insertVouInfo] 이용권(쿠폰) 세부내역 등록 건수 : " + drCode.getVcLimitCnt());
 			for (int i = 0; i < drCode.getVcLimitCnt(); i++) {
 				DrVoucherList dList = new DrVoucherList();
 				Map<String, Object> map = new HashMap<String, Object>();
@@ -444,11 +401,23 @@ public class VoucherService {
 			}
 		}
 		// end.
+		
+        // PG 결제내역 등록
+		if (param.get("mnSeq") != null ) {
+	        param.put("mnSeq"		, param.get("mnSeq"));
+	        param.put("msNum"		, session.getMsNum());
+	        param.put("mnInName"	, session.getMsName());		// 결제자 이름
+
+	        mnInHistoryMapper.insertMnInHistory(param);
+		}
+        // end.
+		
 		return returnMap;
 	}
 	
 	/**
 	 * 이용권 구매 취소
+	 * - PG결제 취소 처리 
 	 * - 구매내역 update, 구매내역로그 insert, 세부내역 update 
 	 * 
 	 * @param vInfo
@@ -473,7 +442,16 @@ public class VoucherService {
 				, orderId, authAmount, transactionId, cancelKey);
 		
 		// PG 결제 취소 처리 
-		mnInHistoryService.cancelLogic(vInfo.getCoDiv(), orderId, authAmount, transactionId, "C", cancelKey, ipAddr, mnHis);
+		Map<String, Object> cMap = new HashMap<String, Object>();
+		cMap.put("coDiv", vInfo.getCoDiv());
+		cMap.put("orderId", orderId);
+		cMap.put("authAmount", authAmount);
+		cMap.put("transactionId", transactionId);
+		cMap.put("cancelKey", cancelKey);
+		cMap.put("ipAddr", ipAddr);
+		cMap.put("cancelType", "C");
+		cMap.put("mnHis", mnHis);
+		mnInHistoryService.cancelLogic(cMap);
 
 		// 구매내역 상태 update 
 		DrVoucherSale dSale = new DrVoucherSale();
