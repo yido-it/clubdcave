@@ -374,7 +374,6 @@ public class BookController {
 				
 				map.put("strtDt", strtDt.replace("-", ""));
 				map.put("endDt", endDt.replace("-", ""));
-			
 			}
 			
 			// srchUseYn > 전체 : A, 지난예약내역 : Y, 진행중인예약 : N

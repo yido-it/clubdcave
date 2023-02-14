@@ -350,9 +350,9 @@ function doSearch(type) {
 						divCnt += '<h5 class="col-4 text-left font-15">이용권</h5>';
 						divCnt += '<h5 class="col-8 text-right font-14 opacity-60 ">';
 						if (data[i].VC_MULTI_CNT > 1) {
-							divCnt += data[i].VC_NAME+' 외 '+ (data[i].VC_MULTI_CNT-1) +'건 ('+data[i].VC_CNT+'매 사용)';
+							divCnt += data[i].VC_NAME+' 외 '+ (data[i].VC_MULTI_CNT-1) +'건 ('+data[i].VC_CNT+'매)';
 						} else {
-							divCnt += data[i].VC_NAME+'('+data[i].VC_CNT+'매 사용)';
+							divCnt += data[i].VC_NAME+'('+data[i].VC_CNT+'매)';
 						}
 						divCnt += '</h5>';
 					}
