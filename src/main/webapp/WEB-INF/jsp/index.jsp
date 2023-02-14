@@ -15,14 +15,14 @@
 		<h1 style="font-size:20px">
 			<img src="images/logo_white.png" style="width:60px;position:absolute;top:-10px" />
 		</h1>		
-		<a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main" style=""><i class="fa fa-bars"></i></a>
+		<a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main"><i class="fa fa-bars font-20"></i></a>
 	</div>
 	<!--//Header-->
 
 	<!--스크롤내리면 보이는 Header-->
 	<div class="header header-auto-show header-fixed header-logo-center ">
 		<a href="javascript:void(0);" class="header-title">클럽디 청담</a>
-		<a href="#" data-menu="menu-main" class="header-icon header-icon-4"><i class="fas fa-bars"></i></a>
+		<a href="#" data-menu="menu-main" class="header-icon header-icon-4 mt-1"><i class="fas fa-bars font-18"></i></a>
 	</div>
 	<!--스크롤내리면 보이는 Header-->
 	
