@@ -139,34 +139,15 @@ public class Utils {
 	        return returnValue == null ? defaultValue : returnValue;
 	    }
 	    
-	    public static String getPropertiesByDev(String key, String defaultValue) {
+	    public static String getPropertiesByType(String key, String defaultValue, String type) {
 	    	String returnValue = null;
 	        
 	        try{            
 	        	
-	            String propFile = new ClassPathResource("application-develop.properties").getURI().getPath();
-	          
-	            Properties props = new Properties();
-	             
-	            FileInputStream fis = new FileInputStream(propFile);
-	             
-	            props.load(new java.io.BufferedInputStream(fis));           
-	            
-	            returnValue = props.getProperty(key) ;
-	        }catch(Exception e){
-	            e.printStackTrace();
-	        }
-	        
-	        return returnValue == null ? defaultValue : returnValue;
-	    }
-
-	    public static String getPropertiesByPro(String key, String defaultValue) {
-	    	String returnValue = null;
-	        
-	        try{            
+	        	String propFile = "";
 	        	
-	            String propFile = new ClassPathResource("application-production.properties").getURI().getPath();
-	          
+	        	if (type.equals("develop")) propFile = new ClassPathResource("application-develop.properties").getURI().getPath();
+	        	else if (type.equals("production")) propFile = new ClassPathResource("application-production.properties").getURI().getPath();
 	            Properties props = new Properties();
 	             
 	            FileInputStream fis = new FileInputStream(propFile);
