@@ -113,7 +113,7 @@
 	<h1 class="text-center mt-4">
 		<i class="fa fa-2x fa-check-circle scale-box color-red-dark shadow-xl rounded-circle"></i> 
 	</h1>
-	<h3 class="text-center mt-3 font-700">환불규정 약관</h3>
+	<h3 class="text-center mt-3 font-700">환불규정에 대한 동의</h3>
 	<p class="boxed-text-xl opacity-70">
 		클럽디청담 결제에 대한 동의가 필요합니다.<br>
 	</p>
@@ -136,7 +136,7 @@
 		<div class="form-check icon-check mt-3 opacity-60" style="margin:0 auto">
 		
 			<input class="form-check-input" type="checkbox" value="Y" id="chkAgree" name="chkAgree">
-			<label class="form-check-label color-white" for="chkAgree">약관에 동의합니다</label>
+			<label class="form-check-label color-white" for="chkAgree" style="padding: 0px 15px 0px 32px;">위 내용을 확인하였고 이에 동의합니다</label>
 			
 			<i class="icon-check-1 fa fa-square color-gray-dark font-16 ml-n1"></i>
 			<i class="icon-check-2 fa fa-check-square font-16 color-highlight ml-n1"></i>
