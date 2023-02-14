@@ -22,7 +22,7 @@
 		
 		<div class="single-slider owl-no-controls owl-carousel owl-no-dots">
             <div data-card-height="150" class="card card-style bg-5 mb-0 rounded-m shadow-l"  style="background-image: url(/images/event/promotion.jpg);">
-                <div class="card-bottom  mb-3">
+                <div class="card-bottom ml-2  mb-3">
                    	<p class="color-white mb-0 opacity-90">02/01~02/03</p>
 						<h2 class="color-white">박세리프로 프로모션</h2>
                 </div>

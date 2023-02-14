@@ -6,18 +6,18 @@
     <div class="content mt-3">
          <h1 class="font-700  ml-1">
          AMBASSADOR</h1>
-       
-         <div class="cover-slider owl-carousel owl-no-dots">
-             <div class="item" onclick="location.href='event_detail.html'">
-                 <div class="card card-style mx-0 bg-9" data-card-height="180" style="background: url(images/gallery/choipro.jpg) no-repeat 0 0; background-size: cover;">
-                     <div class="card-bottom m-3">
-                         <p class="color-white mb-0 opacity-90">앰베서더</p>
+
+         
+         	<div class="single-slider owl-no-controls owl-carousel owl-no-dots">
+            <div data-card-height="170" class="card card-style bg-5 mb-0 rounded-m shadow-l"  style="background: url(images/gallery/choipro.jpg) no-repeat 0 0; background-size: cover;">
+                <div class="card-bottom ml-2  mb-3">
+                       <p class="color-white mb-0 opacity-90">앰베서더</p>
                          <h2 class="color-white">최나연 프로</h2>
-                     </div>
-                     <div class="card-overlay bg-gradient"></div>
-                 </div>
-             </div>
-         </div>    
+                </div>
+                <div class="card-overlay bg-gradient"></div>
+            </div>
+       
+        </div>   
     </div>
     
 <div class="content mt-3">
