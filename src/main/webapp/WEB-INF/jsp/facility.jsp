@@ -12,12 +12,12 @@
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
     
 <div id="page">
-
+<!--스크롤header -->
 <div class="header header-fixed header-logo-app">
 <a href="#" class="header-title header-subtitle">시설안내</a>
 <jsp:include page="common/top.jsp" />
 </div>
-
+<!--//스크롤header -->
 <!-- 좌측GNB-->
 <jsp:include page="common/menu.jsp" />
 <!-- //좌측GNB-->

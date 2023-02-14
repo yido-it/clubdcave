@@ -4,6 +4,9 @@
 <jsp:include page="common/head.jsp" />
 <jsp:include page="common/script.jsp" />
 
+<style>
+.owl-dots{transform: translateY(-30px) !important;}/*메인슬라이드 닷 위치조정 owl-dots-over*/
+</style>
 <body class="theme-dark">
 
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
@@ -32,7 +35,7 @@
 
 	<div class="">  
 		<!--메인슬라이드-->
-		<div class="single-slider  slider-has-arrows  owl-carousel">
+		<div class="single-slider  slider-has-arrows    owl-carousel">
 			<div class="card m-0 bg-main_slide01" data-card-height="300" onClick="goBayDetail(1);">
 				<div class="card-bottom">
 					<h1 class="color-white px-3 mb-0">CLUBD CAVE<span class="badge bg-blue-dark px-2 py-1 ml-2 mt-2 text-uppercase">B1</span></h1>

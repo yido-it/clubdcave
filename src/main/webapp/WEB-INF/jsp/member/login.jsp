@@ -21,9 +21,9 @@
         <div data-card-height="cover-card" class="card bg-1 mb-0">
             <div class="card-center">
                 <div style="width:100%;text-align:center">
-                	<img src="../images/logo_wing.png" class="text-center" style="width:50px;margin-bottom:10px">
+                	<img src="../images/logo_white.png" class="text-center" style="width:150px;margin-bottom:10px">
                 </div> 
-                <a href="/main"><h2 class="font-800 text-center color-white font-40 text-uppercase">Login</h2></a>
+               <!--  <a href="/main"><h2 class="font-800 text-center color-white font-40 text-uppercase">Login</h2></a> -->
                 <p class="mt-1 text-center color-white color-highlight font-12">클럽디청담 회원로그인</p>
                 <div style="max-width:300px;" class="mx-auto">
                     <div class="input-style input-light input-style-1 has-icon">
@@ -58,7 +58,7 @@
                     <div class="row mb-0"> 
                         <div class="col-6" id="naver_id_login"></div>
                         <div class="col-6">
-                            <a href="#" class="letter1 font-13 btn btn-icon btn-m btn-full font-800 text-uppercase rounded-sm= bg-yellow-dark" id="kakao_id_login">
+                            <a href="#" class="letter1 font-13 btn btn-icon btn-m btn-full font-800 text-uppercase rounded-sm= bg-yellow-dark" id="kakao_id_login" style="background-color:#ebd300 !important">
                                 <i class="fa-solid fa-k text-center"></i>카카오톡</a>
                         </div>
                     </div> 

@@ -12,13 +12,13 @@
     
 <div id="page">
 
+
 <!--스크롤내리면 보이는 Header-->
-<div class="header header-auto-show header-fixed header-logo-center ">
-	<a href="#" class="header-icon header-icon-1 back-button mt-1" id="topGoBack"><i class="fa fa-arrow-left font-18"></i></a>
-	<a href="#" class="header-title header-subtitle">CLUBD CAVE</a>
-	<a href="#" data-menu="menu-main" class="header-icon header-icon-4 mt-1"><i class="fas fa-bars font-18"></i></a>
+<div class="header header-auto-show header-fixed header-logo-app">
+<a href="#" class="header-title header-subtitle  mt-1">시설안내</a> 
+<a href="#" class="header-icon header-icon-1 back-button mt-1" id="topGoBack"><i class="fa fa-arrow-left font-18"></i></a>
+<a href="#" data-menu="menu-main" class="header-icon header-icon-2 font-20 mt-1"><i class="fas fa-bars"></i></a> 
 </div>
-<!--스크롤내리면 보이는 Header-->
 
 
 <!-- 좌측GNB-->
@@ -31,11 +31,11 @@
     <div class="page-title page-title-fixed" style="opacity: 1; z-index: 99;">
         <h1 style="font-size:14px">    
             <a href="#" data-back-button class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-dark" >
-                <i class="fas fa fa-arrow-left"></i>
+                <i class="fas fa fa-arrow-left font-18"></i>
             </a>
         </h1> 
         
-        <a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main"><i class="fa fa-bars"></i></a>
+        <a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main"><i class="fa fa-bars font-20"></i></a>
     </div>
 
         
