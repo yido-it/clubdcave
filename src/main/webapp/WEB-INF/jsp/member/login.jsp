@@ -21,7 +21,7 @@
         <div data-card-height="cover-card" class="card bg-1 mb-0">
             <div class="card-center">
                 <div style="width:100%;text-align:center">
-                	<img src="../images/logo_white.png" class="text-center" style="width:150px;margin-bottom:10px">
+                	<img src="../images/logo_white.png" class="text-center" style="width:180px;">
                 </div> 
                <!--  <a href="/main"><h2 class="font-800 text-center color-white font-40 text-uppercase">Login</h2></a> -->
                 <p class="mt-1 text-center color-white color-highlight font-12">클럽디청담 회원로그인</p>
