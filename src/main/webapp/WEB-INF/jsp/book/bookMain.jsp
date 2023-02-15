@@ -482,8 +482,8 @@ function doBook() {
 
 	// 예약 최대 개수 체크 
 	var totBkCnt = Number(bkCnt) + matches.length;
-	if (maxBkCnt < totBkCnt) {
-		
+	// maxBkCnt 가 99 이면 무제한 
+	if (maxBkCnt != 99 && maxBkCnt < totBkCnt) {
 		var overBkTxt = "";
 		if (bkCnt == 0) {
 			// 기존에 예약한 내역이 없다면 

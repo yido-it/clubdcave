@@ -134,10 +134,10 @@ public class BookController {
 			// 예약 최대 개수 
 			CdCommon common = new CdCommon();
 			common.setCdDivision("002");
-			common.setCdCode("11");
+			common.setCdCode(sessionVO.getMsLevel());	// 등급
 			common = commonService.getCommonCode(common);
 			int maxBkCnt = common != null && common.getCdLength() != null && !common.getCdLength().equals("") 
-					? Integer.parseInt(common.getCdLength()) : 4;
+					? Integer.parseInt(common.getCdLength()) : 4;				
 			model.addAttribute("maxBkCnt", maxBkCnt);
 			// end.
 			

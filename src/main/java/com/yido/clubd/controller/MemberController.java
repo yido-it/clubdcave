@@ -558,7 +558,6 @@ public class MemberController {
 		List<MemberVO> mList = new ArrayList<MemberVO>();		
 		log.info("[searchMemberList] params : " + params);
 		
-		
 		try {
 			if (params.get("searchType") == null || params.get("searchTxt") == null ) {
 				return mList;
