@@ -11,14 +11,11 @@
 			</div>
 			<div>
 				<h5 class="font-15">클럽디청담</h5>
-				<p class="font-10 mt-1 d-block">대표자 김이도</p>
 			</div>
 	
-			<div class="divider ml-auto mt-2"> </div>
-			
 		</div>
 		
-		<p class="mb-3 mt-2 font-12">
+		<p class="mb-5 mt-2 font-12">
 			서울시 청담동 123번지 클럽디청담<br/>
 			사업자번호: 1123-123-12332<br/>
 			통신판매업번호: 1123-123-12332<br/>

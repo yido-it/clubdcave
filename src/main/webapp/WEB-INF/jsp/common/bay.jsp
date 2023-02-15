@@ -17,15 +17,15 @@
 </div>
 
 <!-- CLUBD CAVE -->
-<a href="bay1" class="card card-style" data-card-height="120"  style="background: url(../images/gallery/8.jpg) no-repeat 0 0;background-size:cover">
+<a href="bay1" class="card card-style" data-card-height="110"  style="background: url(../images/gallery/8.jpg) no-repeat 0 0;background-size:cover">
 	<div class="card-center pl-3 pr-5">
 		<h3 class="color-white ">
 			<span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">B1</span>
 			CLUBD CAVE 
 		</h3>
-		<p class="color-white opacity-80 mb-0 mt-n2">
+	<!-- 	<p class="color-white opacity-80 mb-0 mt-n2">
 			Full Swing은 시장에서 가장 컴팩트한 
-		</p>
+		</p> -->
 	</div>
  <div class="card-center">
          <span class="icon icon-s fr bg-theme  me-3 rounded-xl opacity-80"><i class="fa fa-arrow-right"></i></span>
@@ -34,14 +34,13 @@
 </a>
 
 <!-- CAVE Restaurant -->
-<a href="bay2" class="card card-style" data-card-height="120"  style="background: url(../images/main/main_slide02.jpg) no-repeat 0 0;background-size:cover">
+<a href="bay2" class="card card-style" data-card-height="110"  style="background: url(../images/main/main_slide02.jpg) no-repeat 0 0;background-size:cover">
 	<div class="card-center pl-3 pr-5">
 		<h3 class="color-white ">
 			<span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">B1</span>
 			CAVE Restaurant 
 		</h3>
-		<p class="color-white opacity-80 mb-0 mt-n2">
-		</p>
+		
 	</div>
  <div class="card-center">
          <span class="icon icon-s fr bg-theme  me-3 rounded-xl opacity-80"><i class="fa fa-arrow-right"></i></span>
@@ -50,14 +49,13 @@
 </a>
 
 <!-- Pop-up Store -->
-<a href="bay3" class="card card-style" data-card-height="120" style="background: url(../images/gallery/7.jpg) no-repeat 0 0;background-size:cover">
+<a href="bay3" class="card card-style" data-card-height="110" style="background: url(../images/gallery/7.jpg) no-repeat 0 0;background-size:cover">
 	<div class="card-center pl-3 pr-5">
 		<h3 class="color-white ">
 			<span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">1F</span>
 			Pop-up Store
 		</h3>
-		<p class="color-white opacity-80 mb-0 mt-n2">
-		</p>
+		
 	</div>
  <div class="card-center">
          <span class="icon icon-s fr bg-theme  me-3 rounded-xl opacity-80"><i class="fa fa-arrow-right"></i></span>
@@ -66,14 +64,13 @@
 </a>
 
 <!-- 오픈타석 -->
-<a href="bay4" class="card card-style" data-card-height="120"  style="background: url(../images/gallery/1.jpg) no-repeat 0 0;background-size:cover">
+<a href="bay4" class="card card-style" data-card-height="110"  style="background: url(../images/gallery/1.jpg) no-repeat 0 0;background-size:cover">
 	<div class="card-center pl-3 pr-5">
 		<h3 class="color-white ">
 			<span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">2F</span>       
 			오픈타석
 		</h3>
-		<p class="color-white opacity-80 mb-0 mt-n2">
-		</p>
+	
 	</div>
  <div class="card-center">
          <span class="icon icon-s fr bg-theme  me-3 rounded-xl opacity-80"><i class="fa fa-arrow-right"></i></span>
@@ -82,14 +79,13 @@
 </a>
 
 <!-- Lesson & TINO5 -->
-<a href="bay5" class="card card-style" data-card-height="120"  style="background: url(../images/gallery/4.jpg) no-repeat 0 0;background-size:cover">
+<a href="bay5" class="card card-style" data-card-height="110"  style="background: url(../images/gallery/4.jpg) no-repeat 0 0;background-size:cover">
 	<div class="card-center pl-3 pr-5">
 		<h3 class="color-white ">
 			<span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">3F</span>
 			Lesson & TINO5
 		</h3>
-		<p class="color-white opacity-80 mb-0 mt-n2">
-		</p>
+	
 	</div>
  <div class="card-center">
          <span class="icon icon-s fr bg-theme  me-3 rounded-xl opacity-80"><i class="fa fa-arrow-right"></i></span>
