@@ -27,7 +27,6 @@ import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.component.FileUtil;
 import com.yido.clubd.component.ImageUtil;
-import com.yido.clubd.config.SessionConfig;
 import com.yido.clubd.model.DrMsCoInfo;
 import com.yido.clubd.model.MemberVO;
 import com.yido.clubd.repository.DrMsCoInfoMapper;
@@ -349,7 +348,7 @@ public class MemberService {
 		params.put("msNum", msNum);
 		
 		// 이전 세션 삭제 (중복 로그인 방지)
-		SessionConfig.getSessionMsNumCheck(msNum);
+		// SessionConfig.getSessionMsNumCheck(msNum);
 		
 		SessionVO member = this.selectMsSession(params);			
 		session.setAttribute("msNum", msNum);
