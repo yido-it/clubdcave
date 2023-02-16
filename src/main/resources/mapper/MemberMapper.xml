@@ -59,6 +59,8 @@
 			, LOGIN_TIME
 			, MS_DI
 			, MS_JOB_CD
+			, MS_AREA1
+			, MS_AREA1
 			, INPUT_STAFF
 			, INPUT_DATETIME
 			, INPUT_IP
@@ -144,6 +146,8 @@
 			, LOGIN_TIME
 			, MS_DI
 			, MS_JOB_CD
+			, MS_AREA1
+			, MS_AREA2
 			, INPUT_STAFF
 			, INPUT_DATETIME
 			, INPUT_IP
@@ -210,6 +214,8 @@
 			, LOGIN_TIME
 			, MS_DI
 			, MS_JOB_CD
+			, MS_AREA1
+			, MS_AREA2
 			, INPUT_STAFF
 			, INPUT_DATETIME
 			, INPUT_IP
@@ -283,6 +289,8 @@
 			, LOGIN_TIME
 			, MS_DI
 			, MS_JOB_CD
+			, MS_AREA1
+			, MS_AREA2
 			, INPUT_STAFF
 			, INPUT_DATETIME
 			, INPUT_IP
@@ -393,24 +401,18 @@
 			</if>
 			<if test='msBirth != null and msBirth != ""'>
 			, MS_BIRTH = DATE_FORMAT(#{msBirth}, '%Y%m%d')
-			</if>
-			<if test='msHomeaddr1 != null and msHomeaddr1 != ""'>
-			, MS_HOMEADDR1 = #{msHomeaddr1}
-			</if>
-			<if test='msHomeaddr2 != null and msHomeaddr2 != ""'>
-			, MS_HOMEADDR2 = #{msHomeaddr2}
-			</if>
+			</if>			
 			<if test='msCompnm != null and msCompnm != ""'>
 			, MS_COMPNM = #{msCompnm}
-			</if>
-			<if test='msCompaddr1 != null and msCompaddr1 != ""'>
-			, MS_COMPADDR1 = #{msCompaddr1}
-			</if>
-			<if test='msCompaddr2 != null and msCompaddr2 != ""'>
-			, MS_COMPADDR2 = #{msCompaddr2}
-			</if>
+			</if>		
 			<if test='msJobCd != null and msJobCd != ""'>
 			, MS_JOB_CD = #{msJobCd}
+			</if>
+			<if test='msArea1 != null and msArea1 != ""'>
+			, MS_AREA1 = #{msArea1}
+			</if>
+			<if test='msArea2 != null and msArea2 != ""'>
+			, MS_AREA2 = #{msArea2}
 			</if>
 			, UPDATE_STAFF = #{updateStaff}
 			, UPDATE_DATETIME = NOW()
@@ -634,27 +636,33 @@
 		   )
 	</insert>
 	
-	<insert id="selectDrMsPicture">
+	<select id="selectDrMsPicture" resultType="MemberVO">
 		/* memberMapper.selectDrMsPicture - 회원/프로 프로필 이미지 조회 */
 		SELECT 
-			  IMG_NAME
-			, IMG_DATA
+			  MS_IMG_NAME
+			, MS_IMG_DATA
 		FROM DR_MS_PICTURE
 		WHERE 1 = 1
-			MS_NUM = ${msNum}
-	</insert>
+			AND MS_NUM = #{msNum}
+		LIMIT 1
+	</select>
 	
 	<insert id="insertDrMsPicture">
 		/* memberMapper.insertDrMsPicture - 회원/프로 프로필 이미지 등록 */
 		INSERT INTO DR_MS_PICTURE (
 			  MS_NUM
-			, IMG_NAME
-			, IMG_DATA
+			, MS_IMG_NAME
+			, MS_IMG_DATA
 		) VALUES (
-			  ${msNum}
-			, ${imgName}
-			, ${imgData}
-		)		
+			  #{msNum}
+			, #{msImgName}
+			, #{msImgData}
+		)
+	</insert>
+	<insert id="deletetDrMsPicture">
+		/* memberMapper.deletetDrMsPicture - 회원/프로 프로필 이미지 삭제 */
+		DELETE FROM DR_MS_PICTURE 
+		WHERE MS_NUM = #{msNum}
 	</insert>
 	
 </mapper>

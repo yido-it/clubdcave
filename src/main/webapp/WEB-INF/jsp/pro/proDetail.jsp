@@ -31,7 +31,7 @@
                     
                     <div class="splide__slide">
                         <!--700x466 이미지사이즈-->
-                        <div class="card" data-card-height="400" style="background: url(/store/001/profile/pro4.jpg) no-repeat 0 0">
+                        <div class="card" data-card-height="400" style="background: url(${proProfile.fileURL}) no-repeat 0 0">
                             <div class="card-bottom text-center mb-3">
                                 <h1 class="color-white font-700 mb-0">${proInfo.msName} 프로</h1>
                                 <p class="color-white">KLPGA 서울 경기</p>

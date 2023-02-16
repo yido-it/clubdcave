@@ -50,8 +50,8 @@ public class KakaoRestAPI {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
-            sb.append("&client_id=" + Globals.kakaoClientId);  //본인이 발급받은 key
-            sb.append("&redirect_uri=" + Globals.kakaoRedirectUrl);     // 본인이 설정해 놓은 경로
+            sb.append("&client_id=" + Globals.KakaoClientId);  //본인이 발급받은 key
+            sb.append("&redirect_uri=" + Globals.KakaoRedirectUrl);     // 본인이 설정해 놓은 경로
             sb.append("&code=" + authorize_code);
             bw.write(sb.toString());
             bw.flush();

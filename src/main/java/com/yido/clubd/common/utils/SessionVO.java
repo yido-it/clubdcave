@@ -57,4 +57,6 @@ public class SessionVO {
 	private String loginTime;			// 홈페이지로그인(일시분초)
 	private String msDi; 				// 실명인증
 	private String msJobCd; 			// 직업코드	
+	private String msArea1; 			// 직업코드	
+	private String msArea2; 			// 직업코드	
 }

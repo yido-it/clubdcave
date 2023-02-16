@@ -6,6 +6,12 @@ public class Globals {
 	public static String serverIpAddress;
 	public static String fileUploadPath;
 	public static String seedKey;
+	
+	// amazonS3 SDK
+	public static String accessKey;
+	public static String secretKey;
+	public static String endPoint;
+	public static String bucketName;
 
 	// PAY
 	public static String serviceId;
@@ -24,8 +30,8 @@ public class Globals {
 	
 	// SNS - Kakao
 	public static String KakaoKey;
-	public static String kakaoClientId;
-	public static String kakaoRedirectUrl;
+	public static String KakaoClientId;
+	public static String KakaoRedirectUrl;
 	// SNS - Naver
 	public static String NaverKey;
 	public static String NaverCallbackUrl;

@@ -78,10 +78,12 @@ public class WebController {
 		Cookie[] cookies = req.getCookies();
     	if(cookies != null) {
     		for(Cookie cookie : cookies) {
-    			System.out.println("delete cookie = " + cookie.getName());
-    			cookie.setMaxAge(0);
-    			cookie.setValue(null);
-    			res.addCookie(cookie);    			
+    			if(cookie.getName().contains("sessionKey")) {
+    				System.out.println("delete cookie = " + cookie.getName());    			
+        			cookie.setMaxAge(0);
+        			cookie.setValue(null);
+        			res.addCookie(cookie); 
+    			}
         	}
     	}    	
     	return "/index";

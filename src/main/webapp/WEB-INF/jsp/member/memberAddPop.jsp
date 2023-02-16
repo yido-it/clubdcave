@@ -18,7 +18,7 @@
             <span class="color-highlight">성별 선택</span>
             <em><i class="fa fa-angle-down"></i></em>
             <select id="msSex" name="msSex">
-                <option value="">성별 선택</option>
+                <option value="" disabled>성별 선택</option>
                 <option value="M">남성</option>
                 <option value="F">여성</option> 
             </select>
@@ -36,12 +36,11 @@
                 <div class="input-style input-style-2  input-required">
                     <span class="color-highlight">지역(시/도)</span>
                     <em><i class="fa fa-angle-down"></i></em>
-                      <select id="msHomeaddr1" name="msHomeaddr1">
+                      <select id="msArea1" name="msArea1">
                         <option value="" disabled>선택하세요</option>
-                        <option value="서울시">서울시</option>
-                        <%-- <c:forEach items="${msHomeaddr1List}" var="item" varStatus="status">
+                        <c:forEach items="${msArea1List}" var="item" varStatus="status">
                         <option value="${item.cdCode}">${item.cdTitle1}</option>
-		                </c:forEach> --%>
+		                </c:forEach>
                     </select>
                 </div> 
             </div>
@@ -49,12 +48,8 @@
                 <div class="input-style input-style-2  input-required">
                     <span class="color-highlight">시/군/구</span>
                     <em><i class="fa fa-angle-down"></i></em>
-                    <select id="msHomeaddr2" name="msHomeaddr2">
-                        <option value="" disabled>선택하세요</option>
-                        <option value="강남구">강남구</option>
-                        <%-- <c:forEach items="${msHomeaddr2List}" var="item" varStatus="status">
-                     	<option value="${item.cdCode}">${item.cdTitle1}</option>
-              			 </c:forEach> --%>
+                    <select id="msArea2" name="msArea2">
+                        <option value="" disabled>선택하세요</option>                     
                     </select>
                 </div> 
             </div> 
@@ -164,12 +159,6 @@
                     <input class="form-control" type="name" placeholder="" id="msCompnm" name="msCompnm">
                 </div> 
             </div>
-            <div class="col-12 mb-3">
-                       <div class="input-style input-style-2  input-required">
-                           <span class="color-highlight input-style-1-active">직장주소</span>
-                           <input class="form-control" type="name" placeholder="" id="msCompnm" name="msCompAddr1" >
-                       </div> 
-                   </div> 
        	 </div>
        
     </div>
@@ -217,9 +206,48 @@
 		        yearSuffix: '년',
 		        yearRange: '-100:+00',
        	
-		    }); 
+		    });
+		    
+		    
+		})
+		setDateValue('msBirth');
+		
+		$('#msArea1').on('change', function() {
+			getArea2List();
 		})
 		
+		function getArea2List() {
+			var params = {
+				  coDiv : '001'
+				, cdDivision : '221'	
+				, cdCode : $('#msArea1').val()
+			}		
+			
+			$.ajax({
+		        url: "<c:out value='/common/getCommonCodeDetailList'/>"
+		        , type: "post"
+		        , dataType: 'json'
+		        , data: params
+		        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+		        , success: function(data) {
+		            if(data.result){		          
+		            	var list = data.detailList;
+		            	$('.cd_detail_list').remove();
+						for(var i = 0; i < list.length; i++) {
+							var option = $("<option value='" + list[i].cdCode + "' class='cd_detail_list'>" + list[i].cdTitle1 + "</option>");
+							$('#msArea2').append(option);
+						}
+						setSelectValue('msArea2');
+		            } else {
+		                alertModal.fail(data.message);                    
+		            }                
+		        }
+		        , error: function(data) {
+		        	 alertModal.fail('[error] 코드 호출 중 오류 발생했습니다.');
+		        }
+		    });
+		}
+				
 		$('#btnAddCar').on('click', function() {
 			if(!$('#carArea2').is(':visible')) {
 				$('#carArea2').show();				
@@ -281,6 +309,8 @@
 			window.scrollTo(0, 0);
 			saveMemberAdd();
 		})		
+		
+	
 		function saveMemberAdd() {
 		    $.ajax({
 		        url: "<c:out value='/member/saveMemberAdd'/>"

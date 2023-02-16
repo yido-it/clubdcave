@@ -25,6 +25,8 @@ public interface CommonMapper {
 	public void sendSms(Map<String, Object> params) throws Exception;
 	
 	public void actionAgree(Map<String, Object> params) throws Exception;
+
+	public List<CdCommon> getCommonCodeDetailList(CdCommon cdCommon);
 }
 
 

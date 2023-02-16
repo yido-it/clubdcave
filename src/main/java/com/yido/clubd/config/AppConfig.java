@@ -33,8 +33,9 @@ public class AppConfig implements WebMvcConfigurer {
 				.mediaType("json", MediaType.APPLICATION_JSON_UTF8); // UTF-8 기반 JSON 타입 선언			
 	}
     
+    // ex) http://호스트 주소:포트/store/profile/sample.jpg 요청 시 https://kr.object.ncloudstorage.com/clubdcheongdam/test/profile/sample.jpg로 연결됨
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    	String imgDir = "file:///" + rootDir + "/";
+    	String imgDir = rootDir + "/";
         registry.addResourceHandler("/store/**").addResourceLocations(imgDir);
     }
     

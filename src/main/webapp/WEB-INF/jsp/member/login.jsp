@@ -74,8 +74,8 @@
 <script type="text/javascript">
 
 	var kakao_key = "${Globals.KakaoKey}";
-	var kakao_client_id = "${Globals.kakaoClientId}";
-	var kakao_redirect_url = "${Globals.kakaoRedirectUrl}";
+	var kakao_client_id = "${Globals.KakaoClientId}";
+	var kakao_redirect_url = "${Globals.KakaoRedirectUrl}";
 	
 	var naver_domain = "${Globals.NaverDomain}";
 	var naver_key = "${Globals.NaverKey}"; 
@@ -220,4 +220,3 @@
 
 </body>	
 </html>
-

@@ -21,13 +21,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.yido.clubd.common.utils.AWSFileUtil;
 import com.yido.clubd.common.utils.Globals;
 import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.component.FileUtil;
+import com.yido.clubd.component.ImageUtil;
+import com.yido.clubd.config.SessionConfig;
 import com.yido.clubd.model.DrMsCoInfo;
 import com.yido.clubd.model.MemberVO;
-import com.yido.clubd.model.ProVO;
 import com.yido.clubd.repository.DrMsCoInfoMapper;
 import com.yido.clubd.repository.MemberMapper;
 
@@ -346,7 +348,11 @@ public class MemberService {
 		String msNum = this.selectMsNum(params);
 		params.put("msNum", msNum);
 		
+		// 이전 세션 삭제 (중복 로그인 방지)
+		SessionConfig.getSessionMsNumCheck(msNum);
+		
 		SessionVO member = this.selectMsSession(params);			
+		session.setAttribute("msNum", msNum);
 		session.setAttribute("msMember", member);
 		session.setMaxInactiveInterval(30 * 60);
 		
@@ -401,17 +407,18 @@ public class MemberService {
 	 * @return 
 	 */
 	public void saveFirstPick(Map<String, Object> params) {
-		DrMsCoInfo result = drMsCoInfoMapper.selectDrMsCoInfo(params);
-		
-		DrMsCoInfo drMsCoInfo = new DrMsCoInfo();
-		drMsCoInfo.setCoDiv((String)params.get("coDiv"));
-		drMsCoInfo.setMsNum((String)params.get("msNum"));
-		
-		if(result == null) {			
-			drMsCoInfoMapper.insertDrMsCoInfo(drMsCoInfo);
-		}
-		drMsCoInfoService.updateFirstPickY(drMsCoInfo);
-		
+		if((String)params.get("coDiv") != null && (String)params.get("coDiv") != "") {			
+			DrMsCoInfo result = drMsCoInfoMapper.selectDrMsCoInfo(params);
+			
+			DrMsCoInfo drMsCoInfo = new DrMsCoInfo();
+			drMsCoInfo.setCoDiv((String)params.get("coDiv"));
+			drMsCoInfo.setMsNum((String)params.get("msNum"));
+			
+			if(result == null) {			
+				drMsCoInfoMapper.insertDrMsCoInfo(drMsCoInfo);
+			}
+			drMsCoInfoService.updateFirstPickY(drMsCoInfo);
+		}		
 	}
 	
 	/**
@@ -442,10 +449,11 @@ public class MemberService {
 		    String mimeType = Files.probeContentType(srcPath);		// 파일 경로에 있는 Content-Type(파일 유형) 확인
 		    mimeType = (mimeType == null ? "" : mimeType);			// 확장자가 없는 경우 null을 반환
 			
-			String newFileNm = System.currentTimeMillis() + "." + extNm;
-			String newFolderNm = (String)params.get("msImgData");				 // 업로드 할 경로
-			FileUtil.uploadObject("clubdcave", newFolderNm, newFileNm, filePath); // 프로젝트명, 업로드 경로, 새 파일 이름, 복사될 파일 경로
-			
+		    String folderNm = (String)params.get("msImgData");		// ex) test/profile/00000001
+			String newFileNm = System.currentTimeMillis() + "." + extNm;			
+						
+			AWSFileUtil.uploadFile(folderNm, folderNm + newFileNm, extNm, filePath);	// 생성할 폴더명, 새 파일 이름, 복사될 파일 경로
+									
 			// 업로드 후 임시파일 삭제
 			if(tmpFile.exists()) tmpFile.delete();
 			
@@ -455,9 +463,17 @@ public class MemberService {
 		}
 		
 	}
+	
 
 	public MemberVO selectProfileImg(Map<String, Object> map) {
 		return memberMapper.selectDrMsPicture(map);
 	}
+
+	public void deleteProfileImg(Map<String, Object> params) {
+		String objectName = (String)params.get("msImgData") + (String)params.get("msImgName");
+		AWSFileUtil.deleteFile(objectName);
+		
+		memberMapper.deletetDrMsPicture(params);		
+	}	
 
 }

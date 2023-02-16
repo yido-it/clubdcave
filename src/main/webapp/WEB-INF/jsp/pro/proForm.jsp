@@ -37,6 +37,24 @@
                 <div class="dropzone" id="">
                     <button type="button" id="profileUpload" class="btn bg-highlight color-white font-15 dz-message mb-5" style="width:100%;height:100%">
                     <i class="fa fa-camera"></i> 사진 찾기</button>
+                    
+                    <c:if test="${proProfile != null}">
+                    <div class="img-area px-0 col-6 mb-3">
+						<div class="">
+							<div class="dz-image my-2" style="text-align: center">
+								<img alt="${proProfile.msImgName}" src="${proProfile.thumbURL}" data-dz-thumbnail>
+							</div>
+							<div class="d-flex mt-1">
+								<div class="ml-auto pl-3 text-right">
+									<a class="dz-remove color-red-dark font-14 btn" href="javascript:undefined;" 
+										id="${sessionScope.msMember.msNum}" data-filepath="${proProfile.msImgData}" data-filename="${proProfile.msImgName}" data-dz-remove>
+									<i class="fa-regular fa-rectangle-xmark"></i> 삭제
+									</a>
+								</div>								
+							</div>
+						</div>
+					</div>
+                    </c:if>
                 </div>        
 
             </div>
@@ -45,9 +63,7 @@
 
         <div class="content" id="formArea">
         <form id="frmPro" name="frmPro">  
-            <!--개인정보 출신대학빼고 다 필수-->
-            <h3 class="font-700 mt-5 mb-3">개인정보</h3> 
- 
+            <h3 class="font-700 mt-5 mb-3">개인정보</h3>  			
             <div class="input-style input-style-2 input-required">
                 <span class="color-highlight">성별 선택</span>
                 <em><i class="fa fa-angle-down"></i></em>
@@ -69,13 +85,12 @@
 	                <div class="input-style input-style-2  input-required">
 	                    <span class="color-highlight">지역(시/도)</span>
 	                    <em><i class="fa fa-angle-down"></i></em>
-	                    <input class="form-control" type="hidden" id="msHomeaddr1Val" value="${sessionScope.msMember.msHomeaddr1}" >
-	                      <select id="msHomeaddr1" name="msHomeaddr1">
-	                        <option value="" disabled>선택하세요</option>
-	                        <option value="서울시">서울시</option>
-	                        <%-- <c:forEach items="${msHomeaddr1List}" var="item" varStatus="status">
+	                    <input class="form-control" type="hidden" id="msArea1Val" value="${sessionScope.msMember.msArea1}" >
+	                      <select id="msArea1" name="msArea1">
+	                        <option value="" selected>선택하세요</option>
+	                        <c:forEach items="${msArea1List}" var="item" varStatus="status">
 	                        <option value="${item.cdCode}">${item.cdTitle1}</option>
-			                </c:forEach> --%>
+			                </c:forEach>
 	                    </select>
 	                </div> 
 	            </div>
@@ -83,13 +98,9 @@
                     <div class="input-style input-style-2  input-required">
                         <span class="color-highlight">시/군/구</span>
                         <em><i class="fa fa-angle-down"></i></em>
-                        <input class="form-control" type="hidden" id="msHomeaddr2Val" value="${sessionScope.msMember.msHomeaddr2}" >
-                        <select id="msHomeaddr2" name="msHomeaddr2">
-                            <option value="" disabled>선택하세요</option>
-                            <option value="강남구">강남구</option>
-                            <%-- <c:forEach items="${msHomeaddr2List}" var="item" varStatus="status">
-	                        <option value="${item.cdCode}">${item.cdTitle1}</option>
-			                </c:forEach> --%>
+                        <input class="form-control" type="hidden" id="msArea2Val" value="${sessionScope.msMember.msArea2}" >
+                        <select id="msArea2" name="msArea2">
+                            <option value="" selected>선택하세요</option>
                         </select>
                     </div> 
                 </div>
@@ -191,8 +202,9 @@
                     <div class="input-style input-style-2 input-required">
                         <span class="color-highlight">선호 업장</span>
                         <em><i class="fa fa-angle-down"></i></em>
+                        <input class="form-control" type="hidden" id="coDivVal" value="${msFirstPick}" >
 						<select id="coDiv" name="coDiv">
-							<option value="" disabled>선호하는 업장</option>
+							<option value="" selected>선호하는 업장</option>
 			                <c:forEach items="${placeList}" var="item" varStatus="status">
 			                <option value="${item.coDiv}">${item.coName}</option>
 			                </c:forEach>
@@ -248,7 +260,7 @@
 	            	제출하기
 	            </button>  
             </div>     
-        </form>
+        </form>        
         <c:forEach items="${noticeList}" var="item" varStatus="status">
         	<input type="hidden" class='hidden-notice' id="${item.noticeDiv}" value="${item.proRemark}"/>
 		</c:forEach>
@@ -258,20 +270,10 @@
     <!-- Page content ends here--> 
 </div>
  
-<div id="menu-success-1" class="menu menu-box-bottom bg-blue-dark rounded-0" data-menu-height="335" data-menu-effect="menu-parallax" >
-    <h1 class="text-center mt-4"><i class="fa fa-3x fa-check-circle scale-box color-white shadow-xl rounded-circle"></i></h1>
-    <h1 class="text-center mt-3 font-700 color-white">관리자 승인필요</h1>
-    <p class="boxed-text-l color-white opacity-70 font-16">
-        관리자 검토/승인후에 프로필이 반영됩니다. <br/>
-        제출하시겠습니까?
-    </p>
-    <a  data-menu="timed-5" class="font-18  btn btn-m btn-center-m button-s shadow-l rounded-s text-uppercase font-600 bg-white color-black">
-        확인</a>  
-</div>
 <div class="menu-hider"><div></div></div>
-
 <jsp:include page="../common/alertModal.jsp" />  
 <script type="text/javascript">
+	var params;
 
 	$().ready(function() {
 		
@@ -293,28 +295,61 @@
 	    setSelectValue('msSex');
 	    setSelectValue('coDiv');
 	    
-		setSelectValue('msHomeaddr1');
-		setSelectValue('msHomeaddr2');
+		setSelectValue('msArea1');
+		if($('#msArea1').val() != '') {
+			getArea2List();
+		}
 	    
 		showCarInput();
 	})
 	
 	Dropzone.autoDiscover = false;
-		var myDropzone = new Dropzone('div.dropzone', {
-			  autoProcessQueue : false
+		var imgDropzone = new Dropzone('div.dropzone', {
+			  autoProcessQueue : true
 			, url : '/pro/uploadProfileImg'
 			, method : 'post'
 			, maxFiles : 1
-			, maxFilesize : 10
+			, maxFilesize : 3
 			, resizeQueality : 1
 			, resizeWidth : 960
-			, dictFileTooBig : '{{filesize}}MB 이하로 업로드 해주세요.'
+			, dictFileTooBig : '{{maxFilesize}}MB 이하로 업로드 해주세요.'
 			, paramName : 'file'
 			, addRemoveLinks : true
 			, acceptedFiles : "image/*"
 			, uploadMultiple : false
 			, init : function() {
-				
+				// 파일 개수 초과
+				this.on("maxfilesexceeded", function (file) {
+					this.removeAllFiles();
+					this.addFile(file);
+				});
+				// 에러 발생 (ex 파일 용량 초과)
+		   		this.on("error", function(file, message) { 
+		   			alertModal.fail(message);
+	                this.removeFile(file); 
+	    		});
+				// 파일 dropzone area에 올라간 후
+		   		this.on("addedfile", function (file) {
+		   			if($(".img-area").length >= 1) {
+		   				this.removeAllFiles();
+		   				alertModal.fail('등록된 사진을 먼저 삭제해주세요!');
+			   			 /* var params = {
+			   				  msImgName : $('.img-area').find('a').data('filename')	
+			   				, msImgData : $('.img-area').find('a').data('filepath')
+			   				, msNum : $('#msNum').val()
+			   			}
+		   				deleteProfileImg(params);  */
+		   			}
+		   		});
+				// 파일 업로드 중
+				this.on('sending', function(file, xhr, formData){										
+		   			formData.append('msNum', $("#msNum").val());
+		   		});	
+				// 파일 업로드 성공 후
+				this.on("success", function(file, res){
+                    this.removeFile(file);
+	            	goAfterModal();  	                   
+                });
 			}
 		});
 	
@@ -362,6 +397,77 @@
 				$('#carArea3').show();
 			}
 	}
+	 
+	$('.dz-remove').on('click', function() {	
+		
+		 params = {
+			  msImgId : $(this).attr('id')
+			, msImgName : $(this).data('filename')	
+			, msImgData : $(this).data('filepath')
+			, msNum : $('#msNum').val()
+		};		
+		alertModal.confirm1('사진을 삭제하시겠습니까?', 'deleteProfileImg(params);');
+	})	 
+	
+	function deleteProfileImg(params) {
+		$.ajax({
+	        url: "<c:out value='/pro/deleteProfileImg'/>"
+	        , type: "post"
+	        , dataType: 'json'
+	        , data: params
+	        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+	        , success: function(data) {
+	            if(data.result){
+	            	document.getElementById(params.msImgId).closest('.img-area').remove();
+	            	
+	            	$("#confirm1Popup").removeClass('menu-active');
+	            	params = null;
+	            	
+	            } else {
+	                alertModal.fail(data.message);                    
+	            }                
+	        }
+	        , error: function(data) {
+	        	 alertModal.fail('[error] 코드 호출 중 오류 발생했습니다.');
+	        }
+	    });
+	}
+	
+	$('#msArea1').on('change', function() {
+		getArea2List();
+	})
+	
+	function getArea2List() {
+		var params = {
+			  coDiv : '001'
+			, cdDivision : '221'	
+			, cdCode : $('#msArea1').val()
+		}		
+		
+		$.ajax({
+	        url: "<c:out value='/common/getCommonCodeDetailList'/>"
+	        , type: "post"
+	        , dataType: 'json'
+	        , data: params
+	        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+	        , success: function(data) {
+	            if(data.result){		          
+	            	var list = data.detailList;
+	            	$('.cd_detail_list').remove();
+					for(var i = 0; i < list.length; i++) {
+						var option = $("<option value='" + list[i].cdCode + "' class='cd_detail_list'>" + list[i].cdTitle1 + "</option>");
+						$('#msArea2').append(option);
+					}
+					setSelectValue('msArea2');
+	            } else {
+	                alertModal.fail(data.message);                    
+	            }                
+	        }
+	        , error: function(data) {
+	        	 alertModal.fail('[error] 코드 호출 중 오류 발생했습니다.');
+	        }
+	    });
+	}
 
 	$('#btnAddCar').on('click', function() {
 		if(!$('#carArea2').is(':visible')) {
@@ -393,10 +499,10 @@
 	})
 	
 	$('#btnSubmit').on('click', function() {
-		if($(".dz-preview").length){
-        	myDropzone.processQueue();
-    	}
-		//saveProForm();
+		// 수정된 내용이 없습니다
+		
+		//console.log($('#frmPro').serialize());
+		alertModal.confirm1('관리자 검토/승인후에 프로필이 반영됩니다.<br/>제출하시겠습니까?', 'saveProForm()', '관리자 승인필요');
 	})
 			
 	function saveProForm() {			
@@ -407,17 +513,14 @@
 	        , data: $('#frmPro').serialize()
 	        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
 	        , success: function(data) {		    	
-	            if(data.result){
-	            	// 사진 업로드
-                	if($(".dz-preview").length){
-	                	myDropzone.processQueue();	                	
-	                // 사진 업로드 없음
-                	}else{
-    	            	alertModal.success('제출이 완료되었습니다.');
-    	            	localStorage.removeItem('frmPro');
-    	            	
-    	            	goAfterModal();
-                	}
+	            if(data.result){	       
+	            	
+               		$("#confirm1Popup").removeClass('menu-active');
+	            	
+   	            	alertModal.success('제출이 완료되었습니다.');
+   	            	localStorage.removeItem('frmPro');    	            	
+   	            	goAfterModal();
+   	            	
 	            } else {
 	            	alertModal.fail(data.message);                    
 	            }                

@@ -17,6 +17,7 @@
 	</div>
 	<jsp:include page="../common/menu.jsp" />
 	
+	<input type="hidden" id="msNum" name="msNum" value="${sessionScope.msMember.msNum}"/>
 	<div class="page-content header-clear">
 		<div class="divider divider-margins"></div>
 		<div class="menu-title">
@@ -28,62 +29,30 @@
         <div class="card card-style">
             <div class="content mb-0">
                 <h3>사진업로드</h3>
-                <p>가로로 긴 사진 업로드를 추천합니다.(사진크기 3MB이하)</p>
-                   <div class="file-data pb-5">
-                       <input type="file" id="file-upload" class="upload-file bg-highlight shadow-s rounded-s" accept="image/*">
-                       <p class="upload-file-text color-white font-15"><i class="fa fa-camera"></i> 사진 찾기</p>
-                   </div> 	
-                   <div class="row mb-0 mt-2"> 
-                       <!--사진-->
-                       <div class="col-6 mb-3">
-                           <img id="image-data float-left" src="images/pictures/pro4.jpg" class="img-fluid" > 
-                           <div class="d-flex mt-1">
-                               <div>
-                                   <a href="#" class="border-0" >
-                                       <i class="fa-regular fa-images color-brown-dark"></i>
-                                       <span class="color-white">1.4MB</span>
-                                   </a>      
-                               </div>
-                               <div class="ml-auto pl-3 text-right">
-                                   <a class="color-red-dark font-14 ">
-                                       <i class="fa-regular fa-rectangle-xmark" ></i> 삭제
-                                   </a>    
-                               </div>
-                           </div> 
-                       </div>
-                       <div class="col-6 mb-3">
-                       	<img id="image-data" src="images/pictures/pro3.jpg" class="img-fluid image-fit" > 
-                       	<div class="d-flex mt-1">
-                           	<div>
-                                <a href="#" class="border-0" >
-                                    <i class="fa-regular fa-images color-brown-dark"></i>
-                                    <span class="color-white">1.4MB</span>
-                                </a>      
-                            </div>
-                           	<div class="ml-auto pl-3 text-right">
-                                <a class="color-red-dark font-14 ">
-                                    <i class="fa-regular fa-rectangle-xmark" ></i> 삭제
-                                </a>    
-                           	</div>
-                       	</div> 
-                   	</div>
-                     	<div class="col-6 mb-3">
-                       	<img id="image-data float-left" src="images/pictures/pro4.jpg" class="img-fluid" > 
-                       	<div class="d-flex mt-1">
-                            <div>
-                                <a href="#" class="border-0" >
-                                    <i class="fa-regular fa-images color-brown-dark"></i>
-                                    <span class="color-white">1.4MB</span>
-                                </a>      
-                            </div>
-                            <div class="ml-auto pl-3 text-right">
-                                <a class="color-red-dark font-14 ">
-                                    <i class="fa-regular fa-rectangle-xmark" ></i> 삭제
-                                </a>    
-                            </div>
-                       	</div> 
-                   	</div>
-               	</div>
+				<p>가로로 긴 사진 업로드를 추천합니다.(사진크기 3MB이하)</p>
+				<div class="img-dropzone dropzone" id="">
+                    <button type="button" id="profileUpload" class="btn bg-highlight color-white font-15 dz-message mb-5" style="width:100%;height:100%">
+                    <i class="fa fa-camera"></i> 사진 찾기</button>
+                    
+                    <c:if test="${proProfile != null}">
+                    <div class="img-area">
+						<div class="col-6 px-0 dz-image-preview">
+							<div class="dz-image my-2" style="text-align: center">
+								<img data-dz-thumbnail="" alt="${proProfile.msImgName}" src="${proProfile.thumbURL}">
+							</div>
+							<div style="display:flex;">
+								<div class="">
+									<div class="">
+										<i class="fa-regular fa-images color-brown-dark"></i>
+										<span class="color-white data-dz-size">0.1MB</span>
+									</div>
+								</div>
+								<a class="dz-remove color-red-dark font-14 btn-img-delete" data-filepath="${proProfile.msImgData}" data-filename="${proProfile.msImgName}" data-dz-remove=""><i class="fa-regular fa-rectangle-xmark"></i> 삭제</a>
+							</div>
+						</div>
+					</div>
+                    </c:if>
+                </div>
 			</div>
 		</div>	            
         <!--//사진수정-->
@@ -93,63 +62,29 @@
         	<div class="content mb-0">
             	<h3>영상업로드</h3>
             	<p>영상크기 5MB이하 권장</p>
-				<div class="file-data pb-5">
-				    <input type="file" id="file-upload" class="upload-file bg-highlight shadow-s rounded-s " accept="image/*">
-				    <p class="upload-file-text color-white font-15"><i class="fa-solid fa-video"></i> 영상 찾기</p>
-				</div>
-
-	            <div class="row mb-0 mt-2"> 
-	                <!--영상-->
-	                <div class="col-6 mb-3">
-	                    <img id="image-data float-left" src="images/pictures/pro4.jpg" class="img-fluid" > 
-	                    <div class="d-flex mt-1">
-	                        <div>
-	                            <a href="#" class="border-0" >
-	                                <i class="fa fa-video color-brown-dark"></i>
-	                                <span class="color-white">1.4MB</span>
-	                            </a>      
-	                        </div>
-	                        <div class="ml-auto pl-3 text-right">
-	                            <a class="color-red-dark font-14 ">
-	                                <i class="fa-regular fa-rectangle-xmark" ></i> 삭제
-	                            </a>    
-	                        </div>
-	                    </div> 
-	                </div>
-	                <div class="col-6 mb-3">
-		                 <img id="image-data" src="images/pictures/pro3.jpg" class="img-fluid image-fit" > 
-		                 <div class="d-flex mt-1">
-		                     <div>
-		                         <a href="#" class="border-0" >
-		                             <i class="fa fa-video color-brown-dark"></i>
-		                             <span class="color-white">2.4MB</span>
-		                         </a>      
-		                     </div>
-		                     <div class="ml-auto pl-3 text-right">
-		                         <a class="color-red-dark font-14 ">
-		                             <i class="fa-regular fa-rectangle-xmark" ></i> 삭제
-		                         </a>    
-		                     </div>
-		                </div> 
-	            	</div>
-	            	<div class="col-6 mb-3">
-		                <img id="image-data float-left" src="images/pictures/pro4.jpg" class="img-fluid" > 
-		                <div class="d-flex mt-1">
-		                    <div>
-		                        <a href="#" class="border-0" >
-		                            <i class="fa fa-video color-brown-dark"></i>
-		                            <span class="color-white">3.4MB</span>
-		                        </a>      
-		                    </div>
-		                    <div class="ml-auto pl-3 text-right">
-		                        <a class="color-red-dark font-14 ">
-		                            <i class="fa-regular fa-rectangle-xmark" ></i> 삭제
-		                        </a>    
-		                    </div>
-		                </div> 
-	            	</div>
-					<!--//영상-->
-				</div>
+				<div class="video-dropzone dropzone" id="">
+                    <button type="button" id="profileUpload" class="btn bg-highlight color-white font-15 dz-message mb-5" style="width:100%;height:100%">
+                    <i class="fa-solid fa-video"></i> 영상 찾기</button>
+                    
+                    <c:if test="${proProfile != null}">
+                    <div class="img-area">
+						<div class="col-6 px-0 dz-image-preview">
+							<div class="dz-image my-2" style="text-align: center">
+								<img data-dz-thumbnail="" alt="${proProfile.msImgName}" src="${proProfile.thumbURL}">
+							</div>
+							<div style="display:flex;">
+								<div class="">
+									<div class="">
+										<i class="fa-regular fa-images color-brown-dark"></i>
+										<span class="color-white data-dz-size">0.1MB</span>
+									</div>
+								</div>
+								<a class="dz-remove color-red-dark font-14 btn-img-delete" data-filepath="${proProfile.msImgData}" data-filename="${proProfile.msImgName}" data-dz-remove=""><i class="fa-regular fa-rectangle-xmark"></i> 삭제</a>
+							</div>
+						</div>
+					</div>
+                    </c:if>
+                </div>
 			</div>
 		</div>
 		<!--//영상수정-->
@@ -172,9 +107,110 @@
 
 <jsp:include page="../common/alertModal.jsp" />  
 <script type="text/javascript">	
-	$('#btnEdit').on('click', function() {
-		
-	})
+
+	Dropzone.autoDiscover = false;
+	var imgDropzone = new Dropzone('div.img-dropzone', {
+		  autoProcessQueue : false
+		, url : '/pro/uploadGalleryImg'
+		, method : 'post'
+		, maxFiles : 10
+		, parallelUploads : 5
+		, maxFilesize : 3
+		, resizeQueality : 1
+		, resizeWidth : 960
+		, dictFileTooBig : '{{filesize}}MB 이하로 업로드 해주세요.'
+		, paramName : 'file'
+		, addRemoveLinks : true
+		, acceptedFiles : "image/*"
+		, uploadMultiple : true
+		, init : function() {
+			// 파일 개수 초과
+			this.on("maxfilesexceeded", function (file) {
+				alertModal.fail('한번에 10개까지 업로드 가능합니다.');
+				this.removeFile(file);
+			});
+			// 에러 발생 (ex 파일 용량 초과)
+	   		this.on("error", function(file, message) { 
+	   			alertModal.fail(message);
+                this.removeFile(file); 
+    		});
+			// 파일 dropzone area에 올라간 후 (총 업로드 개수 제한)
+	   		this.on("addedfile", function (file) {
+	   			if($(".img-area").length >= 30) {
+	   				alertModal.fail(message);
+	   				this.removeFile(file); 
+	   			}
+	   		})
+	   		// 파일 업로드 중
+			this.on('sending', function(file, xhr, formData){
+	   			formData.append('msNum', $("#msNum").val());
+	   		});
+			// 사진 업로드 완료 후
+			this.on("success", function(file, res){
+                this.removeFile(file);
+				alertModal.success('업로드 완료');
+            	goAfterModal();
+                   
+               });
+	   		/* this.on("successmultiple", function(file){
+	   			this.removeFile(file);
+				alertModal.success('업로드 완료');
+            	goAfterModal();
+	   		}); */
+	   		
+		}
+	});
+	
+	var videoDropzone = new Dropzone('div.video-dropzone', {
+		  autoProcessQueue : false
+		, url : '/pro/uploadGalleryVideo'
+		, method : 'post'
+		, maxFiles : 10
+		, parallelUploads : 5
+		, maxFilesize : 5
+		, resizeQueality : 1
+		, resizeWidth : 960
+		, dictFileTooBig : '{{filesize}}MB 이하로 업로드 해주세요.'
+		, paramName : 'file'
+		, addRemoveLinks : true
+		, acceptedFiles : "video/*"
+		, uploadMultiple : false
+		, init : function() {
+			// 파일 개수 초과
+			this.on("maxfilesexceeded", function (file) {
+				alertModal.fail('한번에 10개까지 업로드 가능합니다.');
+				this.removeFile(file);
+			});
+			// 에러 발생 (ex 파일 용량 초과)
+	   		this.on("error", function(file, message) { 
+	   			alertModal.fail(message);
+                this.removeFile(file); 
+    		});
+	   		// 파일 dropzone area에 올라간 후 (총 업로드 개수 제한)
+	   		this.on("addedfile", function (file) {
+	   			if($(".img-area").length >= 30) {
+	   				alertModal.fail(message);
+	   				this.removeFile(file); 
+	   			}
+	   		})
+	   		// 파일 업로드 중
+			this.on('sending', function(file, xhr, formData){
+	   			formData.append('msNum', $("#msNum").val());
+	   		});	
+			// 사진 업로드 완료 후
+			this.on("success", function(file, res){
+                this.removeFile(file);
+				alertModal.success('업로드 완료');
+	          	goAfterModal();
+                 
+             });
+	   		/* this.on("successmultiple", function(file){
+	   			this.removeFile(file);
+				alertModal.success('업로드 완료');
+            	goAfterModal();
+	   		}); */
+		}
+	});
 	
 	function getProList(){			
 	   	$.ajax({

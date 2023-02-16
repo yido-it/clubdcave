@@ -33,6 +33,10 @@ public class CommonService {
     	return commonMapper.getCommonCodeList(cdCommon);
     }
     
+    public List<CdCommon> getCommonCodeDetailList(CdCommon cdCommon) {
+    	return commonMapper.getCommonCodeDetailList(cdCommon);
+    }
+    
 	public List<Map<String, Object>> getAddrList(Map<String, Object> params) {
 		return commonMapper.getAddrList(params);
 	}

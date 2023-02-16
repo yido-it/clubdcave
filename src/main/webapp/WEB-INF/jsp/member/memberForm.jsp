@@ -224,10 +224,10 @@
 		
 		$('#btnSignUp').on('click', function() {
 			
-			$('#memberAddPop').load('/member/memberAddPop');
-			$('#memberAddPop').addClass('menu-active');
+			/* $('#memberAddPop').load('/member/memberAddPop');
+			$('#memberAddPop').addClass('menu-active'); */
 			
-			/* if(msLoginCd == 'APP') {
+			if(msLoginCd == 'APP') {
 				if(!chkInputVal('msId')) return;
 				if(!checkId) {
 					alertModal.fail('아이디 중복확인을 해주세요.');
@@ -249,7 +249,7 @@
 				return;
 			}
 			
-			doSignUp(); */		
+			doSignUp();	
 		})
 		
 		function doSignUp() {

@@ -31,8 +31,8 @@ public class MainInitialize {
 			
 			log.info("======================= SNS Info Start =======================");
 			Globals.KakaoKey  = Utils.getProperties("Globals.Kakao.Key", "");
-			Globals.kakaoClientId = Utils.getProperties("Globals.Kakao.Client.Id", "");
-			Globals.kakaoRedirectUrl = Utils.getProperties("Globals.Kakao.Redirect.Url", "");
+			Globals.KakaoClientId = Utils.getProperties("Globals.Kakao.Client.Id", "");
+			Globals.KakaoRedirectUrl = Utils.getProperties("Globals.Kakao.Redirect.Url", "");
 			
 			Globals.NaverKey  = Utils.getProperties("Globals.Naver.Key", "");
 			Globals.NaverCallbackUrl  = Utils.getProperties("Globals.Naver.Callback.Url", "");
@@ -67,6 +67,15 @@ public class MainInitialize {
 			Globals.partnerCalUrl = Utils.getPropertiesByType("Globals.Pay.Partner.Cal.Url", "", serverType);
 			log.info("Pay Partner Cal Url : " + Globals.partnerCalUrl);
 			log.info("======================= [{}] Pay Info Finish =======================", serverType);
+			
+log.info("======================= AWS S3 Info Start =======================");
+			
+			Globals.accessKey = Utils.getProperties("Globals.awsS3.accessKey", "");
+			Globals.secretKey = Utils.getProperties("Globals.awsS3.secretKey", "");
+			Globals.endPoint = Utils.getProperties("Globals.awsS3.endPoint", "");
+			Globals.bucketName = Utils.getProperties("Globals.awsS3.bucketName", "");
+			
+			log.info("======================= AWS S3 Info Finish =======================");
 			
 		} catch (Exception e) {
 			System.out.println(e);

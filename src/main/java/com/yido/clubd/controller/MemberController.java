@@ -95,11 +95,15 @@ public class MemberController {
 	public String goMemberAddPop(Model model) throws Exception {
 		CdCommon cdCommon = new CdCommon();
 		cdCommon.setCoDiv("001");
-		cdCommon.setCdDivision("025");
 		
+		cdCommon.setCdDivision("025");
 		List<CdCommon> jobList = commonService.getCommonCodeList(cdCommon);
+		cdCommon.setCdDivision("220");
+		List<CdCommon> msArea1List = commonService.getCommonCodeList(cdCommon);
+		
 		List<CoPlace> placeList = coPlaceService.selectPlaceList();
 		model.addAttribute("jobList", jobList);
+		model.addAttribute("msArea1List", msArea1List);
 		model.addAttribute("placeList", placeList);
 		return "/member/memberAddPop";
 	}
@@ -376,9 +380,12 @@ public class MemberController {
 	public String goMemberModify(Model model, HttpSession session) throws Exception {
 		CdCommon cdCommon = new CdCommon();
 		cdCommon.setCoDiv("001");
-		cdCommon.setCdDivision("025");
 		
+		cdCommon.setCdDivision("025");		
 		List<CdCommon> jobList = commonService.getCommonCodeList(cdCommon);
+		cdCommon.setCdDivision("220");
+		List<CdCommon> msArea1List = commonService.getCommonCodeList(cdCommon);
+		
 		List<CoPlace> placeList = coPlaceService.selectPlaceList();
 		
 		SessionVO member = (SessionVO)session.getAttribute("msMember");
@@ -388,6 +395,7 @@ public class MemberController {
 		DrMsCoInfo drMsInfo = drMsCoInfoService.selectFirstPick(msNum);
 		
 		model.addAttribute("jobList", jobList);
+		model.addAttribute("msArea1List", msArea1List);
 		model.addAttribute("placeList", placeList);
 		
 		model.addAttribute("basicInfo", basicInfo);

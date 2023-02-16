@@ -69,7 +69,11 @@ public class MemberVO {
 	private String msMktAgreeYn; 		// 마케팅동의여부(약관동의)
 	private String msDormant; 			// 휴면계정구분
 	private String loginTime;			// 홈페이지로그인(일시분초)	
-	private String msDi; 												// 실명인증
+	private String msDi; 				// 실명인증
+	private String msJobCd;				// 직업코드(025)
+	private String msArea1; 			// 지역코드1
+	private String msArea2; 			// 지역코드2
+	
 	private String inputStaff; 											// 입력사번
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -89,10 +93,7 @@ public class MemberVO {
 	private String msLessonUnit;		// 레슨단위
 	private String msRoundCnt;			// 라운딩횟수
 	private String msRoundUnit;			// 라운딩측정단위
-	private String msJobCd;				// 직업코드
-	private String Cmpnm;				// 회사명
-	private String Cmpaddr1;			// 회사주소
-	private String Cmpaddr2;			// 회사주소상세
+
 	private Integer carSeq;				// 차량순번
 	private String msCarNo;				// 차량번호	
 		
@@ -101,10 +102,10 @@ public class MemberVO {
 	private String msImgData;			// 이미지 경로 (변경 요청함)
 	
 	public String getFileURL() {
-		return "/store/" + this.msImgData + "/" + this.msImgName; 
+		return "/store/" + this.msImgData + this.msImgName; 
 	}	
 	public String getThumbURL() {
-		return "/store/thumb/" + this.msImgData + "/" + this.msImgName; 
+		return "/store/" + this.msImgData + "thumb/" + this.msImgName; 
 	}
 	
 	/* 컬럼 외  */

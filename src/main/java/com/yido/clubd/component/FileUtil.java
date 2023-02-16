@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class FileUtil {
 
 	@Value("${file.root}")
+	public
     static String rootDir = "";
 
     @Value("${file.root}")
@@ -33,7 +34,7 @@ public class FileUtil {
 	 * 파일 업로드
 	 */
     public static void uploadObject(String projectNm, String folderName, String objectName, String filePath) throws IOException {
-
+    	
     	String fullPath = null;
 		fullPath = folderName + "/" + objectName;
 

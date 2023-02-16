@@ -31,10 +31,12 @@ private String msName;
 	private String imgData;
 	
 	/* PRO_LICENSE 레슨프로자격사항 */
-	private String licSeq;			// 순번
+	private Integer licSeq;			// 순번
 	private String licKind;			// 라이센스 코드
 	private String licRemark;		// 비고
 	private String licName;		// 라이센스 이름
+	
+	private String coDiv;
 	
 	
 }

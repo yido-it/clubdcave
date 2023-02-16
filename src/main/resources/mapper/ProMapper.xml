@@ -5,34 +5,8 @@
  * 테이블명 : PRO_NOTICE
  * 테이블 설명 : 레슨프로특이사항
 -->
-<mapper namespace="com.yido.clubd.repository.ProMapper">
-   
-    <insert id="insertProNotice">
-    	INSERT INTO PRO_NOTICE (
-			MS_NUM				
-			, NOTICE_DIV			
-			, PRO_MUST_YN			
-			, PRO_REMARK
-			, NOTICE_OPEN_YN	
-    	) values (
-    		#{msNum}			
-    		, #{noticeDiv}		
-    		, #{proMustYn}			
-    		, #{proRemark}
-    		, #{noticeOpenYn}			
-    	)  	
-    </insert>
-    
-   	<update id="updateProNotice">
-		UPDATE PRO_NOTICE
-		   SET PRO_MUST_YN 		= #{proMustYn}
-		     , PRO_REMARK 		= #{proRemark}
-		     , NOTICE_OPEN_YN 	= #{noticeOpenYn}
-		 WHERE MS_NUM 			= #{msNum}
-		   AND NOTICE_DIV 		= #{noticeDiv}
-	</update>
-	
-	<select id="selectProNoticeList" resultType="ProVO">
+<mapper namespace="com.yido.clubd.repository.ProMapper">   	
+   	<select id="selectProNoticeList" resultType="ProVO">
 		SELECT
 			  M.MS_NUM
 		    , M.MS_NAME
@@ -48,6 +22,26 @@
 	        AND IFNULL(NULLIF(M.MS_BLANK,''),'N') = 'N'
 	        AND N.NOTICE_OPEN_YN = 'Y'    
 	</select>
+	
+	<select id="selectProNotice" resultType="ProVO">
+		SELECT
+			  M.MS_NUM
+		    , M.MS_NAME
+			, MS_IMAGENAME
+		    , NOTICE_DIV
+		    , PRO_MUST_YN
+		    , PRO_REMARK
+		    , NOTICE_OPEN_YN
+	    FROM PRO_NOTICE N
+	    RIGHT OUTER JOIN DR_MS_MAININFO M ON N.MS_NUM = M.MS_NUM
+	    WHERE 1 = 1
+			AND M.MS_NUM = #{msNum}
+			AND NOTICE_DIV = #{noticeDiv}
+	        AND IFNULL(NULLIF(M.MS_BLANK,''),'N') = 'N'
+	        AND N.NOTICE_OPEN_YN = 'Y'
+	    LIMIT 1    
+	</select>
+	
 	<select id="selectProImageList" resultType="ProVO">
 		SELECT
 			  MS_NUM
@@ -55,8 +49,41 @@
 			, MS_IMG_DATA
 	    FROM DR_MS_PICTURE		
 	    WHERE 1 = 1
-			AND MS_NUM = ${msNum}	    
+			AND MS_NUM = #{msNum}	    
 	</select>
+	
+    <insert id="insertProNotice">
+    	INSERT INTO PRO_NOTICE (
+			  MS_NUM				
+			, NOTICE_DIV			
+			, PRO_MUST_YN			
+			, PRO_REMARK
+			, NOTICE_OPEN_YN	
+    	) values (
+    		  #{msNum}			
+    		, #{noticeDiv}		
+    		, 'Y'		
+    		, #{proRemark}
+    		, 'Y'		
+    	)  	
+    </insert>
+    
+   	<update id="updateProNotice">
+		UPDATE PRO_NOTICE
+		   SET MS_NUM = #{msNum}
+		   	 <if test='proMustYn != null and proMustYn != ""'>
+		   	 , PRO_MUST_YN 		= #{proMustYn}
+		   	 </if>
+		   	 <if test='proRemark != null and proRemark != ""'>
+		     , PRO_REMARK 		= #{proRemark}
+		     </if>
+		     <if test='noticeOpenYn != null and noticeOpenYn != ""'>
+		     , NOTICE_OPEN_YN 	= #{noticeOpenYn}
+		     </if>
+		 WHERE MS_NUM 			= #{msNum}
+		   AND NOTICE_DIV 		= #{noticeDiv}
+	</update>
+
 	<select id="selectProLicenseList" resultType="ProVO">
 		SELECT
 			  M.MS_NUM
@@ -69,19 +96,45 @@
 	    RIGHT OUTER JOIN DR_MS_MAININFO M ON M.MS_NUM = L.MS_NUM
 	    INNER JOIN CD_COMMON C ON C.CD_CODE = L.LIC_KIND AND C.CD_DIVISION = '018'
 	    WHERE 1 = 1
-			AND M.MS_NUM = ${msNum}
+			AND M.MS_NUM = #{msNum}
 	        AND IFNULL(NULLIF(M.MS_BLANK,''),'N') = 'N'
 	    ORDER BY CD_SORT
-	</select>	
+	</select>
+	
+	<select id="selectProLicense" resultType="ProVO">
+		SELECT
+			  LIC_SEQ
+			, MS_NUM
+		    , LIC_KIND
+		    , LIC_REMARK
+		    , LIC_OPEN_YN
+	    FROM PRO_LICENSE 
+	    WHERE 1 = 1
+			AND MS_NUM = #{msNum}
+			AND LIC_KIND = #{licKind}
+	</select>
+	
+	<select id="deleteAllProLicense" resultType="ProVO">
+		DELETE FROM PRO_LICENSE 
+	    WHERE 1 = 1
+			AND MS_NUM = #{msNum}
+	</select>
+	
 	<insert id="insertProLicense">
+	 	<selectKey resultType="Integer" keyProperty="licSeq" order="BEFORE">
+            SELECT IFNULL(MAX(LIC_SEQ), 0) + 1
+				FROM PRO_LICENSE
+            WHERE 1 = 1
+				AND MS_NUM = #{msNum}
+        </selectKey>
     	INSERT INTO PRO_LICENSE (
-			MS_NUM				
+			  MS_NUM				
 			, LIC_SEQ			
 			, LIC_KIND			
 			, LIC_REMARK
     	) values (
-    		#{msNum}			
-    		, #{licSeq}		
+    		  #{msNum}			
+    		, #{licSeq}	
     		, #{licKind}			
     		, #{licRemark}	
     	)  	
@@ -94,5 +147,27 @@
 		 WHERE MS_NUM 			= #{msNum}
 		   AND LIC_SEQ 			= #{licSeq}
 	</update>
+		
+	<insert id="insertProImage">
+		<selectKey resultType="Integer" keyProperty="imgSeq" order="BEFORE">
+	            SELECT IFNULL(MAX(IMG_SEQ), 0) + 1
+					FROM PRO_IMAGE
+	            WHERE 1 = 1
+					AND MS_NUM = #{msNum}
+	        </selectKey>
+	    	INSERT INTO PRO_IMAGE (
+				  MS_NUM				
+				, IMG_DIV			
+				, IMG_SEQ			
+				, IMG_FILENAME
+				, IMG_DATA
+	    	) values (
+	    		  #{msNum}			
+	    		, #{imgDiv}	
+	    		, #{imgSeq}	
+	    		, #{imgFilename}			
+	    		, #{imgData}	
+	    	)  	
+	</insert>
 		
 </mapper>
