@@ -14,7 +14,7 @@
 <div id="page">
 <!--스크롤header -->
 <div class="header header-fixed header-logo-app">
-<a href="#" class="header-title header-subtitle">시설안내</a>
+<a href="#" class="header-title header-subtitle mt-1">시설안내</a>
 <jsp:include page="common/top.jsp" />
 </div>
 <!--//스크롤header -->

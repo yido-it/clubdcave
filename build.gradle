@@ -62,8 +62,8 @@ dependencies {
     compile('org.apache.poi:poi:4.0.0') // .xls
     
     /* 로그 라이브러리 개인 설정 */
-    implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
-	//compile "com.googlecode.log4jdbc:log4jdbc:1.2"
+    //implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+	compile "com.googlecode.log4jdbc:log4jdbc:1.2"
 	/* ------------------------- */
 	
 	compile group: 'org.apache.commons', name: 'commons-email', version: '1.5'

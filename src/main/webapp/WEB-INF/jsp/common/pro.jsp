@@ -8,7 +8,7 @@
          AMBASSADOR</h1>
 
 		 <div class="cover-slider owl-carousel owl-no-dots owl-no-controls" style="touch-action: auto;">
-			<div class="item" onclick="location.href='event'">
+			<div class="item" onclick="location.href=''">
 				<div class="card card-style mx-0 bg-9" data-card-height="150" style="background: url(images/gallery/choipro.jpg) no-repeat 0 0; background-size: cover;">
 					<div class="card-bottom m-3">
 						<p class="color-white mb-0 opacity-90">앰베서더</p>

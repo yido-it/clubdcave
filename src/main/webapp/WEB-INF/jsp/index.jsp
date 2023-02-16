@@ -95,10 +95,11 @@
 	
 		<!--프로-->
 		<jsp:include page="common/pro.jsp" />
-		<div class="divider divider-margins"></div>
-	
+			
 		<!--베이소개-->
-		<jsp:include page="common/bay.jsp" />
+		<%-- <div class="divider divider-margins"></div>
+		
+		<jsp:include page="common/bay.jsp" /> --%>
 	
 	<!--//end컨텐츠-->
 	</div>	

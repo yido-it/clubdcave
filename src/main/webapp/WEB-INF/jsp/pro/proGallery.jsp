@@ -4,7 +4,10 @@
 <%@ page import="com.yido.clubd.common.utils.Globals" %>
 <jsp:include page="../common/head.jsp" />
 <jsp:include page="../common/script.jsp" />
-    
+    <style>
+    .dz-preview{float:left}
+    a.dz-remove{padding:0 0.75em}
+    </style>
 <body class="theme-dark">
 
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div> 
@@ -22,6 +25,7 @@
 		<div class="divider divider-margins"></div>
 		<div class="menu-title">
 			<h1 class="my-0 py-0">갤러리수정</h1>
+			   <a href="" class="mr-3 btn btn-md color-green-dark border-green-dark rounded-s font-16" style="width:auto;height:auto;top:0px" id="">저장</a>
 		</div>
         <div class="divider divider-margins"></div>
 
@@ -36,9 +40,9 @@
                     
                     <c:if test="${proProfile != null}">
                     <div class="img-area">
-						<div class="col-6 px-0 dz-image-preview">
+						<div class="col-6 px-0 dz-image-preview float-left">
 							<div class="dz-image my-2" style="text-align: center">
-								<img data-dz-thumbnail="" alt="${proProfile.msImgName}" src="${proProfile.thumbURL}">
+								<img class="image-data float-left" data-dz-thumbnail="" alt="${proProfile.msImgName}" src="${proProfile.thumbURL}">
 							</div>
 							<div style="display:flex;">
 								<div class="">
@@ -47,7 +51,7 @@
 										<span class="color-white data-dz-size">0.1MB</span>
 									</div>
 								</div>
-								<a class="dz-remove color-red-dark font-14 btn-img-delete" data-filepath="${proProfile.msImgData}" data-filename="${proProfile.msImgName}" data-dz-remove=""><i class="fa-regular fa-rectangle-xmark"></i> 삭제</a>
+								<a class="dz-remove color-red-dark font-14 btn-img-delete"  data-filepath="${proProfile.msImgData}" data-filename="${proProfile.msImgName}" data-dz-remove=""><i class="fa-regular fa-rectangle-xmark"></i> 삭제</a>
 							</div>
 						</div>
 					</div>
