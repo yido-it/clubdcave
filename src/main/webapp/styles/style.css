@@ -7142,7 +7142,8 @@ background-color: #1b1d21;}
 
 /*프로상세*/
 .image-fit{height: 91px;  width: 100%;  object-fit: cover;}
-
+.dz-preview{float:left}
+a.dz-remove{padding:0 0.75em}
 /*이용권*/
 .collapse{border-bottom:1px solid #333}
 .accodion-padding{padding: 12px 8px !important}

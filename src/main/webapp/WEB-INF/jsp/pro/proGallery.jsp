@@ -4,10 +4,7 @@
 <%@ page import="com.yido.clubd.common.utils.Globals" %>
 <jsp:include page="../common/head.jsp" />
 <jsp:include page="../common/script.jsp" />
-    <style>
-    .dz-preview{float:left}
-    a.dz-remove{padding:0 0.75em}
-    </style>
+
 <body class="theme-dark">
 
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div> 
