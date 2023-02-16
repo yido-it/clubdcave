@@ -2,15 +2,24 @@ package com.yido.clubd.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.yido.clubd.model.BBS;
+import com.yido.clubd.service.BBSService;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -18,6 +27,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/")
 public class WebController {
 
+	@Autowired
+	private BBSService bbsService;
+	
 	@RequestMapping("")
 	public String index(Model model) {
 		return "redirect:main";	
@@ -32,6 +44,23 @@ public class WebController {
 	 */
 	@RequestMapping("/main")
 	public String index(Model model, HttpServletRequest req) {
+
+		// 프로모션 
+		Map<String, Object> pMap = new HashMap<String, Object>();
+		pMap.put("bbsType", 3);
+		pMap.put("coDiv", "001");
+		List<BBS> pList = bbsService.selectList(pMap);	
+		model.addAttribute("pList", pList);
+		// end.
+		
+		// 이벤트 
+		Map<String, Object> eMap = new HashMap<String, Object>();
+		eMap.put("bbsType", 2);
+		eMap.put("coDiv", "001");
+		List<BBS> eList = bbsService.selectList(eMap);	
+		model.addAttribute("eList", eList);
+		// end.
+		
 		return "/index";
 	}
 
@@ -89,19 +118,6 @@ public class WebController {
     	return "/index";
 	}
 
-
-	/**
-	 * 공지사항 목록
-	 * 
-	 * @param model
-	 * @param req
-	 * @return
-	 */
-	@RequestMapping("/noticeList")  
-	public String noticeList(Model model, HttpServletRequest req) {
-		return "/notice/noticeList";
-	}
-
 	/**
 	 * 공지사항 상세
 	 * 
@@ -114,18 +130,6 @@ public class WebController {
 		return "/notice/noticeView";
 	}
 
-	/**
-	 * 이벤트 목록
-	 * 
-	 * @param model
-	 * @param req
-	 * @return
-	 */
-	@RequestMapping("/event")  
-	public String event(Model model, HttpServletRequest req) {
-		return "/event";
-	}
-	
 	/**
 	 * 이용안내
 	 * 

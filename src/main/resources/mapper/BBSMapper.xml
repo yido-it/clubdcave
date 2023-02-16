@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+ * 테이블명 : BBS
+ * 테이블 설명 : 게시판
+-->
+<mapper namespace="com.yido.clubd.repository.BBSMapper">
+	
+	<select id="selectList" parameterType="hashmap" resultType="bbs">
+		SELECT IDX
+			 , TITLE
+			 , CONTENT
+			 , UP_FILENAME
+			 , UP_FILEURL
+			 , REGDATE
+			 , DATE_FORMAT(START_DAY, "%m/%d") AS STARTDAY 
+			 , DATE_FORMAT(END_DAY, "%m/%d") AS ENDDAY 
+		 FROM BBS
+		WHERE DEL_DIV = '0'
+		<if test='coDiv != null and coDiv != ""'>
+         AND CO_DIV = #{coDiv}
+		</if>
+		<if test='bbsType != null and bbsType != ""'>
+         AND BBSTYPE = #{bbsType}
+		</if>  
+		ORDER BY REGDATE DESC
+		<if test='limit != null and offset != null'>
+        LIMIT #{limit} OFFSET #{offset}
+		</if>   
+    </select>
+    
+ 	<select id="getNotice" parameterType="hashmap" resultType="bbs">
+		SELECT * 
+		 FROM BBS
+		WHERE DEL_DIV = '0'
+		<if test='idx != null and idx != ""'>
+         AND IDX = #{idx}
+		</if> 
+    </select>
+</mapper>

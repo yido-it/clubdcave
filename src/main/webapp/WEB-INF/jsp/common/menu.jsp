@@ -55,7 +55,7 @@
 			<i class="fa fa-gift color-green-light"></i>이벤트<i class="fa fa-angle-right"></i>
 		</a> -->
 		
-		<a href="javascript:location.href='/noticeList'" id="nav-media">
+		<a href="javascript:location.href='/boardList/001/1'" id="nav-media">
 			<i class="fa fa-list color-teal-dark"></i>공지사항<i class="fa fa-angle-right"></i>
 		</a>
 		<div class="divider mt-3 mb-3"></div>
