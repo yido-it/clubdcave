@@ -89,12 +89,10 @@ function doSearch(type) {
 					var lastIdx = Number(listSize);
 					var regdate = String(data[i].regDate).substr(0, 10).replaceAll('-', '.');
 					
-					divCnt += '<div id=noticeList_'+(lastIdx+i)+'>';
+					divCnt += '<div id=noticeList_'+(lastIdx+i)+' onclick="goView('+data[i].idx+')">';
 					divCnt += '<div class="d-flex pb-3">';
 					divCnt += '<div>';
-					divCnt += '<a href="/boardView/'+data[i].idx+'">';
 					divCnt += '<p class="pl-3 line-height-s color-theme mb-1 pt-3 font-13">'+textLengthOverCut(data[i].title, 30)+'</p>';
-					divCnt += '</a>';
 					divCnt += '<p class="mb-0 pl-3 font-10 pt-1 opacity-60"><i class="fa fa-clock pr-1"></i>'+regdate+'</p>'; 
 					divCnt += '</div>';
 					divCnt += '</div>';
@@ -129,7 +127,10 @@ function doSearch(type) {
 			}
 		}
 	});
+}
 
+function goView(idx) {
+	location.href="/boardView/" + idx;
 }
 </script>
 </html>
