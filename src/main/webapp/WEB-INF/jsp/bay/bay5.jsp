@@ -17,7 +17,7 @@
 <div class="header header-auto-show header-fixed header-logo-app">
 <a href="#" class="header-title header-subtitle  mt-1">시설안내</a> 
 <a href="#" class="header-icon header-icon-1 back-button mt-1" id="topGoBack"><i class="fa fa-arrow-left font-18"></i></a>
-<a href="#" data-menu="menu-main" class="header-icon header-icon-2 font-20 mt-1"><i class="fas fa-bars"></i></a> 
+<a href="#" data-menu="menu-main" class="header-icon header-icon-2 font-20 mt-2"><i class="fas fa-bars"></i></a> 
 </div>
 
 
@@ -75,16 +75,17 @@
     
                 
                 <div class="content">
-                <p class="mb-n1 color-highlight font-600 mb-n1">프라이빗 레슨룸 & TINO5</p>
-                    <h1 class="font-26">
+                <p class="mb-n1 color-highlight font-600 mb-n1"></p>
+                    <h1 class="font-24">
                     <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">3F</span>
-                    Lesson & TINO5                    
+                    PRIVATE ROOM & TINO 5              
                     </h1>
                     
                   
                     <p class="mb-2">
-                        <span class="badge bg-green-dark px-2 py-1 mt-2 text-uppercase">개인레슨</span>
+                        <span class="badge bg-green-dark px-2 py-1 mt-2 text-uppercase">1:1LESSON</span>
                         <span class="badge bg-green-dark px-2 py-1 ml-2 mt-2 text-uppercase">TINO5</span>
+                        <span class="badge bg-green-dark px-2 py-1 ml-2 mt-2 text-uppercase">CLUBFITTING</span>
                     </p>
                       <div class="divider mt-2 mb-3"></div>
                       <p>

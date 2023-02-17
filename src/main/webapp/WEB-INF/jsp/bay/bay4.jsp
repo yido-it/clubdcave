@@ -82,13 +82,14 @@
                 <p class="mb-n1 color-highlight font-600 mb-n1"></p>
                     <h1 class="font-22">
            <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">2F</span>         
-                    오픈타석, 버추얼그린, 벙커</h1>
+                    OPEN BAY & SHORT GAME AREA  </h1>
                     
                   
                     <p class="mb-2">
-                        <span class="badge bg-green-dark px-2 py-1 mt-2 text-uppercase">오픈타석</span>
-                        <span class="badge bg-green-dark px-2 py-1 ml-2 mt-2 text-uppercase">버추얼그린</span>
-                        <span class="badge bg-green-dark px-2 py-1 ml-2 mt-2 text-uppercase">벙커샷</span>
+                        <span class="badge bg-green-dark px-2 py-1 mt-2 text-uppercase">VIRTUALGREEN</span>
+                        <span class="badge bg-green-dark px-2 py-1 ml-2 mt-2 text-uppercase">PUTTVIEW</span>
+                        <span class="badge bg-green-dark px-2 py-1 ml-2 mt-2 text-uppercase">BUNKER</span>
+                        <span class="badge bg-green-dark px-2 py-1 ml-2 mt-2 text-uppercase">OPENBAY</span>
                     </p>
                       <div class="divider mt-2 mb-3"></div>
                       <p>

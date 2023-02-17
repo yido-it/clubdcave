@@ -7,7 +7,6 @@
 <jsp:include page="common/head.jsp" />
 <jsp:include page="common/script.jsp" />
 
-
 <body class="theme-dark">
     
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
@@ -54,8 +53,7 @@
     
             <div class="content">
                 <p class="mb-n1 color-highlight font-600">클럽디청담 소개</p>
-                <h1>ABOUT CLUBD CHEONGDAM 
-                                    </h1>
+                <h1>CLUBD CHEONGDAM </h1>
                 <p>
                클럽디는 밸류업플랫폼 기업인 <span class="color-highlight">주식회사 이도</span>가 운영하는 골프클럽 브랜드입니다.<br/><br/>
                2018년 런칭 이후 차별화된 서비스를 통해 지속적으로 성장하고 있으며 현재 클럽디 보은, 
