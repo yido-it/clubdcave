@@ -44,7 +44,7 @@
 	        <div class="calendar">
 	            <div class="cal-header">
 	            	<!-- 년  / 월 -->
-	                <h4 class="cal-title text-center text-uppercase font-400 bg-highlight color-white" id="calHeader"></h4>
+	                <h4 class="cal-title text-center text-uppercase font-400  color-white" style="background-color: #19321e !important;" id="calHeader"></h4>
 	                <!-- 이전달 -->
 	                <h6 class="cal-title-left color-white">
 	                	<i class="fa fa-chevron-left"></i>
@@ -55,7 +55,7 @@
 	                </h6>
 	            </div>
 	            <div class="clearfix"></div>
-	            <div class="cal-days bg-highlight opacity-80 bottom-0">
+	            <div class="cal-days  opacity-80 bottom-0" style="background-color: #295031 !important;">
 	                <a href="#">일</a>
 	                <a href="#">월</a>
 	                <a href="#">화</a>
@@ -96,9 +96,9 @@
 <jsp:include page="../common/footerBar.jsp" />
 
 <!--베이선택 팝업-->
-<div id="select_bay" class="menu menu-box-bottom rounded-0 modal_bay" data-menu-height="435" data-menu-effect="menu-parallax" style="display: block; height: 335px;">
+<div id="select_bay" class="menu menu-box-bottom rounded-0 modal_bay" data-menu-height="356" data-menu-effect="menu-parallax" style="display: block; height: 335px;">
     <div class="menu-title">
-        <h1 class="my-0 py-0">베이선택</h1>
+        <h1 class="my-0 py-0">Bay Selection</h1>
         <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
     </div>
     <div class="mr-3 ml-3 mt-3">
@@ -323,7 +323,7 @@ function doSearch(){
 				$('.timeTable').css('display', 'inline');
 				
 			} else {
-				divCnt += "<span style='color:red'>예약 가능한 시간이 없습니다.</span>";
+				divCnt += "<span style='color:#ff8282'>예약 가능한 시간이 없습니다.</span>";
 				document.querySelector(".selectedDate").innerHTML = divTop + divCnt + divBottom;
 				$('.timeTable').css('display', 'inline');
 			}

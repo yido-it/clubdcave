@@ -7116,6 +7116,7 @@ background-color: #1b1d21;}
 /*공통*/
 .txt_logo{width:13px;margin-bottom:5px}
 .badge{font-weight:400}
+a.header-title.header-subtitle{ margin-top: 0.125rem !important;}
 /*예약*/
 /*bay선택*/
 .modal_bay .list-custom-small a img{width:80px;height:auto}
