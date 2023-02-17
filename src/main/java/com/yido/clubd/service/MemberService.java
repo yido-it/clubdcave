@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.jcodec.api.JCodecException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,7 +65,7 @@ public class MemberService {
 	 * 로그인
 	 * 
 	 * @param params
-	 * @return
+	 * @return MemberVO
 	 */
     public MemberVO selectLoginUser(Map<String, Object> params) throws Exception {
     	return memberMapper.selectLoginUser(params);
@@ -427,7 +428,7 @@ public class MemberService {
 	 * @param mreq
 	 * @return 
 	 */
-	public void uploadProfileImg(Map<String, Object> params, MultipartHttpServletRequest mreq) throws IllegalStateException, IOException {
+	public void uploadProfileImg(Map<String, Object> params, MultipartHttpServletRequest mreq) throws Exception {
 		Iterator<String> iter = mreq.getFileNames();	
 		while(iter.hasNext()) {
 			
@@ -451,7 +452,7 @@ public class MemberService {
 		    String folderNm = (String)params.get("msImgData");		// ex) test/profile/00000001
 			String newFileNm = System.currentTimeMillis() + "." + extNm;			
 						
-			AWSFileUtil.uploadFile(folderNm, folderNm + newFileNm, extNm, filePath);	// 생성할 폴더명, 새 파일 이름, 복사될 파일 경로
+			AWSFileUtil.uploadFile(folderNm, newFileNm, extNm, filePath);	// 생성할 폴더명, 새 파일 이름, 복사될 파일 경로
 									
 			// 업로드 후 임시파일 삭제
 			if(tmpFile.exists()) tmpFile.delete();

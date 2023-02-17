@@ -72,6 +72,10 @@ dependencies {
     implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
 	implementation 'com.amazonaws:aws-java-sdk-s3'
 	
+	/* JCodec - 동영상 썸네일 생성 라이브러리 */
+	compile 'org.jcodec:jcodec:0.2.3'
+	compile 'org.jcodec:jcodec-javase:0.2.3'
+	
 	bootRun {
 	    args = ["--spring.profiles.active=develop"]
 	}

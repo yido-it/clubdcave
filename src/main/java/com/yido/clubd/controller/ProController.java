@@ -283,7 +283,12 @@ public class ProController {
 	 * @return
 	 */
 	@RequestMapping("/proGallery")
-	public String goProGallery(Model model, HttpSession session) {
+	public String goProGallery(Model model, HttpSession session, @RequestParam Map<String, Object> params) {
+		SessionVO member = (SessionVO) session.getAttribute("msMember");
+		params.put("msNum", member.getMsNum());
+		
+		List<ProVO> galleryList = proService.selectProImageList(params);
+		model.addAttribute("galleryList", galleryList);
 		return "/pro/proGallery";
 	}
 	

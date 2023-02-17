@@ -328,7 +328,7 @@
 		   			alertModal.fail(message);
 	                this.removeFile(file); 
 	    		});
-				// 파일 dropzone area에 올라간 후
+				// 파일 dropzone area에 올라간 후 (총 업로드 개수 제한)
 		   		this.on("addedfile", function (file) {
 		   			if($(".img-area").length >= 1) {
 		   				this.removeAllFiles();
@@ -347,7 +347,7 @@
 		   		});	
 				// 파일 업로드 성공 후
 				this.on("success", function(file, res){
-                    this.removeFile(file);
+					this.removeAllFiles();
 	            	goAfterModal();  	                   
                 });
 			}

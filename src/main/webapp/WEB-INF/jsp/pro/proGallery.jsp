@@ -4,7 +4,7 @@
 <%@ page import="com.yido.clubd.common.utils.Globals" %>
 <jsp:include page="../common/head.jsp" />
 <jsp:include page="../common/script.jsp" />
-
+    
 <body class="theme-dark">
 
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div> 
@@ -21,8 +21,7 @@
 	<div class="page-content header-clear">
 		<div class="divider divider-margins"></div>
 		<div class="menu-title">
-			<h1 class="my-0 py-0">갤러리수정</h1>
-			   <a href="" class="mr-3 btn btn-md color-green-dark border-green-dark rounded-s font-16" style="width:auto;height:auto;top:0px" id="">저장</a>
+			<h1 class="my-0 py-0">갤러리수정</h1>			   
 		</div>
         <div class="divider divider-margins"></div>
 
@@ -48,7 +47,7 @@
 										<span class="color-white data-dz-size">0.1MB</span>
 									</div>
 								</div>
-								<a class="dz-remove color-red-dark font-14 btn-img-delete"  data-filepath="${proProfile.msImgData}" data-filename="${proProfile.msImgName}" data-dz-remove=""><i class="fa-regular fa-rectangle-xmark"></i> 삭제</a>
+								<a class="dz-remove color-red-dark font-14 btn-img-delete" data-filepath="${proProfile.msImgData}" data-filename="${proProfile.msImgName}" data-dz-remove=""><i class="fa-regular fa-rectangle-xmark"></i> 삭제</a>
 							</div>
 						</div>
 					</div>
@@ -111,15 +110,14 @@
 
 	Dropzone.autoDiscover = false;
 	var imgDropzone = new Dropzone('div.img-dropzone', {
-		  autoProcessQueue : false
+		  autoProcessQueue : true
 		, url : '/pro/uploadGalleryImg'
 		, method : 'post'
 		, maxFiles : 10
-		, parallelUploads : 5
 		, maxFilesize : 3
 		, resizeQueality : 1
 		, resizeWidth : 960
-		, dictFileTooBig : '{{filesize}}MB 이하로 업로드 해주세요.'
+		, dictFileTooBig : '{{maxFilesize}}MB 이하로 업로드 해주세요.'
 		, paramName : 'file'
 		, addRemoveLinks : true
 		, acceptedFiles : "image/*"
@@ -127,7 +125,7 @@
 		, init : function() {
 			// 파일 개수 초과
 			this.on("maxfilesexceeded", function (file) {
-				alertModal.fail('한번에 10개까지 업로드 가능합니다.');
+				alertModal.fail('10개까지 업로드 가능합니다.');
 				this.removeFile(file);
 			});
 			// 에러 발생 (ex 파일 용량 초과)
@@ -137,8 +135,8 @@
     		});
 			// 파일 dropzone area에 올라간 후 (총 업로드 개수 제한)
 	   		this.on("addedfile", function (file) {
-	   			if($(".img-area").length >= 30) {
-	   				alertModal.fail(message);
+	   			if($(".img-area").length >= 10) {
+	   				alertModal.fail('10개까지 업로드 가능합니다.');
 	   				this.removeFile(file); 
 	   			}
 	   		})
@@ -148,30 +146,28 @@
 	   		});
 			// 사진 업로드 완료 후
 			this.on("success", function(file, res){
-                this.removeFile(file);
+                this.removeAllFiles();
 				alertModal.success('업로드 완료');
             	goAfterModal();
                    
-               });
+            });
 	   		/* this.on("successmultiple", function(file){
-	   			this.removeFile(file);
+	   			this.removeAllFiles()
 				alertModal.success('업로드 완료');
             	goAfterModal();
-	   		}); */
-	   		
+	   		}); */	   		
 		}
 	});
 	
 	var videoDropzone = new Dropzone('div.video-dropzone', {
-		  autoProcessQueue : false
+		  autoProcessQueue : true
 		, url : '/pro/uploadGalleryVideo'
 		, method : 'post'
 		, maxFiles : 10
-		, parallelUploads : 5
 		, maxFilesize : 5
 		, resizeQueality : 1
 		, resizeWidth : 960
-		, dictFileTooBig : '{{filesize}}MB 이하로 업로드 해주세요.'
+		, dictFileTooBig : '{{maxFilesize}}MB 이하로 업로드 해주세요.'
 		, paramName : 'file'
 		, addRemoveLinks : true
 		, acceptedFiles : "video/*"
@@ -179,7 +175,7 @@
 		, init : function() {
 			// 파일 개수 초과
 			this.on("maxfilesexceeded", function (file) {
-				alertModal.fail('한번에 10개까지 업로드 가능합니다.');
+				alertModal.fail('10개까지 업로드 가능합니다.');
 				this.removeFile(file);
 			});
 			// 에러 발생 (ex 파일 용량 초과)
@@ -187,12 +183,12 @@
 	   			alertModal.fail(message);
                 this.removeFile(file); 
     		});
-	   		// 파일 dropzone area에 올라간 후 (총 업로드 개수 제한)
+	   		// 파일 dropzone area에 올라간 후 (총 업로드 개수 제한, 영상 썸네일)
 	   		this.on("addedfile", function (file) {
-	   			if($(".img-area").length >= 30) {
-	   				alertModal.fail(message);
+	   			if($(".img-area").length >= 10) {
+	   				alertModal.fail('10개까지 업로드 가능합니다.');
 	   				this.removeFile(file); 
-	   			}
+	   			}	   			
 	   		})
 	   		// 파일 업로드 중
 			this.on('sending', function(file, xhr, formData){
@@ -200,16 +196,10 @@
 	   		});	
 			// 사진 업로드 완료 후
 			this.on("success", function(file, res){
-                this.removeFile(file);
+				this.removeAllFiles();
 				alertModal.success('업로드 완료');
-	          	goAfterModal();
-                 
+	          	goAfterModal();                 
              });
-	   		/* this.on("successmultiple", function(file){
-	   			this.removeFile(file);
-				alertModal.success('업로드 완료');
-            	goAfterModal();
-	   		}); */
 		}
 	});
 	

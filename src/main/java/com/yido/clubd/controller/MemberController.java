@@ -63,7 +63,7 @@ public class MemberController {
 	 * 
 	 * @param req
 	 * @param model
-	 * @return
+	 * @return String
 	 */
 	@RequestMapping("/agree")  
 	public String goAgree(HttpServletRequest req, Model model) {
@@ -76,7 +76,7 @@ public class MemberController {
 	 * 
 	 * @param req
 	 * @param model
-	 * @return
+	 * @return String
 	 */
 	@RequestMapping("/memberForm")  
 	public String goMemberForm(HttpServletRequest req, Model model) {
@@ -89,7 +89,7 @@ public class MemberController {
 	 * 회원가입 > 회원 추가정보 팝업
 	 * 
 	 * @param model
-	 * @return
+	 * @return String
 	 */
 	@RequestMapping("/memberAddPop")  
 	public String goMemberAddPop(Model model) throws Exception {
@@ -121,7 +121,7 @@ public class MemberController {
 	 * 회원가입 > 아이디 중복확인
 	 * 
 	 * @param msId
-	 * @return map
+	 * @return Map
 	 */
 	@RequestMapping("/checkIdExist")
 	@ResponseBody
@@ -143,7 +143,7 @@ public class MemberController {
 	 * 회원가입 > 인증번호 전송
 	 * 
 	 * @param params
-	 * @return map
+	 * @return Map
 	 */
 	@RequestMapping(value = "/verifybyCode")
 	@ResponseBody
@@ -177,7 +177,7 @@ public class MemberController {
 	 * @param res
 	 * @param session
 	 * @param memberVO
-	 * @return map
+	 * @return Map
 	 */
 	@RequestMapping("/doSignUp")
 	@ResponseBody
@@ -223,7 +223,7 @@ public class MemberController {
      * @param res
      * @param session
      * @param params
-     * @return
+     * @return Map
 	 * @throws JsonProcessingException 
      */
     @RequestMapping(value = "/doLogin")
@@ -265,7 +265,7 @@ public class MemberController {
      * @param res
      * @param session
      * @param params ( 로그인타입 : msLoginCd, 이름 : msName )
-     * @return map
+     * @return Map
      */
     @RequestMapping(value = "/doLoginForSocial")
     @ResponseBody
@@ -307,7 +307,7 @@ public class MemberController {
 	 * 
 	 * @param req
 	 * @param res
-	 * @return
+	 * @return String
 	 */
     @RequestMapping(value = "/succNaverLogin")
     public String goNaverCallbackPage(HttpServletRequest req, HttpServletResponse res) {
@@ -321,7 +321,7 @@ public class MemberController {
      * @param code
      * @param req
      * @param model
-     * @return
+     * @return String
      */
     @RequestMapping(value = "/succKakaoLogin")
     public String oauthKakao(@RequestParam(value = "code", required = false) String code, HttpServletRequest req, Model model) throws Exception {
@@ -341,7 +341,7 @@ public class MemberController {
 	 * 
 	 * @param session
 	 * @param params
-	 * @return map
+	 * @return Map
 	 */
 	
 	@RequestMapping("/saveMemberAdd")
@@ -374,7 +374,7 @@ public class MemberController {
 	 * 
 	 * @param model
 	 * @param session
-	 * @return
+	 * @return String
 	 */
 	@RequestMapping("/memberModify")  
 	public String goMemberModify(Model model, HttpSession session) throws Exception {
@@ -415,7 +415,7 @@ public class MemberController {
 	 * 
 	 * @param session
 	 * @param params
-	 * @return map
+	 * @return Map
 	 */
 	@RequestMapping("/saveMemberModify")
 	@ResponseBody
@@ -453,7 +453,7 @@ public class MemberController {
 	 * 
 	 * @param model
 	 * @param req
-	 * @return
+	 * @return String
 	 */
 	@RequestMapping("/memberFind")  
 	public String goMemberFind(Model model, HttpServletRequest req) {
@@ -464,7 +464,7 @@ public class MemberController {
 	 * 아이디 찾기
 	 * 
 	 * @param params
-	 * @return map
+	 * @return Map
 	 */	
 	@RequestMapping(value = "/doFindId")
 	@ResponseBody
@@ -504,7 +504,7 @@ public class MemberController {
 	 * 
 	 * @param req
 	 * @param params
-	 * @return map
+	 * @return Map
 	 */
 	@RequestMapping(value = "/doFindPw")
 	@ResponseBody
@@ -558,7 +558,7 @@ public class MemberController {
 	 * 
 	 * @param req
 	 * @param params
-	 * @return
+	 * @return List
 	 */
 	@RequestMapping(value = "/searchMemberList")
 	@ResponseBody

@@ -29,15 +29,21 @@ public class MainInitialize {
 			//log.info("File Upload Path : " + filePath);		
 			log.info("======================= Initialize Finish =======================");
 			
-			log.info("======================= SNS Info Start =======================");
-			Globals.KakaoKey  = Utils.getProperties("Globals.Kakao.Key", "");
-			Globals.KakaoClientId = Utils.getProperties("Globals.Kakao.Client.Id", "");
-			Globals.KakaoRedirectUrl = Utils.getProperties("Globals.Kakao.Redirect.Url", "");
+			log.info("======================= [{}] SNS Info Start =======================", serverType);
+			Globals.KakaoKey  = Utils.getPropertiesByType("Globals.Kakao.Key", "", serverType);
+			log.info("KakaoKey : " + Globals.KakaoKey);
+			Globals.KakaoClientId = Utils.getPropertiesByType("Globals.Kakao.Client.Id", "", serverType);
+			log.info("KakaoClientId : " + Globals.KakaoClientId);
+			Globals.KakaoRedirectUrl = Utils.getPropertiesByType("Globals.Kakao.Redirect.Url", "", serverType);
+			log.info("KakaoRedirectUrl : " + Globals.KakaoRedirectUrl);
 			
-			Globals.NaverKey  = Utils.getProperties("Globals.Naver.Key", "");
-			Globals.NaverCallbackUrl  = Utils.getProperties("Globals.Naver.Callback.Url", "");
-			Globals.NaverDomain  = Utils.getProperties("Globals.Naver.Domain", "");
-			log.info("======================= SNS Info Finish =======================");
+			Globals.NaverKey  = Utils.getPropertiesByType("Globals.Naver.Key", "", serverType);
+			log.info("NaverKey : " + Globals.NaverKey);
+			Globals.NaverCallbackUrl  = Utils.getPropertiesByType("Globals.Naver.Callback.Url", "", serverType);
+			log.info("NaverCallbackUrl : " + Globals.NaverCallbackUrl);
+			Globals.NaverDomain  = Utils.getPropertiesByType("Globals.Naver.Domain", "", serverType);
+			log.info("NaverDomain : " + Globals.NaverDomain);
+			log.info("======================= [{}] SNS Info Finish =======================", serverType);
 
 			log.info("======================= [{}] Pay Info Start =======================", serverType);
 			Globals.serviceId = Utils.getPropertiesByType("Globals.Pay.Service.Id", "", serverType);
@@ -68,13 +74,15 @@ public class MainInitialize {
 			log.info("Pay Partner Cal Url : " + Globals.partnerCalUrl);
 			log.info("======================= [{}] Pay Info Finish =======================", serverType);
 			
-log.info("======================= AWS S3 Info Start =======================");
-			
+			log.info("======================= AWS S3 Info Start =======================");			
 			Globals.accessKey = Utils.getProperties("Globals.awsS3.accessKey", "");
+			log.info("AWS S3 accessKey : " + Globals.accessKey);
 			Globals.secretKey = Utils.getProperties("Globals.awsS3.secretKey", "");
+			log.info("AWS S3 secretKey : " + Globals.secretKey);
 			Globals.endPoint = Utils.getProperties("Globals.awsS3.endPoint", "");
-			Globals.bucketName = Utils.getProperties("Globals.awsS3.bucketName", "");
-			
+			log.info("AWS S3 endPoint : " + Globals.endPoint);
+			Globals.bucketName = Utils.getProperties("Globals.awsS3.bucketName", "");			
+			log.info("AWS S3 bucketName : " + Globals.bucketName);
 			log.info("======================= AWS S3 Info Finish =======================");
 			
 		} catch (Exception e) {

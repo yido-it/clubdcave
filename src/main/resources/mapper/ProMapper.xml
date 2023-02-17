@@ -45,9 +45,11 @@
 	<select id="selectProImageList" resultType="ProVO">
 		SELECT
 			  MS_NUM
-			, MS_IMG_NAME
-			, MS_IMG_DATA
-	    FROM DR_MS_PICTURE		
+			, IMG_DIV
+			, IMG_SEQ
+			, IMG_FILENAME
+			, IMG_DATA
+	    FROM PRO_IMAGE	
 	    WHERE 1 = 1
 			AND MS_NUM = #{msNum}	    
 	</select>

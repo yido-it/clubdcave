@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jcodec.api.JCodecException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 레슨프로특이사항
  * 
- * @author bae
+ * @author YOO
  *
  */
 @Slf4j
@@ -123,7 +124,7 @@ public class ProService {
 		return proMapper.selectProImageList(map);
 	}
 	
-	public void uploadGalleryImg(Map<String, Object> params, MultipartHttpServletRequest mreq) throws IllegalStateException, IOException {
+	public void uploadGalleryImg(Map<String, Object> params, MultipartHttpServletRequest mreq) throws Exception {
 		Iterator<String> iter = mreq.getFileNames();	
 		while(iter.hasNext()) {
 			
@@ -147,7 +148,7 @@ public class ProService {
 		    String folderNm = (String)params.get("imgData");		// ex) test/picture/00000001
 			String newFileNm = System.currentTimeMillis() + "." + extNm;			
 						
-			AWSFileUtil.uploadFile(folderNm, folderNm + newFileNm, extNm, filePath);	// 생성할 폴더명, 새 파일 이름, 복사될 파일 경로
+			AWSFileUtil.uploadFile(folderNm, newFileNm, extNm, filePath);	// 생성할 폴더명, 새 파일 이름, 복사될 파일 경로
 									
 			// 업로드 후 임시파일 삭제
 			if(tmpFile.exists()) tmpFile.delete();
@@ -159,7 +160,7 @@ public class ProService {
 		
 	}
 
-	public void uploadGalleryVideo(Map<String, Object> params, MultipartHttpServletRequest mreq) throws IllegalStateException, IOException {
+	public void uploadGalleryVideo(Map<String, Object> params, MultipartHttpServletRequest mreq) throws Exception {
 		Iterator<String> iter = mreq.getFileNames();	
 		while(iter.hasNext()) {
 			
@@ -183,14 +184,14 @@ public class ProService {
 		    String folderNm = (String)params.get("imgData");		// ex) test/video/00000001
 			String newFileNm = System.currentTimeMillis() + "." + extNm;			
 						
-			AWSFileUtil.uploadFile(folderNm, folderNm + newFileNm, extNm, filePath);	// 생성할 폴더명, 새 파일 이름, 복사될 파일 경로
+			AWSFileUtil.uploadFile(folderNm, newFileNm, extNm, filePath);	// 생성할 폴더명, 새 파일 이름, 복사될 파일 경로
 									
 			// 업로드 후 임시파일 삭제
 			if(tmpFile.exists()) tmpFile.delete();
 			
 			params.put("imgDiv", 2);
 			params.put("imgFileName", newFileNm);
-			proMapper.insertProImage(params);			
+			//proMapper.insertProImage(params); XXXXXXXXXXXXXXX
 		}
 		
 	}
