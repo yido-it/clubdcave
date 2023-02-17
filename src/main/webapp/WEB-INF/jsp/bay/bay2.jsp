@@ -40,7 +40,7 @@
         <div class="card card-fixed" data-card-height="300">
           
                         <div class="single-slider  slider-has-arrows  owl-carousel owl-dots-over">
-                            <div class="card m-0 " data-card-height="300"   style="background: url(/images/gallery/rest_main2.jpg) no-repeat 0 0;background-size:cover">
+                            <div class="card m-0 " data-card-height="300"   style="background: url(/images/gallery/rest_main1.jpg) no-repeat 0 0;background-size:cover">
                               
                                 <div class="card-overlay bg-gradient"></div>
                             </div>
@@ -50,7 +50,7 @@
                                 <div class="card-overlay bg-gradient"></div>
                             </div>
                 
-                            <div class="card m-0 " data-card-height="300"  style="background: url(/images/gallery/rest_main1.jpg) no-repeat 0 0;background-size:cover">
+                            <div class="card m-0 " data-card-height="300"  style="background: url(/images/gallery/rest_main2.jpg) no-repeat 0 0;background-size:cover">
                                
                                 <div class="card-bottom">
                                  
@@ -72,10 +72,10 @@
     
                 
                 <div class="content">
-                <p class="mb-n1 color-highlight font-600 mb-n1">카브 레스토랑</p>
+                <p class="mb-n1 color-highlight font-600 mb-n1">클럽디 카브 비스트로</p>
                     <h1 class="font-26">
                     <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">B1</span>
-                    CAVE Restaurant </h1>
+                    CLUBD CAVE BISTRO </h1>
                   
                     <p class="mb-2">
                         <span class="badge bg-green-dark px-2 py-1 mt-2 text-uppercase">CAVE</span>

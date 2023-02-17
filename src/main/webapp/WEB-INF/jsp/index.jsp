@@ -38,9 +38,9 @@
 		<div class="single-slider  slider-has-arrows    owl-carousel">
 			<div class="card m-0 bg-main_slide01" data-card-height="300" onClick="goBayDetail(1);">
 				<div class="card-bottom">
-					<h1 class="color-white px-3 mb-0">CLUBD CAVE<span class="badge bg-blue-dark px-2 py-1 ml-2 mt-2 text-uppercase">B1</span></h1>
-					<p class="px-3 color-white font-15 opacity-80 mb-4">
-					풀스윙에서 제공하는 골프게임을 즐겨보세요
+					<h1 class="color-white px-3 mb-0">CLUBD CAVE GOLF<span class="badge bg-blue-dark px-2 py-1 ml-2 mt-2 text-uppercase">B1</span></h1>
+					<p class="px-3 color-white font-13 opacity-80 mb-4">
+					 클럽디청담 FULLSWING TOPGOLF SWING SUITE  
 					</p> 
 				</div>
 				<div class="card-overlay bg-gradient"></div>
@@ -49,9 +49,10 @@
 			<div class="card m-0 bg-main_slide02" data-card-height="300" onClick="goBayDetail(2);">
 				<div class="card-bottom">
 					<!-- <span class="badge bg-highlight px-2 py-1 ml-2 mt-2 text-uppercase">게임</span>  -->
-					<h1 class="color-white  px-3 mb-0">CAVE Restaurant <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">B1</span></h1>
-					<p class="px-3 color-white font-15 opacity-80 mb-4">
-					풀스윙에서 제공하는 골프게임을 즐겨보세요
+					<h1 class="color-white  px-3 mb-0">CLUBD CAVE BISTRO <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">B1</span></h1>
+					<p class="px-3 color-white font-13 opacity-80 mb-4">
+					클럽디카브 BISTRO FOOD AND WINE 
+
 					</p>
 				</div>
 				<div class="card-overlay bg-gradient"></div>
@@ -59,27 +60,27 @@
 		
 			<div class="card m-0 bg-main_slide03" data-card-height="300" onClick="goBayDetail(3);"> 
 				<div class="card-bottom">
-					<h1 class="color-white px-3 mb-0">Pop-up Store <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">1F</span></h1>
-					<p class="px-3 color-white font-15 opacity-80 mb-4">
-					풀스윙에서 제공하는 골프게임을 즐겨보세요
+					<h1 class="color-white px-3 mb-0">Reception <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">1F</span></h1>
+					<p class="px-3 color-white font-13 opacity-80 mb-4">
+					클럽디청담, FULLSWING, TINO5
 					</p>
 				</div>
 				<div class="card-overlay bg-gradient"></div>
 			</div>
 				<div class="card m-0 bg-main_slide04" data-card-height="300" onClick="goBayDetail(4);"> 
 				<div class="card-bottom">
-					<h1 class="color-white  px-3 mb-0">오픈타석 <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">2F</span></h1>
-					<p class="px-3 color-white font-15 opacity-80 mb-4">
-					풀스윙에서 제공하는 골프게임을 즐겨보세요
+					<h1 class="color-white  px-3 mb-0">OPEN BAY & SHORT GAME AREA <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">2F</span></h1>
+					<p class="px-3 color-white font-13 opacity-80 mb-4">
+					VIRTUALGREEN, PUTTVIEW, BUNKER, OPENBAY
 					</p>
 				</div>
 				<div class="card-overlay bg-gradient"></div>
 			</div>
 				<div class="card m-0 bg-main_slide05" data-card-height="300" onClick="goBayDetail(5);"> 
 				<div class="card-bottom">
-				<h1 class="color-white  px-3 mb-0">Lesson & TINO5<span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">3F</span></h1>
-					<p class="px-3 color-white font-15 opacity-80 mb-4">
-					풀스윙에서 제공하는 골프게임을 즐겨보세요
+				<h1 class="color-white  px-3 mb-0">PRIVATE ROOM & TINO 5<span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">3F</span></h1>
+					<p class="px-3 color-white font-13 opacity-80 mb-4">
+					1:1LESSON, TINO5, CLUBFITTING 
 					</p>
 				</div>
 				<div class="card-overlay bg-gradient"></div>

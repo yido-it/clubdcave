@@ -42,7 +42,7 @@
         <div class="card card-fixed" data-card-height="300">
           
                         <div class="single-slider  slider-has-arrows  owl-carousel owl-dots-over">
-                             <div class="card m-0 bg-28" data-card-height="300"  style="background: url(/images/gallery/cave_main1.jpg) no-repeat 0 0;background-size:cover">
+                             <div class="card m-0 bg-1" data-card-height="300"  >
                               
                                 <div class="card-overlay bg-gradient"></div>
                             
@@ -53,7 +53,7 @@
                             </div>
                             
                 
-                            <div class="card m-0 bg-1" data-card-height="300"  >
+                            <div class="card m-0 bg-28" data-card-height="300" style="background: url(/images/gallery/cave_main1.jpg) no-repeat 0 0;background-size:cover">
                                
                                 <div class="card-bottom">
                                  
@@ -69,29 +69,30 @@
         <div class="card card-clear" data-card-height="323"></div>
          
         <div class="page-content pb-3">  
-            <div class="card card-full rounded-m" style="margin-bottom:-10px">
+            <div class="card card-full rounded-m" style="margin-bottom:-10px;min-height:500px !important">
              
                 <div class="divider mb-0"></div>
     
                 
                 <div class="content">
-                <p class="mb-n1 color-highlight font-600 mb-n1">클럽디카브</p>
+                <p class="mb-n1 color-highlight font-600 mb-n1">클럽디 카브 골프</p>
                     <h1 class="font-26">
                     <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">B1</span>
-                    CLUBD CAVE
+                   CLUBD CAVE GOLF
                     </h1>
                                       
                   
                     <p class="mb-2">
-                        <span class="badge bg-green-dark px-2 py-1 mt-2 text-uppercase">Fullswing</span>
-                        <span class="badge bg-green-dark px-2 py-1 ml-2 mt-2 text-uppercase">해시태그</span>
+                        <span class="badge bg-green-dark px-2 py-1 mt-2 text-uppercase">클럽디청담</span>
+                        <span class="badge bg-green-dark px-2 py-1 ml-2 mt-2 text-uppercase">FULLSWING</span>
+                        <span class="badge bg-green-dark px-2 py-1 ml-2 mt-2 text-uppercase">TOPGOLF SWINGSUITE</span>
                     </p>
                       <div class="divider mt-2 mb-3"></div>
                       <p>
-                   6개 타석 모두 국내 최초로 FULL SWING Pro가 설치되어 있어 PGA TOUR 메이저 대회가 열리는 골프코스 라운드 뿐만 아니라 다양한 스포츠 게임도 즐길 수 있습니다. 
-                   <br/><br/>
-                   미니 프로암, 다양한 오픈 클래스와 스킬 챌린지, 그리고 동반 플레이어들과 골프게임 후 식사도 가능하여 도심에서 골프모임을 즐기기에 최적화된 공간으로 구성되었습니다. 
-
+					                  골프를 사랑하는 사람들의 아지트 <br/><br/>
+					타이거 우즈가 공동개발한 골프 시뮬레이터 ‘FULL SWING PRO’와 함께 세계 명문 골프장에서 VIRTUAL 라운드를 즐기며, 
+					미국 ‘TOP GOLF SWING SUITE’의 다양한 게임을 실내에서 즐길 수 있습니다. 
+					<br/><br/>클럽디 카브의 시그니처 요리와 와인을 곁들여 골프&미식 라이프를 함께 즐기세요! 
                     </p>
                     
                     <div class="divider mt-2 mb-3"></div>
@@ -99,14 +100,12 @@
                     <p class="mb-n1 color-highlight font-600 mb-n1">Time</p>
                     <h2>영업시간</h2>
                     <p>
-                        월 10:00 ~ 22:00 <br/>
-                        화 10:00 ~ 22:00 <br/>
-                        수 10:00 ~ 22:00 <br/>
-                        목 10:00 ~ 22:00 <br/>
-                        금 10:00 ~ 22:00 <br/>
+                    	연중무휴<br/>
+                        8:00 ~ 17:00(주간) <br/>
+                       17:00 ~ 24:00 (야간)
+					<br/> 
                     </p> 
-                   <div class="divider mt-2 mb-3"></div>
-
+                
                 </div>
            
 

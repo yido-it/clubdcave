@@ -5,7 +5,7 @@
 	
 	<!-- 상단 로그인 버튼 -->
 	<div class="text-center pt-4 notch-clear">
-		<a href="javascript:location.href='/main'"><h1 class="text-uppercase font-800"><span class="color-highlight font-800">클럽디</span> 청담</h1></a>
+		<a href="javascript:location.href='/main'"><h1 class="text-uppercase font-800"><span class="font-800">클럽디</span> 청담</h1></a>
 	
 		<c:if test="${empty sessionScope.msMember.msId}">
 			<!-- 비로그인 상태 -->

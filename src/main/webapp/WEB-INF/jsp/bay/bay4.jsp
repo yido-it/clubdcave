@@ -43,7 +43,7 @@
           
                         <div class="single-slider  slider-has-arrows  owl-carousel owl-dots-over">
                         
-                            <div class="card m-0 bg-1" data-card-height="300"  >
+                            <div class="card m-0" data-card-height="300"  style="background: url(/images/gallery/open_main3.jpg) no-repeat 0 0;background-size:cover">
                                
                                 <div class="card-bottom">
                                  
@@ -58,7 +58,7 @@
                             
               				  </div>
               				  
-                            <div class="card m-0 " data-card-height="300"  style="background: url(/images/gallery/4.jpg) no-repeat 0 0;background-size:cover">
+                            <div class="card m-0 " data-card-height="300"  style="background: url(/images/gallery/open_main1.jpg) no-repeat 0 0;background-size:cover">
                               
                                 <div class="card-overlay bg-gradient"></div>
                             </div>
