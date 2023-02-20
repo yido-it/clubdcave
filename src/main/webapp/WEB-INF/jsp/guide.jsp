@@ -22,27 +22,22 @@
 <jsp:include page="common/menu.jsp" />
 <!-- //좌측GNB-->
 
+
   
     <div class="page-content header-clear">
-        <div class="card card-fixed" data-card-height="400">
-          
-                        <div class="">
-                      
-                            <div class="card m-0 " data-card-height="400"   style="background: url(../images/gallery/intro.jpg) no-repeat 0 0;background-size:cover;">
+      
+    <!--     <div class="card m-0 " data-card-height="450" style="background: url(../images/gallery/intro.jpg) no-repeat 0 0;background-size:cover;">
                                
                                 <div class="card-bottom">
                                  
                                 </div>
-                               <!--  <div class="card-overlay bg-gradient"></div> -->
-                            </div>              
-                         
-            </div>    
-        </div>
-        
-          <div class="card card-clear" data-card-height="423"></div>
-         
+                              </div>              --> 
+	
+	<img src="../images/gallery/intro.jpg" style="width:100%"/>
+	                            
+                            
         <div class="page-content pb-3">  
-            <div class="card card-full rounded-m" style="margin-bottom:-10px">
+            <div class="mb-1" style="">
              
                 <div class="divider mb-0"></div>
     
