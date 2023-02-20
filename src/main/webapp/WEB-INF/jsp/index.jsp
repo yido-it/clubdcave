@@ -46,10 +46,9 @@
 				<div class="card-overlay bg-gradient"></div>
 			</div>
 			
-			<div class="card m-0 bg-main_slide02" data-card-height="300" onClick="goBayDetail(2);">
+			<div class="card m-0 bg-main_slide02" data-card-height="300" onClick="goBayDetail(2);"  style="background: url(/images/gallery/rest_main.jpg) no-repeat 0 0;background-size:cover">
 				<div class="card-bottom">
-					<!-- <span class="badge bg-highlight px-2 py-1 ml-2 mt-2 text-uppercase">게임</span>  -->
-					<h1 class="color-white  px-3 mb-0">CLUBD CAVE BISTRO <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">B1</span></h1>
+				 	<h1 class="color-white  px-3 mb-0">CLUBD CAVE BISTRO <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">B1</span></h1>
 					<p class="px-3 color-white font-13 opacity-80 mb-4">
 					클럽디카브 BISTRO FOOD AND WINE 
 
@@ -67,7 +66,7 @@
 				</div>
 				<div class="card-overlay bg-gradient"></div>
 			</div>
-				<div class="card m-0 bg-main_slide04" data-card-height="300" onClick="goBayDetail(4);"> 
+				<div class="card m-0 " data-card-height="300" onClick="goBayDetail(4);" style="background: url(/images/gallery/open_main2.jpg) no-repeat 0 0;background-size:cover"> 
 				<div class="card-bottom">
 					<h1 class="color-white  px-3 mb-0">OPEN BAY & SHORT GAME AREA <span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">2F</span></h1>
 					<p class="px-3 color-white font-13 opacity-80 mb-4">
@@ -76,7 +75,7 @@
 				</div>
 				<div class="card-overlay bg-gradient"></div>
 			</div>
-				<div class="card m-0 bg-main_slide05" data-card-height="300" onClick="goBayDetail(5);"> 
+				<div class="card m-0 bg-main_slide05" data-card-height="300" onClick="goBayDetail(5);"  style="background: url(/images/gallery/lesson_main.jpg) no-repeat 0 0;background-size:cover"> 
 				<div class="card-bottom">
 				<h1 class="color-white  px-3 mb-0">PRIVATE ROOM & TINO 5<span class="badge bg-blue-dark px-2 py-1 ml-1 mt-2 text-uppercase">3F</span></h1>
 					<p class="px-3 color-white font-13 opacity-80 mb-4">
@@ -98,9 +97,9 @@
 		<jsp:include page="common/pro.jsp" />
 			
 		<!--베이소개-->
-		<%-- <div class="divider divider-margins"></div>
+	 <div class="divider divider-margins"></div>
 		
-		<jsp:include page="common/bay.jsp" /> --%>
+		<jsp:include page="common/bay.jsp" />  
 	
 	<!--//end컨텐츠-->
 	</div>	

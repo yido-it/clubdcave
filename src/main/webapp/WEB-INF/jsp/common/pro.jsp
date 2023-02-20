@@ -40,9 +40,9 @@
 		
 		<div class="double-slider owl-carousel owl-no-dots mb-4" style="">
 			<div class="item" style="">
-				<div class="card card-style mx-0 bg-pro1" data-card-height="280">
+				<div class="card card-style mx-0 bg-pro1" data-card-height="280" style="background: url(images/gallery/kimhyeri.jpg) no-repeat 0 0; background-size: cover;">
 					<div class="card-bottom">
-						<h2 class="text-center color-white pb-4 font-700">김태희</h2>
+						<h2 class="text-center color-white pb-4 font-700">김혜리 프로</h2>
 					</div>
 					<div class="card-overlay bg-gradient"></div>
 				</div>
@@ -50,9 +50,9 @@
 			</div>
 			
 			<div class="item">
-				<div class="card card-style mx-0 bg-pro3" data-card-height="280">
+				<div class="card card-style mx-0 bg-pro3" data-card-height="280" style="background: url(images/gallery/imseungun.jpg) no-repeat 0 0; background-size: cover;">
 					<div class="card-bottom">
-						<h2 class="text-center color-white pb-4 font-700">김이도</h2>
+						<h2 class="text-center color-white pb-4 font-700">임승언 프로</h2>
 					</div>
 					<div class="card-overlay bg-gradient"></div>
 				</div>

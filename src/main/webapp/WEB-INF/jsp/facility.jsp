@@ -43,7 +43,7 @@
             <div class="card-overlay bg-black opacity-50"></div>
         </a>
 
-        <a href="bay2" class="card card-style" data-card-height="180"  style="background: url(/images/gallery/rest_main2.jpg) no-repeat 0 0;background-size:cover">
+        <a href="bay2" class="card card-style" data-card-height="180"  style="background: url(/images/gallery/rest_main.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
                 <h1 class="color-white font-700">
                 <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">B1</span>
@@ -63,9 +63,9 @@
             <div class="card-center pl-3 pr-5">
                 <h1 class="color-white font-700">
                 <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">1F</span>
-               Reception</h1>
+               RECEIPTION</h1>
                 <p class="color-white opacity-80 mb-0 mt-n2">
-       클럽디청담, FULLSWING, TINO5
+      			 클럽디청담, FULLSWING, TINO5
                 </p>
             </div>
             <div class="card-center">
@@ -75,11 +75,11 @@
             <div class="card-overlay bg-black opacity-50"></div>
         </a>
        
-        <a href="bay4" class="card card-style" data-card-height="180"  style="background: url(/images/gallery/1.jpg) no-repeat 0 0;background-size:cover">
+        <a href="bay4" class="card card-style" data-card-height="180"  style="background: url(/images/gallery/open_main2.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
-                <h1 class="color-white font-700 font-22">
+                <h2 class="color-white font-700 font-22">
          <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">2F</span>       
-             OPEN BAY & SHORT GAME AREA</h1>
+             OPEN BAY & SHORT GAME AREA</h2>
                 <p class="color-white opacity-80 mb-0 mt-n2">
                	VIRTUALGREEN, PUTTVIEW, BUNKER, OPENBAY
                 </p>
@@ -89,13 +89,13 @@
             </div>
             <div class="card-overlay bg-black opacity-50"></div>
         </a>
-        <a href="bay5" class="card card-style" data-card-height="180"  style="background: url(/images/gallery/lesson_main1.jpg) no-repeat 0 0;background-size:cover">
+        <a href="bay5" class="card card-style" data-card-height="180"  style="background: url(/images/gallery/lesson_main.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
-                <h1 class="color-white font-700">
+                <h2 class="color-white font-700">
                 <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">3F</span> 
-                PRIVATE ROOM & TINO 5 </h1>
+                PRIVATE ROOM & TINO 5 </h2>
                 <p class="color-white opacity-80 mb-0 mt-n2">
-           	1:1LESSON, TINO5, CLUBFITTING 
+           	1:1 LESSON, TINO5, CLUB FITTING 
                 </p>
             </div>
            <div class="card-center">
