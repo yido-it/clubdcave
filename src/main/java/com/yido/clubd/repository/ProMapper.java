@@ -48,4 +48,6 @@ public interface ProMapper {
 
 	public void deleteAllProLicense(Map<String, Object> params);
 
+	public void deleteProImage(Map<String, Object> params);
+
 }

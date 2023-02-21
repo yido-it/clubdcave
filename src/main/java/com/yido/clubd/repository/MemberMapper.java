@@ -88,7 +88,10 @@ public interface MemberMapper {
 	public MemberVO selectDrMsPicture(Map<String, Object> map);
 
 	// 회원/프로 프로필 이미지 삭제
-	public void deletetDrMsPicture(Map<String, Object> params);
+	public void deleteDrMsPicture(Map<String, Object> params);
+
+	// 회원 탈퇴
+	public void updateMemberQuit(Map<String, Object> params);
 
 
 }

@@ -21,8 +21,8 @@
         <div class="divider divider-margins"></div>
         <div class="menu-title">
             <h1 class="my-0 py-0">정보수정</h1>
-            <a href="" class="font-12 mr-2 btn btn-sm color-red-dark border-red-dark rounded-s" style="width:auto;height:auto" id="btnDelete">
-                회원탈퇴</a>
+            <button type="button" class="font-12 mr-2 btn btn-sm color-red-dark border-red-dark rounded-s" style="width:auto;height:auto" id="btnDelete">
+                회원탈퇴</button>
         </div>
              
         <div class="content">
@@ -247,7 +247,6 @@
     <!-- Page content ends here--> 
 </div>
 <div class="menu-hider"><div></div></div>
-<jsp:include page="../common/alertModal.jsp" /> 	
 	<script>
 		var checkVerify = false; // 인증 완료 여부
 		var pwdReg = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
@@ -261,6 +260,8 @@
 
 		var element_wrap1 = document.getElementById('wrap1');
 		var element_wrap2 = document.getElementById('wrap2');
+		
+		var params;
 		
 		if(msLoginCd == 'APP') {	
 			$('.app').show();
@@ -535,6 +536,33 @@
 		        }
 		    });		
 		}
+		
+		$('#btnDelete').on('click', function() {
+			params =  $('#frmMember').serialize();
+			alertModal.confirm1('정말로 ClubD Cave를 탈퇴하시겠습니까?', 'deleteMember(params)', '회원탈퇴')
+		})
+		
+		function deleteMember(params) {			
+		    $.ajax({
+		          url: "/member/deleteMember"
+		        , type: "post"
+		        , dataType: 'json'
+		        , data: params
+		        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+		        , success: function(data) {		    	
+		            if(data.result){
+		            	alertModal.success('탈퇴가 완료되었습니다.');
+		            	goAfterModal("/succ-logout");
+		            } else {
+		            	alertModal.fail(data.message);                    
+		            }                
+		        }
+		        , error: function(data) {
+		        	alertModal.fail('[error] 오류가 발생했습니다.');
+		        }
+		    });		
+		}
+		
 	</script>	
 </body>
 </html>

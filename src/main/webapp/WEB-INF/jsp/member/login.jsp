@@ -11,7 +11,7 @@
 <div id="page">
     <div class="header header-fixed header-logo-app header-transparent">
         <a href="#" class="color-white header-title header-subtitle">로그인</a>
-        <a href="#" data-back-button class="color-white header-icon header-icon-1"><i class="fa fa-arrow-left"></i></a>
+        <a href="#" data-back-button class="color-white header-icon header-icon-1" id="topGoBack"><i class="fa fa-arrow-left"></i></a>
         <a href="#" data-menu="menu-main" class="color-white header-icon header-icon-2"><i class="fas fa-bars"></i></a>
     </div>
    	<jsp:include page="../common/menu.jsp" />
@@ -70,7 +70,6 @@
     </div><!-- Page-content ends-->
 </div> <!-- Page ends-->  
 <div class="menu-hider"><div></div></div>
-<jsp:include page="../common/alertModal.jsp" />  
 <script type="text/javascript">
 
 	var kakao_key = "${Globals.KakaoKey}";

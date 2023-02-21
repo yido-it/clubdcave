@@ -12,8 +12,8 @@
 <div id="page">
     
 	<div class="header header-fixed header-logo-app">
-		<a href="javascript:history.back()" class="header-title header-subtitle">프로선택</a>
-		<a href="#" data-back-button class="header-icon header-icon-1"><i class="fa fa-arrow-left"></i></a>
+		<a href="#" class="header-title header-subtitle">프로선택</a>
+		<a href="javascript:location.href='/pro/proDetail?msNum=${sessionScope.msMember.msNum}'" data-back-button class="header-icon header-icon-1"><i class="fa fa-arrow-left"></i></a>
 		<a href="#" data-menu="menu-main" class="header-icon header-icon-2"><i class="fas fa-bars"></i></a>
 	</div>
     <jsp:include page="../common/menu.jsp" />
@@ -32,7 +32,7 @@
             <div class="content mb-0">
                 <h3>사진수정</h3>
                 <p>
-                    세로로 긴 사진 업로드를 추천합니다.(사진크기 3MB이하)
+                    세로로 긴 사진 업로드를 추천합니다.
                 </p>
                 <div class="dropzone" id="">
                     <button type="button" id="profileUpload" class="btn bg-highlight color-white font-15 dz-message mb-5" style="width:100%;height:100%">
@@ -271,7 +271,6 @@
 </div>
  
 <div class="menu-hider"><div></div></div>
-<jsp:include page="../common/alertModal.jsp" />  
 <script type="text/javascript">
 	var params;
 
@@ -309,8 +308,10 @@
 			, url : '/pro/uploadProfileImg'
 			, method : 'post'
 			, maxFiles : 1
-			, maxFilesize : 3
-			, resizeQueality : 1
+			, maxFilesize : 10
+			, thumbnailHeight: 90
+			, thumbnailWidth: 135
+			, resizeQueality : 0.9
 			, resizeWidth : 960
 			, dictFileTooBig : '{{maxFilesize}}MB 이하로 업로드 해주세요.'
 			, paramName : 'file'

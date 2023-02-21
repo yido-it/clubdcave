@@ -135,26 +135,13 @@ public class ProService {
 			String orgFileNm = mFile.getOriginalFilename();
 			String extNm = orgFileNm.substring(orgFileNm.lastIndexOf(".") + 1, orgFileNm.length()).toLowerCase();
 			
-			
-			File sameFile = new File(orgFileNm);					// 똑같은 이름의 파일 객체 생성 (file_name.jpg)
-			String filePath = sameFile.getAbsolutePath();			// 실행 중인 working directory + File에 전달한 경로값 (C:\folder_name\file_name.jpg)
-			File tmpFile = new File(filePath);						// 절대경로로 다시 파일 객체 생성
-			mFile.transferTo(tmpFile);								// 임시파일 객체에 mFile을 복사하면 해당 경로에 파일이 만들어짐
-			
-			Path srcPath = Paths.get(filePath);						// String을 Path 객체로 만들어줌
-		    String mimeType = Files.probeContentType(srcPath);		// 파일 경로에 있는 Content-Type(파일 유형) 확인
-		    mimeType = (mimeType == null ? "" : mimeType);			// 확장자가 없는 경우 null을 반환
-			
 		    String folderNm = (String)params.get("imgData");		// ex) test/picture/00000001
 			String newFileNm = System.currentTimeMillis() + "." + extNm;			
 						
-			AWSFileUtil.uploadFile(folderNm, newFileNm, extNm, filePath);	// 생성할 폴더명, 새 파일 이름, 복사될 파일 경로
-									
-			// 업로드 후 임시파일 삭제
-			if(tmpFile.exists()) tmpFile.delete();
+			AWSFileUtil.uploadFile(folderNm, newFileNm, mFile);		// 생성할 폴더명, 새 파일 이름, 복사될 파일 경로
 			
 			params.put("imgDiv", 1);
-			params.put("imgFileName", newFileNm);
+			params.put("imgFilename", newFileNm);
 			proMapper.insertProImage(params);			
 		}
 		
@@ -171,29 +158,24 @@ public class ProService {
 			String orgFileNm = mFile.getOriginalFilename();
 			String extNm = orgFileNm.substring(orgFileNm.lastIndexOf(".") + 1, orgFileNm.length()).toLowerCase();
 			
-			
-			File sameFile = new File(orgFileNm);					// 똑같은 이름의 파일 객체 생성 (file_name.jpg)
-			String filePath = sameFile.getAbsolutePath();			// 실행 중인 working directory + File에 전달한 경로값 (C:\folder_name\file_name.jpg)
-			File tmpFile = new File(filePath);						// 절대경로로 다시 파일 객체 생성
-			mFile.transferTo(tmpFile);								// 임시파일 객체에 mFile을 복사하면 해당 경로에 파일이 만들어짐
-			
-			Path srcPath = Paths.get(filePath);						// String을 Path 객체로 만들어줌
-		    String mimeType = Files.probeContentType(srcPath);		// 파일 경로에 있는 Content-Type(파일 유형) 확인
-		    mimeType = (mimeType == null ? "" : mimeType);			// 확장자가 없는 경우 null을 반환
-			
 		    String folderNm = (String)params.get("imgData");		// ex) test/video/00000001
-			String newFileNm = System.currentTimeMillis() + "." + extNm;			
-						
-			AWSFileUtil.uploadFile(folderNm, newFileNm, extNm, filePath);	// 생성할 폴더명, 새 파일 이름, 복사될 파일 경로
+			String newFileNm = System.currentTimeMillis() + "." + extNm;	
 									
-			// 업로드 후 임시파일 삭제
-			if(tmpFile.exists()) tmpFile.delete();
+			AWSFileUtil.uploadFile(folderNm, newFileNm, mFile);		// 생성할 폴더명, 새 파일 이름, 복사될 파일 경로
 			
 			params.put("imgDiv", 2);
-			params.put("imgFileName", newFileNm);
-			//proMapper.insertProImage(params); XXXXXXXXXXXXXXX
+			params.put("imgFilename", newFileNm);
+			proMapper.insertProImage(params);
 		}
 		
+	}
+
+	public void deleteGalleryItem(Map<String, Object> params) {
+		String objectName = (String)params.get("imgData") + (String)params.get("imgFilename");
+		AWSFileUtil.deleteFile(objectName);
+		AWSFileUtil.deleteThumbnail(objectName);		
+		
+		proMapper.deleteProImage(params);
 	}
 
 }

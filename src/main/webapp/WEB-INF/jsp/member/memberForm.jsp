@@ -8,7 +8,7 @@
 	<div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
     <div id="page">        
         <div class="header header-fixed header-logo-app header-transparent">
-            <a href="javascript:history.back()" class="color-white header-title header-subtitle">회원가입</a>
+            <a href="#" class="color-white header-title header-subtitle">회원가입</a>
             <jsp:include page="../common/top.jsp" />
         </div>
         <jsp:include page="../common/menu.jsp" />
@@ -90,7 +90,6 @@
 	<!-- // 추가 정보 입력 팝업 -->
     
 	<div class="menu-hider"><div></div></div>
-	<jsp:include page="../common/alertModal.jsp" /> 
 	<script>
 		var checkId = false; // 아이디 중복 여부
 		var checkVerify = false; // 인증 완료 여부

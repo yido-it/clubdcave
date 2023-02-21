@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 모델명 : MemberVO 
+ * 모델명 : ProVO
  * 모델 설명 : 프로 정보
  * 
  * @author MSYOO
@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class ProVO {
 
-private String msName;
+	private String msName;
 	
 	/* PRO_NOTICE 레슨프로특이사항 */
 	private String msNum;			// 회원번호
@@ -34,9 +34,20 @@ private String msName;
 	private Integer licSeq;			// 순번
 	private String licKind;			// 라이센스 코드
 	private String licRemark;		// 비고
-	private String licName;		// 라이센스 이름
+	private String licName;			// 라이센스 이름
 	
-	private String coDiv;
+	private String coDiv;			// 선호업장
+	
+	public String getFileURL() {
+		return "/store/" + this.imgData + this.imgFilename; 
+	}	
+	public String getThumbURL() {
+		String str = "";
+		if(this.imgFilename != "" && this.imgFilename != null) {
+			str = this.imgFilename.substring(0, (this.imgFilename.lastIndexOf(".") + 1)).concat("png");
+		}
+		return "/store/" + this.imgData + "thumb/" + str; 
+	}
 	
 	
 }

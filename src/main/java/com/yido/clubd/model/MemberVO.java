@@ -105,13 +105,18 @@ public class MemberVO {
 		return "/store/" + this.msImgData + this.msImgName; 
 	}	
 	public String getThumbURL() {
-		return "/store/" + this.msImgData + "thumb/" + this.msImgName; 
+		String str = "";
+		if(this.msImgName != "" && this.msImgName != null) {
+			str = this.msImgName.substring(0, (this.msImgName.lastIndexOf(".") + 1)).concat("png");
+		}
+		return "/store/" + this.msImgData + "thumb/" + str; 
 	}
 	
 	/* 컬럼 외  */
 	private String msPhone; 			// 핸드폰번호(full)
-	public String ipAddr;
+	private String ipAddr;
 	private String coDiv;				// 선호업장
+	private String licName;				// 프로 자격증명
 	
 	public String getFullMsPhone() {
 		return this.msFirstPhone1 + this.msMidPhone1 + this.msLastPhone1;
