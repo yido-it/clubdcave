@@ -69,7 +69,7 @@
         <div class="card card-clear" data-card-height="323"></div>
          
         <div class="page-content pb-3">  
-            <div class="card card-full rounded-m" style="margin-bottom:-10px;min-height:500px !important">
+            <div class="card card-full rounded-m" style="margin-bottom:-10px;">
              
                 <div class="divider mb-0"></div>
     
@@ -112,6 +112,7 @@
        
             </div>
         </div>
+        <div class="mb-5"></div>
         
         
 </div>   

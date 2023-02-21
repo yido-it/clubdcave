@@ -44,7 +44,7 @@
 	        <div class="calendar">
 	            <div class="cal-header">
 	            	<!-- 년  / 월 -->
-	                <h4 class="cal-title text-center text-uppercase font-400  color-white" style="background-color: #19321e !important;" id="calHeader"></h4>
+	                <h4 class="cal-title text-center text-uppercase font-400  color-white" style="background-color: #767676  !important;" id="calHeader"></h4>
 	                <!-- 이전달 -->
 	                <h6 class="cal-title-left color-white">
 	                	<i class="fa fa-chevron-left"></i>
@@ -55,7 +55,7 @@
 	                </h6>
 	            </div>
 	            <div class="clearfix"></div>
-	            <div class="cal-days  opacity-80 bottom-0" style="background-color: #295031 !important;">
+	            <div class="cal-days  opacity-80 bottom-0" style="background-color: #b5b5b5  !important;">
 	                <a href="#">일</a>
 	                <a href="#">월</a>
 	                <a href="#">화</a>
