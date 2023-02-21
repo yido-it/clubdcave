@@ -42,7 +42,7 @@
 	         
 			<!-- 예약 캘린더 -->
 	        <div class="calendar">
-	            <div class="cal-header">
+	            <div class="cal-header"> 
 	            	<!-- 년  / 월 -->
 	                <h4 class="cal-title text-center text-uppercase font-400  color-white" style="background-color: #767676  !important;" id="calHeader"></h4>
 	                <!-- 이전달 -->
