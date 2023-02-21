@@ -6031,6 +6031,9 @@ code {
 .bg-main_slide05
 {background-image: url(../images/main/main_slide05.jpg)}  
 
+.bg-empty_profile{background-image: url(../images/pictures/empty_profile.jpg) ; background-size:cover} /*프로 프로필 빈 이미지*/
+.bg-empty_pro{background-image: url(../images/pictures/empty_pro2.jpg) ; background-size:cover}   /*프로 메인슬라이드 빈 이미지*/
+
 
 /*Demo Colors*/
 .demo-color {

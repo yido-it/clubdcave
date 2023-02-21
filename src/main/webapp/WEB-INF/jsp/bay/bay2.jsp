@@ -45,7 +45,7 @@
                                 <div class="card-overlay bg-gradient"></div>
                             </div>
                             
-                              <div class="card m-0 " data-card-height="300"   style="background: url(/images/gallery/rest_main3.jpg) no-repeat 0 0;background-size:cover">
+                              <div class="card m-0 " data-card-height="300"   style="background: url(/images/gallery/rest_main.jpg) no-repeat 0 0;background-size:cover">
                               
                                 <div class="card-overlay bg-gradient"></div>
                             </div>
@@ -78,8 +78,9 @@
                     CLUBD CAVE BISTRO </h1>
                   
                     <p class="mb-2">
-                        <span class="badge bg-green-dark px-2 py-1 mt-2 text-uppercase">CAVE</span>
-                        <span class="badge bg-green-dark px-2 py-1 ml-2 mt-2 text-uppercase">해시태그</span>
+                        <span class="badge bg-green-dark px-2 py-1 mt-2 text-uppercase">클럽디카브</span>
+                        <span class="badge bg-green-dark px-2 py-1 ml-2 mt-2 text-uppercase">BISTRO</span>
+                        <span class="badge bg-green-dark px-2 py-1 ml-2 mt-2 text-uppercase">FOODANDWINE</span>
                     </p>
                         <div class="divider mt-1 mb-1"></div>
                      <p>
@@ -199,14 +200,17 @@
                
             <div class="divider mt-2 mb-3"></div>
                     
-                    <p class="mb-n1 color-highlight font-600 mb-n1">Time</p>
                     <h2>영업시간</h2>
                     <p>
-                        연중무휴 10:00 ~ 22:00 <br/>
-                        *캐치테이블에서 예약가능합니다. 
+                         11:00 ~ 24:00(연중무휴) <br/><br/>
+                     <span class="color-green-dark" style="width: 70px;display: inline-block;"> LUNCH</span> │ 11:00~15:00  <br/>
+						 <span class="color-green-dark"> BREAK TIME</span> │ 15:00 ~17:00 (*카페 음료 및 샌드위치만 가능) <br/>
+						 <span class="color-green-dark"style="width: 70px;display: inline-block;"> DINNER </span> │ 17:00 ~ 24:00 (*라스트오더 22:30) <br/> <br/>
+ 
+
                     </p> 
                     
-                    <a href="tel:+1 234 567 890" class="btn btn-border btn-md btn-full mb-3 rounded-sm text-uppercase font-900 border-green-dark color-green-dark bg-theme">
+                    <a href="javascript:alert('준비중입니다.');"  class="btn btn-border btn-md btn-full mb-3 rounded-sm text-uppercase font-900 border-green-dark color-green-dark bg-theme">
 					대관문의
 					</a>
 					
@@ -236,10 +240,7 @@
 				            <div class="card-overlay bg-gradient"></div>
 				        </a> -->
 					    
-                </div>
-           
-
-       
+                </div> 
             </div>
         </div>
          

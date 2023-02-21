@@ -53,7 +53,14 @@
                             </div>
                             
                 
-                            <div class="card m-0 bg-28" data-card-height="300" style="background: url(/images/gallery/cave_main1.jpg) no-repeat 0 0;background-size:cover">
+                            <div class="card m-0 bg-28" data-card-height="300" style="background: url(/images/gallery/cave_main2.jpg) no-repeat 0 0;background-size:cover">
+                               
+                                <div class="card-bottom">
+                                 
+                                </div>
+                                <div class="card-overlay bg-gradient"></div>
+                            </div>
+                              <div class="card m-0 bg-28" data-card-height="300" style="background: url(/images/gallery/cave_main3.jpg) no-repeat 0 0;background-size:cover">
                                
                                 <div class="card-bottom">
                                  
@@ -97,8 +104,7 @@
                     
                     <div class="divider mt-2 mb-3"></div>
                     
-                    <p class="mb-n1 color-highlight font-600 mb-n1">Time</p>
-                    <h2>영업시간</h2>
+                      <h2>영업시간</h2>
                     <p>
                     	연중무휴<br/>
                         8:00 ~ 17:00(주간) <br/>
@@ -106,10 +112,7 @@
 					<br/> 
                     </p> 
                 
-                </div>
-           
-
-       
+                </div> 
             </div>
         </div>
         <div class="mb-5"></div>

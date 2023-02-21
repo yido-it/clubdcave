@@ -17,7 +17,7 @@
 <div class="header header-auto-show header-fixed header-logo-app">
 <a href="#" class="header-title header-subtitle  mt-1">시설안내</a> 
 <a href="#" class="header-icon header-icon-1 back-button mt-1" id="topGoBack"><i class="fa fa-arrow-left font-18"></i></a>
-<a href="#" data-menu="menu-main" class="header-icon header-icon-2 font-20 mt-2"><i class="fas fa-bars"></i></a> 
+<a href="#" data-menu="menu-main" class="header-icon header-icon-2 font-20 mt-1"><i class="fas fa-bars"></i></a> 
 </div>
 
 
@@ -31,11 +31,10 @@
     <div class="page-title page-title-fixed" style="opacity: 1; z-index: 99;">
         <h1 style="font-size:14px">    
             <a href="#" data-back-button class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-dark" >
-                <i class="fas fa fa-arrow-left font-18"></i>
+                <i class="fas fa fa-arrow-left font-18 mt-2"></i>
             </a>
         </h1> 
-        
-        <a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main"><i class="fa fa-bars font-20"></i></a>
+        <a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main"><i class="fa fa-bars font-20 mt-2"></i></a>
     </div>
 
         
@@ -43,13 +42,13 @@
         <div class="card card-fixed" data-card-height="300">
           
                         <div class="single-slider  slider-has-arrows  owl-carousel owl-dots-over">
-                            <div class="card m-0" data-card-height="300"  style="background: url(/images/gallery/lesson_main1.jpg) no-repeat 0 0;background-size:cover">
+                            <div class="card m-0" data-card-height="300"  style="background: url(/images/gallery/lesson_main.jpg) no-repeat 0 0;background-size:cover">
                               
                                 <div class="card-overlay bg-gradient"></div>
                             </div>
                             
                 
-                            <div class="card m-0" data-card-height="300"  style="background: url(/images/gallery/lesson_main2.jpg) no-repeat 0 0;background-size:cover">
+                            <div class="card m-0" data-card-height="300"  style="background: url(/images/gallery/lesson_main5.jpg) no-repeat 0 0;background-size:cover">
                                
                                 <div class="card-bottom">
                                  
@@ -57,7 +56,7 @@
                                 <div class="card-overlay bg-gradient"></div>
                             </div>
                 
-                            <div class="card m-0" data-card-height="300"   style="background: url(/images/gallery/lesson_main3.jpg) no-repeat 0 0;background-size:cover">
+                            <div class="card m-0" data-card-height="300"   style="background: url(/images/gallery/lesson_main4.jpg) no-repeat 0 0;background-size:cover">
                               
                                 <div class="card-overlay bg-gradient"></div>
                             
@@ -89,9 +88,10 @@
                     </p>
                       <div class="divider mt-2 mb-3"></div>
                       <p>
-     클럽디 청담 소속 국내 최고의 프로골퍼들에게 1:1 개인레슨을 받을 수 있는 4개의 프라이빗 레슨룸이 설치되어 있습니다. 
-     <br/><br/>레슨룸에는 타이거 우즈와 존람, 조던 스피스의 집에 설치되어 있는 Full Swing Pro를 사용하여 섬세하고 정밀한 스윙 분석과 레슨을 받으실 수 있습니다.<br/><br/>
-Tino 5가 입점되어 있어 최신 트렌드의 골프용품 쇼핑이 가능합니다. Tino 5 소속 클럽피터에게 예약제로 클럽 피팅이 가능하여 본인에게 가장 잘 맞는 클럽을 선택하고 구매하실 수 있습니다.  
+    타이거 우즈, 존람, 조던 스피스 등 세계 정상급 선수들이 사용하는
+     ‘Full Swing PRO’가 설치된 프라이빗 룸에서 최고의 프로들에게 체계적인 레슨을 받으실 수 있습니다.<br/><br/>
+TINO 5의 최신 트렌드를 반영한 골프 용품 쇼핑과 클럽 피팅을 받으실 수 있습니다. 
+
 
 
 
@@ -100,16 +100,24 @@ Tino 5가 입점되어 있어 최신 트렌드의 골프용품 쇼핑이 가능�
                     
                     <div class="divider mt-2 mb-3"></div>
                     
-                    <p class="mb-n1 color-highlight font-600 mb-n1">Time</p>
+                    <!-- <p class="mb-n1 color-highlight font-600 mb-n1">Time</p> -->
                     <h2>영업시간</h2>
                     <p>
-                        월 10:00 ~ 22:00 <br/>
-                        화 10:00 ~ 22:00 <br/>
-                        수 10:00 ~ 22:00 <br/>
-                        목 10:00 ~ 22:00 <br/>
-                        금 10:00 ~ 22:00 <br/>
+                   8:00~22:00(연중무휴)
                     </p> 
-                         <div class="divider mt-2 mb-3"></div>
+                    
+                    <a href="javascript:alert('준비중입니다.');"  class="btn btn-border btn-md btn-full mb-3 rounded-sm text-uppercase font-900 border-blue-dark color-blue-dark bg-theme">
+					레슨문의
+					</a>
+					
+					<a href="javascript:alert('준비중입니다.');" class="btn btn-border btn-md btn-full mb-3 rounded-sm text-uppercase font-900 border-green-dark color-green-dark bg-theme">
+					클럽피팅문의
+					</a>
+					
+					<!-- <a href="tel:+1 234 567 890" class="btn btn-border btn-md btn-full mb-3 rounded-sm text-uppercase font-900 border-green-dark color-green-dark bg-theme">
+					클럽피팅문의
+					</a> -->
+                         <div class="divider mt-2 mb-5"></div>
 
                 </div>
            

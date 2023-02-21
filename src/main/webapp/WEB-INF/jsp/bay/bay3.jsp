@@ -77,26 +77,24 @@
                     
                   
                     <p class="mb-2">
-                        <span class="badge bg-green-dark px-2 py-1 mt-2 text-uppercase">Fullswing</span>
-                        <span class="badge bg-green-dark px-2 py-1 ml-2 mt-2 text-uppercase">해시태그</span>
+                        <span class="badge bg-green-dark px-2 py-1 mt-2 text-uppercase">FULLSWING</span>
+                        <span class="badge bg-green-dark px-2 py-1 ml-2 mt-2 text-uppercase">TINO5</span>
                     </p>
                       <div class="divider mt-2 mb-3"></div>
                       <p>
-                클럽디 청담 안내 및 간단한 골프 용품들과 Full Swing Kit를 구매하실 수 있는 공간으로 구성되었습니다. 
-                <br/><br/>시즌별로 최신 트렌드를 반영한 골프관련 브랜드들의 팝업 전시가 준비되어 있습니다. 
+클럽디 청담 입장시 체크인 하시고 시설 안내를 받으실 수 있는 공간입니다. 
+골프 용품을 구매할 수 있는 TINO 5와 Full Swing KIT 판매 부스가 준비되어 있습니다.
+<br/><br/>
+
+시즌별로 최신 트렌드를 반영한 골프 관련 브랜드들의 팝업 전시와 이벤트가 진행됩니다.   
 
                     </p>
                     
                     <div class="divider mt-2 mb-3"></div>
-                    
-                    <p class="mb-n1 color-highlight font-600 mb-n1">Time</p>
+                     
                     <h2>영업시간</h2>
                     <p>
-                        월 10:00 ~ 22:00 <br/>
-                        화 10:00 ~ 22:00 <br/>
-                        수 10:00 ~ 22:00 <br/>
-                        목 10:00 ~ 22:00 <br/>
-                        금 10:00 ~ 22:00 <br/>
+                     08:00 ~ 22:00(연중무휴) 
                     </p> 
                          <div class="divider mt-2 mb-3"></div>
 
