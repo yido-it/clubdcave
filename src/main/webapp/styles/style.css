@@ -3561,6 +3561,8 @@ img.mx-auto {
   display: block;
 }
 
+.icon-check i.icon-check-1, .icon-check i.icon-check-2{top: 5px}
+
 /*Input Style 1*/
 .input-style-1 {
   position: relative;

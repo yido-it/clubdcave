@@ -26,59 +26,37 @@
   
     <div class="page-content header-clear">
       
-    <!--     <div class="card m-0 " data-card-height="450" style="background: url(../images/gallery/intro.jpg) no-repeat 0 0;background-size:cover;">
-                               
-                                <div class="card-bottom">
-                                 
-                                </div>
-                              </div>              --> 
-	
 	<img src="../images/gallery/intro.jpg" style="width:100%"/>
 	                            
                             
         <div class="page-content pb-3">  
             <div class="mb-1" style="">
              
-                <div class="divider mb-0"></div>
-    
-                
+                <div class="divider mb-0"></div> 
                 <div class="content">
-                
-        
-    
+                 
             <div class="content">
                 <p class="mb-n1 color-highlight font-600">클럽디청담 소개</p>
-                <h1>CLUBD CHEONGDAM </h1>
-                <p>
-               클럽디는 밸류업플랫폼 기업인 <span class="color-highlight">주식회사 이도</span>가 운영하는 골프클럽 브랜드입니다.<br/><br/>
-               2018년 런칭 이후 차별화된 서비스를 통해 지속적으로 성장하고 있으며 현재 클럽디 보은, 
-               속리산, 금강, 거창에서 골프코스를 운영하고 있습니다.
-               <br/><br/>
-                2023년 4월, 강남구 도산대로에 새로운 실내 골프 문화공간 <span class="color-highlight"> '클럽디 청담'</span>을 오픈하여 그 영역을 확장하고자 합니다.
-                클럽디 청담은 타이거 우즈의 프리미엄 골프 시뮬레이터<span class="color-highlight"> FULL SWING, 골프 편집샵 TINO 5, </span>
-                전문 셰프의 섬세한 요리와 와인을  
-                함께 즐길 수 있는 <span class="color-highlight"> '클럽디 카브 골프 & 비스트로'</span>로 구성되어 도시에서 즐기는 새로운 골프 문화 공간을 선사합니다.
-                <br/><br/>
-                 또한, 최고의 프로들의 1:1 골프레슨, 주니어 그룹 골프 수업, 여러가지 주제로 진행되는 오픈 클래스, 
-                그리고 다양한 이벤트와 Skills Challenge도 참여할 수 있습니다.
-                </p>
-                
-       <!--          <div class="row text-center row-cols-3 mb-0">
-                    <a class="col mb-4" data-gallery="gallery-1">
-                        <img src="images/pictures/32s.jpg" data-src="images/login/5.jpg" class="preload-img img-fluid rounded-xs entered loaded" alt="img" data-ll-status="loaded">
-                    </a>
-                    <a class="col mb-4" data-gallery="gallery-1" >
-                        <img src="images/pictures/18s.jpg" data-src="images/login/3.jpg" class="preload-img img-fluid rounded-xs entered loaded" alt="img" data-ll-status="loaded">
-                    </a>
-                    <a class="col mb-4" data-gallery="gallery-1" >
-                        <img src="images/pictures/16s.jpg" data-src="images/login/4.jpg" class="preload-img img-fluid rounded-xs entered loaded" alt="img" data-ll-status="loaded">
-                    </a>
-                </div> -->
-
-                
-             
+	                <h1>CLUBD CHEONGDAM </h1>
+	                <p>
+	               클럽디는 밸류업플랫폼 기업인 <span class="color-highlight">주식회사 이도</span>가 운영하는 골프클럽 브랜드입니다.<br/><br/>
+	               2018년 런칭 이후 차별화된 서비스를 통해 지속적으로 성장하고 있으며 현재 클럽디 보은, 
+	               속리산, 금강, 거창에서 골프코스를 운영하고 있습니다.
+	               <br/><br/>
+	                2023년 4월, 강남구 도산대로에 새로운 실내 골프 문화공간 <span class="color-highlight"> '클럽디 청담'</span>을 오픈하여 그 영역을 확장하고자 합니다.
+	                클럽디 청담은 타이거 우즈의 프리미엄 골프 시뮬레이터<span class="color-highlight"> FULL SWING, 골프 편집샵 TINO 5, </span>
+	                전문 셰프의 섬세한 요리와 와인을  
+	                함께 즐길 수 있는 <span class="color-highlight"> '클럽디 카브 골프 & 비스트로'</span>로 구성되어 도시에서 즐기는 새로운 골프 문화 공간을 선사합니다.
+	                <br/><br/>
+	                 또한, 최고의 프로들의 1:1 골프레슨, 주니어 그룹 골프 수업, 여러가지 주제로 진행되는 오픈 클래스, 
+	                그리고 다양한 이벤트와 Skills Challenge도 참여할 수 있습니다.
+	                </p>
+	  
             </div>
         </div>
+        
+        
+        
         <!-- //카드종료 -->
         
     <!--     

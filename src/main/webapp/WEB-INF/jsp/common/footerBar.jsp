@@ -72,13 +72,13 @@
 			<a href="tel:+1 234 567 890">
 				<i class="fa font-14 fa-phone color-phone"></i>
 				<span>+82 02-1313-1313</span>
-				<span class="badge bg-highlight">전화걸기</span>
+				<span class="badge bg-highlight font-13" style="font-weight:400">전화걸기</span>
 				<i class="fa fa-angle-right"></i>
 			</a>        
 			<a href="mailto:mail@domain.com">
 				<i class="fa font-14 fa-envelope color-mail"></i>
 				<span>cheongdam@yido.com</span>
-				<span class="badge bg-highlight">메일보내기</span>
+				<span class="badge bg-highlight  font-13" style="font-weight:400">메일보내기</span>
 				<i class="fa fa-angle-right"></i>
 			</a>         
 		</div>

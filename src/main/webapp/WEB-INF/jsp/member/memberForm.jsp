@@ -67,7 +67,9 @@
                                     <input class="form-control" type="" id="verifyCode" name="verifyCode" placeholder="인증번호 입력" data-name="인증번호" max="9999">
                                 </div> 
                                 <input type="hidden" id="hiddenCode" name="hiddenCode"/>
-                                <input type="checkbox" id="chkSmsYn"/> SMS 수신에 동의합니다
+                                <input type="checkbox" id="chkSmsYn"/> 
+                                  <label for="chkSmsYn" class="form-check-label font-14 color-white mt-2"> SMS 수신에 동의합니다 </label>
+                              
                                 <input type="hidden" id="smsChk1" name="smsChk1"/>
                                 <input type="hidden" id="msEmail" name="msEmail"/>
                                 <input type="hidden" id="msMktAgreeYn" name="msMktAgreeYn" value="${msMktAgreeYn}"/>
