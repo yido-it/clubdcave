@@ -13,7 +13,7 @@
  
     <div class="page-title page-title-fixed" style="opacity: 1; z-index: 99;">
         <h1 style="font-size:14px">
-            <a href="javascript:history.back()" data-back-button class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-dark">
+            <a href="javascript:location.href='/pro/proMain'" data-back-button class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-dark">
             <i class="fas fa fa-arrow-left"></i></a>
         </h1>
         <!-- 프로 정보 수정 아이콘 -->
@@ -118,12 +118,20 @@
             <div id="">
                 <div class="content mb-3 text-center">
                     <div class="gallery gallery-filter-links" style="padding: 0px; position: relative; height: 234.75px;">
-                        <a href="images/gallery/1.jpg" data-lightbox="gallery-1" class="filtr-item default-link" title="" data-category="1" >
-                            <img src="images/gallery/1.jpg" data-src="images/gallery/1.jpg" class="preload-img rounded-s shadow-m" >
-                        </a>
-                        <a href="images/gallery/6.jpg" data-menu="menu-video" class="filtr-item default-link" title="" data-category="2">
-                            <img src="images/gallery/6.jpg" data-src="images/gallery/6.jpg" class="preload-img rounded-s shadow-m" >
-                        </a>
+	                	<c:forEach items="${proImgList}" var="item" varStatus="status">
+	                	<c:choose>
+		                	<c:when test="${item.imgDiv eq 1}">
+		                        <a href="${item.fileURL}" data-lightbox="gallery-1" class="filtr-item default-link btn-picture" data-pic-url="${item.fileURL}" data-category="${item.imgDiv}" >
+		                            <img src="${item.thumbURL}" class="preload-img rounded-s shadow-m" >
+		                        </a>
+		                	</c:when>
+		                	<c:otherwise>
+		                        <a href="${item.thumbURL}" data-menu="menu-video" class="filtr-item default-link btn-video" data-video-url="${item.fileURL}" data-category="${item.imgDiv}">
+		                            <img src="${item.thumbURL}" class="preload-img rounded-s shadow-m" >
+								</a>
+		                    </c:otherwise>
+	                    </c:choose>
+                        </c:forEach>
                     </div>                
                 </div>
             </div>        
@@ -133,7 +141,7 @@
     <!-- Page content ends here--> 
 
     <!--  Video -->
-    <div id="menu-video"  class="menu menu-box-bottom rounded-0" data-menu-height="300" data-menu-effect="menu-parallax">
+    <div id="menu-video" class="menu menu-box-bottom rounded-0" data-menu-height="300" data-menu-effect="menu-parallax">
         <!-- <div class='responsive-iframe max-iframe'>
              <iframe src='https://www.youtube.com/embed/B8PPbO-xYGg' frameborder='0' allowfullscreen></iframe></div>
             -->     
@@ -142,7 +150,7 @@
             <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
         </div>
         <div class="content mt-n2">
-            <video controls   playsinline style="width:100%;height:100%" src="images/gallery/2023.mp4" type="video/mp4"></video>
+            <video controls playsinline style="width:100%;height:100%" src="" type="video/mp4"></video>
           
         </div>
     </div>   
@@ -151,8 +159,9 @@
 </div>
 	    
 <div class="menu-hider"><div></div></div>	
-<jsp:include page="../common/alertModal.jsp" />  
 <script type="text/javascript">
+	
+	//console.log("${proImgList}");
 	var msNum = "<c:out value='${sessionScope.msMember.msNum}'/>";
 	
 	$().ready(function() {
@@ -160,6 +169,16 @@
 			$('#btnEdit').show();
 		}
 	});
+	
+	$('.btn-pic').on('click', function() {
+		var url = $(this).data('pic-url');
+		$(this).find('img').attr('data-src', url);
+	})
+	
+	$('.btn-video').on('click', function() {
+		var url = $(this).data('video-url');
+		$('#menu-video').find('video').attr('src', url);
+	})
 	
 </script>
 </body>

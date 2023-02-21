@@ -91,32 +91,6 @@ public class ProController {
 	}
 
 	/**
-	 * 프로 목록 조회
-	 * 
-	 * @param res
-	 * @return
-	 */
-	@RequestMapping("/getProList")
-	@ResponseBody
-	public Map<String, Object> getProList(HttpServletResponse res) {
-		Map<String, Object> map = new HashMap<>();
-
-		try {
-			List<MemberVO> drMsMaininfoList = memberService.selectProList();
-
-			if (drMsMaininfoList.isEmpty()) {
-				throw new Exception("조회 가능한 프로가 없습니다");
-			}
-			map.put("result", true);
-			map.put("proList", drMsMaininfoList);
-		} catch (Exception e) {
-			map.put("result", false);
-			map.put("message", e.getMessage());
-		}
-		return map;
-	}
-
-	/**
 	 * 프로 상세 페이지
 	 * 
 	 * @param model
@@ -345,6 +319,20 @@ public class ProController {
 		return map;
 	}
 
+	@RequestMapping(value = "/deleteGalleryItem")
+	@ResponseBody
+	public Map<String, Object> deleteGalleryItem(@RequestParam Map<String, Object> params) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			proService.deleteGalleryItem(params);
+			map.put("result", true);
+		} catch (Exception e) {
+			map.put("result", false);
+			map.put("message", "파일 삭제 중 오류가 발생했습니다.");
+		}
+		return map;
+	}
+	
 	/**
 	 * 레슨프로 일정 등록
 	 * 

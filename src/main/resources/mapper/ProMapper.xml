@@ -171,5 +171,12 @@
 	    		, #{imgData}	
 	    	)  	
 	</insert>
+	<delete id="deleteProImage">
+		/* memberMapper.deleteProImage - 프로 갤러리 이미지/영상 삭제 */
+		DELETE FROM PRO_IMAGE
+		WHERE 1 = 1
+			AND IMG_SEQ = #{imgSeq} 
+			AND MS_NUM = #{msNum}
+	</delete>
 		
 </mapper>

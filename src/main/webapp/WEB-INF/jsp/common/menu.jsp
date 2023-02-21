@@ -112,12 +112,10 @@
 <div id="menu-colors" data-menu-load="menu-colors.html" data-menu-effect="menu-parallax" class="menu menu-box-right"  data-menu-width="75"></div>   
 <div id="menu-share"  data-menu-load="menu-share.html"  data-menu-effect="menu-parallax" class="menu menu-box-bottom" data-menu-height="323"></div>   
 -->
-
+<jsp:include page="../common/alertModal.jsp" /> 
 <script type="text/javascript">
 	$('#btnLogout').on('click', function() {
-		if(confirm('로그아웃 하시겠습니까?')) {
-			location.href = '/succ-logout';
-		}
+		alertModal.confirm2('로그아웃 하시겠습니까?', 'location.href="/succ-logout"');
 	})
 		
 	// 메뉴 active 관련 

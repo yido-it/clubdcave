@@ -127,7 +127,6 @@
 </div>  
 
 <div class="menu-hider"><div></div></div>
-<jsp:include page="../common/alertModal.jsp" /> 
 <script type="text/javascript">
 
 	$(document).ready(function() {  

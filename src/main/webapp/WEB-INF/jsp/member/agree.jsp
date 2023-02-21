@@ -11,7 +11,7 @@
     <div id="page">
 		<div class="header header-fixed header-logo-app header-transparent">
 			<a href="javascript:history.back()" class="color-white header-title header-subtitle">약관 확인하기</a>
-			<a href="#" data-back-button class="color-white header-icon header-icon-1"><i class="fa fa-arrow-left"></i></a>
+			<a href="#" data-back-button class="color-white header-icon header-icon-1" id="topGoBack"><i class="fa fa-arrow-left"></i></a>
         	<a href="#" data-menu="menu-main" class="color-white header-icon header-icon-2"><i class="fas fa-bars"></i></a>
 	    </div>
 	    <jsp:include page="../common/menu.jsp" />
@@ -144,10 +144,8 @@
         </div>
     </div>
 </div>  
-
  
 <div class="menu-hider"><div></div></div>
-<jsp:include page="../common/alertModal.jsp" />  
 	<script type="text/javascript">
 	
 		$('#btnNext').on('click', function () {

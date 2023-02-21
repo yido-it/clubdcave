@@ -446,7 +446,31 @@ public class MemberController {
     		map.put("message", "수정 중 오류가 발생했습니다.");
     	}
 		return map;
-	}		
+	}	
+	
+	/**
+	 * 회원탈퇴
+	 * 
+	 * @param session
+	 * @param req
+	 * @return Map
+	 */
+	@RequestMapping("/deleteMember")
+	@ResponseBody
+	public Map<String, Object> deleteMember(HttpSession session, HttpServletRequest req, @RequestParam Map<String, Object> params) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		SessionVO member = (SessionVO)session.getAttribute("msMember");
+		params.put("msNum", member.getMsNum());
+		params.put("ipAddr", Utils.getClientIpAddress(req));
+		try {
+			memberService.updateMemberQuit(params);			
+			map.put("result", true);
+    	} catch (Exception e) {
+    		map.put("result", false);
+    		map.put("message", "탈퇴 중 오류가 발생했습니다.");
+    	}
+		return map;
+	}	
 		
 	/**
 	 * 아이디/비밀번호 찾기 페이지

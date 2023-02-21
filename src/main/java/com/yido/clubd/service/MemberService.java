@@ -27,7 +27,6 @@ import com.yido.clubd.common.utils.Globals;
 import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.component.FileUtil;
-import com.yido.clubd.component.ImageUtil;
 import com.yido.clubd.model.DrMsCoInfo;
 import com.yido.clubd.model.MemberVO;
 import com.yido.clubd.repository.DrMsCoInfoMapper;
@@ -431,15 +430,16 @@ public class MemberService {
 	public void uploadProfileImg(Map<String, Object> params, MultipartHttpServletRequest mreq) throws Exception {
 		Iterator<String> iter = mreq.getFileNames();	
 		while(iter.hasNext()) {
-			
 			// 다음 file[n] 값을 Multipartfile 객체로 생성
 			MultipartFile mFile = mreq.getFile(iter.next());
 			
+			 
 			// mFile의 파일이름 가져옴
 			String orgFileNm = mFile.getOriginalFilename();
 			String extNm = orgFileNm.substring(orgFileNm.lastIndexOf(".") + 1, orgFileNm.length()).toLowerCase();
+			String newFileNm = System.currentTimeMillis() + "." + extNm;
 			
-			
+			/*
 			File sameFile = new File(orgFileNm);					// 똑같은 이름의 파일 객체 생성 (file_name.jpg)
 			String filePath = sameFile.getAbsolutePath();			// 실행 중인 working directory + File에 전달한 경로값 (C:\folder_name\file_name.jpg)
 			File tmpFile = new File(filePath);						// 절대경로로 다시 파일 객체 생성
@@ -448,14 +448,13 @@ public class MemberService {
 			Path srcPath = Paths.get(filePath);						// String을 Path 객체로 만들어줌
 		    String mimeType = Files.probeContentType(srcPath);		// 파일 경로에 있는 Content-Type(파일 유형) 확인
 		    mimeType = (mimeType == null ? "" : mimeType);			// 확장자가 없는 경우 null을 반환
+			*/
 			
 		    String folderNm = (String)params.get("msImgData");		// ex) test/profile/00000001
-			String newFileNm = System.currentTimeMillis() + "." + extNm;			
-						
-			AWSFileUtil.uploadFile(folderNm, newFileNm, extNm, filePath);	// 생성할 폴더명, 새 파일 이름, 복사될 파일 경로
+			AWSFileUtil.uploadFile(folderNm, newFileNm, mFile);	// 생성할 폴더명, 새 파일 이름, 복사될 파일 경로
 									
 			// 업로드 후 임시파일 삭제
-			if(tmpFile.exists()) tmpFile.delete();
+			// if(tmpFile.exists()) tmpFile.delete();
 			
 			params.put("msImgName", newFileNm);
 			memberMapper.insertDrMsPicture(params);
@@ -472,8 +471,20 @@ public class MemberService {
 	public void deleteProfileImg(Map<String, Object> params) {
 		String objectName = (String)params.get("msImgData") + (String)params.get("msImgName");
 		AWSFileUtil.deleteFile(objectName);
+		AWSFileUtil.deleteThumbnail(objectName);
 		
-		memberMapper.deletetDrMsPicture(params);		
+		memberMapper.deleteDrMsPicture(params);		
+	}
+	
+	/**
+	 * 회원탈퇴
+	 * 
+	 * @param session
+	 * @return Map
+	 */
+	public void updateMemberQuit(Map<String, Object> params) {
+		memberMapper.updateMemberQuit(params);
+		
 	}	
 
 }

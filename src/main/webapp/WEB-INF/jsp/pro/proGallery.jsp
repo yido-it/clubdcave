@@ -12,8 +12,9 @@
 <div id="page">
 
 	<div class="header header-fixed header-logo-app">
-		<a href="javascript:history.back()" class="header-title header-subtitle">갤러리수정</a>
-		<jsp:include page="../common/top.jsp" />
+		<a href="#" class="header-title header-subtitle">갤러리수정</a>
+		<a href="javascript:location.href='/pro/proDetail?msNum=${sessionScope.msMember.msNum}'" data-back-button class="header-icon header-icon-1"><i class="fa fa-arrow-left"></i></a>
+		<a href="#" data-menu="menu-main" class="header-icon header-icon-2"><i class="fas fa-bars"></i></a>
 	</div>
 	<jsp:include page="../common/menu.jsp" />
 	
@@ -29,28 +30,31 @@
         <div class="card card-style">
             <div class="content mb-0">
                 <h3>사진업로드</h3>
-				<p>가로로 긴 사진 업로드를 추천합니다.(사진크기 3MB이하)</p>
+				<p>가로로 긴 사진 업로드를 추천합니다.</p>
 				<div class="img-dropzone dropzone" id="">
                     <button type="button" id="profileUpload" class="btn bg-highlight color-white font-15 dz-message mb-5" style="width:100%;height:100%">
                     <i class="fa fa-camera"></i> 사진 찾기</button>
                     
-                    <c:if test="${proProfile != null}">
-                    <div class="img-area">
-						<div class="col-6 px-0 dz-image-preview float-left">
+                    <c:if test="${not empty galleryList}">
+                    <c:forEach items="${galleryList}" var="item" varStatus="status">
+                    <c:if test="${item.imgDiv == 1}">
+                    <div class="img-area px-0 col-6 mb-3">
+						<div class="">
 							<div class="dz-image my-2" style="text-align: center">
-								<img class="image-data float-left" data-dz-thumbnail="" alt="${proProfile.msImgName}" src="${proProfile.thumbURL}">
+								<img alt="${item.imgFilename}" src="${item.thumbURL}" data-dz-thumbnail>
 							</div>
-							<div style="display:flex;">
-								<div class="">
-									<div class="">
-										<i class="fa-regular fa-images color-brown-dark"></i>
-										<span class="color-white data-dz-size">0.1MB</span>
-									</div>
-								</div>
-								<a class="dz-remove color-red-dark font-14 btn-img-delete" data-filepath="${proProfile.msImgData}" data-filename="${proProfile.msImgName}" data-dz-remove=""><i class="fa-regular fa-rectangle-xmark"></i> 삭제</a>
+							<div class="d-flex mt-1">
+								<div class="ml-auto pl-3 text-right">
+									<a class="dz-remove color-red-dark font-14 btn" href="javascript:undefined;" 
+										id="${item.imgSeq}" data-filepath="${item.imgData}" data-filename="${item.imgFilename}" data-dz-remove>
+									<i class="fa-regular fa-rectangle-xmark"></i> 삭제
+									</a>
+								</div>								
 							</div>
 						</div>
 					</div>
+					</c:if>
+                    </c:forEach>
                     </c:if>
                 </div>
 			</div>
@@ -66,23 +70,26 @@
                     <button type="button" id="profileUpload" class="btn bg-highlight color-white font-15 dz-message mb-5" style="width:100%;height:100%">
                     <i class="fa-solid fa-video"></i> 영상 찾기</button>
                     
-                    <c:if test="${proProfile != null}">
-                    <div class="img-area">
-						<div class="col-6 px-0 dz-image-preview">
+                     <c:if test="${not empty galleryList}">
+                    <c:forEach items="${galleryList}" var="item" varStatus="status">
+                    <c:if test="${item.imgDiv == 2}">
+                    <div class="img-area px-0 col-6 mb-3">
+						<div class="">
 							<div class="dz-image my-2" style="text-align: center">
-								<img data-dz-thumbnail="" alt="${proProfile.msImgName}" src="${proProfile.thumbURL}">
+								<img alt="${item.imgFilename}" src="${item.thumbURL}" data-dz-thumbnail>
 							</div>
-							<div style="display:flex;">
-								<div class="">
-									<div class="">
-										<i class="fa-regular fa-images color-brown-dark"></i>
-										<span class="color-white data-dz-size">0.1MB</span>
-									</div>
-								</div>
-								<a class="dz-remove color-red-dark font-14 btn-img-delete" data-filepath="${proProfile.msImgData}" data-filename="${proProfile.msImgName}" data-dz-remove=""><i class="fa-regular fa-rectangle-xmark"></i> 삭제</a>
+							<div class="d-flex mt-1">
+								<div class="ml-auto pl-3 text-right">
+									<a class="dz-remove color-red-dark font-14 btn" href="javascript:undefined;" 
+										id="${item.imgSeq}" data-filepath="${item.imgData}" data-filename="${item.imgFilename}" data-dz-remove>
+									<i class="fa-regular fa-rectangle-xmark"></i> 삭제
+									</a>
+								</div>								
 							</div>
 						</div>
 					</div>
+					</c:if>
+                    </c:forEach>
                     </c:if>
                 </div>
 			</div>
@@ -105,7 +112,6 @@
 </div>
 <div class="menu-hider"><div></div></div>
 
-<jsp:include page="../common/alertModal.jsp" />  
 <script type="text/javascript">	
 
 	Dropzone.autoDiscover = false;
@@ -113,9 +119,11 @@
 		  autoProcessQueue : true
 		, url : '/pro/uploadGalleryImg'
 		, method : 'post'
-		, maxFiles : 10
-		, maxFilesize : 3
-		, resizeQueality : 1
+		, maxFiles : 1
+		, maxFilesize : 10
+		, thumbnailHeight: 90
+		, thumbnailWidth: 135
+		, resizeQueality : 0.9
 		, resizeWidth : 960
 		, dictFileTooBig : '{{maxFilesize}}MB 이하로 업로드 해주세요.'
 		, paramName : 'file'
@@ -125,8 +133,8 @@
 		, init : function() {
 			// 파일 개수 초과
 			this.on("maxfilesexceeded", function (file) {
-				alertModal.fail('10개까지 업로드 가능합니다.');
-				this.removeFile(file);
+				this.removeAllFiles();
+				this.addFile(file);
 			});
 			// 에러 발생 (ex 파일 용량 초과)
 	   		this.on("error", function(file, message) { 
@@ -136,7 +144,7 @@
 			// 파일 dropzone area에 올라간 후 (총 업로드 개수 제한)
 	   		this.on("addedfile", function (file) {
 	   			if($(".img-area").length >= 10) {
-	   				alertModal.fail('10개까지 업로드 가능합니다.');
+	   				alertModal.fail('10개까지 등록 가능합니다.');
 	   				this.removeFile(file); 
 	   			}
 	   		})
@@ -163,10 +171,10 @@
 		  autoProcessQueue : true
 		, url : '/pro/uploadGalleryVideo'
 		, method : 'post'
-		, maxFiles : 10
+		, maxFiles : 1
 		, maxFilesize : 5
-		, resizeQueality : 1
-		, resizeWidth : 960
+		, thumbnailHeight: 90
+		, thumbnailWidth: 135
 		, dictFileTooBig : '{{maxFilesize}}MB 이하로 업로드 해주세요.'
 		, paramName : 'file'
 		, addRemoveLinks : true
@@ -175,8 +183,8 @@
 		, init : function() {
 			// 파일 개수 초과
 			this.on("maxfilesexceeded", function (file) {
-				alertModal.fail('10개까지 업로드 가능합니다.');
-				this.removeFile(file);
+				this.removeAllFiles();
+				this.addFile(file);
 			});
 			// 에러 발생 (ex 파일 용량 초과)
 	   		this.on("error", function(file, message) { 
@@ -203,22 +211,41 @@
 		}
 	});
 	
-	function getProList(){			
-	   	$.ajax({
-	             url : "/pro/getProList"
-	           , type : "post"
-	           , dataType : 'json'
-	   		, contentType : 'application/x-www-form-urlencoded; charset=UTF-8'
-	   		, success : function(data) {
-	           	if(data.rows.length > 0) {
-	           		drawProList(data.rows);
-	           	}
-	           }
-	   		, error : function(data) {
-	   			
-	           }
-	       })
+	$('.dz-remove').on('click', function() {	
+		
+		 params = {
+			  imgSeq : $(this).attr('id')
+			, imgFilename : $(this).data('filename')	
+			, imgData : $(this).data('filepath')
+			, msNum : $('#msNum').val()
+		};
+		 console.log(params);
+		alertModal.confirm1('사진을 삭제하시겠습니까?', 'deleteGalleryItem(params);');
+	})
+	
+	function deleteGalleryItem(params) {
+		$.ajax({
+	        url: "<c:out value='/pro/deleteGalleryItem'/>"
+	        , type: "post"
+	        , dataType: 'json'
+	        , data: params
+	        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+	        , success: function(data) {
+	            if(data.result){
+	            	document.getElementById(params.imgSeq).closest('.img-area').remove();	          
+	            	$("#confirm1Popup").removeClass('menu-active');
+	            	params = null;
+	            	
+	            } else {
+	                alertModal.fail(data.message);                    
+	            }                
+	        }
+	        , error: function(data) {
+	        	 alertModal.fail('[error] 코드 호출 중 오류 발생했습니다.');
+	        }
+	    });
 	}
+	
 </script>
 </body>
 </html>
