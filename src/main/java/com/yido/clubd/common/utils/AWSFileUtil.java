@@ -62,8 +62,8 @@ public class AWSFileUtil {
 	static String bucketName = Globals.bucketName;
 	
 	// 썸네일 기본 크기
-	private static final int IMG_HEIGHT = 90;
-	private static final int IMG_WIDTH = 135;
+	//private static final int IMG_HEIGHT = 90;
+	private static final int IMG_WIDTH = 143;
 	// 썸네일 기본 형식
 	private static final String IMAGE_FORMAT = "png";
 	// 동영상 썸네일 프레임
@@ -228,7 +228,6 @@ public class AWSFileUtil {
 		
 		// MultipartFile -> File
 		File file = new File(multipartFile.getOriginalFilename());
-		file.createNewFile();
 	    FileOutputStream fos = new FileOutputStream(file);
 	    fos.write(multipartFile.getBytes());
 	    fos.close();
@@ -238,17 +237,23 @@ public class AWSFileUtil {
 					
 		Image src = ImageIO.read(file);
 		
-		float ratio = src.getWidth(null) / IMG_WIDTH;
+		float ratio = Math.round((float)src.getWidth(null) / (float)IMG_WIDTH);
 		int newHeight = (int)(src.getHeight(null) / ratio);
 		
+		/* 새 세로 길이가 IMG_HEIGHT보다 작으면 IMG_HEIGHT로 늘리기
+		if(newHeight < IMG_HEIGHT ) {
+			newHeight = IMG_HEIGHT;
+		}*/		
 		// 가로 길이에 맞춰 resize
 		src = src.getScaledInstance(IMG_WIDTH, newHeight, Image.SCALE_SMOOTH);		
 		BufferedImage resizeImage = new BufferedImage(IMG_WIDTH, newHeight, BufferedImage.TYPE_INT_RGB);
 		resizeImage.getGraphics().drawImage(src, 0, 0, null);
 		
-		// 이미지 세로 길이만큼 crop
-		int yPos = (resizeImage.getHeight() / 2) - (IMG_HEIGHT / 2);
-		resizeImage = resizeImage.getSubimage(0, yPos, IMG_WIDTH, IMG_HEIGHT); 		
+		/* 이미지 세로 길이만큼 crop
+		if(resizeImage.getHeight() > IMG_HEIGHT) {			
+			int yPos = (resizeImage.getHeight() / 2) - (IMG_HEIGHT / 2);
+			resizeImage = resizeImage.getSubimage(0, yPos, IMG_WIDTH, IMG_HEIGHT); 		
+		}*/
 		
 		// BufferedImage -> Input Stream
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -270,6 +275,8 @@ public class AWSFileUtil {
 		} catch(SdkClientException e) {
 		    e.printStackTrace();
 		}
+		
+		file.delete();
 	
 		/*
 		FileOutputStream out = new FileOutputStream(thumbFilePath);
@@ -295,7 +302,6 @@ public class AWSFileUtil {
 		
 		// MultipartFile -> File
 		File file = new File(multipartFile.getOriginalFilename());
-		file.createNewFile();
 	    FileOutputStream fos = new FileOutputStream(file);
 	    fos.write(multipartFile.getBytes());
 	    fos.close();
@@ -305,16 +311,23 @@ public class AWSFileUtil {
 		    
 		Picture pic = FrameGrab.getFrameFromFile(file, FRAME_NUMBER);
 		
-		float ratio = pic.getWidth() / IMG_WIDTH;
+		float ratio = Math.round((float)pic.getWidth() / (float)IMG_WIDTH);
 		int newHeight = (int)(pic.getHeight() / ratio);
+		
+		/* 새 세로 길이가 IMG_HEIGHT보다 작으면 IMG_HEIGHT로 늘리기
+		if(newHeight < IMG_HEIGHT) {
+			newHeight = IMG_HEIGHT;
+		}*/
 		
 		BufferedImage bufferedImage = AWTUtil.toBufferedImage(pic);
 		BufferedImage resizeImage = new BufferedImage(IMG_WIDTH, newHeight, BufferedImage.TYPE_INT_RGB);
 		resizeImage.getGraphics().drawImage(bufferedImage.getScaledInstance(IMG_WIDTH, newHeight, Image.SCALE_SMOOTH), 0, 0, null);
 		
-		// 이미지 세로 길이만큼 crop
-		int yPos = (resizeImage.getHeight() / 2) - (IMG_HEIGHT / 2);
-		resizeImage = resizeImage.getSubimage(0, yPos, IMG_WIDTH, IMG_HEIGHT); 
+		/* 이미지 세로 길이만큼 crop
+		if(resizeImage.getHeight() > IMG_HEIGHT) {	
+			int yPos = (resizeImage.getHeight() / 2) - (IMG_HEIGHT / 2);
+			resizeImage = resizeImage.getSubimage(0, yPos, IMG_WIDTH, IMG_HEIGHT); 
+		}*/
 		
 		// BufferedImage -> Input Stream
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -336,6 +349,8 @@ public class AWSFileUtil {
 		} catch(SdkClientException e) {
 		    e.printStackTrace();
 		}
+		
+		file.delete();
 	}
 
 	// ACL 줘야 공개처리됨....

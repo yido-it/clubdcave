@@ -13,7 +13,7 @@
     
 	<div class="header header-fixed header-logo-app">
 		<a href="#" class="header-title header-subtitle">프로선택</a>
-		<a href="javascript:location.href='/pro/proDetail?msNum=${sessionScope.msMember.msNum}'" data-back-button class="header-icon header-icon-1"><i class="fa fa-arrow-left"></i></a>
+		<a href="#" data-back-button class="header-icon header-icon-1"><i class="fa fa-arrow-left"></i></a>
 		<a href="#" data-menu="menu-main" class="header-icon header-icon-2"><i class="fas fa-bars"></i></a>
 	</div>
     <jsp:include page="../common/menu.jsp" />
@@ -109,13 +109,7 @@
             <div class="input-style input-style-2 input-required">
                 <span class="input-style-1-active input-style-1-inactive">경력사항 입력</span>
                 <em></em>
-               	<textarea class="form-control" placeholder="ex)학력, 투어경력, 방송활동, 레슨경력" style="height: 110px;padding: 10px;line-height: unset;" id="n_001" name="n_001">
-               		<c:forEach items="${noticeList}" var="item" varStatus="status">
-               		<c:if test="${item.noticeDiv == '001'}">
-	        			${item.proRemark}
-	        		</c:if>
-					</c:forEach>
-               	</textarea>
+               	<textarea class="form-control" placeholder="ex)학력, 투어경력, 방송활동, 레슨경력" style="height: 110px;padding: 10px;line-height: unset;" id="n_001" name="n_001"></textarea>
             </div>     
 
             <div class="mb-3">
@@ -157,10 +151,9 @@
             <div class="row mb-0 mt-4">
                 <div class="col-12 mb-1">
                     <div class="input-style input-style-2 input-required">
-                        <span class="input-style-1-active input-style-1-inactive">레슨계획 입력</span>
                         <em></em>
-                        <textarea class="form-control" placeholder="자유롭게 기술" style="height: 110px;padding: 10px;line-height: unset;" id="n_002" name="n_002">
-                        </textarea>
+                        <span class="input-style-1-active input-style-1-inactive">레슨계획 입력</span>
+                        <textarea class="form-control" placeholder="자유롭게 기술" style="height: 110px;padding: 10px;line-height: unset;" id="n_002" name="n_002"></textarea>
                     </div>
                 </div>
                 <div class="col-6 mb-1">
@@ -309,8 +302,6 @@
 			, method : 'post'
 			, maxFiles : 1
 			, maxFilesize : 10
-			, thumbnailHeight: 90
-			, thumbnailWidth: 135
 			, resizeQueality : 0.9
 			, resizeWidth : 960
 			, dictFileTooBig : '{{maxFilesize}}MB 이하로 업로드 해주세요.'
@@ -318,6 +309,7 @@
 			, addRemoveLinks : true
 			, acceptedFiles : "image/*"
 			, uploadMultiple : false
+			, previewTemplate : '<div class="dz-preview px-0 col-6 mb-3 dz-processing dz-image-preview" style="display:none;"></div>'
 			, init : function() {
 				// 파일 개수 초과
 				this.on("maxfilesexceeded", function (file) {
@@ -407,7 +399,7 @@
 			, msImgData : $(this).data('filepath')
 			, msNum : $('#msNum').val()
 		};		
-		alertModal.confirm1('사진을 삭제하시겠습니까?', 'deleteProfileImg(params);');
+		alertModal.confirm2('사진을 삭제하시겠습니까?', 'deleteProfileImg(params);');
 	})	 
 	
 	function deleteProfileImg(params) {

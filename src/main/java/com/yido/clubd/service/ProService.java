@@ -135,7 +135,7 @@ public class ProService {
 			String orgFileNm = mFile.getOriginalFilename();
 			String extNm = orgFileNm.substring(orgFileNm.lastIndexOf(".") + 1, orgFileNm.length()).toLowerCase();
 			
-		    String folderNm = (String)params.get("imgData");		// ex) test/picture/00000001
+		    String folderNm = (String)params.get("imgData");		// ex) test/picture/00000001/
 			String newFileNm = System.currentTimeMillis() + "." + extNm;			
 						
 			AWSFileUtil.uploadFile(folderNm, newFileNm, mFile);		// 생성할 폴더명, 새 파일 이름, 복사될 파일 경로

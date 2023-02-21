@@ -1,7 +1,6 @@
 package com.yido.clubd.controller;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yido.clubd.model.BBS;
+import com.yido.clubd.model.MemberVO;
 import com.yido.clubd.service.BBSService;
+import com.yido.clubd.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,6 +30,9 @@ public class WebController {
 
 	@Autowired
 	private BBSService bbsService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@RequestMapping("")
 	public String index(Model model) {
@@ -59,6 +63,11 @@ public class WebController {
 		eMap.put("coDiv", "001");
 		List<BBS> eList = bbsService.selectList(eMap);	
 		model.addAttribute("eList", eList);
+		// end.
+		
+		// 프로 리스트
+		List<MemberVO> drMsMaininfoList = memberService.selectProList();
+		model.addAttribute("proList", drMsMaininfoList);
 		// end.
 		
 		return "/index";

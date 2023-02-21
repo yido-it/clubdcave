@@ -43,22 +43,18 @@
 	            	<c:when test="${not empty proList}">
 	            		<c:forEach items="${proList}" var="item" varStatus="status">
 		                <div class="col-6" onclick="javascript:location.href='proDetail?msNum=${item.msNum}'">
-		                	<c:choose>
-			                	<c:when test="${item.msImgName != null && item.msImgName != ''}">
-			                    <div class="card card-style m-0 mb-2 rounded-m" data-card-height="150" style="background: url(${item.fileURL}) no-repeat 0 0">
-			                        <c:if test="${item.licName != null}">
-			                        <div class="card-bottom"><span class="badge bg-highlight p-1 pl-2 rounded-0">${item.licName}</span></div>
-			                        </c:if>
-			                    </div>
-			                    </c:when>
-			                    <c:otherwise>
-			                    <div class="card card-style m-0 mb-2 rounded-m bg-pro3" data-card-height="150" style="">
-			                        <c:if test="${item.licName != null}">
-			                        <div class="card-bottom"><span class="badge bg-highlight p-1 pl-2 rounded-0">${item.licName}</span></div>
-			                        </c:if>
-			                    </div>
-			                    </c:otherwise>
-		                    </c:choose>
+	                		<c:choose>
+		                	<c:when test="${item.msImgName != null && item.msImgName != ''}">
+		                    <div class="card card-style m-0 mb-2 rounded-m" data-card-height="150" style="background: url(${item.fileURL}) no-repeat 0 0">
+		                    </c:when>
+		                    <c:otherwise>
+		                    <div class="card card-style m-0 mb-2 rounded-m bg-empty_pro" data-card-height="150" style="">
+		                    </c:otherwise>
+	                    	</c:choose>
+		                        <c:if test="${item.licName != null && item.licName != ''}">
+		                        <div class="card-bottom"><span class="badge bg-highlight p-1 pl-2 rounded-0">${item.licName}</span></div>
+		                        </c:if>
+			                </div>
 		                    <p class="line-height-s color-theme mb-1">${item.msName} 프로 </p>
 		                    <p class="mb-0 font-10 pt-0 opacity-60"><i class="fa fa-clock pr-1"></i>레슨: 화/목</p> 
 		                </div>

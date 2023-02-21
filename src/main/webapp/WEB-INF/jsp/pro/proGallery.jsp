@@ -36,25 +36,25 @@
                     <i class="fa fa-camera"></i> 사진 찾기</button>
                     
                     <c:if test="${not empty galleryList}">
-                    <c:forEach items="${galleryList}" var="item" varStatus="status">
-                    <c:if test="${item.imgDiv == 1}">
-                    <div class="img-area px-0 col-6 mb-3">
-						<div class="">
-							<div class="dz-image my-2" style="text-align: center">
-								<img alt="${item.imgFilename}" src="${item.thumbURL}" data-dz-thumbnail>
+	                    <c:forEach items="${galleryList}" var="item" varStatus="status">
+		                    <c:if test="${item.imgDiv == 1}">
+		                    <div class="img-area px-0 col-6 mb-3">
+								<div class="">
+									<div class="dz-image my-2" style="text-align: center">
+										<img alt="${item.imgFilename}" src="${item.thumbURL}" data-dz-thumbnail>
+									</div>
+									<div class="d-flex mt-1">
+										<div class="ml-auto pl-3 text-right">
+											<a class="dz-remove color-red-dark font-14 btn" href="javascript:undefined;" 
+												id="${item.imgSeq}" data-filepath="${item.imgData}" data-filename="${item.imgFilename}" data-dz-remove>
+											<i class="fa-regular fa-rectangle-xmark"></i> 삭제
+											</a>
+										</div>								
+									</div>
+								</div>
 							</div>
-							<div class="d-flex mt-1">
-								<div class="ml-auto pl-3 text-right">
-									<a class="dz-remove color-red-dark font-14 btn" href="javascript:undefined;" 
-										id="${item.imgSeq}" data-filepath="${item.imgData}" data-filename="${item.imgFilename}" data-dz-remove>
-									<i class="fa-regular fa-rectangle-xmark"></i> 삭제
-									</a>
-								</div>								
-							</div>
-						</div>
-					</div>
-					</c:if>
-                    </c:forEach>
+							</c:if>
+	                    </c:forEach>
                     </c:if>
                 </div>
 			</div>
@@ -70,26 +70,26 @@
                     <button type="button" id="profileUpload" class="btn bg-highlight color-white font-15 dz-message mb-5" style="width:100%;height:100%">
                     <i class="fa-solid fa-video"></i> 영상 찾기</button>
                     
-                     <c:if test="${not empty galleryList}">
-                    <c:forEach items="${galleryList}" var="item" varStatus="status">
-                    <c:if test="${item.imgDiv == 2}">
-                    <div class="img-area px-0 col-6 mb-3">
-						<div class="">
-							<div class="dz-image my-2" style="text-align: center">
-								<img alt="${item.imgFilename}" src="${item.thumbURL}" data-dz-thumbnail>
+                    <c:if test="${not empty galleryList}">
+	                    <c:forEach items="${galleryList}" var="item" varStatus="status">
+		                    <c:if test="${item.imgDiv == 2}">
+		                    <div class="img-area px-0 col-6 mb-3">
+								<div class="">
+									<div class="dz-image my-2" style="text-align: center">
+										<img alt="${item.imgFilename}" src="${item.thumbURL}" data-dz-thumbnail>
+									</div>
+									<div class="d-flex mt-1">
+										<div class="ml-auto pl-3 text-right">
+											<a class="dz-remove color-red-dark font-14 btn" href="javascript:undefined;" 
+												id="${item.imgSeq}" data-filepath="${item.imgData}" data-filename="${item.imgFilename}" data-dz-remove>
+											<i class="fa-regular fa-rectangle-xmark"></i> 삭제
+											</a>
+										</div>								
+									</div>
+								</div>
 							</div>
-							<div class="d-flex mt-1">
-								<div class="ml-auto pl-3 text-right">
-									<a class="dz-remove color-red-dark font-14 btn" href="javascript:undefined;" 
-										id="${item.imgSeq}" data-filepath="${item.imgData}" data-filename="${item.imgFilename}" data-dz-remove>
-									<i class="fa-regular fa-rectangle-xmark"></i> 삭제
-									</a>
-								</div>								
-							</div>
-						</div>
-					</div>
-					</c:if>
-                    </c:forEach>
+							</c:if>
+	                    </c:forEach>
                     </c:if>
                 </div>
 			</div>
@@ -121,8 +121,6 @@
 		, method : 'post'
 		, maxFiles : 1
 		, maxFilesize : 10
-		, thumbnailHeight: 90
-		, thumbnailWidth: 135
 		, resizeQueality : 0.9
 		, resizeWidth : 960
 		, dictFileTooBig : '{{maxFilesize}}MB 이하로 업로드 해주세요.'
@@ -130,6 +128,7 @@
 		, addRemoveLinks : true
 		, acceptedFiles : "image/*"
 		, uploadMultiple : true
+		, previewTemplate : '<div class="dz-preview px-0 col-6 mb-3 dz-processing dz-image-preview" style="display:none;"></div>'
 		, init : function() {
 			// 파일 개수 초과
 			this.on("maxfilesexceeded", function (file) {
@@ -173,13 +172,12 @@
 		, method : 'post'
 		, maxFiles : 1
 		, maxFilesize : 5
-		, thumbnailHeight: 90
-		, thumbnailWidth: 135
 		, dictFileTooBig : '{{maxFilesize}}MB 이하로 업로드 해주세요.'
 		, paramName : 'file'
 		, addRemoveLinks : true
 		, acceptedFiles : "video/*"
 		, uploadMultiple : false
+		, previewTemplate : '<div class="dz-preview px-0 col-6 mb-3 dz-processing dz-image-preview" style="display:none;"></div>'
 		, init : function() {
 			// 파일 개수 초과
 			this.on("maxfilesexceeded", function (file) {
@@ -220,7 +218,7 @@
 			, msNum : $('#msNum').val()
 		};
 		 console.log(params);
-		alertModal.confirm1('사진을 삭제하시겠습니까?', 'deleteGalleryItem(params);');
+		alertModal.confirm2('사진을 삭제하시겠습니까?', 'deleteGalleryItem(params);');
 	})
 	
 	function deleteGalleryItem(params) {
