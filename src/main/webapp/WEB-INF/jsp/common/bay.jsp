@@ -15,7 +15,7 @@
 		</div>
 	</div>
 </div>
-      <a href="bay1" class="card card-style " data-card-height="180"  style="background: url(/images/pictures/1.jpg) no-repeat 0 0;background-size:cover">
+      <a href="bay1" class="card card-style " data-card-height="150"  style="background: url(/images/pictures/1.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
                 <h1 class="color-white font-700">
                 <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">B1</span>
@@ -33,7 +33,7 @@
             <div class="card-overlay bg-black opacity-50"></div>
         </a>
 
-        <a href="bay2" class="card card-style" data-card-height="180"  style="background: url(/images/gallery/rest_main.jpg) no-repeat 0 0;background-size:cover">
+        <a href="bay2" class="card card-style" data-card-height="150"  style="background: url(/images/gallery/rest_main.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
                 <h1 class="color-white font-700">
                 <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">B1</span>
@@ -49,7 +49,7 @@
             <div class="card-overlay bg-black opacity-50"></div>
         </a>
      
-        <a href="bay3" class="card card-style" data-card-height="180" style="background: url(/images/gallery/store_main2.jpg) no-repeat 0 0;background-size:cover">
+        <a href="bay3" class="card card-style" data-card-height="150" style="background: url(/images/gallery/store_main2.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
                 <h1 class="color-white font-700">
                 <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">1F</span>
@@ -65,7 +65,7 @@
             <div class="card-overlay bg-black opacity-50"></div>
         </a>
        
-        <a href="bay4" class="card card-style" data-card-height="180"  style="background: url(/images/gallery/open_main2.jpg) no-repeat 0 0;background-size:cover">
+        <a href="bay4" class="card card-style" data-card-height="150"  style="background: url(/images/gallery/open_main2.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
                 <h2 class="color-white font-700 font-22">
          <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">2F</span>       
@@ -79,7 +79,7 @@
             </div>
             <div class="card-overlay bg-black opacity-50"></div>
         </a>
-        <a href="bay5" class="card card-style" data-card-height="180"  style="background: url(/images/gallery/lesson_main.jpg) no-repeat 0 0;background-size:cover">
+        <a href="bay5" class="card card-style" data-card-height="150"  style="background: url(/images/gallery/lesson_main.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
                 <h2 class="color-white font-700">
                 <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">3F</span> 

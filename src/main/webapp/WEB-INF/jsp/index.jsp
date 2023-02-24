@@ -25,7 +25,7 @@
 	<!--스크롤내리면 보이는 Header-->
 	<div class="header header-auto-show header-fixed header-logo-center ">
 		<a href="javascript:void(0);" class="header-title">클럽디 청담</a>
-		<a href="#" data-menu="menu-main" class="header-icon header-icon-4 mt-1"><i class="fas fa-bars font-18"></i></a>
+		<a href="#" data-menu="menu-main" class="header-icon header-icon-4 mt-1"><i class="fas fa-bars"></i></a>
 	</div>
 	<!--스크롤내리면 보이는 Header-->
 	

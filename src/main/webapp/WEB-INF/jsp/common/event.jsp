@@ -13,7 +13,7 @@
 			<!-- 이벤트 -->
 			<c:forEach items="${eList}" var="event" varStatus="status">
 			<div class="item" onclick="location.href='/boardView/${event.idx}'">
-				<div class="card card-style mx-0 bg-9" data-card-height="250" style="background-image: url(${event.fileURL});">
+				<div class="card card-style mx-0 bg-9" data-card-height="170" style="background-image: url(${event.fileURL});">
 					<div class="card-bottom m-3">
                 		<!-- 시작일~종료일 -->
 						<p class="color-white mb-0 opacity-80">${event.startDay}~${event.endDay}</p>

@@ -22,8 +22,6 @@
 <jsp:include page="common/menu.jsp" />
 <!-- //좌측GNB-->
 
-
-  
     <div class="page-content header-clear">
       
 	<img src="../images/gallery/intro.jpg" style="width:100%"/>
@@ -35,7 +33,6 @@
                 <div class="divider mb-0"></div> 
                 <div class="content">
                  
-            <div class="content">
                 <p class="mb-n1 color-highlight font-600">클럽디청담 소개</p>
 	                <h1>CLUBD CHEONGDAM </h1>
 	                <p>

@@ -23,10 +23,10 @@
     </div>
     
     <div class="page-content header-clear-medium">
-        <div class="menu-title">
+      <!--   <div class="menu-title">
             <h1 class="my-0 py-0">예약정보확인</h1>
         </div>
-        <div class="divider"></div>
+        <div class="divider"></div> -->
         <div class="content">
             <div class="d-flex mb-3" style="width:100%">
                 <div>
@@ -138,10 +138,10 @@
 			
 				<!-- 최종결제금액 -->
 				<div class="col-6 mt-1">
-					<h6 class="font-700 font-23">최종결제금액 </h6>
+					<h6 class="font-700 font-21">최종결제금액 </h6>
 				</div>
 				<div class="col-6">
-					<h6 class="font-700 font-28 txtTotAmt">
+					<h6 class="font-700 font-26 txtTotAmt">
 						<fmt:formatNumber value="${amount}" pattern="#,###" />원 
 					</h6>
 					<input type="hidden" name="totAmount" id="totAmount" value="${amount}"/>
@@ -458,7 +458,7 @@ function doPay() {
 	const isChk = checkbox.checked;
 	
 	if (isChk == false) {
-		alertModal.fail('환불규정 약관에 동의해주세요.');
+		alertModal.fail('예약규정 약관에 동의해주세요.');
 		return;
 	}
 

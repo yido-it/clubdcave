@@ -23,7 +23,7 @@
 				
 		<div class="single-slider owl-no-controls owl-carousel owl-no-dots">
 		<c:forEach items="${pList}" var="pro" varStatus="status">
-            <div data-card-height="150" class="card card-style bg-5 mb-0 rounded-m shadow-l" style="background-image: url(${pro.fileURL});" onclick="location.href='/boardView/${pro.idx}'">
+            <div data-card-height="130" class="card card-style bg-5 mb-0 rounded-m shadow-l" style="background-image: url(${pro.fileURL});" onclick="location.href='/boardView/${pro.idx}'">
                 <div class="card-bottom ml-2  mb-3">
                 	<!-- 시작일~종료일 -->
                    	<p class="color-white mb-0 opacity-90">${pro.startDay}~${pro.endDay}</p>

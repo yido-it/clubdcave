@@ -44,10 +44,10 @@
 				<div class="item" style="">
 					<c:choose>
 					<c:when test="${item.msImgName != null && item.msImgName != ''}">
-						<div class="card card-style mx-0 bg-pro1" data-card-height="280" style="background: url(${item.fileURL}) no-repeat 0 0; background-size: cover;">
+						<div class="card card-style mx-0 bg-pro1" data-card-height="230" style="background: url(${item.fileURL}) no-repeat 0 0; background-size: cover;">
 					</c:when>
 					<c:otherwise>					
-						<div class="card card-style mx-0 bg-pro1 bg-empty_profile" data-card-height="280">
+						<div class="card card-style mx-0 bg-pro1 bg-empty_profile" data-card-height="230">
 					</c:otherwise>
 					</c:choose>
 						<div class="card-bottom">

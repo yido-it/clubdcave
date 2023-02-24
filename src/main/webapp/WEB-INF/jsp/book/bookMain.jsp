@@ -33,7 +33,7 @@
 				<input type="hidden" name="bkDay" id="bkDay" value="" /> 
 			</form>
 		
-	        <h3 class="mb-3">클럽디청담 예약 </h3> 
+	       <!--  <h3 class="mb-3">클럽디청담 예약 </h3>  -->
 	        <div class="input-style input-style-2 input-required" data-menu="select_bay">
 	            <span class="color-highlight input-style-1-inactive bayInfo">베이선택</span>
 	            <em><i class="fa fa-chevron-down color-green-dark"></i></em> 
@@ -44,7 +44,7 @@
 	        <div class="calendar">
 	            <div class="cal-header"> 
 	            	<!-- 년  / 월 -->
-	                <h4 class="cal-title text-center text-uppercase font-400  color-white" style="background-color: #767676  !important;" id="calHeader"></h4>
+	                <h4 class="cal-title text-center text-uppercase font-400  color-white" style="line-height:56px;background-color: #767676  !important;" id="calHeader"></h4>
 	                <!-- 이전달 -->
 	                <h6 class="cal-title-left color-white">
 	                	<i class="fa fa-chevron-left"></i>
