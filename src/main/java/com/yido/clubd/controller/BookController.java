@@ -1,8 +1,6 @@
 package com.yido.clubd.controller;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,22 +22,20 @@ import com.yido.clubd.model.BookInfoVO;
 import com.yido.clubd.model.CdCommon;
 import com.yido.clubd.model.CoPlace;
 import com.yido.clubd.model.DrBayInfo;
-import com.yido.clubd.model.DrBkHistory;
 import com.yido.clubd.model.DrBkHistoryTemp;
+import com.yido.clubd.model.DrBkMark;
 import com.yido.clubd.model.DrBkOpenTime;
 import com.yido.clubd.model.DrBkTime;
-import com.yido.clubd.model.DrVoucherCode;
-import com.yido.clubd.model.DrVoucherList;
 import com.yido.clubd.service.BookService;
 import com.yido.clubd.service.ClDayInfoService;
 import com.yido.clubd.service.CoPlaceService;
 import com.yido.clubd.service.DrBayInfoService;
 import com.yido.clubd.service.DrBkHistoryService;
 import com.yido.clubd.service.DrBkHistoryTempService;
+import com.yido.clubd.service.DrBkMarkService;
 import com.yido.clubd.service.DrBkOpenTimeService;
 import com.yido.clubd.service.DrBkTimeService;
 import com.yido.clubd.service.DrCostInfoService;
-import com.yido.clubd.service.DrVoucherCodeService;
 import com.yido.clubd.service.DrVoucherListService;
 import com.yido.clubd.service.DrVoucherSaleService;
 import com.yido.clubd.service.MemberService;
@@ -89,6 +85,9 @@ public class BookController {
 	
 	@Autowired
 	private CommonService commonService;
+
+	@Autowired
+	private DrBkMarkService drBkMarkService;
 	
 	/**
 	 * [예약] 예약페이지
@@ -205,14 +204,13 @@ public class BookController {
 		HttpSession session = req.getSession();
 		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
 		String returnPage = "/book/book2";
-
-		log.info("sessionVO: {}", sessionVO);
+		
 		try {
 			if (coDiv == null || serialNo == null || sessionVO == null 
 					|| coDiv.equals("") || serialNo.equals("") || sessionVO.getMsId().equals("")) {
 				return returnPage;
 			}
-			
+
 			// 예약 임시 테이블 조회
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("coDiv"		, coDiv);
@@ -220,9 +218,8 @@ public class BookController {
 			map.put("msNum"		, sessionVO.getMsNum());
 			DrBkHistoryTemp temp = drBkHistoryTempService.getHistory(map);
 
-			log.info("예약 임시 데이터: {}", temp);
-			
 			if (temp != null) {
+	
 				model.addAttribute("bkHis", temp);
 				
 				// 날짜 포맷 변경
@@ -266,10 +263,26 @@ public class BookController {
 				model.addAttribute("vcList", vList);
 				// end.
 				
-				// log.info("지점 정보: {}", place.get(0));
-				// log.info("베이 정보: {}", bay.get(0));
-				// log.info("요금: {}", cost);
+				// 예약선점 시간 조회
+				BookInfoVO bkInfo = new BookInfoVO();
+				bkInfo.setCoDiv(coDiv);
+				bkInfo.setBkDay(temp.getBkDay());
+				if (temp.getBkTime2().indexOf(",") > 0) {
+					String tmpBkTime[] = temp.getBkTime2().split(",");
+					bkInfo.setBkTime(tmpBkTime[0]);
+				} else {
+					bkInfo.setBkTime(temp.getBkTime2());
+				}
+				bkInfo.setMsId(sessionVO.getMsId());
+				List<DrBkMark> mList = drBkMarkService.selectList(bkInfo);
+				
+				if (mList.size() > 0) {
+					model.addAttribute("entryDatetime", mList.get(0).getEntryDatetime());	
+				}			
+				// end.
+				
 			}
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -309,8 +322,6 @@ public class BookController {
 				list = clDayInfoService.selectList(cMap); 
 			}
 			
-			log.info("[getCalendar] list : " + list);
-		
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -342,6 +353,7 @@ public class BookController {
 		return returnPage;
 	}
 	
+
 	/**
 	 * [예약] 예약내역 조회 + 더보기 
 	 * 
@@ -392,6 +404,7 @@ public class BookController {
 		return list;
 	}
 
+	
 	/**
 	 * [예약] 결제 완료 페이지 
 	 * 
@@ -419,11 +432,7 @@ public class BookController {
 			// 예약정보 
 			List<Map<String, Object>> list = drBkHistoryService.selectBkHis(param);
 			model.addAttribute("bk", list.get(0));
-			
-			// 이용권 사용내역 
-			//List<Map<String, Object>> vList = drBkHistoryService.selectVoucherList(param);
-			//model.addAttribute("vList", vList); 
-			
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -444,12 +453,9 @@ public class BookController {
 	public List<DrBkTime> bookAvailableTime(HttpServletRequest req, @RequestParam Map<String, Object> params){
 		
 		List<DrBkTime> timeList = new ArrayList<DrBkTime>();
-		log.info("[bookAvailableTime] params :" + params);
 		
 		try {
 			timeList = drBkTimeService.bookAvailableTime(params);
-
-			log.info("[bookAvailableTime] timeList :" + timeList);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -471,8 +477,7 @@ public class BookController {
 
     	ResultVO result = new ResultVO();
 		String ipAddr = Utils.getClientIpAddress(req);
-    	log.info("[bookCancel] bInfo: " + bInfo);
-
+    
 		try {
 			bInfo.setIpAddr(ipAddr);
 			result = bookService.bookCancel(bInfo);
@@ -496,7 +501,6 @@ public class BookController {
 	@ResponseBody
 	public ResultVO unBkMark(HttpServletRequest req, BookInfoVO bookInfo){
 		
-		log.info("[unBkMark] bookInfo : " + bookInfo);
     	ResultVO result = new ResultVO();
     	
 		try {
@@ -508,4 +512,33 @@ public class BookController {
 		
 		return result;
 	}
+	
+	/**
+	 * 예약선점 데이터 조회
+	 * 
+	 * @param req
+	 * @param params
+	 * @return
+	 */
+	@RequestMapping("/getMark")
+	@ResponseBody
+	public DrBkMark getMark(HttpServletRequest req, BookInfoVO bkInfo){
+		HttpSession session = req.getSession();
+		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
+		DrBkMark drBkMark = new DrBkMark();
+		
+		try {
+			// 예약선점 테이블 조회
+			bkInfo.setMsId(sessionVO.getMsId());
+			List<DrBkMark> list = drBkMarkService.selectList(bkInfo);
+			
+			if (list.size() > 0) drBkMark = list.get(0);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return drBkMark;
+	}	
+	
 }

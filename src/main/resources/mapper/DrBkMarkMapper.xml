@@ -20,10 +20,7 @@
  			 , ENTRY_IP
  			 , ENTRY_DATETIME
 		 FROM DR_BK_MARK
-		WHERE 1=1
-		<if test='availableYn != null and availableYn == "Y"'>
-		AND BK_STATE = 'Y' AND (ENTRY_DATETIME IS NULL OR ENTRY_DATETIME = '') 		
-		</if>			
+		WHERE 1=1	
 		<if test='coDiv != null and coDiv != ""'>
 		AND CO_DIV = #{coDiv} 
 		</if>	
@@ -41,8 +38,8 @@
 		</if>	
 		<if test='bkState != null and bkState != ""'>
 		AND BK_STATE = #{bkState} 
-		</if>		  	      
-		ORDER BY BK_SEQ
+		</if>	     
+		ORDER BY ENTRY_DATETIME DESC
     </select>
    
    	<!-- [예약 선점용] 테이블에서 예약 가능한 데이터 조회하기 -->
@@ -83,9 +80,6 @@
 	    	<if test='bkSerialNo != null'>
 			, BK_SERIAL_NO 		= #{bkSerialNo}
 			</if>	
-	    	<if test='bkState != null'>
-			, BK_STATE 			= #{bkState}
-			</if>	
 		 WHERE CO_DIV 			= #{coDiv}
 		   AND BAY_CONDI 		= #{bayCondi}
 		   AND BK_DAY 			= #{bkDay}
@@ -95,9 +89,6 @@
 		</if>	 
 		<if test='entryUser != null and entryUser != ""'>
 		   AND ENTRY_USER 		= #{entryUser} 
-		</if>
-		<if test='bkStateIsY != null and bkStateIsY == "Y"'>
-		   AND BK_STATE 		= 'Y'
 		</if>
     </update>
     
@@ -107,7 +98,8 @@
     	   SET ENTRY_METHOD 	= #{entryMethod}
 			 , ENTRY_USER 		= #{updMsId}
 			 , ENTRY_IP 		= #{ipAddr}
-			 , ENTRY_DATETIME	= DATE_ADD(NOW(), INTERVAL #{entryTime} MINUTE)			
+			 , ENTRY_DATETIME	= DATE_ADD(NOW(), INTERVAL #{entryTime} MINUTE)	
+			 , BK_STATE			= 'N'		
 		 WHERE CO_DIV 			= #{coDiv}
 		   AND BAY_CONDI 		= #{bayCondi}
 		   AND BK_DAY 			= #{bkDay}
@@ -118,12 +110,11 @@
 		<if test='entryUser != null and entryUser != ""'>
 		   AND ENTRY_USER 		= #{entryUser} 
 		</if>
-		<if test='bkStateIsY != null and bkStateIsY == "Y"'>
-		   AND BK_STATE 		= 'Y'
+		<if test='bkStateIsYn != null and bkStateIsYn == "Y"'>
+		   AND BK_STATE 		= #{bkStateIsYn}
 		</if>
     </update>
     
-
     <!-- [예약 선점용] 해제 -->
     <update id="updateUnMark" parameterType="hashmap">
     	UPDATE DR_BK_MARK
@@ -142,9 +133,6 @@
 		</if>	 
 		<if test='entryUser != null and entryUser != ""'>
 		   AND ENTRY_USER 		= #{entryUser} 
-		</if>
-		<if test='bkStateIsY != null and bkStateIsY == "Y"'>
-		   AND BK_STATE 		= 'Y'
 		</if>
     </update>
 </mapper>

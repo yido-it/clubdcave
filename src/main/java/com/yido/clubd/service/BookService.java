@@ -139,6 +139,7 @@ public class BookService {
 				// end.
 				
 				param.put("entryMethod"		, "M");		// M: 모바일	
+				param.put("bkStateIsYn"		, "Y");		// 예약가능한거 찾아서 선점처리 
 				param.put("updMsId"			, bkInfo.getMsId());		
 				param.put("ipAddr"			, bkInfo.getIpAddr());		
 				param.put("entryTime"		, eTime);			

@@ -72,9 +72,11 @@ public class VoucherController {
 		HttpSession session = req.getSession();
 		SessionVO sessionVO = (SessionVO) session.getAttribute("msMember");
 		String returnPage = "/voucher/voucherMain";
-		
+
 		try {
 			if (sessionVO == null) return returnPage;
+			
+			if (req.getParameter("tab") != null) model.addAttribute("tab", req.getParameter("tab"));
 			
 			// 이용권 조회
 			List<DrVoucherCode> list = new ArrayList<DrVoucherCode>();

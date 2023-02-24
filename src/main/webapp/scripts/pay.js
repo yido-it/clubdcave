@@ -31,7 +31,7 @@ var mPay = function() {
 		fnFail = fail;
 		
 		var current = new Date().yyyymmddhhmmss();
-		
+	
 		var format_form = String.format(form
 			, params.serviceId
 			, params.key

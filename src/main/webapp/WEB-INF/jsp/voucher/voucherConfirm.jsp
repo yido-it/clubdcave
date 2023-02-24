@@ -93,8 +93,9 @@ $(document).ready(function() {
 	}
 });
 
+// 이용권 구매내역 확인 페이지로 이동 
 function goList(coDiv) {
-	location.href='/voucher/voucherMain/'+coDiv;
+	location.href='/voucher/voucherMain/'+coDiv+'?tab=2';
 }
 </script>
 </html>

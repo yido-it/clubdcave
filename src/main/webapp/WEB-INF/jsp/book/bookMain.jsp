@@ -511,9 +511,11 @@ function doBook() {
 		// 선택된 시간 반복문
 		var bookData = new Object();	
 		var afterStr = matches[i].id.split('_');
-		
-		bookData.bkTime = afterStr[1] + ":00";
-		bkList.push(bookData);
+
+		if (afterStr[1] != undefined) {
+			bookData.bkTime = afterStr[1] + ":00";
+			bkList.push(bookData);
+		}
 	}
 	reservationInfo.bkList 		= bkList;
 	reservationInfo.bayCondi 	= $('#bayCondi').val();

@@ -1,5 +1,7 @@
 <!-- 
 기능 : 예약 2단계 페이지 (예약 정보 확인, 이용권 선택) 
+	-> 해당 페이지에서는 하단바, 메뉴 모두 안보이게 처리함
+	   ( 예약선점된 채로 페이지 이동되는 문제 때문에 )
 작성자 :bae
 -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -17,13 +19,9 @@
     
     <div class="header header-fixed header-logo-app">
         <a href="#" class="header-title header-subtitle">예약확인</a>
-		<jsp:include page="../common/top.jsp" />
+		<jsp:include page="../common/topBook.jsp" />
     </div>
     
-    <!-- 좌측GNB-->
-	<jsp:include page="../common/menu.jsp" />
-	<!-- //좌측GNB-->
-
     <div class="page-content header-clear-medium">
         <div class="menu-title">
             <h1 class="my-0 py-0">예약정보확인</h1>
@@ -68,7 +66,7 @@
 				<!-- 이용권 목록 -->	
 				<c:forEach items="${vcList}" var="vc">
 					<div class="d-flex mb-2"> 
-						<input type="hidden" id="remCnt" value="${vc.VC_REM_CNT}"/>					<!-- 잔여수량 -->
+						<input type="hidden" id="remCnt${vc.SALE_SEQ}" value="${vc.VC_REM_CNT}"/>	<!-- 잔여수량 -->
 						<input type="hidden" id="saleDay${vc.SALE_SEQ}" value="${vc.SALE_DAY}"/> 	<!-- 이용권 구매일자 -->
 						<input type="hidden" id="coDiv${vc.SALE_SEQ}" value="${vc.CO_DIV}"/> 		
 						<div class="w-100">
@@ -97,7 +95,7 @@
 								<a href="#" class="stepper-sub font-14" onClick="chkQuantity('minus', ${vc.SALE_SEQ})">
 									<i class="fa fa-minus color-theme opacity-40"></i>
 								</a>
-								<input style="font-size:15px !important" id="quantity${vc.SALE_SEQ}" type="number" min="1" max="${vc.VC_REM_CNT}" value="1">
+								<input style="font-size:15px !important" id="quantity${vc.SALE_SEQ}" type="number" min="1" max="${vc.VC_REM_CNT}" value="0" readonly>
 								<a href="#" class="stepper-add font-14" onClick="chkQuantity('plus',${vc.SALE_SEQ})">
 									<i class="fa fa-plus color-theme opacity-40"></i>
 								</a>
@@ -106,6 +104,9 @@
 						</div>
 					</div>
 				</c:forEach>
+				<c:if test="${empty vcList}">
+				보유중인 이용권이 없습니다.
+				</c:if>
 				<!--//이용권-->
             </div>
 			
@@ -160,69 +161,86 @@
 <!-- 모달-->
 <jsp:include page="../common/pop/modal.jsp" />
 
-<!-- 하단바 -->
-<jsp:include page="../common/footerBar.jsp" />
-
 </body>
 
 <jsp:include page="../common/alertModal.jsp" />  
 
 <script type="text/javascript">
 
-var msId 		= "<c:out value='${sessionScope.msMember.msId}'/>";
-var amount 		= "<c:out value='${amount}'/>";		// 결제할 금액
-var timeAmt 	= "<c:out value='${timeAmt}'/>";	// 시간당 금액 (이용권1장 = 시간당금액)
-var totAmount	= "<c:out value='${amount}'/>";		// 최종 결제할 금액
-var vAmount 	= 0;								// 총 사용할 이용권금액
-var selectedCnt = 0;								// 선택된 이용권의 총 수량
+var coDiv 			= "<c:out value='${place.coDiv}'/>";		<!-- 지점코드 -->
+var entryDatetime	= "<c:out value='${entryDatetime}'/>";	
+var entryDt 		= "";
+var msId 			= "<c:out value='${sessionScope.msMember.msId}'/>";
+var amount 			= "<c:out value='${amount}'/>";		// 결제할 금액
+var timeAmt 		= "<c:out value='${timeAmt}'/>";	// 시간당 금액 (이용권1장 = 시간당금액)
+var totAmount		= "<c:out value='${amount}'/>";		// 최종 결제할 금액
+var vAmount 		= 0;								// 총 사용할 이용권금액
+var selectedCnt 	= 0;								// 선택된 이용권의 총 수량
 
 var msNum			= "<c:out value='${sessionScope.msMember.msNum}'/>";
 var msLevel 		= "<c:out value='${sessionScope.msMember.msLevel}'/>";
 var msEmail 		= "<c:out value='${sessionScope.msMember.msEmail}'/>";
 var msName 			= "<c:out value='${sessionScope.msMember.msName}'/>";
-/*
-var msFirstPhone1	= "<c:out value='${sessionScope.msMember.msFirstPhone1}'/>";
-var msMidPhone1 	= "<c:out value='${sessionScope.msMember.msMidPhone1}'/>";
-var msLastPhone1 	= "<c:out value='${sessionScope.msMember.msLastPhone1}'/>";
-var msPhone 		= msFirstPhone1 + "-" + msMidPhone1 + "-" + msLastPhone1;
-*/
+
 var reservationInfo 			= {};
-reservationInfo.coDiv 			= "<c:out value='${place.coDiv}'/>";		<!-- 지점코드 -->
+reservationInfo.coDiv 			= coDiv;		<!-- 지점코드 -->
 reservationInfo.bayCondi 		= "<c:out value='${bay.bayCd}'/>"; 			<!-- 베이코드 -->
 reservationInfo.bkDay 			= "<c:out value='${bkHis.bkDay}'/>"; 		<!-- 예약임시테이블 -->
 reservationInfo.bkTime 			= "<c:out value='${bkHis.bkTime2}'/>"; 		<!-- 예약임시테이블 -->
 reservationInfo.tempSerialNo	= "<c:out value='${bkHis.serialNo}'/>"; 	<!-- 예약임시테이블 -->
 reservationInfo.bkAmount 		= totAmount; 
 reservationInfo.oriBkAmount	 	= amount; 
-/*
-reservationInfo.msLevel			= msLevel;
-reservationInfo.userMail 		= msEmail;
-reservationInfo.msNum 			= msNum;
-reservationInfo.msId 			= msId;
-reservationInfo.userName 		= msName;
-reservationInfo.phone 			= msPhone;
-*/
 
 var vList 						= new Array();		// 이용권 정보 
-
 
 timeAmt = Number(timeAmt);
 amount = Number(amount);
 
 $(document).ready(function() {
-	if (msId == null || msId == "") {
-		// alertModal.fail('로그인 후 이용 가능합니다.');
-		location.href = "/login";	
+	
+	if (entryDatetime != null && entryDatetime != "") {
+		entryDt = new Date(entryDatetime);
+	} else {		
+		location.href = "/book/bookMain/"+coDiv;	
 		return;
 	}
 	
-	// 하단바 [예약] 버튼 클릭시 모달창 뜨도록 
-	document.getElementById('footerBook').setAttribute( 'data-menu', 'modal_btnBook' );
+	if (msId == null || msId == "") {
+		location.href = "/login";	
+		return;
+	}
+
+	// 하단바  버튼 클릭시 모달창 뜨도록 
+	// document.getElementById('footerBook').setAttribute( 'data-menu', 'modal_btnBook' );
+	
 	// 좌측 상단 [뒤로가기] 클릭시 모달창 뜨도록 
 	$('#topGoBack').removeClass('back-button');
 	document.getElementById('topGoBack').setAttribute( 'data-menu', 'modal_back' );
 	
+	setInterval("chkMark()", 5000); // 5초마다 chkMark() 함수 실행
 });
+
+// 예약선점 시간 지난 경우에 페이지 벗어나도록  
+function chkMark() {
+	var now = new Date();
+	
+	if (entryDt <= now) {
+    	$.ajax({
+    		url: "/book/getMark/"
+    		, type: "post"
+    		, dataType: 'json'
+    		, data: reservationInfo
+    		, contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+    		, success: function(data) {
+				// 데이터 존재하지 않으면 예약 메인 페이지로 이동
+				if (data == null || data.bkDay == null) {
+					location.href="/book/bookMain/" + coDiv;
+					
+				}
+    		}
+    	});	   		
+	}
+}
 
 // 이용권 체크박스 선택
 function chkVoucher(checked, seq) {
@@ -230,23 +248,29 @@ function chkVoucher(checked, seq) {
 	// 이용권 체크박스 
     const chkVou = document.getElementsByName("chkVoucher");
     const chkLength = $("input:checkbox[name='chkVoucher']:checked").length;   
-	console.log('선택되어있는 체크박스:', chkLength);
-    
 	var quantity = Number($('#quantity'+seq).val());
 
-	console.log('선택된 이용권 수량:', quantity, ', 이용권 총 금액:', vAmount);
-	
 	if( checked.checked == true ){
 		// 이용권 선택
+		console.log('선택되어있는 체크박스:', chkLength, ', 현재 이용권 사용 수량:', quantity);
 		
 		if (quantity == 0) {
 			$('#quantity'+seq).val(1);
 			quantity = Number($('#quantity'+seq).val());
 		}
 		
-		vAmount += (timeAmt * quantity);
-		totAmount = amount - vAmount;
+		if ((timeAmt * quantity) > totAmount) {
+			$("input:checkbox[id='check"+seq+"']").prop("checked", false);
+			$('#quantity'+seq).val(quantity-1);	// 현재 선택된 이용권의 수량 -1 
+			alertModal.fail('이용권 사용금액이 결제금액보다 클 수 없습니다.');
+			return;
+		}
+		
+		vAmount += (timeAmt * quantity);	// 이용권 1장당 금액 * 수량 
+		totAmount = amount - vAmount;		// 결제금액 - 이용권 총 사용금액
 		selectedCnt += 1;
+
+		console.log('결제금액:', amount, ' - 이용권 총 금액: ', vAmount, ' = 총 결제금액 : ', totAmount);
 		
 		// 이용권금액
 	 	document.querySelector(".txtVcAmt").innerHTML = "-" + (vAmount).toLocaleString("ko-KR") + "원";
@@ -261,12 +285,13 @@ function chkVoucher(checked, seq) {
 				
 	} else {
 		// 이용권 선택 해제
+		console.log('선택되어있는 체크박스:', chkLength, ', 현재 이용권 해제 수량:', quantity);
 		
 		// 총금액 - 선택된 이용권 금액 
 		vAmount -= (timeAmt * quantity);
-		console.log('해제 > 총 결제금액: ', totAmount, ',총 이용권 금액:', vAmount);
 		totAmount = amount - vAmount;	// 결제금액 - 이용권금액 = 최종 결제할 금액
 		selectedCnt -= 1;
+		console.log('결제금액:', amount, ' - 이용권 총 금액: ', vAmount, ' = 총 결제금액 : ', totAmount);
 		
 		// 이용권금액
 	 	document.querySelector(".txtVcAmt").innerHTML = "-" + (vAmount).toLocaleString("ko-KR") + "원";
@@ -281,7 +306,6 @@ function chkVoucher(checked, seq) {
     		$('.vcCnt').css('display', 'none');
     		$('.vcAmt').css('display', 'none');
 		}
-	    
 	}
 }
 
@@ -294,13 +318,13 @@ function chkQuantity(type, seq){
     const chkLength = $("input:checkbox[name='chkVoucher']:checked").length;   	// 선택된 이용권 개수
 		  
 	var quantity = Number($('#quantity'+seq).val());
-	var remCnt = Number($('#remCnt').val());
+	var remCnt = Number($('#remCnt'+seq).val());
 
 	switch (type) {
 		case "minus" :
 			
 			quantity -= 1;
-			console.log('현재 선택된 수량:', quantity);
+			console.log('현재 이용권 사용 수량:', quantity);
 			
 			if (quantity == 0 && chkThis.checked == false) {
 				quantity += 1;
@@ -336,7 +360,7 @@ function chkQuantity(type, seq){
 		    		// end.
 		    	    
 					totSelectedAmt += timeAmt * tmpCnt;
-					console.log('[선택된 이용권+수량]의 금액 합계 :', totSelectedAmt, ', 선택된 이용권 수량  : ', tmpCnt, ', 총 금액:' , totSelectedAmt);
+					console.log('[선택된 이용권+수량]의 금액 합계 :', totSelectedAmt, ', 선택된 이용권 수량  : ', tmpCnt);
 		    	    			    	   
 					if (tmpCnt == 0) {
 						// 수량 0개되면 해당 이용권 체크박스 선택해제	
@@ -347,16 +371,14 @@ function chkQuantity(type, seq){
 		    }			
 			// end.
 			
-			console.log('1. 선택된 이용권금액:', timeAmt, ', 현재 선택된 수량: ', quantity, ', 이용권 총 금액: ', vAmount, ', 총 결제금액 : ', totAmount);
-			// vAmount = selectedAmt * quantity;
 			totAmount = amount - vAmount;	// 결제금액 - 이용권금액 = 최종 결제할 금액 
-			console.log('2. 선택된 이용권금액:', timeAmt, ', 이용권 총 금액: ', vAmount, ', 총 결제금액 : ', totAmount);
+			console.log('결제금액:', amount, ' - 이용권 총 금액: ', vAmount, ' = 총 결제금액 : ', totAmount);
 			
 			break;
 
 		case "plus" :
 			quantity += 1;
-			console.log('현재 선택된 수량:', quantity);
+			console.log('현재 이용권 사용 수량:', quantity);
 			
 			// 수량이 1이상이면 체크박스 자동으로 선택되도록
 			if (quantity > 0) {
@@ -369,6 +391,7 @@ function chkQuantity(type, seq){
 			// 선택된 수량이 잔여수량보다 크면 중단 
 			if (quantity > remCnt) {
 				quantity -= 1;
+				$('#quantity'+seq).val(quantity-1);	// 현재 선택된 이용권의 수량 -1 
 				alertModal.fail('잔여수량 초과하였습니다.');
 				return;
 			}
@@ -400,7 +423,10 @@ function chkQuantity(type, seq){
 			if (totSelectedAmt > amount) {
 				quantity -= 1;
 				$('#quantity'+seq).val(quantity-1);	// 현재 선택된 이용권의 수량 -1 
+				
 				vAmount -= timeAmt;
+				totSelectedAmt -= vAmount;
+
 				alertModal.fail('이용권 사용금액이 결제금액보다 클 수 없습니다.');
 				return;
 			}
@@ -409,15 +435,8 @@ function chkQuantity(type, seq){
 			$('.vcCnt').css('display', 'inline');
 			$('.vcAmt').css('display', 'inline');
 
-			if (quantity == 2) {
-				console.log('1. 선택된 이용권금액:', timeAmt, ', 현재 선택된 수량: ', quantity, ', 이용권 총 금액: ', vAmount, ', 총 결제금액 : ', totAmount);
-				//vAmount = vAmount + (selectedAmt * quantity);
-			} else {
-				console.log('1. 선택된 이용권금액:', timeAmt, ', 현재 선택된 수량: ', quantity, ', 이용권 총 금액: ', vAmount, ', 총 결제금액 : ', totAmount);
-				//vAmount += selectedAmt;
-			}
 			totAmount = amount - vAmount;
-			console.log('2. 선택된 이용권금액:', timeAmt, ', 이용권 총 금액: ', vAmount, ', 총 결제금액 : ', totAmount);
+			console.log('결제금액:', amount, ' - 이용권 총 금액: ', vAmount, ' = 총 결제금액 : ', totAmount);
 			
 			break;
 	}
@@ -476,8 +495,7 @@ function doPay() {
     				// 결제완료 페이지로 이동
     				location.href="/book/bookConfirm";
     			} else if (data.code == '9999') {
-    				alertModal.fail(data.message);
-    				
+    				alertModal.fail(data.message);   				
     			}
     		}
     	});	        
@@ -533,7 +551,7 @@ function fnUnBkMark(reservationInfo, type) {
 	return result;
 }
 
-// 뒤로가기 
+// 뒤로가기 (예약선점해제)
 function goBack() {
 	fnUnBkMark(reservationInfo, 'back');
 	setTimeout(function() { window.history.go(-1); }, 50);

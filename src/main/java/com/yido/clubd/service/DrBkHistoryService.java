@@ -15,6 +15,7 @@ import com.yido.clubd.common.repository.CommonMapper;
 import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.model.BookInfoVO;
 import com.yido.clubd.model.DrBkHistory;
+import com.yido.clubd.model.DrBkMark;
 import com.yido.clubd.model.DrBkMnMap;
 import com.yido.clubd.repository.DrBkHistoryLogMapper;
 import com.yido.clubd.repository.DrBkHistoryMapper;
@@ -184,15 +185,20 @@ public class DrBkHistoryService {
 		param.put("costCoDiv"	, map.get("COST_DIV").toString());
 		// end.
 		
-		// 선점용 map
+		// 선점용 
+		BookInfoVO bkInfo = new BookInfoVO();
+		bkInfo.setCoDiv(param.get("coDiv").toString());
+		bkInfo.setBayCondi(param.get("bayCondi").toString());
+		bkInfo.setBkDay(param.get("bkDay").toString());
+		bkInfo.setMsId(session.getMsId());
+		bkInfo.setBkState("N"); // 선점 된 것중에 msId null 인거 가져와야함 
+		
 		Map<String, Object> map2 = new HashMap<String, Object>();
-		map2.put("coDiv"		, param.get("coDiv"));
-		map2.put("bayCondi"		, param.get("bayCondi"));
-		map2.put("bkDay"		, param.get("bkDay"));
-		map2.put("entryUser"	, session.getMsId());
+		map2.put("coDiv"		, bkInfo.getCoDiv());
+		map2.put("bayCondi"		, bkInfo.getBayCondi());
+		map2.put("bkDay"		, bkInfo.getBkDay());
+		map2.put("entryUser"	, bkInfo.getMsId());
 		map2.put("msNum"		, session.getMsNum());
-		map2.put("bkStateIsY"	, "Y");
-		map2.put("bkState"		, "N");
 		// end.
 		
 		// 예약 입금 연결 정보				
@@ -218,6 +224,7 @@ public class DrBkHistoryService {
 	        mnInHistoryMapper.insertMnInHistory(param);
 		}
         // end.
+		
         
 		if (param.get("bkTime").toString().indexOf(",") > 0) {
 			// 다건 예약
@@ -251,12 +258,20 @@ public class DrBkHistoryService {
 				bkLog.setLogDiv("I");
 				drBkHistoryLogMapper.insertDrBkHistoryLog(bkLog);
 				// end.
-				
-				// 예약선점 테이블 변경 (예약고유번호, 상태)
-				// 조회조건 : 지점코드, 베이코드, 일자, 시간, 아이디, 상태 Y인거 
-				map2.put("bkSerialNo", bkSerialNo);
-				map2.put("bkTime", sBkTime);
-				drBkMarkMapper.updateDrBkMark(map2);	
+	
+				// 해당 아이디로 예약 선점한거 가져오기 (BK_SEQ 필요함)
+	    		bkInfo.setBkTime(sBkTime);
+				List<DrBkMark> markList = drBkMarkMapper.selectList(bkInfo);
+				log.debug("[actionReservation] 해당 아이디로 예약 선점한거 조회 > 결과 : {}", markList);
+				// end.
+				if (markList != null && markList.size() > 0) {
+					// 예약선점 테이블 변경 (예약고유번호, 상태)
+					// 조회조건 : 지점코드, 베이코드, 일자, 시간, 아이디, 상태 Y인거 
+					map2.put("bkSerialNo"	, bkSerialNo);
+					map2.put("bkTime"		, sBkTime);
+					map2.put("bkSeq"		, markList.get(0).getBkSeq());
+					drBkMarkMapper.updateDrBkMark(map2);	
+				}
 				 
 				if (param.get("mnSeq") != null) {
 					// 예약-입금 연결 정보 insert
@@ -292,12 +307,20 @@ public class DrBkHistoryService {
 			drBkHistoryLogMapper.insertDrBkHistoryLog(bkLog);
 			// end.
 			
-			// 예약선점 테이블 변경 (예약고유번호, 상태)
-			// 조회조건 : 지점코드, 베이코드, 일자, 시간, 아이디, 상태 Y인거 
-			map2.put("bkSerialNo", bkSerialNo);
-			map2.put("bkTime", param.get("bkTime"));
-			drBkMarkMapper.updateDrBkMark(map2);	
-
+			// 해당 아이디로 예약 선점한거 가져오기 (BK_SEQ 필요함)
+    		bkInfo.setBkTime(param.get("bkTime").toString());
+			List<DrBkMark> markList = drBkMarkMapper.selectList(bkInfo);
+			log.debug("[actionReservation] 해당 아이디로 예약 선점한거 조회 > 결과 : {}", markList);
+			// end.
+			if (markList != null && markList.size() > 0) {
+				// 예약선점 테이블 변경 (예약고유번호, 상태)
+				// 조회조건 : 지점코드, 베이코드, 일자, 시간, 아이디, 상태 Y인거 
+				map2.put("bkSerialNo"	, bkSerialNo);
+				map2.put("bkTime"		, param.get("bkTime"));
+				map2.put("bkSeq"		, markList.get(0).getBkSeq());
+				drBkMarkMapper.updateDrBkMark(map2);	
+			}
+			
 			if (param.get("mnSeq") != null) {
 				// 예약-입금 연결 정보 insert
 				// 건수가 여러개이면 순번, 예약고유번호 다르게 들어가야함 

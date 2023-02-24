@@ -34,11 +34,11 @@
 	<div class="content">
 		<!-- 탭선택 -->
 		<div class="tab-controls tabs-round tab-animated tabs-medium tabs-rounded shadow-xl" data-tab-items="2" data-tab-active="bg-green-dark color-white">
-			<a href="#" data-tab-active="" data-tab="tab-1" class="bg-green-dark color-white no-click font-15" style="width: 50%;">
+			<a href="#" data-tab="tab-1" class="bg-green-dark color-white no-click font-15" id="tab1" style="width: 50%;">
 				이용권구매
 			</a>
 			
-			<a href="#" data-tab="tab-2" style="width: 50%;" class="font-15">
+			<a href="#" data-tab="tab-2" style="width: 50%;" class="font-15" id="tab2">
 				이용권보유내역
 			</a>
 		</div>
@@ -203,6 +203,7 @@
 
 var listSize	= 0;	
 var msId 		= "<c:out value='${sessionScope.msMember.msId}'/>";
+var tab 		= "<c:out value='${tab}'/>";
 var coDiv 		= "<c:out value='${coDiv}'/>";
 var saleSeq		= ""; // 취소할때 필요한 매출순번
 var drSerialNo	= ""; // 취소할때 필요한 이용권 매출 고유번호
@@ -217,8 +218,18 @@ $(document).ready(function() {
 	init();
 	doSearchList('search');
 	
-
+	tabSetting();
 });
+
+function tabSetting() {
+	if (tab != null && tab != '' && tab == '2') {
+		// 이용권보유내역 탭 표출
+		$('#tab1').removeClass('bg-green-dark color-white no-click');
+		$('#tab-1').css('display', 'none');
+		$('#tab2').addClass('bg-green-dark color-white no-click');
+		$('#tab-2').css('display', 'block');
+	}
+}
 
 function init() {
 
@@ -368,7 +379,7 @@ function doSearchList(type) {
 					var saleDay = getStringDt2(data[i].SALE_DAY, '-');
 				
 					var isCancel = false;
-					if (data[i].VC_LIMIT_CNT == data[i].VC_REM_CNT) {
+					if (data[i].VC_STATE == '01' && data[i].VC_LIMIT_CNT == data[i].VC_REM_CNT) {
 						isCancel = true;	// 사용전이므로 [구매취소] 가능  
 					} 
 					
@@ -378,6 +389,9 @@ function doSearchList(type) {
 				
 					if (isCancel) {
 						// 사용전이므로 [구매취소] 가능  
+						divCnt += '<button class="btn accordion-btn border-0 color-theme font-14 accodion-padding">';
+					} else if (data[i].VC_STATE != '01') {
+						// 이용권 상태 : 삭제, 만료, 휴회 등 
 						divCnt += '<button class="btn accordion-btn border-0 color-theme font-14 accodion-padding">';
 					} else {
 						// [구매취소] 불가 + 상세내역 조회 
@@ -395,11 +409,13 @@ function doSearchList(type) {
 						divCnt += '		style="border-bottom : 1px solid #DA4453 !important">';
 						divCnt += '취소';
 						divCnt += '</a>';
+					} else if (data[i].VC_STATE != '01') {
+						// 이용권 상태 : 삭제, 만료, 휴회 등 
+						divCnt += '<span class="color-pink-light ml-1">('+ data[i].VC_STATE_NM+')</span>';
 					} else {
 						divCnt += '<i class="fa fa-chevron-down font-10 accordion-icon"></i>';
 					}
 					
-
 					divCnt += '<p class="opacity-50 font-11 mt-1 mb-1"><i class="fa-regular fa-clock"></i>유효기간: '+toDay+'</p>'; 
 					divCnt += '<p class="opacity-50 font-11"><i class="fa-regular fa-calendar"></i></i>결제일자: '+saleDay+'</p>';	 					        
 

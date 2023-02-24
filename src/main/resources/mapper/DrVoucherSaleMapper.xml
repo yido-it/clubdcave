@@ -29,8 +29,10 @@
 		     , A.VC_STATE
 		     , A.MS_NUM
 		     , A.DR_SERIAL_NO
+		     , CD_TITLE1 AS VC_STATE_NM
 		FROM DR_VOUCHER_SALE A 
 				INNER JOIN DR_VOUCHER_CODE B ON A.VC_CD = B.VC_CD
+				INNER JOIN CD_COMMON C ON A.VC_STATE = C.CD_CODE AND C.CD_DIVISION = '019' AND C.CD_USEYN = 'Y'
 		WHERE 1=1 
 		<if test='coDiv != null and coDiv != ""'>
 		  AND A.CO_DIV = #{coDiv}
