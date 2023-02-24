@@ -109,7 +109,7 @@
 			<otherwise></otherwise>
 		</choose> 
 		GROUP BY B.CO_NAME, D.CD_TITLE1, BK_DAY, A.CALC_SERIAL_NO
-        ORDER BY A.CALC_SERIAL_NO DESC
+        ORDER BY A.BK_DAY DESC
 		<if test='limit != null and offset != null'>
         LIMIT #{limit} OFFSET #{offset}
 		</if>        

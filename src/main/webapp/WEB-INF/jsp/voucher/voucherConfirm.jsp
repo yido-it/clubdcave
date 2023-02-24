@@ -29,7 +29,7 @@
         <div class="menu-title">
             <!-- <h1 class="my-0 py-0 ">결제완료</h1> -->
             <p class="font-16">결제가 정상적으로 완료되었습니다. <br/>
-            	고객센터: 02 -6403-7717</p>
+            	고객센터: 02-6403-7717</p>
         </div>
         <div class="divider mt-4"></div>
         
