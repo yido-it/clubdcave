@@ -13,19 +13,17 @@
 
 	<div class="header header-fixed header-logo-app">
 		<a href="#" class="header-title header-subtitle">갤러리수정</a>
-		<a href="javascript:location.href='/pro/proDetail?msNum=${sessionScope.msMember.msNum}'" data-back-button class="header-icon header-icon-1"><i class="fa fa-arrow-left"></i></a>
-		<a href="#" data-menu="menu-main" class="header-icon header-icon-2"><i class="fas fa-bars"></i></a>
+		<a href="javascript:location.href='/pro/proDetail?msNum=${sessionScope.msMember.msNum}'" data-back-button class="header-icon header-icon-1" style="margin-top: 8px !important;    font-size: 20px;">
+			<i class="fa fa-arrow-left"></i></a>
+		<a href="#" data-menu="menu-main" class="header-icon header-icon-2 font-20 mt-1"><i class="fas fa-bars"></i></a>
 	</div>
 	<jsp:include page="../common/menu.jsp" />
 	
 	<input type="hidden" id="msNum" name="msNum" value="${sessionScope.msMember.msNum}"/>
 	<div class="page-content header-clear">
 		<div class="divider divider-margins"></div>
-		<div class="menu-title">
-			<h1 class="my-0 py-0">갤러리수정</h1>			   
-		</div>
-        <div class="divider divider-margins"></div>
-
+	
+       
         <!--사진수정-->
         <div class="card card-style">
             <div class="content mb-0">
@@ -39,19 +37,17 @@
 	                    <c:forEach items="${galleryList}" var="item" varStatus="status">
 		                    <c:if test="${item.imgDiv == 1}">
 		                    <div class="img-area px-0 col-6 mb-3 fl">
-								<div class="">
 									<div class="dz-image my-2" style="text-align: center">
 										<img alt="${item.imgFilename}" src="${item.thumbURL}" data-dz-thumbnail>
 									</div>
 									<div class="d-flex mt-1">
 										<div class="ml-auto pl-3 text-right">
 											<a class="dz-remove color-red-dark font-14 btn del-img" href="javascript:undefined;" 
-												id="${item.imgSeq}" data-filepath="${item.imgData}" data-filename="${item.imgFilename}" data-dz-remove>
+												id="${item.imgSeq}" data-filepath="${item.imgPath}" data-filename="${item.imgFilename}" data-dz-remove>
 											<i class="fa-regular fa-rectangle-xmark del-img"></i> 삭제
 											</a>
 										</div>								
 									</div>
-								</div>
 							</div>
 							</c:if>
 	                    </c:forEach>
@@ -73,15 +69,15 @@
                     <c:if test="${not empty galleryList}">
 	                    <c:forEach items="${galleryList}" var="item" varStatus="status">
 		                    <c:if test="${item.imgDiv == 2}">
-		                    <div class="img-area px-0 col-6 mb-3">
+		                    <div class="img-area px-0 col-6 mb-3 fl">
 								<div class="">
 									<div class="dz-image my-2" style="text-align: center">
-										<img alt="${item.imgFilename}" src="${item.videoThumbURL}" style="width: 143px" data-dz-thumbnail>
+										<img alt="${item.imgFilename}" src="${item.videoThumbURL}" onerror="this.src='/images/thumb_loading.jpg'" style="width: 143px" data-dz-thumbnail>
 									</div>
 									<div class="d-flex mt-1">
 										<div class="ml-auto pl-3 text-right">
 											<a class="dz-remove color-red-dark font-14 btn del-video" href="javascript:undefined;" 
-												id="${item.imgSeq}" data-filepath="${item.imgData}" data-filename="${item.imgFilename}" data-dz-remove>
+												id="${item.imgSeq}" data-filepath="${item.imgPath}" data-filename="${item.imgFilename}" data-dz-remove>
 											<i class="fa-regular fa-rectangle-xmark del-video"></i> 삭제
 											</a>
 										</div>								
@@ -214,7 +210,7 @@
 		 params = {
 			  imgSeq : $(this).attr('id')
 			, imgFilename : $(this).data('filename')	
-			, imgData : $(this).data('filepath')
+			, imgPath : $(this).data('filepath')
 			, msNum : $('#msNum').val()
 		};
 		// console.log(params);

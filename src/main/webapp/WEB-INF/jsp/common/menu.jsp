@@ -65,7 +65,14 @@
 			<i class="fa-solid fa-money-check color-red-dark"></i>이용권<i class="fa fa-angle-right"></i>
 		</a>
 		
+		<c:choose>
+		<c:when test="${sessionScope.msMember.msDivision ne '00'}">
 		<a href="javascript:location.href='/member/memberModify'" id="nav-modify">
+		</c:when>
+		<c:otherwise>
+		<a href="javascript:location.href='/pro/proForm'" id="nav-modify">
+		</c:otherwise>
+		</c:choose>
 			<i class="fa fa-pen color-brown-dark"></i>정보수정<i class="fa fa-angle-right"></i>
 		</a>
 		

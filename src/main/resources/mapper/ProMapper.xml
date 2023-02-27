@@ -47,6 +47,7 @@
 			  MS_NUM
 			, IMG_DIV
 			, IMG_SEQ
+			, IMG_PATH
 			, IMG_FILENAME
 			, IMG_DATA
 	    FROM PRO_IMAGE	
@@ -161,14 +162,16 @@
 				  MS_NUM				
 				, IMG_DIV			
 				, IMG_SEQ			
+				, IMG_PATH
 				, IMG_FILENAME
 				, IMG_DATA
 	    	) values (
 	    		  #{msNum}			
 	    		, #{imgDiv}	
 	    		, #{imgSeq}	
+	    		, #{imgPath}			
 	    		, #{imgFilename}			
-	    		, #{imgData}	
+	    		, 'test'
 	    	)  	
 	</insert>
 	<delete id="deleteProImage">

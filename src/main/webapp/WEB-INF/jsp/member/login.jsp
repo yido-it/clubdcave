@@ -6,7 +6,7 @@
 <jsp:include page="../common/script.jsp" />
 
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
-<body class="is-not-ios ">
+<body class="is-not-ios theme-dark">
     
 <div id="page">
     <div class="header header-fixed header-logo-app header-transparent">

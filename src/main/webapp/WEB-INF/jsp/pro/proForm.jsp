@@ -13,8 +13,9 @@
     
 	<div class="header header-fixed header-logo-app">
 		<a href="#" class="header-title header-subtitle">프로선택</a>
-		<a href="#" data-back-button class="header-icon header-icon-1"><i class="fa fa-arrow-left"></i></a>
-		<a href="#" data-menu="menu-main" class="header-icon header-icon-2"><i class="fas fa-bars"></i></a>
+		<a href="#" data-back-button class="header-icon header-icon-1" style="margin-top: 8px !important;    font-size: 20px;">
+			<i class="fa fa-arrow-left"></i></a>
+		<a href="#" data-menu="menu-main" class="header-icon header-icon-2 font-20 mt-1"><i class="fas fa-bars"></i></a>
 	</div>
     <jsp:include page="../common/menu.jsp" />
 
@@ -22,8 +23,7 @@
         <div class="divider divider-margins"></div>
         <div class="menu-title">
             <h1 class="my-0 py-0">프로필수정</h1>
-            <!-- <a href="" class="font-12 mr-2 btn btn-sm color-red-dark border-red-dark rounded-s" style="width:auto;height:auto" >
-                회원탈퇴</a> -->
+       
         </div>
         <div class="divider divider-margins"></div>
 
@@ -47,7 +47,7 @@
 							<div class="d-flex mt-1">
 								<div class="ml-auto pl-3 text-right">
 									<a class="dz-remove color-red-dark font-14 btn" href="javascript:undefined;" 
-										id="${sessionScope.msMember.msNum}" data-filepath="${proProfile.msImgData}" data-filename="${proProfile.msImgName}" data-dz-remove>
+										id="${sessionScope.msMember.msNum}" data-filepath="${proProfile.msImgPath}" data-filename="${proProfile.msImgName}" data-dz-remove>
 									<i class="fa-regular fa-rectangle-xmark"></i> 삭제
 									</a>
 								</div>								
@@ -328,7 +328,7 @@
 		   				alertModal.fail('등록된 사진을 먼저 삭제해주세요!');
 			   			 /* var params = {
 			   				  msImgName : $('.img-area').find('a').data('filename')	
-			   				, msImgData : $('.img-area').find('a').data('filepath')
+			   				, msImgPath : $('.img-area').find('a').data('filepath')
 			   				, msNum : $('#msNum').val()
 			   			}
 		   				deleteProfileImg(params);  */
@@ -408,7 +408,7 @@
 		 params = {
 			  msImgId : $(this).attr('id')
 			, msImgName : $(this).data('filename')	
-			, msImgData : $(this).data('filepath')
+			, msImgPath : $(this).data('filepath')
 			, msNum : $('#msNum').val()
 		};		
 		alertModal.confirm2('사진을 삭제하시겠습니까?', 'deleteProfileImg(params);');
@@ -504,10 +504,11 @@
 	})
 	
 	$('#btnSubmit').on('click', function() {
+		var frmObj = $('#frmPro').serializeArray()
+		console.log(frmObj);
 		// 수정된 내용이 없습니다
 		
-		//console.log($('#frmPro').serialize());
-		alertModal.confirm1('관리자 검토/승인후에 프로필이 반영됩니다.<br/>제출하시겠습니까?', 'saveProForm()', '관리자 승인필요');
+		//alertModal.confirm1('관리자 검토/승인후에 프로필이 반영됩니다.<br/>제출하시겠습니까?', 'saveProForm()', '관리자 승인필요');
 	})
 			
 	function saveProForm() {			

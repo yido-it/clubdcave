@@ -7175,3 +7175,10 @@ background-color: #242424 !important;}
 .header a.header-icon.header-icon-2{font-size:20px !important}
 .header a.header-icon.header-icon-4{font-size:20px !important}
 #topGoBack, .back-button{margin-top:8px !important; font-size:20px}
+
+/*사진업로드*/
+.img-area .dz-image{ background-color: #e0e0e0;margin:3%;border-radius: 5px;}
+.img-area .dz-image img{  height: 130px;  object-fit: cover; background-color: #e0e0e0;}
+.pro_detail .gallery-filter-links a, .gallery-filter-select a{width:50%;float:left}
+.pro_detail  .gallery-filter-links a img, .gallery-filter-select a img{height:100px;object-fit: cover;}
+

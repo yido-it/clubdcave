@@ -56,7 +56,7 @@
     <div class="page-content pb-3">  
         <div class="card card-full rounded-m" style="margin-bottom:-10px">        
             
-            <div class="content">
+            <div class="content mt-5">
                 <p class="font-600 mb-n1 color-highlight">${proInfo.msEname}</p>
                 <h1 class="font-30">${proInfo.msName} 프로</h1>
                 <p class="mb-0">
@@ -138,7 +138,7 @@
             </div>
             <!-- // content -->
             
-            <div class="content mb-3 text-center">
+            <div class="content mb-3 text-center pro_detail">
 	            <c:if test="${not empty proImgList}">
                 	<div class="gallery gallery-filter-links" style="padding: 0px; position: relative; height: 234.75px;">
 		             	<c:forEach items="${proImgList}" var="item" varStatus="status">
@@ -149,8 +149,8 @@
 							</a>
 		              	</c:when>
 		              	<c:otherwise>
-							<a href="${item.videoThumbURL}" data-menu="menu-video" class="filtr-item default-link btn-video" data-video-url="${item.fileURL}" data-category="${item.imgDiv}">
-								<img src="${item.videoThumbURL}" class="preload-img rounded-s shadow-m">
+							<a href="${item.videoThumbURL}" data-menu="menu-video" class="filtr-item default-link btn-video" data-video-url="${item.videoFileURL}" data-category="${item.imgDiv}">
+								<img src="${item.videoThumbURL}" onerror="this.src='/images/thumb_loading.jpg'" class="preload-img rounded-s shadow-m">
 							</a>
 		                </c:otherwise>
 		                </c:choose>
@@ -176,7 +176,7 @@
         <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
     </div>
     <div class="content mt-n2">
-        <video controls playsinline style="width:100%;height:100%" src="" type="video/mp4"></video>          
+        <video controls playsinline style="width:100%;height:200px" src="" type="video/mp4"></video>          
     </div>
 </div>   
 <!------------->
@@ -201,7 +201,9 @@
 	
 	$('.btn-video').on('click', function() {
 		var url = $(this).data('video-url');
+		var thumb = $(this).attr('href');
 		$('#menu-video').find('video').attr('src', url);
+		$('#menu-video').find('video').attr('poster', thumb);
 	})
 	
 </script>

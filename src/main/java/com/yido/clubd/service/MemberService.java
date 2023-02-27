@@ -450,7 +450,7 @@ public class MemberService {
 		    mimeType = (mimeType == null ? "" : mimeType);			// 확장자가 없는 경우 null을 반환
 			
 			
-		    String folderNm = (String)params.get("msImgData");		// ex) test/profile/00000001
+		    String folderNm = (String)params.get("msImgPath");		// ex) test/profile/00000001
 		    
 		    // AWSFileUtil.uploadFile(folderNm, newFileNm, mFile);	// 생성할 폴더명, 새 파일 이름, 복사될 파일 경로
 			AWSFileUtil.uploadFile(folderNm, newFileNm, tmpFile, mimeType);	// 생성할 폴더명, 새 파일 이름, 복사될 파일, 파일타입
@@ -469,7 +469,7 @@ public class MemberService {
 	}
 
 	public void deleteProfileImg(Map<String, Object> params) {
-		String objectName = (String)params.get("msImgData") + (String)params.get("msImgName");
+		String objectName = (String)params.get("msImgPath") + (String)params.get("msImgName");
 		AWSFileUtil.deleteFile(objectName);
 		AWSFileUtil.deleteThumbnail(objectName);
 		
