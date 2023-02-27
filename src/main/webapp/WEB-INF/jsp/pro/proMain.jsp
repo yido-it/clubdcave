@@ -20,7 +20,7 @@
         
        	<!-- 앰배서더 -->
 		<div class="content ">
-            <h1 class="font-700">AMBASSADOR</h1>          
+            <h2 class="font-700">AMBASSADOR</h2>          
             <div class="cover-slider owl-carousel owl-no-dots">
                 <div class="item" onclick="location.href='event_detail.html'">
                     <div class="card card-style mx-0 bg-9" data-card-height="180" style="background: url(images/gallery/choipro.jpg) no-repeat 0 0; background-size: cover;">
@@ -37,7 +37,7 @@
 		<!-- 프로 골퍼 -->
         <div class="content mt-2">
               
-            <h1 class="font-700">PRO GOLFER</h1>
+            <h2 class="font-700">PRO GOLFER</h2>
             <div class="row mb-0 mt-2">
             	<c:choose>
 	            	<c:when test="${not empty proList}">

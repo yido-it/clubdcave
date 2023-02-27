@@ -4,7 +4,7 @@
 
 <div class="content mt-1">
 	<div class="">
-		<h1 class="font-700  ml-1">PROMOTION</h1>
+		<h2 class="font-700  ml-1">PROMOTION</h2>
 	
 		<!-- 
 		프로모션 1개 일때

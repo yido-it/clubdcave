@@ -7,7 +7,7 @@
 <div class="content"> 
 	<div class="mb-0">
 	
-		<h1 class="font-700 ml-1">EVENT</h1>
+		<h2 class="font-700 ml-1">EVENT</h2>
 	
 		<div class="single-slider-boxed owl-carousel owl-no-dots">
 			<!-- 이벤트 -->

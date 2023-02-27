@@ -20,8 +20,8 @@
     <div class="page-content header-clear">
         <div class="divider divider-margins"></div>
         <div class="menu-title">
-            <h1 class="my-0 py-0">정보수정</h1>
-            <button type="button" class="font-12 mr-2 btn btn-sm color-red-dark border-red-dark rounded-s" style="width:auto;height:auto" id="btnDelete">
+            <h1 class="my-0 py-0" style="display:inline"></h1>
+            <button type="button" class="font-12 mr-2 fr btn btn-sm color-red-dark border-red-dark rounded-s" style="width:auto;height:auto" id="btnDelete">
                 회원탈퇴</button>
         </div>
              
