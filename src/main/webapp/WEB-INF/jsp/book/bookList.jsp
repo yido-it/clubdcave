@@ -29,7 +29,7 @@
 
     <div class="page-content header-clear-medium">
         <div class="menu-title">
-            <h1 class="my-0 py-0">예약내역</h1>
+            <h1 class="my-0 py-0">&nbsp;</h1>
             <div class="float-right  mt-n4">
                 <!-- <div class="form-check icon-check">
                     <input class="form-check-input" type="checkbox" value="" id="check1" >

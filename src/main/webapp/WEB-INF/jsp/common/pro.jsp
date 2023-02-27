@@ -4,8 +4,8 @@
 
     <!--앰베서더-->
     <div class="content mt-3">
-         <h1 class="font-700  ml-1">
-         AMBASSADOR</h1>
+         <h2 class="font-700  ml-1">
+         AMBASSADOR</h2>
 
 		 <div class="cover-slider owl-carousel owl-no-dots owl-no-controls" style="touch-action: auto;">
 			<div class="item" onclick="location.href=''">
@@ -35,7 +35,7 @@
     
 <div class="content mt-3">
 	<div class="">
-		<h1 class="font-700  ml-1">PRO GOLFER</h1>
+		<h2 class="font-700  ml-1">PRO GOLFER</h2>
 		
 		<c:choose>
 		    <c:when test="${not empty proList}">
@@ -44,10 +44,10 @@
 				<div class="item" style="">
 					<c:choose>
 					<c:when test="${item.msImgName != null && item.msImgName != ''}">
-						<div class="card card-style mx-0 bg-pro1" data-card-height="230" style="background: url(${item.fileURL}) no-repeat 0 0; background-size: cover;">
+						<div class="card card-style mx-0 bg-pro1" data-card-height="160" style="background: url(${item.fileURL}) no-repeat 0 0; background-size: cover;">
 					</c:when>
 					<c:otherwise>					
-						<div class="card card-style mx-0 bg-pro1 bg-empty_profile" data-card-height="230">
+						<div class="card card-style mx-0 bg-pro1 bg-empty_profile" data-card-height="160">
 					</c:otherwise>
 					</c:choose>
 						<div class="card-bottom">

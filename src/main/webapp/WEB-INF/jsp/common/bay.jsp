@@ -5,7 +5,7 @@
 <div class="content mt-3 mb-0">
 	<div class="row mb-0 px-3">
 		<div class="col-6">
-			<h1 class="font-700">BAY</h1>
+			<h2 class="font-700">BAY</h2>
 		</div>
 		<div class="col-6">
 			<!-- 자세히보기 -->

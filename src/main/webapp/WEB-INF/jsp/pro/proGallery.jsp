@@ -38,7 +38,7 @@
                     <c:if test="${not empty galleryList}">
 	                    <c:forEach items="${galleryList}" var="item" varStatus="status">
 		                    <c:if test="${item.imgDiv == 1}">
-		                    <div class="img-area px-0 col-6 mb-3">
+		                    <div class="img-area px-0 col-6 mb-3 fl">
 								<div class="">
 									<div class="dz-image my-2" style="text-align: center">
 										<img alt="${item.imgFilename}" src="${item.thumbURL}" data-dz-thumbnail>
