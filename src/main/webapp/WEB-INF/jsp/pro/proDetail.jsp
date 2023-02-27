@@ -149,8 +149,8 @@
 							</a>
 		              	</c:when>
 		              	<c:otherwise>
-							<a href="${item.thumbURL}" data-menu="menu-video" class="filtr-item default-link btn-video" data-video-url="${item.fileURL}" data-category="${item.imgDiv}">
-								<img src="${item.thumbURL}" class="preload-img rounded-s shadow-m" >
+							<a href="${item.videoThumbURL}" data-menu="menu-video" class="filtr-item default-link btn-video" data-video-url="${item.fileURL}" data-category="${item.imgDiv}">
+								<img src="${item.videoThumbURL}" class="preload-img rounded-s shadow-m">
 							</a>
 		                </c:otherwise>
 		                </c:choose>

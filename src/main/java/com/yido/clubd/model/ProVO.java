@@ -44,12 +44,17 @@ public class ProVO {
 	public String getThumbURL() {
 		String str = "";
 		if(this.imgFilename != "" && this.imgFilename != null) {
-			str = this.imgFilename.substring(0, (this.imgFilename.lastIndexOf(".") + 1)).concat("png");
+			str = this.imgFilename.substring(0, (this.imgFilename.lastIndexOf(".") + 1)).concat("jpg");
 		}
 		return "/store/" + this.imgData + "thumb/" + str; 
 	}
-	
-	
+	public String getVideoThumbURL() {
+		String str = "";
+		if(this.imgFilename != "" && this.imgFilename != null) {
+			str = this.imgFilename.replace("_default.mp4", "_01.jpg");
+		}
+		return "/store/" + this.imgData + str; 
+	}
 }
 
 

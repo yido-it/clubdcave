@@ -83,6 +83,8 @@ public class MainInitialize {
 			log.info("AWS S3 endPoint : " + Globals.endPoint);
 			Globals.bucketName = Utils.getProperties("Globals.awsS3.bucketName", "");			
 			log.info("AWS S3 bucketName : " + Globals.bucketName);
+			Globals.videoBucketName = Utils.getProperties("Globals.awsS3.videoBucketName", "");			
+			log.info("AWS S3 videoBucketName : " + Globals.videoBucketName);
 			log.info("======================= AWS S3 Info Finish =======================");
 			
 		} catch (Exception e) {

@@ -382,6 +382,9 @@
     	/* memberMapper.updateMember - 회원정보 수정 (DR_MS_MAININFO) */
     	UPDATE DR_MS_MAININFO
     		SET MS_NUM = #{msNum}
+    		<if test='msStatus != null and msStatus != ""'>
+			, MS_STATUS = #{msStatus})
+			</if>
     		<if test='newMsPassword != null and newMsPassword != ""'>
 			, MS_PASSWORD = SHA2(#{newMsPassword}, 256)
 			</if>

@@ -189,6 +189,7 @@ public class ProController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		try {
+			params.put("msStatus", "U");
 			memberService.updateMember(params);
 			memberService.saveMemberCar(params);
 			memberService.saveFirstPick(params);
@@ -220,7 +221,7 @@ public class ProController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		//String yearMonth = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM"));
-		String path = "test/profile/" + params.get("msNum") + "/";
+		String path = "profile/" + params.get("msNum") + "/";
 		params.put("msImgData", path); // 나중에 변경
 
 		try {
@@ -280,8 +281,7 @@ public class ProController {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		//String yearMonth = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM"));
-		String path = "test/picture/" + params.get("msNum") + "/";
+		String path = "picture/" + params.get("msNum") + "/";
 		params.put("imgData", path); // 나중에 변경
 
 		try {
@@ -303,8 +303,7 @@ public class ProController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		//String yearMonth = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM"));
-		String path = "test/video/" + params.get("msNum") + "/";
+		String path = "video/main/clubd_cheongdam/"; // 비디오 업로드 전용 버킷 폴더 경로
 		params.put("imgData", path); // 나중에 변경
 		
 		try {
@@ -319,12 +318,26 @@ public class ProController {
 		return map;
 	}
 
-	@RequestMapping(value = "/deleteGalleryItem")
+	@RequestMapping(value = "/deleteGalleryImg")
 	@ResponseBody
-	public Map<String, Object> deleteGalleryItem(@RequestParam Map<String, Object> params) {
+	public Map<String, Object> deleteGalleryImg(@RequestParam Map<String, Object> params) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			proService.deleteGalleryItem(params);
+			proService.deleteGalleryImg(params);
+			map.put("result", true);
+		} catch (Exception e) {
+			map.put("result", false);
+			map.put("message", "파일 삭제 중 오류가 발생했습니다.");
+		}
+		return map;
+	}
+	
+	@RequestMapping(value = "/deleteGalleryVideo")
+	@ResponseBody
+	public Map<String, Object> deleteGalleryVideo(@RequestParam Map<String, Object> params) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			proService.deleteGalleryVideo(params);
 			map.put("result", true);
 		} catch (Exception e) {
 			map.put("result", false);
