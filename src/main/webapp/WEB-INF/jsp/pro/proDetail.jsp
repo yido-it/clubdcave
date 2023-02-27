@@ -176,7 +176,7 @@
         <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
     </div>
     <div class="content mt-n2">
-        <video controls playsinline style="width:100%;height:100%" src="" type="video/mp4"></video>          
+        <video controls playsinline style="width:100%;height:200px" src="" type="video/mp4"></video>          
     </div>
 </div>   
 <!------------->
