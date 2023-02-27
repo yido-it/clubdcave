@@ -27,6 +27,7 @@ public class ProVO {
 	private String imgDiv;
 	private String imgSeq;
 	private String imgLink;
+	private String imgPath;
 	private String imgFilename;
 	private String imgData;
 	
@@ -39,21 +40,24 @@ public class ProVO {
 	private String coDiv;			// 선호업장
 	
 	public String getFileURL() {
-		return "/store/" + this.imgData + this.imgFilename; 
+		return "/store/" + this.imgPath + this.imgFilename; 
 	}	
 	public String getThumbURL() {
 		String str = "";
 		if(this.imgFilename != "" && this.imgFilename != null) {
 			str = this.imgFilename.substring(0, (this.imgFilename.lastIndexOf(".") + 1)).concat("jpg");
 		}
-		return "/store/" + this.imgData + "thumb/" + str; 
+		return "/store/" + this.imgPath + "thumb/" + str; 
+	}
+	public String getVideoFileURL() {
+		return "http://ixeewzeyqupw16148943.cdn.ntruss.com/" + this.imgPath + this.imgFilename; 
 	}
 	public String getVideoThumbURL() {
 		String str = "";
 		if(this.imgFilename != "" && this.imgFilename != null) {
 			str = this.imgFilename.replace("_default.mp4", "_01.jpg");
 		}
-		return "/store/" + this.imgData + str; 
+		return "/store/" + this.imgPath + str; 
 	}
 }
 

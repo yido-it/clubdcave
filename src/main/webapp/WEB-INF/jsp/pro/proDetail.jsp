@@ -149,8 +149,8 @@
 							</a>
 		              	</c:when>
 		              	<c:otherwise>
-							<a href="${item.videoThumbURL}" data-menu="menu-video" class="filtr-item default-link btn-video" data-video-url="${item.fileURL}" data-category="${item.imgDiv}">
-								<img src="${item.videoThumbURL}" class="preload-img rounded-s shadow-m">
+							<a href="${item.videoThumbURL}" data-menu="menu-video" class="filtr-item default-link btn-video" data-video-url="${item.videoFileURL}" data-category="${item.imgDiv}">
+								<img src="${item.videoThumbURL}" onerror="this.src='/images/thumb_loading.jpg'" class="preload-img rounded-s shadow-m">
 							</a>
 		                </c:otherwise>
 		                </c:choose>
@@ -201,7 +201,9 @@
 	
 	$('.btn-video').on('click', function() {
 		var url = $(this).data('video-url');
+		var thumb = $(this).attr('href');
 		$('#menu-video').find('video').attr('src', url);
+		$('#menu-video').find('video').attr('poster', thumb);
 	})
 	
 </script>

@@ -633,7 +633,7 @@
 			, A.UPDATE_STAFF
 			, A.UPDATE_DATETIME
 			, A.UPDATE_IP
-			, B.MS_IMG_DATA
+			, B.MS_IMG_PATH
     		, B.MS_IMG_NAME
 		    , D.CD_TITLE1 AS LIC_NAME
 		FROM DR_MS_MAININFO A
@@ -644,6 +644,7 @@
 			AND A.MS_DIVISION = 00
 			AND IFNULL(NULLIF(A.MS_BLANK,''),'N') = 'N'
 			AND IFNULL(NULLIF(A.MS_DORMANT,''),'N') = 'N'    
+		ORDER BY MS_IMG_NAME DESC
 	</select>
 	<update id="updateMsSessionKey" parameterType="hashmap">
 	/* memberMapper.updateMsSessionKey - 회원 세션키 등록 (자동 로그인) */
@@ -703,7 +704,7 @@
 		/* memberMapper.selectDrMsPicture - 회원/프로 프로필 이미지 조회 */
 		SELECT 
 			  MS_IMG_NAME
-			, MS_IMG_DATA
+			, MS_IMG_PATH
 		FROM DR_MS_PICTURE
 		WHERE 1 = 1
 			AND MS_NUM = #{msNum}
@@ -715,11 +716,13 @@
 		INSERT INTO DR_MS_PICTURE (
 			  MS_NUM
 			, MS_IMG_NAME
+			, MS_IMG_PATH
 			, MS_IMG_DATA
 		) VALUES (
 			  #{msNum}
 			, #{msImgName}
-			, #{msImgData}
+			, #{msImgPath}
+			, 'test'
 		)
 	</insert>
 	<delete id="deleteDrMsPicture">

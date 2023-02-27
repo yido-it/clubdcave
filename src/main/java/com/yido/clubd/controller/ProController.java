@@ -222,7 +222,7 @@ public class ProController {
 
 		//String yearMonth = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM"));
 		String path = "profile/" + params.get("msNum") + "/";
-		params.put("msImgData", path); // 나중에 변경
+		params.put("msImgPath", path); // 나중에 변경
 
 		try {
 			memberService.uploadProfileImg(params, mreq);
@@ -282,7 +282,7 @@ public class ProController {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		String path = "picture/" + params.get("msNum") + "/";
-		params.put("imgData", path); // 나중에 변경
+		params.put("imgPath", path); // 나중에 변경
 
 		try {
 			proService.uploadGalleryImg(params, mreq);
@@ -304,7 +304,7 @@ public class ProController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		String path = "video/main/clubd_cheongdam/"; // 비디오 업로드 전용 버킷 폴더 경로
-		params.put("imgData", path); // 나중에 변경
+		params.put("imgPath", path); // 나중에 변경
 		
 		try {
 			proService.uploadGalleryVideo(params, mreq);

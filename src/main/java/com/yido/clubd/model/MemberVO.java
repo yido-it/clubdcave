@@ -99,17 +99,18 @@ public class MemberVO {
 		
 	/* DR_MS_PICTURE 회원/프로 이미지 */
 	private String msImgName;			// 이미지 이름
+	private String msImgPath;			// 이미지 경로 (변경 요청함)
 	private String msImgData;			// 이미지 경로 (변경 요청함)
 	
 	public String getFileURL() {
-		return "/store/" + this.msImgData + this.msImgName; 
+		return "/store/" + this.msImgPath + this.msImgName; 
 	}	
 	public String getThumbURL() {
 		String str = "";
 		if(this.msImgName != "" && this.msImgName != null) {
 			str = this.msImgName.substring(0, (this.msImgName.lastIndexOf(".") + 1)).concat("jpg");
 		}
-		return "/store/" + this.msImgData + "thumb/" + str; 
+		return "/store/" + this.msImgPath + "thumb/" + str; 
 	}
 	
 	/* 컬럼 외  */

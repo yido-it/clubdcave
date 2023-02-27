@@ -20,18 +20,41 @@
         
        	<!-- 앰배서더 -->
 		<div class="content ">
-            <h2 class="font-700">AMBASSADOR</h2>          
-            <div class="cover-slider owl-carousel owl-no-dots">
-                <div class="item" onclick="location.href='event_detail.html'">
-                    <div class="card card-style mx-0 bg-9" data-card-height="180" style="background: url(images/gallery/choipro.jpg) no-repeat 0 0; background-size: cover;">
-                        <div class="card-bottom m-3">
-                            <p class="color-white mb-0 opacity-90">앰베서더</p>
-                            <h2 class="color-white">최나연 프로</h2>
-                        </div>
-                        <div class="card-overlay bg-gradient"></div>
-                    </div>
-                </div>
-            </div>    
+            <h2 class="font-700">AMBASSADOR</h2>      
+            <c:choose>
+            <c:when test="${not empty proList}">
+	            <c:forEach items="${proList}" var="item" varStatus="status">
+	            	<c:if test="${item.msLevel == '02'}">
+		            <div class="cover-slider owl-carousel owl-no-dots">
+		                <div class="item" onclick="javascript:location.href='proDetail?msNum=${item.msNum}'">
+		                    <div class="card card-style mx-0 bg-9" data-card-height="180" style="background: url(/images/gallery/choipro.jpg) no-repeat 0 0; background-size: cover;">
+		                        <div class="card-bottom m-3">
+		                            <p class="color-white mb-0 opacity-90">앰배서더</p>
+		                            <h2 class="color-white">${item.msName} 프로</h2>
+		                        </div>
+		                        <div class="card-overlay bg-gradient"></div>
+		                    </div>
+		                </div>
+		            </div>
+		            </c:if>
+		        </c:forEach>
+		        <div class="cover-slider owl-carousel owl-no-dots">
+	                <div class="item" onclick="location.href='event_detail.html'">
+	                    <div class="card card-style mx-0 bg-9" data-card-height="180" style="background: url(/images/gallery/choipro.jpg) no-repeat 0 0; background-size: cover;">
+	                        <div class="card-bottom m-3">
+	                            <p class="color-white mb-0 opacity-90">앰배서더</p>
+	                            <h2 class="color-white">최나연 프로</h2>
+	                        </div>
+	                        <div class="card-overlay bg-gradient"></div>
+	                    </div>
+	                </div>
+		        </div>  
+	        </c:when>
+	        <c:otherwise>
+	        	등록된 프로 정보가 없습니다.	        	
+			</c:otherwise>
+			</c:choose>   
+            
     	</div>
 		
 		<!-- 프로 골퍼 -->
@@ -42,6 +65,7 @@
             	<c:choose>
 	            	<c:when test="${not empty proList}">
 	            		<c:forEach items="${proList}" var="item" varStatus="status">
+	            		<c:if test="${item.msLevel != '02'}">
 		                <div class="col-6" onclick="javascript:location.href='proDetail?msNum=${item.msNum}'">
 	                		<c:choose>
 		                	<c:when test="${item.msImgName != null && item.msImgName != ''}">
@@ -58,6 +82,7 @@
 		                    <p class="line-height-s color-theme mb-1">${item.msName} 프로 </p>
 		                    <p class="mb-0 font-10 pt-0 opacity-60"><i class="fa fa-clock pr-1"></i>레슨: 화/목</p> 
 		                </div>
+		                </c:if>
 		                </c:forEach>         
 	            	</c:when>
 	            	<c:otherwise>

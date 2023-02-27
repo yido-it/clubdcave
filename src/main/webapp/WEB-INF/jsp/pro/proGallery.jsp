@@ -43,7 +43,7 @@
 									<div class="d-flex mt-1">
 										<div class="ml-auto pl-3 text-right">
 											<a class="dz-remove color-red-dark font-14 btn del-img" href="javascript:undefined;" 
-												id="${item.imgSeq}" data-filepath="${item.imgData}" data-filename="${item.imgFilename}" data-dz-remove>
+												id="${item.imgSeq}" data-filepath="${item.imgPath}" data-filename="${item.imgFilename}" data-dz-remove>
 											<i class="fa-regular fa-rectangle-xmark del-img"></i> 삭제
 											</a>
 										</div>								
@@ -72,12 +72,12 @@
 		                    <div class="img-area px-0 col-6 mb-3 fl">
 								<div class="">
 									<div class="dz-image my-2" style="text-align: center">
-										<img alt="${item.imgFilename}" src="${item.videoThumbURL}" style="width: 143px" data-dz-thumbnail>
+										<img alt="${item.imgFilename}" src="${item.videoThumbURL}" onerror="this.src='/images/thumb_loading.jpg'" style="width: 143px" data-dz-thumbnail>
 									</div>
 									<div class="d-flex mt-1">
 										<div class="ml-auto pl-3 text-right">
 											<a class="dz-remove color-red-dark font-14 btn del-video" href="javascript:undefined;" 
-												id="${item.imgSeq}" data-filepath="${item.imgData}" data-filename="${item.imgFilename}" data-dz-remove>
+												id="${item.imgSeq}" data-filepath="${item.imgPath}" data-filename="${item.imgFilename}" data-dz-remove>
 											<i class="fa-regular fa-rectangle-xmark del-video"></i> 삭제
 											</a>
 										</div>								
@@ -210,7 +210,7 @@
 		 params = {
 			  imgSeq : $(this).attr('id')
 			, imgFilename : $(this).data('filename')	
-			, imgData : $(this).data('filepath')
+			, imgPath : $(this).data('filepath')
 			, msNum : $('#msNum').val()
 		};
 		// console.log(params);

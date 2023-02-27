@@ -135,7 +135,7 @@ public class ProService {
 			String orgFileNm = mFile.getOriginalFilename();
 			String extNm = orgFileNm.substring(orgFileNm.lastIndexOf(".") + 1, orgFileNm.length()).toLowerCase();
 			
-		    String folderNm = (String)params.get("imgData");		// ex) test/picture/00000001/
+		    String folderNm = (String)params.get("imgPath");		// ex) test/picture/00000001/
 			String newFileNm = System.currentTimeMillis() + "." + extNm;
 			
 			File sameFile = new File(orgFileNm);					// 똑같은 이름의 파일 객체 생성 (file_name.jpg)
@@ -169,7 +169,7 @@ public class ProService {
 			String orgFileNm = mFile.getOriginalFilename();
 			String extNm = orgFileNm.substring(orgFileNm.lastIndexOf(".") + 1, orgFileNm.length()).toLowerCase();
 			
-		    String folderNm = (String)params.get("imgData");		// ex) test/video/00000001
+		    String folderNm = (String)params.get("imgPath");		// ex) test/video/00000001
 			String newFileNm = (String)params.get("msNum") + "_" + System.currentTimeMillis() + "." + extNm;	
 			
 			File sameFile = new File(orgFileNm);					// 똑같은 이름의 파일 객체 생성 (file_name.jpg)
@@ -197,7 +197,7 @@ public class ProService {
 	}
 
 	public void deleteGalleryImg(Map<String, Object> params) {
-		String objectName = (String)params.get("imgData") + (String)params.get("imgFilename");
+		String objectName = (String)params.get("imgPath") + (String)params.get("imgFilename");
 		AWSFileUtil.deleteFile(objectName);
 		AWSFileUtil.deleteThumbnail(objectName);		
 		
@@ -205,7 +205,7 @@ public class ProService {
 	}
 	
 	public void deleteGalleryVideo(Map<String, Object> params) {
-		String objectName = (String)params.get("imgData") + (String)params.get("imgFilename");
+		String objectName = (String)params.get("imgPath") + (String)params.get("imgFilename");
 		
 		AWSFileUtil.deleteFile(objectName);
 		AWSFileUtil.deleteVideoThumbnail(objectName);		
