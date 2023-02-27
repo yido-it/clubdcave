@@ -3548,6 +3548,9 @@ img.mx-auto {
   font-size: 13px;
   padding: 0px 15px 0px 40px;
 }
+#modal_day .icon-check label {
+    padding: 5px 15px 0px 40px;
+}
 
 .icon-check .icon-check-2 {
   display: none;
