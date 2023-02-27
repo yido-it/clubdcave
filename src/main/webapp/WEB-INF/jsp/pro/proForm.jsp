@@ -13,8 +13,9 @@
     
 	<div class="header header-fixed header-logo-app">
 		<a href="#" class="header-title header-subtitle">프로선택</a>
-		<a href="#" data-back-button class="header-icon header-icon-1"><i class="fa fa-arrow-left"></i></a>
-		<a href="#" data-menu="menu-main" class="header-icon header-icon-2"><i class="fas fa-bars"></i></a>
+		<a href="#" data-back-button class="header-icon header-icon-1" style="margin-top: 8px !important;    font-size: 20px;">
+			<i class="fa fa-arrow-left"></i></a>
+		<a href="#" data-menu="menu-main" class="header-icon header-icon-2 font-20 mt-1"><i class="fas fa-bars"></i></a>
 	</div>
     <jsp:include page="../common/menu.jsp" />
 
@@ -22,8 +23,7 @@
         <div class="divider divider-margins"></div>
         <div class="menu-title">
             <h1 class="my-0 py-0">프로필수정</h1>
-            <!-- <a href="" class="font-12 mr-2 btn btn-sm color-red-dark border-red-dark rounded-s" style="width:auto;height:auto" >
-                회원탈퇴</a> -->
+       
         </div>
         <div class="divider divider-margins"></div>
 
