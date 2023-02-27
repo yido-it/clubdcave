@@ -10,8 +10,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
@@ -19,7 +19,6 @@ import org.jcodec.api.FrameGrab;
 import org.jcodec.api.JCodecException;
 import org.jcodec.common.model.Picture;
 import org.jcodec.scale.AWTUtil;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.SdkClientException;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -29,19 +28,12 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.AccessControlList;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
-import com.amazonaws.services.s3.model.CompleteMultipartUploadRequest;
-import com.amazonaws.services.s3.model.CompleteMultipartUploadResult;
 import com.amazonaws.services.s3.model.GroupGrantee;
-import com.amazonaws.services.s3.model.InitiateMultipartUploadRequest;
-import com.amazonaws.services.s3.model.InitiateMultipartUploadResult;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PartETag;
 import com.amazonaws.services.s3.model.Permission;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
-import com.amazonaws.services.s3.model.UploadPartRequest;
-import com.amazonaws.services.s3.model.UploadPartResult;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -65,7 +57,7 @@ public class AWSFileUtil {
 	//private static final int IMG_HEIGHT = 90;
 	private static final int IMG_WIDTH = 143;
 	// 썸네일 기본 형식
-	private static final String IMAGE_FORMAT = "png";
+	private static final String IMAGE_FORMAT = "jpg";
 	// 동영상 썸네일 프레임
 	private static final int FRAME_NUMBER = 200;
 	
@@ -86,34 +78,53 @@ public class AWSFileUtil {
 	 * @throws IOException 
 	 * @throws JCodecException 
 	 */
-	public static void uploadFile(String folderName, String fileName, MultipartFile multipartFile) throws IOException, JCodecException {
+	public static void uploadFile(String folderName, String fileName, File file, String contentType) throws IOException, JCodecException {
+			    
+		String objectName = folderName + fileName;
 		
-		String contentType = multipartFile.getContentType();
+		System.out.format("Upload Content Type : %s\n", contentType);
+		
+		// 모바일 이미지 뒤집어져서 변환해버림...
+		if (contentType != null && contentType.contains("image/")) {
+			BufferedImage image = ImageIO.read(file);
+			ImageIO.write(image, IMAGE_FORMAT, file);
+		} 
+		
+		// 비디오 업로드 전용 버킷
+		if (contentType != null && contentType.contains("video/")) {
+			bucketName = Globals.videoBucketName;
+		}
+		
+		System.out.format("bucketName : %s\n", bucketName);
 
 		// 1) create folder
-		createFolder(folderName);		
+		//createFolder(folderName);		
 		
-		// 2) upload local file
+		// 2) upload local file			
+		/*
+		String contentType = multipartFile.getContentType();
 		ObjectMetadata objectMetadata = new ObjectMetadata();
 		objectMetadata.setContentLength(multipartFile.getSize());		
 		objectMetadata.setContentType(contentType);		
 		
-		String objectName = folderName + fileName;	
 		PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, objectName, multipartFile.getInputStream(), objectMetadata);
-		
+
+    	// MultipartFile -> File
+		File file = new File(multipartFile.getOriginalFilename());
+	    FileOutputStream fos = new FileOutputStream(file);
+	    fos.write(multipartFile.getBytes());
+	    fos.close();	
+	    */			
+				
 		try {
-		    s3.putObject(putObjectRequest);
-		    System.out.format("Object %s has been created.\n", objectName);
-		    setObjectACL(objectName);
-		    
-		    if(multipartFile.getContentType() != null) {		    	
-		    	// 썸네일 생성
-		    	if (contentType.contains("image/")) {
-		    		getImgThumb(folderName, fileName, multipartFile);
-		    	} else if (contentType.contains("video/")) {
-		    		getVideoThumb(folderName, fileName, multipartFile);
-		    	} 						
-		    }
+			 s3.putObject(bucketName, objectName, file);
+			 System.out.format("Object %s has been created.\n", objectName);
+			 setObjectACL(objectName);
+			 
+			 if(contentType != null && contentType.contains("image/")) { // 썸네일 생성
+				 getImgThumb(folderName, fileName, file);
+			 }
+			 bucketName = Globals.bucketName;
 		} catch (AmazonS3Exception e) {
 		    e.printStackTrace();
 		} catch(SdkClientException e) {
@@ -167,20 +178,37 @@ public class AWSFileUtil {
 	}
 	
 	/**
-	 * 파일 삭제
+	 * 이미지파일 삭제
 	 * 
 	 * @param objectName 업로드 경로 + 파일명
 	 * @return
 	 */
 	public static void deleteFile(String objectName) {
+
+		try {
+		    s3.deleteObject(bucketName, objectName);
+		    System.out.format("Object %s in %s has been deleted.\n", objectName, bucketName);
+		} catch (AmazonS3Exception e) {
+		    e.printStackTrace();
+		} catch(SdkClientException e) {
+		    e.printStackTrace();
+		}
+	}
+		
+	/**
+	 * 썸네일 파일 삭제
+	 * 
+	 * @param objectName 업로드 경로 + 파일명
+	 * @return
+	 */
+	public static void deleteThumbnail(String objectName) {
 		
 		StringBuffer str = new StringBuffer(objectName);
 		str.insert(objectName.lastIndexOf("/"), "/thumb");		
 		String newObjectName = str.toString().substring(0, str.lastIndexOf(".") + 1).concat(IMAGE_FORMAT);
-
 		try {
-		    s3.deleteObject(bucketName, newObjectName);
-		    System.out.format("Object %s has been deleted.\n", newObjectName);
+		    s3.deleteObject(bucketName, objectName);
+		    System.out.format("Object(thumbnail) %s has been deleted.\n", newObjectName);
 		} catch (AmazonS3Exception e) {
 		    e.printStackTrace();
 		} catch(SdkClientException e) {
@@ -189,13 +217,14 @@ public class AWSFileUtil {
 	}
 	
 	/**
-	 * 썸네일 파일 삭제
+	 * 비디오 썸네일 파일 삭제
 	 * 
 	 * @param objectName 업로드 경로 + 파일명
 	 * @return
 	 */
-	public static void deleteThumbnail(String objectName) {		
-		
+	public static void deleteVideoThumbnail(String objectName) {
+	
+		objectName = objectName.replace("_default.mp4", ("_01." + IMAGE_FORMAT));
 		try {
 		    s3.deleteObject(bucketName, objectName);
 		    System.out.format("Object(thumbnail) %s has been deleted.\n", objectName);
@@ -214,7 +243,7 @@ public class AWSFileUtil {
 	 * @param filePath 기존 파일 경로
 	 * @return
 	 */
-	public static void getImgThumb(String folderName, String fileName, MultipartFile multipartFile) throws IOException {
+	public static void getImgThumb(String folderName, String fileName, File file) throws IOException {
 		
 		/*
 		// 기존 이미지 로컬 파일
@@ -225,12 +254,6 @@ public class AWSFileUtil {
 		str.insert(fileName.lastIndexOf("."), "_thumb");
 		String thumbFilePath = folderName + str.toString();
 		*/	
-		
-		// MultipartFile -> File
-		File file = new File(multipartFile.getOriginalFilename());
-	    FileOutputStream fos = new FileOutputStream(file);
-	    fos.write(multipartFile.getBytes());
-	    fos.close();
 		
 		// 업로드할 경로
 		String thumbObjectName = folderName + "thumb/" + fileName.substring(0, fileName.lastIndexOf(".") + 1).concat(IMAGE_FORMAT);
@@ -298,14 +321,8 @@ public class AWSFileUtil {
 	 * @return
 	 */
 	
-	public static void getVideoThumb(String folderName, String fileName, MultipartFile multipartFile) throws IOException, JCodecException {
+	public static void getVideoThumb(String folderName, String fileName, File file) throws IOException, JCodecException {
 		
-		// MultipartFile -> File
-		File file = new File(multipartFile.getOriginalFilename());
-	    FileOutputStream fos = new FileOutputStream(file);
-	    fos.write(multipartFile.getBytes());
-	    fos.close();
-	    
 		// 업로드할 경로
 		String thumbObjectName = folderName + "thumb/" + fileName.substring(0, fileName.lastIndexOf(".") + 1).concat(IMAGE_FORMAT);
 		    

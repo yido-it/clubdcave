@@ -439,7 +439,7 @@ public class MemberService {
 			String extNm = orgFileNm.substring(orgFileNm.lastIndexOf(".") + 1, orgFileNm.length()).toLowerCase();
 			String newFileNm = System.currentTimeMillis() + "." + extNm;
 			
-			/*
+			
 			File sameFile = new File(orgFileNm);					// 똑같은 이름의 파일 객체 생성 (file_name.jpg)
 			String filePath = sameFile.getAbsolutePath();			// 실행 중인 working directory + File에 전달한 경로값 (C:\folder_name\file_name.jpg)
 			File tmpFile = new File(filePath);						// 절대경로로 다시 파일 객체 생성
@@ -448,21 +448,21 @@ public class MemberService {
 			Path srcPath = Paths.get(filePath);						// String을 Path 객체로 만들어줌
 		    String mimeType = Files.probeContentType(srcPath);		// 파일 경로에 있는 Content-Type(파일 유형) 확인
 		    mimeType = (mimeType == null ? "" : mimeType);			// 확장자가 없는 경우 null을 반환
-			*/
+			
 			
 		    String folderNm = (String)params.get("msImgData");		// ex) test/profile/00000001
-			AWSFileUtil.uploadFile(folderNm, newFileNm, mFile);	// 생성할 폴더명, 새 파일 이름, 복사될 파일 경로
+		    
+		    // AWSFileUtil.uploadFile(folderNm, newFileNm, mFile);	// 생성할 폴더명, 새 파일 이름, 복사될 파일 경로
+			AWSFileUtil.uploadFile(folderNm, newFileNm, tmpFile, mimeType);	// 생성할 폴더명, 새 파일 이름, 복사될 파일, 파일타입
 									
 			// 업로드 후 임시파일 삭제
-			// if(tmpFile.exists()) tmpFile.delete();
+			if(tmpFile.exists()) tmpFile.delete();
 			
 			params.put("msImgName", newFileNm);
 			memberMapper.insertDrMsPicture(params);
 			
-		}
-		
-	}
-	
+		}		
+	}	
 
 	public MemberVO selectProfileImg(Map<String, Object> map) {
 		return memberMapper.selectDrMsPicture(map);

@@ -107,7 +107,7 @@ public class MemberVO {
 	public String getThumbURL() {
 		String str = "";
 		if(this.msImgName != "" && this.msImgName != null) {
-			str = this.msImgName.substring(0, (this.msImgName.lastIndexOf(".") + 1)).concat("png");
+			str = this.msImgName.substring(0, (this.msImgName.lastIndexOf(".") + 1)).concat("jpg");
 		}
 		return "/store/" + this.msImgData + "thumb/" + str; 
 	}

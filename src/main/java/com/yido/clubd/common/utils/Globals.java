@@ -12,6 +12,7 @@ public class Globals {
 	public static String secretKey;
 	public static String endPoint;
 	public static String bucketName;
+	public static String videoBucketName;
 
 	// PAY
 	public static String serviceId;

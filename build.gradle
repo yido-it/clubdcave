@@ -76,6 +76,10 @@ dependencies {
 	compile 'org.jcodec:jcodec:0.2.3'
 	compile 'org.jcodec:jcodec-javase:0.2.3'
 	
+	/* 모바일 사진 거꾸로 업로드 되는 현상*/
+	implementation group: 'com.drewnoakes', name: 'metadata-extractor', version: '2.9.1'
+	
+	
 	bootRun {
 	    args = ["--spring.profiles.active=develop"]
 	}

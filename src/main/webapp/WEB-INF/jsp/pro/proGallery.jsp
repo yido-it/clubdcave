@@ -45,9 +45,9 @@
 									</div>
 									<div class="d-flex mt-1">
 										<div class="ml-auto pl-3 text-right">
-											<a class="dz-remove color-red-dark font-14 btn" href="javascript:undefined;" 
+											<a class="dz-remove color-red-dark font-14 btn del-img" href="javascript:undefined;" 
 												id="${item.imgSeq}" data-filepath="${item.imgData}" data-filename="${item.imgFilename}" data-dz-remove>
-											<i class="fa-regular fa-rectangle-xmark"></i> 삭제
+											<i class="fa-regular fa-rectangle-xmark del-img"></i> 삭제
 											</a>
 										</div>								
 									</div>
@@ -76,13 +76,13 @@
 		                    <div class="img-area px-0 col-6 mb-3">
 								<div class="">
 									<div class="dz-image my-2" style="text-align: center">
-										<img alt="${item.imgFilename}" src="${item.thumbURL}" data-dz-thumbnail>
+										<img alt="${item.imgFilename}" src="${item.videoThumbURL}" style="width: 143px" data-dz-thumbnail>
 									</div>
 									<div class="d-flex mt-1">
 										<div class="ml-auto pl-3 text-right">
-											<a class="dz-remove color-red-dark font-14 btn" href="javascript:undefined;" 
+											<a class="dz-remove color-red-dark font-14 btn del-video" href="javascript:undefined;" 
 												id="${item.imgSeq}" data-filepath="${item.imgData}" data-filename="${item.imgFilename}" data-dz-remove>
-											<i class="fa-regular fa-rectangle-xmark"></i> 삭제
+											<i class="fa-regular fa-rectangle-xmark del-video"></i> 삭제
 											</a>
 										</div>								
 									</div>
@@ -171,7 +171,7 @@
 		, url : '/pro/uploadGalleryVideo'
 		, method : 'post'
 		, maxFiles : 1
-		, maxFilesize : 5
+		, maxFilesize : 10
 		, dictFileTooBig : '{{maxFilesize}}MB 이하로 업로드 해주세요.'
 		, paramName : 'file'
 		, addRemoveLinks : true
@@ -217,13 +217,40 @@
 			, imgData : $(this).data('filepath')
 			, msNum : $('#msNum').val()
 		};
-		 console.log(params);
-		alertModal.confirm2('사진을 삭제하시겠습니까?', 'deleteGalleryItem(params);');
+		// console.log(params);
+		if($(this).hasClass('del-video')) {
+			alertModal.confirm2('영상을 삭제하시겠습니까?', 'deleteGalleryVideo(params);');			
+		} else {			
+			alertModal.confirm2('사진을 삭제하시겠습니까?', 'deleteGalleryImg(params);');
+		}
 	})
 	
-	function deleteGalleryItem(params) {
+	function deleteGalleryVideo(params) {
 		$.ajax({
-	        url: "<c:out value='/pro/deleteGalleryItem'/>"
+	        url: "<c:out value='/pro/deleteGalleryVideo'/>"
+	        , type: "post"
+	        , dataType: 'json'
+	        , data: params
+	        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+	        , success: function(data) {
+	            if(data.result){
+	            	document.getElementById(params.imgSeq).closest('.img-area').remove();	          
+	            	$("#confirm1Popup").removeClass('menu-active');
+	            	params = null;
+	            	
+	            } else {
+	                alertModal.fail(data.message);                    
+	            }                
+	        }
+	        , error: function(data) {
+	        	 alertModal.fail('[error] 코드 호출 중 오류 발생했습니다.');
+	        }
+	    });
+	}
+	
+	function deleteGalleryImg(params) {
+		$.ajax({
+	        url: "<c:out value='/pro/deleteGalleryImg'/>"
 	        , type: "post"
 	        , dataType: 'json'
 	        , data: params

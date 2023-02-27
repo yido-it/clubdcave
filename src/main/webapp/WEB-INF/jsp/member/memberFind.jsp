@@ -5,7 +5,7 @@
 <jsp:include page="../common/head.jsp" />
 <jsp:include page="../common/script.jsp" />
 
-<body class="theme-dark">
+<body class="">
     
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
     
@@ -19,7 +19,7 @@
  
     <div class="page-content mb-0">
         
-       <div data-card-height="cover-card" class="card  mb-0" style="background-image:url(../images/gallery/cave_main1.jpg);background-size:cover">
+       <div data-card-height="cover-card" class="card bg-1   mb-0" style="">
 
                 <div class="card-center">
 

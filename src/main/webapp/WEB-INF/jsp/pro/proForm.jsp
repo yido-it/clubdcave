@@ -4,7 +4,7 @@
 <%@ page import="com.yido.clubd.common.utils.Globals" %>
 <jsp:include page="../common/head.jsp" />
 <jsp:include page="../common/script.jsp" />
-
+<script type="text/javascript" src="/scripts/load-image-all.min.js"></script>
 <body class="theme-dark">
     
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
@@ -333,6 +333,7 @@
 			   			}
 		   				deleteProfileImg(params);  */
 		   			}
+		   			
 		   		});
 				// 파일 업로드 중
 				this.on('sending', function(file, xhr, formData){										
@@ -345,6 +346,17 @@
                 });
 			}
 		});
+		
+	$('.dropzone').onchange = function () {
+		alert();
+		  loadImage (
+		      this.files[0]
+		    , function (img) {
+		      	document.body.appendChild(img)
+		    }
+		    , { maxWidth: 600 } // Options
+		  )
+	}
 	
 	<c:forEach items="${proLicList}" var="item" varStatus="status">
 		$('${"#l_"}${item.licKind}').attr('checked', true);
