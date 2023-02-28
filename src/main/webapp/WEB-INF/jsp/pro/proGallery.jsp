@@ -36,7 +36,7 @@
                     <c:if test="${not empty galleryList}">
 	                    <c:forEach items="${galleryList}" var="item" varStatus="status">
 		                    <c:if test="${item.imgDiv == 1}">
-		                    <div class="img-area px-0 col-6 mb-3 fl">
+		                    <div class="img-area px-0 col-6 mb-3 fl area1">
 									<div class="dz-image my-2" style="text-align: center">
 										<img alt="${item.imgFilename}" src="${item.thumbURL}" data-dz-thumbnail>
 									</div>
@@ -69,7 +69,7 @@
                     <c:if test="${not empty galleryList}">
 	                    <c:forEach items="${galleryList}" var="item" varStatus="status">
 		                    <c:if test="${item.imgDiv == 2}">
-		                    <div class="img-area px-0 col-6 mb-3 fl">
+		                    <div class="img-area px-0 col-6 mb-3 fl area2">
 								<div class="">
 									<div class="dz-image my-2" style="text-align: center">
 										<img alt="${item.imgFilename}" src="${item.videoThumbURL}" onerror="this.src='/images/thumb_loading.jpg'" style="" data-dz-thumbnail>
@@ -138,7 +138,7 @@
     		});
 			// 파일 dropzone area에 올라간 후 (총 업로드 개수 제한)
 	   		this.on("addedfile", function (file) {
-	   			if($(".img-area").length >= 10) {
+	   			if($(".area1").length >= 10) {
 	   				alertModal.fail('10개까지 등록 가능합니다.');
 	   				this.removeFile(file); 
 	   			}
@@ -187,7 +187,7 @@
     		});
 	   		// 파일 dropzone area에 올라간 후 (총 업로드 개수 제한, 영상 썸네일)
 	   		this.on("addedfile", function (file) {
-	   			if($(".img-area").length >= 10) {
+	   			if($(".area2").length >= 10) {
 	   				alertModal.fail('10개까지 업로드 가능합니다.');
 	   				this.removeFile(file); 
 	   			}	   			

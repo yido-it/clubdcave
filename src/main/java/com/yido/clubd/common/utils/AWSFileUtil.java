@@ -78,16 +78,16 @@ public class AWSFileUtil {
 	 * @throws IOException 
 	 * @throws JCodecException 
 	 */
-	public static void uploadFile(String folderName, String fileName, File file, String contentType) throws IOException, JCodecException {
-			    
+	public static void uploadFile(String folderName, String fileName, String extNm, File file, String contentType) throws IOException, JCodecException {
+	
 		String objectName = folderName + fileName;
 		
 		System.out.format("Upload Content Type : %s\n", contentType);
 		
 		// 모바일 이미지 뒤집어져서 변환해버림...
-		if (contentType != null && contentType.contains("image/")) {
+		if (contentType != null && contentType.contains("image/")) {			
 			BufferedImage image = ImageIO.read(file);
-			ImageIO.write(image, IMAGE_FORMAT, file);
+			ImageIO.write(image, extNm, file);
 		} 
 		
 		// 비디오 업로드 전용 버킷
@@ -207,7 +207,7 @@ public class AWSFileUtil {
 		str.insert(objectName.lastIndexOf("/"), "/thumb");		
 		String newObjectName = str.toString().substring(0, str.lastIndexOf(".") + 1).concat(IMAGE_FORMAT);
 		try {
-		    s3.deleteObject(bucketName, objectName);
+		    s3.deleteObject(bucketName, newObjectName);
 		    System.out.format("Object(thumbnail) %s has been deleted.\n", newObjectName);
 		} catch (AmazonS3Exception e) {
 		    e.printStackTrace();
@@ -224,7 +224,7 @@ public class AWSFileUtil {
 	 */
 	public static void deleteVideoThumbnail(String objectName) {
 	
-		objectName = objectName.replace("_default.mp4", ("_01." + IMAGE_FORMAT));
+		objectName = objectName.replace("_default.mp4", ("_01.jpg"));
 		try {
 		    s3.deleteObject(bucketName, objectName);
 		    System.out.format("Object(thumbnail) %s has been deleted.\n", objectName);
