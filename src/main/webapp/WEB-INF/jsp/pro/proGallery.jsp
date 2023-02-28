@@ -72,7 +72,7 @@
 		                    <div class="img-area px-0 col-6 mb-3 fl">
 								<div class="">
 									<div class="dz-image my-2" style="text-align: center">
-										<img alt="${item.imgFilename}" src="${item.videoThumbURL}" onerror="this.src='/images/thumb_loading.jpg'" style="width: 143px" data-dz-thumbnail>
+										<img alt="${item.imgFilename}" src="${item.videoThumbURL}" onerror="this.src='/images/thumb_loading.jpg'" style="" data-dz-thumbnail>
 									</div>
 									<div class="d-flex mt-1">
 										<div class="ml-auto pl-3 text-right">
