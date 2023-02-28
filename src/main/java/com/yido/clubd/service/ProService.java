@@ -147,7 +147,7 @@ public class ProService {
 		    String mimeType = Files.probeContentType(srcPath);		// 파일 경로에 있는 Content-Type(파일 유형) 확인
 		    mimeType = (mimeType == null ? "" : mimeType);			// 확장자가 없는 경우 null을 반환
 			
-		    AWSFileUtil.uploadFile(folderNm, newFileNm, tmpFile, mimeType);	// 생성할 폴더명, 새 파일 이름, 복사될 파일, 파일타입
+		    AWSFileUtil.uploadFile(folderNm, newFileNm, extNm, tmpFile, mimeType);	// 생성할 폴더명, 새 파일 이름, 복사될 파일, 파일타입
 			// 업로드 후 임시파일 삭제
 			if(tmpFile.exists()) tmpFile.delete();
 			
@@ -182,7 +182,7 @@ public class ProService {
 		    mimeType = (mimeType == null ? "" : mimeType);			// 확장자가 없는 경우 null을 반환
 			
 									
-		    AWSFileUtil.uploadFile(folderNm, newFileNm, tmpFile, mimeType);	// 생성할 폴더명, 새 파일 이름, 복사될 파일, 파일타입
+		    AWSFileUtil.uploadFile(folderNm, newFileNm, extNm, tmpFile, mimeType);	// 생성할 폴더명, 새 파일 이름, 복사될 파일, 파일타입
 		    // 업로드 후 임시파일 삭제
 		 	if(tmpFile.exists()) tmpFile.delete();
 			
