@@ -7150,6 +7150,8 @@ a.header-title.header-subtitle{ margin-top: 0.175rem !important;}
 .reservation_time .btn-group span{font-size:11px;color:#ff5200}
 /*약관동의박스*/
 .box_agree{    overflow-y: scroll;  height: 136px;  background-color: #585858;  width: 92%;  margin: 0 auto;}
+.menu-box-modal pre{overflow-y: scroll;height: 275px;width:100%;white-space: pre-wrap;font-size:13px;font-weight:400;
+ font-family:'AppleSDGothicNeo',"Poppins", "Roboto", 'Noto Sans KR',  "Microsoft NeoGothic",  "Droid sans", sans-serif; }
 
 /*프로상세*/
 .image-fit{height: 91px;  width: 100%;  object-fit: cover;}
