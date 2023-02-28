@@ -92,7 +92,7 @@
 	<!--  content ends -->   
 </div>   
 
-<!--   Global Footer-->
+<!-- 하단바 -->
 <jsp:include page="../common/footerBar.jsp" />
 
 <!--베이선택 팝업-->

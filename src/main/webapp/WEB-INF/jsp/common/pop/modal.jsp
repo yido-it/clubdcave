@@ -195,9 +195,6 @@
 </div>
 <!-- // 결제 동의 모달 (약관) -->
 
-
-
-
 <!-- 개인정보수집동의 (약관) -->
 <div id="modal_agree2" class="menu menu-box-modal rounded-0"  style="background-color: #303030;z-index:99999;padding: 0px 0px 15px 0;"
     data-menu-height="auto" data-menu-width="330" data-menu-effect="menu-parallax" style="padding:20px">
@@ -313,8 +310,6 @@
     </div>
 </div>   
 <!-- // 개인정보수집동의 (약관) -->
-
-
 
 <!-- 통합회원 이용약관-->
 <div id="modal_agree1" class="menu menu-box-modal rounded-0"  style="background-color: #303030;z-index:99999;padding: 0px 0px 15px 0;"

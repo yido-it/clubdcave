@@ -157,12 +157,12 @@
 				<label class="form-check-label" for="srchPeriod4">직접설정</label>
 				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
-			</div> 
+			</div>  
 		</div>
 	</div>
 
 	<!--기간달력선택 -->
-	<div class="row mt-3 mb-0" style="padding:10px;position:relative;" id="calendar">
+	<div class="row mt-3 mb-0" style="padding:10px;position:relative;;display:none" id="calendar">
 		<div class="col-6" class=""> 
 			<div class="input-style input-style-2">
 				<span style="border-radius: 5px;" class="input-style-1-active input-style-1-inactive">시작일</span>
@@ -253,6 +253,8 @@ function init() {
 // 날짜 검색 > 조회 개월 클릭했을때 실행되는 함수 
 function search(value) {
 
+	$('#calendar').css('display', '');
+	
 	switch(value) {
 		case '1' :
 			// 1개월전

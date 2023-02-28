@@ -129,7 +129,7 @@ public class VoucherController {
 			// srchUseYn > 전체 : A, 사용완료 : Y, 사용중 : N
 			if (req.getParameter("srchUseYn") != null) map.put("srchUseYn", req.getParameter("srchUseYn"));
 			// srchPeriod > 최근1개월, 최근3개월, 최근1년, 기간설정
-			if (req.getParameter("srchPeriod") != null) map.put("srchPeriod", req.getParameter("srchPeriod"));
+			// if (req.getParameter("srchPeriod") != null) map.put("srchPeriod", req.getParameter("srchPeriod"));
 			
 			map.put("msNum", sessionVO.getMsNum());
 			map.put("coDiv", coDiv);

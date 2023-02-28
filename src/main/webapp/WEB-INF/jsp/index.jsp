@@ -16,7 +16,7 @@
 	<!--Header-->
 	<div class="page-title page-title-fixed" style="opacity: 1;z-index:99;position:absolute">
 		<h1 style="font-size:20px">
-			<img src="images/logo_white.png" style="width:60px;position:absolute;top:-10px" />
+			<img src="/images/logo_white.png" style="width:60px;position:absolute;top:-10px" />
 		</h1>		
 		<a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main"><i class="fa fa-bars font-20"></i></a>
 	</div>

@@ -86,87 +86,8 @@
 <!-- </div> -->
 <!-- Page content ends-->
 
-<!--이용약관 모달-->
-<div id="modal_agree1" class="menu menu-box-modal rounded-0"  style="background-color: #303030;z-index:99999;padding: 0px 0px 15px 0;"
-    data-menu-height="auto" data-menu-width="330" data-menu-effect="menu-parallax" style="padding:20px">
-    <div class="accordion" id="accordion-1">
-        <div class="mb-0">
-            <button class="btn accordion-btn border-0 color-theme font-16">
-                <i class="fa-solid fa-play color-red-dark mr-2"></i>클럽디 회원 이용 약관
-            </button>
-            <div id="collapse1" class="collapse show"  style="background-color: rgb(86 86 86);">
-                <div class="py-2 pl-3 pr-3"style="overflow-y: scroll;height: 220px;">
-                    - 제1장 총칙 -
-
-                        제1조 (목적)
-                        본 약관은 클럽디(이하 “CLUB D”라 함)및 그 계열사(이하 “회사”라 함)가 제공/운영하는 웹사이트 (이하 “통합회원 홈페이지”라 함)와 스마트폰 등 이동통신기기를 통해 제공되는 CLUB D 모바일 애플리케이션(이하 “CLUB D 앱”이라 함)을 통해서 제공되는 고객 관련 서비스(이하 “서비스”라 함)를 하나의 ID(이하 “아이디”라 함) 와 PASSWORD(이하 “비밀번호”라 함)로 이용함에 있어 회사 및 회원의 제반 권리, 의무, 관련 절차 등을 규정하는데 그 목적이 있습니다.
-
-                        제2조 (용어의 정의)
-                        본 약관에서 사용하는 주요 용어의 정의는 다음과 같습니다.
-                        1. “통합회원 홈페이지”란 회원이 온라인을 통해 서비스를 이용할 수 있는 “회사”의 인터넷 사이트들을 말하며, 추후 변동될 수 있습니다. 각 통합회원 홈페이지에서 서비스를 원활히 이용하고자 하는 회원은 “회사”에서 정하는 회원 가입 절차를 거쳐야 합니다.
-                </div>
-            </div>
-        </div> 
-    
-    </div>
-    <div class="row mb-0 mr-3 ml-3 mt-3"> 
-        <div class="col-12">
-            <a href="#" class="btn close-menu btn btn-full btn-md color-green-dark border-green-dark font-800 text-uppercase rounded-s">확인</a>
-        </div>
-    </div>
-</div>  
-
-<!--개인정보 모달-->
-<div id="modal_agree2" class="menu menu-box-modal rounded-0"  style="background-color: #303030;z-index:99999;padding: 0px 0px 15px 0;"
-    data-menu-height="auto" data-menu-width="330" data-menu-effect="menu-parallax" style="padding:20px">
-    <div class="accordion" id="accordion-1">
-        <div class="mb-0">
-            <button class="btn accordion-btn border-0 color-theme font-16">
-                <i class="fa-solid fa-play color-red-dark mr-2"></i>개인정보 수집 및 이용동의 
-            </button>
-            <div id="collapse1" class="collapse show" style="background-color: rgb(86 86 86);">
-                <pre class="py-2 pl-3 pr-3" style="">
-클럽디는 이용자들의 개인정보보호를 매우 중요시하며, 이용자가 회사의 서비스를 이용함과 동시 에 온라인상에서 회사에 제공한 개인정보가 보호 받을 수 있도록 최선을 다하고 있습니다.
-이에 클럽디는 통신비밀보호법, 전기통신사업법, 정보통신망 이용촉진 및 정보보호 등에 관한 법 률 등 정보통신서비스제공자가 준수하여야 할 관련 법규상의 개인정보보호 규정 및 정보통신부가 제정한 개인정보보호지침을 준수하고 있습니다. 클럽디는 개인정보 취급방침을 통하여 이용자들 이 제공하는 개인정보가 어떠한 용도와 방식으로 이용되고 있으며 개인정보보호를 위해 어떠한 조치가 취해지고 있는지 알려 드립니다. 클럽디는 개인정보 취급방침을 홈페이지 첫 화면에 공개 함으로써 이용자들이 언제나 용이하게 보실 수 있도록 조치하고 있습니다.
-회사의 개인정보 취급방침은 정부의 법률 및 지침 변경이나 회사의 내부 방침 변경 등으로 인하 여 수시로 변경될 수 있고, 이에 따른 개인정보 취급방침의 지속적인 개선을 위하여 필요한 절차 를 정하고 있습니다. 그리고 개인정보 취급방침을 개정하는 경우나 개인정보 취급방침이 변경될 경우 홈페이지의 첫 페이지에 개인정보 취급방침을 통해 고지하고 있습니다. 이용자들께서는 사 이트 방문 시 수시로 확인하시기 바랍니다.
-
-개인정보취급방침의 순서는 다음과 같습니다.
-
-1.개인정보의 수집 및 이용목적
-2.개인정보 수집에 대한 동의
-3.개인정보의 제공
-4.개인정보의 열람/정정 방법(이용자 권리행사 방법)
-5.개인정보의 보존기간 및 삭제
-6.개인정보 처리의 위탁
-7.쿠키에 의한 개인정보 수집
-8.고객 개인정보 보호책임자
-9.개인정보침해 관련 상담 및 신고
-10.정책 변경에 따른 공지의무
-11.만14세 미만 아동의 개인정보보호
- 
-1.개인정보의 수집 및 이용목적
-클럽디는 클럽디 홈페이지 및 별도 서면 신청서를 통한 회원 가입을 통해 개인정보를 수집하고 있습니다. 클럽디는 이용자들이 회원서비스를 이용하기 위해 회원으로 가입하실 때 서비스 제공 을 위한 필수적인 정보들을 온라인 및 오프라인에서 입력 받고 있습니다. 회원 가입 시에 받는 필수적인 정보는 이름, 핸드폰번호, 이메일 주소, 전화번호 등입니다. 그 이외의 수집항목은 고객 별 맞춤 서비스 제공을 위한 것이므로 반드시 입력하거나 기입하시지 않아도 서비스 이용이 가능 합니다.
-
-※ 수집방법
-프런트, 전화, 팩스, 홈페이지 설문조사나 이벤트 행사 시 통계분석이나 경품제공 등을 위해 선별 적으로 개인정보 입력을 요청할 수 있습니다. 그러나 이용자의 기본적 인권 침해의 우려가 있는 민감한 개인정보(인종 및 민족, 사상 및 신조, 출신지 및 본적지, 정치적 성향 및 범죄기록, 건강 상태 및 성생활 등)는 수집하지 않으며 부득이하게 수집해야 할 경우 이용자들의 사전 동의를 반 드시 구할 것입니다. 그리고 어떤 경우에라도 입력하신 정보를 이용자들에게 사전에 밝힌 목적 이외에 다른 목적으로는 사용하지 않으며 외부로 유출하지 않습니다.
-
-클럽디는 수집한 개인정보를 다음의 목적으로 이용합니다.
--	사업장 예약 및 취소 확인
--	고객 관리 및 마일리지 적립
--	공지사항, 클럽소식, 클럽 내 이벤트 정보 제공, 회원불만 처리
--	공지사항 전달, 이벤트 등 광고성 정보 전달, 물품 배송
--	서비스 이용 요금 납부 및 회비 납부
-
-                </pre>
-            </div>
-        </div>    
-    </div>
-    <div class="row mb-0 mr-3 ml-3 mt-3"> 
-        <div class="col-12">
-            <a href="#" class="btn close-menu btn-full btn-m bg-blue-dark font-16 rounded-s">확인</a>
-        </div>
-    </div>
-</div>  
+<!-- 모달-->
+<jsp:include page="../common/pop/modal.jsp" />
  
 <div class="menu-hider"><div></div></div>
 	<script type="text/javascript">

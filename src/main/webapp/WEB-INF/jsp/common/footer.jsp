@@ -10,8 +10,13 @@
 			</div>
 			<div>
 				<h5 class="font-15">클럽디청담</h5>
-			 <a href="" class="header-title">개인정보수집방침</a> <span class="color-white">│</span>
-			<a href="" class="header-title">통합회원이용약관</a>
+				 <a href="" data-menu="modal_agree2" class="header-title">
+				 	개인정보수집방침
+				 </a> 
+				 <span class="color-white">│</span>
+				<a href="" data-menu="modal_agree1" class="header-title">
+					통합회원이용약관
+				</a>
 			</div>
 	
 		</div>
@@ -26,3 +31,5 @@
 		</p>
 	</div>
 </div>
+<!-- 모달-->
+<jsp:include page="../common/pop/modal.jsp" />

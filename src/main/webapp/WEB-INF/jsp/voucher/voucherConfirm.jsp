@@ -16,23 +16,27 @@
     
 <div id="page">
     
- <%--    <div class="header header-fixed header-logo-app">
+ <%--    
+	<div class="header header-fixed header-logo-app">
         <a href="#" class="header-title header-subtitle">결제완료</a>
 		<jsp:include page="../common/top.jsp" />
-    </div> --%>
+    </div> 
     
     <!-- 좌측GNB-->
 	<jsp:include page="../common/menu.jsp" />
 	<!-- //좌측GNB-->
+--%>
 
     <div class="page-content mt-5">
-    
-            <h1 class="my-0 py-0 text-center">
-            <i class="fa fa-3x fa-check-circle scale-box color-green-dark shadow-xl rounded-circle mb-2"></i>
-            <br/>
-            결제완료</h1>
-            <p class="text-center mt-2 font-14">결제가 정상적으로 완료되었습니다. <br/>고객센터: 02-6403-7717</p>
-        </div>
+		<div class="menu-title">
+			<h1 class="my-0 py-0 text-center">
+				<i class="fa fa-3x fa-check-circle scale-box color-green-dark shadow-xl rounded-circle mb-2"></i>
+				<br/>
+				결제완료
+			</h1>
+			<p class="text-center mt-2 font-14">결제가 정상적으로 완료되었습니다. <br/>고객센터: 02-6403-7717</p>
+		</div>
+		        
         <div class="divider mt-3"></div>
         
         <div class="content">
@@ -69,7 +73,7 @@
 			</a>
 			
 			<!-- 홈으로 -->
-			<a href="/main" class="mt-1 mb-4 btn btn-md bg-green-dark btn-full shadow-xl text-uppercase font-800 rounded-s">
+			<a href="javascript:location.href='/main';" class="mt-1 mb-4 btn btn-md bg-green-dark btn-full shadow-xl text-uppercase font-800 rounded-s">
 				홈으로
 			</a>
         </div> 

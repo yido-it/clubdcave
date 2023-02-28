@@ -92,7 +92,7 @@
 	<div class="row mb-0 mr-1 ml-1 mt-2">
 		<div class="col-6"> 
 			<div class="form-check icon-check">
-				<input class="form-check-input" type="radio" name="srchPeriod" value="1" id="srchPeriod1" onclick='search(this.value)'>
+				<input class="form-check-input" type="radio" name="srchPeriod" value="1" id="srchPeriod1" onclick='search(this.value)' >
 				<label class="form-check-label" for="srchPeriod1">최근 1개월</label>
 				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
@@ -111,17 +111,18 @@
 				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
 			</div>
+			
 			<div class="form-check icon-check">
 				<input class="form-check-input" type="radio" name="srchPeriod" value="0" id="srchPeriod4" onclick='search(this.value)'>
 				<label class="form-check-label" for="srchPeriod4">직접설정</label>
 				<i class="icon-check-1 fa fa-circle color-gray-dark font-16"></i>
 				<i class="icon-check-2 fa fa-check-circle font-16 color-highlight"></i>
-			</div> 
+			</div>
 		</div>
 	</div>
 	
 	<!--기간달력선택 -->
-	<div class="row mt-3 mb-0" style="padding:10px;position:relative;" id="calendar">
+	<div class="row mt-3 mb-0" style="padding:10px;position:relative;display:none" id="calendar">
 		<div class="col-6" class=""> 
 			<div class="input-style input-style-2">
 				<span style="border-radius: 5px;" class="input-style-1-active input-style-1-inactive">시작일</span>
@@ -198,6 +199,8 @@ function init() {
 
 // 날짜 검색 > 조회 개월 클릭했을때 실행되는 함수 
 function search(value) {
+	
+	$('#calendar').css('display', '');
 	
 	switch(value) {
 		case '1' :
@@ -364,7 +367,7 @@ function doSearch(type) {
 						case '1' : 
 							if ( ${nowDt} == data[i].BK_DAY ) {
 								// 당일취소불가
-								divCnt += '<span class="fr btn btn-border btn-sm rounded-0 text-uppercase font-900 border-yellow-dark color-yellow-dark bg-theme">';
+								divCnt += '<span class="fr btn btn-border btn-sm rounded-0 text-uppercase font-900 border-pink-dark color-pink-dark bg-theme">';
 								divCnt += '당일취소불가';
 								divCnt += '</span>';
 							} else if ( ${nowDt} > data[i].BK_DAY ) {
