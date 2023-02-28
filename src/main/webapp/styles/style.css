@@ -7184,3 +7184,11 @@ background-color: #242424 !important;}
 .pro_detail .gallery-filter-links a, .gallery-filter-select a{width:50%;float:left}
 .pro_detail  .gallery-filter-links a img, .gallery-filter-select a img{height:100px;object-fit: cover;width:100%; border-radius:5px}
 
+/*지도 주소복사*/
+.box01{float: right; position: relative; top: -38px;}
+.box01 input{
+    border: none;
+    font-size: 15px;
+    outline: none;
+    text-align: center;display:none
+}

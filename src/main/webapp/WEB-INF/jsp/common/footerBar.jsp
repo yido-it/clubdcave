@@ -61,9 +61,18 @@
 	
 	<div class="content">
 		<h3 class="font-700">Address</h3>
-		<p class="pb-0 mb-0">서울시 강남구 도산대로 439 (소봉빌딩) </p>
+		<p class="pb-0 mb-0" id="text">서울시 강남구 도산대로 439 소봉빌딩 </p>
 		<p class="pb-0 mb-0">클럽디청담(지하 1층 ~ 3층) </p>
+		
 	
+
+		<p class="box01">
+	  
+	        <span id="button" class="badge bg-highlight font-13" style="font-weight:400;padding: 5px 8px 5px 8px;">
+			     주소복사</span>
+	      
+	    </p> 
+	          
 		<div class="divider mt-2 mb-3"></div>
 		
 		<h3 class="font-700">Contact</h3>
@@ -94,4 +103,19 @@ if (pUrl.indexOf('/main') >= 0) $('#footerMain').addClass('active-nav');	// 메�
 else if (pUrl.indexOf('/pro/proMain') >= 0) $('#footerPro').addClass('active-nav');	// 프로소개
 else if (pUrl.indexOf('/voucher/voucherMain') >= 0) $('#footerVoucher').addClass('active-nav'); // 이용권
 
+
+function copyClipboard() {
+	  const text = document.getElementById('text').textContent;
+	  const textarea = document.createElement('textarea');
+	  textarea.textContent = text;
+	  document.body.append(textarea);
+	  textarea.select();
+	  document.execCommand('copy');
+	  alert('주소가 복사되었습니다.');
+	  textarea.remove();
+	}
+
+	const button = document.getElementById('button');
+	button.addEventListener('click', copyClipboard);
+	
 </script>
