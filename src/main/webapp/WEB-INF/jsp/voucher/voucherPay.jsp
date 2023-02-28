@@ -29,9 +29,9 @@
 <!-- //좌측GNB-->
 
 <div class="page-content header-clear-medium">
-	<div class="menu-title">
+<!-- 	<div class="menu-title">
 		<h1 class="my-0 py-0">구매정보확인</h1>
-	</div>
+	</div> -->
 	<div class="divider"></div>
 	<div class="content">
 		<div class="d-flex mb-0" style="width:100%">

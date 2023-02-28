@@ -6,10 +6,12 @@
 	<div class="content mb-0 pb-3">
 		<div class="d-flex" style="position:relative">
 			<div>
-				<img src="images/logo_white.png" class="mr-2 mt-3" style="width:60px;position: absolute;right: 1%;">
+				<img src="images/logo_white.png" class="mr-2 mt-5" style="width:60px;position: absolute;right: 1%;">
 			</div>
 			<div>
 				<h5 class="font-15">클럽디청담</h5>
+			 <a href="" class="header-title">개인정보수집방침</a> <span class="color-white">│</span>
+			<a href="" class="header-title">통합회원이용약관</a>
 			</div>
 	
 		</div>
@@ -20,6 +22,7 @@
 			통신판매업자: 제 2023-서울중구-0389호<br/>
 			고객센터: 02 -6403-7717<br/>
 			<br/>
+		
 		</p>
 	</div>
 </div>

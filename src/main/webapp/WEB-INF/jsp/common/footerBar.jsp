@@ -37,7 +37,7 @@
 	</div>
 	<!-- * 카카오맵 - 지도퍼가기 -->
 <!-- 1. 지도 노드 -->
-<div id="daumRoughmapContainer1677222586033" class="root_daum_roughmap root_daum_roughmap_landing"></div>
+<div id="daumRoughmapContainer1677222586033" class="root_daum_roughmap root_daum_roughmap_landing" style="width:100%"></div>
 
 <!--
 	2. 설치 스크립트
@@ -50,7 +50,7 @@
 	new daum.roughmap.Lander({
 		"timestamp" : "1677222586033",
 		"key" : "2duqe",
-		"mapWidth" : "",
+		"mapWidth" : "100%",
 		"mapHeight" : "250"
 	}).render();
 </script>
