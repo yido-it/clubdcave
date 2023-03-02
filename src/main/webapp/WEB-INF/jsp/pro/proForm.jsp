@@ -359,8 +359,17 @@
 	}
 	
 	var objData = []; // 제출 시 비교할 기존 데이터
+	objData["msNum"] = "${sessionScope.msMember.msNum}";
+	objData["msSex"] = "${sessionScope.msMember.msSex}";
+	objData["msBirth"] = "${sessionScope.msMember.msBirth}";
+	objData["msArea1"] = "${sessionScope.msMember.msArea1}";
+	objData["msArea2"] = "${sessionScope.msMember.msArea2}";
+	objData["coDiv"] = "${msFirstPick}";
 	<c:forEach items="${carList}" var="item" varStatus="status">
 		objData['${"msCarNo"}${status.count}'] = '${item.msCarNo}';
+	</c:forEach>
+	<c:forEach items="${noticeList}" var="item" varStatus="status">
+		objData['${"n_"}${item.noticeDiv}'] = '${item.proRemark}'.replaceAll("<br/>", "\r\n");
 	</c:forEach>
 	<c:forEach items="${proLicList}" var="item" varStatus="status">
 		$('${"#l_"}${item.licKind}').attr('checked', true);
@@ -500,7 +509,7 @@
 	$('#btnMidSave').on('click', function() {
 		var midSave = new Object();
 		var frmArr = $('#frmPro').serializeArray();
-		var obj = {};
+		var obj = [];
 		$.each(frmArr, function() {
 			obj[this.name] = this.value;
 		})
@@ -510,11 +519,20 @@
 	
 	$('#btnSubmit').on('click', function() {
 		var frmArr = $('#frmPro').serializeArray()
-		console.log(frmArr);
+		var result = false;
+		$.each(frmArr, function() {
+			if(objData[this.name] != this.value && !(this.value == '' && objData[this.name] == undefined)) {
+				result = true;
+				return result;
+			}
+			//console.log(objData[this.name] + ' == ' + this.value + ', result : ' + result);
+		})
 		
-		// 수정된 내용이 없는 경우
-		console.log(objData);		
-		//alertModal.confirm1('관리자 검토/승인후에 프로필이 반영됩니다.<br/>제출하시겠습니까?', 'saveProForm()', '관리자 승인필요');
+		if(!result) {
+			alertModal.fail('변경된 내용이 없습니다.');
+			return;
+		}
+		alertModal.confirm1('관리자 검토/승인후에 프로필이 반영됩니다.<br/>제출하시겠습니까?', 'saveProForm()', '관리자 승인필요');
 	})
 			
 	function saveProForm() {			
