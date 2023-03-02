@@ -144,12 +144,13 @@
 		             	<c:forEach items="${proImgList}" var="item" varStatus="status">
 		             	<c:choose>
 		              	<c:when test="${item.imgDiv eq 1}">
-	                    	<a href="${item.fileURL}" data-lightbox="gallery-1" class="filtr-item default-link btn-picture" data-pic-url="${item.fileURL}" data-category="${item.imgDiv}" >
-								<img src="${item.thumbURL}" class="preload-img rounded-s shadow-m" >
+	                    	<a href="${item.fileURL}" data-lightbox="gallery-1" class="filtr-item default-link btn-picture" data-pic-url="${item.fileURL}" data-category="${item.imgDiv}" >								
+								<img src="${item.thumbURL}" class="preload-img rounded-s shadow-m" >								
 							</a>
 		              	</c:when>
 		              	<c:otherwise>
 							<a href="${item.videoThumbURL}" data-menu="menu-video" class="filtr-item default-link btn-video" data-video-url="${item.videoFileURL}" data-category="${item.imgDiv}">
+							<div class="btn_videoplay"><i class="fa-regular fa-circle-play"></i></div>
 								<img src="${item.videoThumbURL}" onerror="this.src='/images/thumb_loading.jpg'" class="preload-img rounded-s shadow-m">
 							</a>
 		                </c:otherwise>
