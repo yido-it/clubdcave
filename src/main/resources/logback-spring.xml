@@ -16,13 +16,13 @@
 
     <!-- Logger -->
     
-    <logger name="com.yido.clubd" 		level="DEBUG" 	appender-ref="console" />
+    <logger name="com.yido.clubd" 		level="ERROR" 	appender-ref="console" />
     <logger name="jdbc" 				level="OFF" 	appender-ref="console"/>			<!--  log4jdbc 옵션 -->
     <logger name="jdbc.sqltiming" 		level="DEBUG" 	appender-ref="console-infolog" />	<!-- 쿼리문 수행시간 -->
-    <logger name="jdbc.sqlonly" 		level="OFF" 	appender-ref="console-infolog" />	<!-- sql문만 로깅할지 여부 -->
+    <logger name="jdbc.sqlonly" 		level="INFO" 	appender-ref="console-infolog" />	<!-- sql문만 로깅할지 여부 -->
     <logger name="jdbc.connection" 		level="OFF"	 	appender-ref="console"/>			<!-- connection open close 여부 -->
     <logger name="jdbc.resultset" 		level="OFF" 	appender-ref="console-infolog" />	<!-- ResultSet 포함 모든 JDBC 호출 정보 -->
-    <logger name="jdbc.resultsettable" 	level="DEBUG" 	appender-ref="console-infolog" />	<!-- SQL 결과 조회된 데이터의 table -->
+    <logger name="jdbc.resultsettable" 	level="INFO" 	appender-ref="console-infolog" />	<!-- SQL 결과 조회된 데이터의 table -->
 
     <!-- Root Logger -->
     <root level="INFO">

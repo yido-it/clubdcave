@@ -1,14 +1,11 @@
 package com.yido.clubd.controller;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yido.clubd.common.service.CommonService;
-import com.yido.clubd.common.utils.AWSFileUtil;
+import com.yido.clubd.common.utils.FFmpegUtil;
 import com.yido.clubd.common.utils.SessionVO;
-import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.model.CdCommon;
 import com.yido.clubd.model.CoPlace;
 import com.yido.clubd.model.DrMsCoInfo;
@@ -306,7 +301,21 @@ public class ProController {
 		String path = "video/main/clubd_cheongdam/"; // 비디오 업로드 전용 버킷 폴더 경로
 		params.put("imgPath", path); // 나중에 변경
 		
-		try {
+		double duration = FFmpegUtil.getVideoDuration(mreq);
+		System.out.println(duration);		
+		if(duration  <= 0) {
+			map.put("result", false);
+			map.put("message", "잘못된 파일입니다.");
+			
+			return map;
+		}			
+		if(duration > 10) {
+			map.put("result", false);
+			map.put("message", "업로드 하려는 동영상이 10초를 넘습니다.");
+			
+			return map;
+		}	
+		try {			
 			proService.uploadGalleryVideo(params, mreq);
 			map.put("result", true);
 			
@@ -314,7 +323,7 @@ public class ProController {
 			map.put("result", false);
 			map.put("message", "파일 업로드중 오류가 발생하였습니다.");
 			e.printStackTrace();
-		}
+		}		
 		return map;
 	}
 

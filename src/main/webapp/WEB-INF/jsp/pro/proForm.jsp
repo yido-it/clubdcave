@@ -358,8 +358,13 @@
 		  )
 	}
 	
+	var objData = []; // 제출 시 비교할 기존 데이터
+	<c:forEach items="${carList}" var="item" varStatus="status">
+		objData['${"msCarNo"}${status.count}'] = '${item.msCarNo}';
+	</c:forEach>
 	<c:forEach items="${proLicList}" var="item" varStatus="status">
 		$('${"#l_"}${item.licKind}').attr('checked', true);
+		objData['${"l_"}${item.licKind}'] = 'Y';
 	</c:forEach>
 	
 	if(localStorage.getItem('frmPro') != undefined) {
@@ -494,9 +499,9 @@
 	
 	$('#btnMidSave').on('click', function() {
 		var midSave = new Object();
-		var formArr = $('#frmPro').serializeArray();
+		var frmArr = $('#frmPro').serializeArray();
 		var obj = {};
-		$.each(formArr, function() {
+		$.each(frmArr, function() {
 			obj[this.name] = this.value;
 		})
 		localStorage.setItem('frmPro', JSON.stringify(obj));
@@ -504,10 +509,11 @@
 	})
 	
 	$('#btnSubmit').on('click', function() {
-		var frmObj = $('#frmPro').serializeArray()
-		console.log(frmObj);
-		// 수정된 내용이 없습니다
+		var frmArr = $('#frmPro').serializeArray()
+		console.log(frmArr);
 		
+		// 수정된 내용이 없는 경우
+		console.log(objData);		
 		//alertModal.confirm1('관리자 검토/승인후에 프로필이 반영됩니다.<br/>제출하시겠습니까?', 'saveProForm()', '관리자 승인필요');
 	})
 			

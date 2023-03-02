@@ -36,7 +36,6 @@ public class InterceptorConfig extends HandlerInterceptorAdapter {
 	public String[] loginInessential = {
 			  "/"
 			, "/main"
-			, "/login/**"
 			};
 	
 	@Autowired
@@ -86,7 +85,7 @@ public class InterceptorConfig extends HandlerInterceptorAdapter {
 
 					drMsMaininfoService.insertLoginLog(params);
 				}
-			return true;
+				return true;
 			
 			} else {
 				String destUri = req.getRequestURI(); 
@@ -96,16 +95,13 @@ public class InterceptorConfig extends HandlerInterceptorAdapter {
 				 
 				res.sendRedirect("/login");
 				return false;
-			}
-			// 로그인 정보 없음
-			
+			}			
 		}		
     }
 	
 	@Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         log.debug("==================== END ======================");
-        log.debug("===============================================");
     }
 	
 

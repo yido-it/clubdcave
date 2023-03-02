@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.yido.clubd.common.repository.CommonMapper;
-import com.yido.clubd.component.FileUtil;
 import com.yido.clubd.model.CdCommon;
 
 

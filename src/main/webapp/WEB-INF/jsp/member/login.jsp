@@ -72,6 +72,10 @@
 <div class="menu-hider"><div></div></div>
 <script type="text/javascript">
 
+	if('${sessionScope.msMember.msNum}' != '' && '${sessionScope.msMember.msNum}' != undefined) {
+		location.href='/main';
+	}
+
 	var kakao_key = "${Globals.KakaoKey}";
 	var kakao_client_id = "${Globals.KakaoClientId}";
 	var kakao_redirect_url = "${Globals.KakaoRedirectUrl}";

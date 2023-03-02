@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.jcodec.api.JCodecException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,7 +25,6 @@ import com.yido.clubd.common.utils.AWSFileUtil;
 import com.yido.clubd.common.utils.Globals;
 import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
-import com.yido.clubd.component.FileUtil;
 import com.yido.clubd.model.DrMsCoInfo;
 import com.yido.clubd.model.MemberVO;
 import com.yido.clubd.repository.DrMsCoInfoMapper;

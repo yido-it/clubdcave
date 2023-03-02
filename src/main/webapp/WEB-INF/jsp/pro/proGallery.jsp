@@ -28,7 +28,7 @@
         <div class="card card-style">
             <div class="content mb-0">
                 <h3>사진업로드</h3>
-				<p>가로로 긴 사진 업로드를 추천합니다.</p>
+				<p>10MB 이하의 사진만 가능합니다.</p>
 				<div class="img-dropzone dropzone" id="">
                     <button type="button" id="profileUpload" class="btn bg-highlight color-white font-15 dz-message mb-5" style="width:100%;height:100%">
                     <i class="fa fa-camera"></i> 사진 찾기</button>
@@ -61,7 +61,7 @@
         <div class="card card-style">
         	<div class="content mb-0">
             	<h3>영상업로드</h3>
-            	<p>영상크기 5MB이하 권장</p>
+            	<p>10초 이내의 영상만 가능합니다.</p>
 				<div class="video-dropzone dropzone" id="">
                     <button type="button" id="profileUpload" class="btn bg-highlight color-white font-15 dz-message mb-5" style="width:100%;height:100%">
                     <i class="fa-solid fa-video"></i> 영상 찾기</button>
@@ -149,10 +149,13 @@
 	   		});
 			// 사진 업로드 완료 후
 			this.on("success", function(file, res){
-                this.removeAllFiles();
-				alertModal.success('업로드 완료');
-            	goAfterModal();
-                   
+            	if(res.result) {					
+                    this.removeAllFiles();
+    				alertModal.success('업로드 완료');
+                	goAfterModal();              
+				} else {
+					alertModal.fail(res.message);
+				}
             });
 	   		/* this.on("successmultiple", function(file){
 	   			this.removeAllFiles()
@@ -167,7 +170,7 @@
 		, url : '/pro/uploadGalleryVideo'
 		, method : 'post'
 		, maxFiles : 1
-		, maxFilesize : 10
+		, maxFilesize : 50
 		, dictFileTooBig : '{{maxFilesize}}MB 이하로 업로드 해주세요.'
 		, paramName : 'file'
 		, addRemoveLinks : true
@@ -198,9 +201,13 @@
 	   		});	
 			// 사진 업로드 완료 후
 			this.on("success", function(file, res){
-				this.removeAllFiles();
-				alertModal.success('업로드 완료');
-	          	goAfterModal();                 
+				if(res.result) {					
+					this.removeAllFiles();
+					alertModal.success('업로드 완료');
+		          	goAfterModal();                 
+				} else {
+					alertModal.fail(res.message);
+				}
              });
 		}
 	});

@@ -15,11 +15,6 @@ import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
-import org.jcodec.api.FrameGrab;
-import org.jcodec.api.JCodecException;
-import org.jcodec.common.model.Picture;
-import org.jcodec.scale.AWTUtil;
-
 import com.amazonaws.SdkClientException;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -76,9 +71,8 @@ public class AWSFileUtil {
 	 * @param filePath 기존 파일경로
 	 * @return
 	 * @throws IOException 
-	 * @throws JCodecException 
 	 */
-	public static void uploadFile(String folderName, String fileName, String extNm, File file, String contentType) throws IOException, JCodecException {
+	public static void uploadFile(String folderName, String fileName, String extNm, File file, String contentType) throws IOException {
 	
 		String objectName = folderName + fileName;
 		
@@ -312,64 +306,6 @@ public class AWSFileUtil {
 		
 	}
 	
-	/**
-	 * 동영상 썸네일 생성 (로컬)
-	 * 
-	 * @param objectName 업로드 경로
-	 * @param fileName 파일명
-	 * @param filePath 기존 파일경로
-	 * @return
-	 */
-	
-	public static void getVideoThumb(String folderName, String fileName, File file) throws IOException, JCodecException {
-		
-		// 업로드할 경로
-		String thumbObjectName = folderName + "thumb/" + fileName.substring(0, fileName.lastIndexOf(".") + 1).concat(IMAGE_FORMAT);
-		    
-		Picture pic = FrameGrab.getFrameFromFile(file, FRAME_NUMBER);
-		
-		float ratio = Math.round((float)pic.getWidth() / (float)IMG_WIDTH);
-		int newHeight = (int)(pic.getHeight() / ratio);
-		
-		/* 새 세로 길이가 IMG_HEIGHT보다 작으면 IMG_HEIGHT로 늘리기
-		if(newHeight < IMG_HEIGHT) {
-			newHeight = IMG_HEIGHT;
-		}*/
-		
-		BufferedImage bufferedImage = AWTUtil.toBufferedImage(pic);
-		BufferedImage resizeImage = new BufferedImage(IMG_WIDTH, newHeight, BufferedImage.TYPE_INT_RGB);
-		resizeImage.getGraphics().drawImage(bufferedImage.getScaledInstance(IMG_WIDTH, newHeight, Image.SCALE_SMOOTH), 0, 0, null);
-		
-		/* 이미지 세로 길이만큼 crop
-		if(resizeImage.getHeight() > IMG_HEIGHT) {	
-			int yPos = (resizeImage.getHeight() / 2) - (IMG_HEIGHT / 2);
-			resizeImage = resizeImage.getSubimage(0, yPos, IMG_WIDTH, IMG_HEIGHT); 
-		}*/
-		
-		// BufferedImage -> Input Stream
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write(resizeImage, IMAGE_FORMAT, baos);
-		InputStream is = new ByteArrayInputStream(baos.toByteArray());
-		
-		// 썸네일 업로드		
-		ObjectMetadata objectMetadata = new ObjectMetadata();
-		objectMetadata.setContentLength(baos.size());		
-		objectMetadata.setContentType("image/" + IMAGE_FORMAT);		
-		
-		PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, thumbObjectName, is, objectMetadata);
-		
-		try {
-			s3.putObject(putObjectRequest);
-			setObjectACL(thumbObjectName);
-		} catch (AmazonS3Exception e) {
-		    e.printStackTrace();
-		} catch(SdkClientException e) {
-		    e.printStackTrace();
-		}
-		
-		file.delete();
-	}
-
 	// ACL 줘야 공개처리됨....
 	public static void setObjectACL (String objectName) {
 		try {
