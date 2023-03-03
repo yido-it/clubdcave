@@ -429,8 +429,7 @@ public class MemberService {
 		Iterator<String> iter = mreq.getFileNames();	
 		while(iter.hasNext()) {
 			// 다음 file[n] 값을 Multipartfile 객체로 생성
-			MultipartFile mFile = mreq.getFile(iter.next());
-			
+			MultipartFile mFile = mreq.getFile(iter.next());			
 			 
 			// mFile의 파일이름 가져옴
 			String orgFileNm = mFile.getOriginalFilename();
@@ -447,8 +446,7 @@ public class MemberService {
 		    String mimeType = Files.probeContentType(srcPath);		// 파일 경로에 있는 Content-Type(파일 유형) 확인
 		    mimeType = (mimeType == null ? "" : mimeType);			// 확장자가 없는 경우 null을 반환
 			
-			
-		    String folderNm = (String)params.get("msImgPath");		// ex) test/profile/00000001
+		    String folderNm = "profile/" + params.get("msNum") + "/";			
 		    
 		    // AWSFileUtil.uploadFile(folderNm, newFileNm, mFile);	// 생성할 폴더명, 새 파일 이름, 복사될 파일 경로
 			AWSFileUtil.uploadFile(folderNm, newFileNm, extNm, tmpFile, mimeType);	// 생성할 폴더명, 새 파일 이름, 복사될 파일, 파일타입
@@ -457,6 +455,7 @@ public class MemberService {
 			if(tmpFile.exists()) tmpFile.delete();
 			
 			params.put("msImgName", newFileNm);
+			params.put("msImgPath", folderNm);
 			memberMapper.insertDrMsPicture(params);
 			
 		}		

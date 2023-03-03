@@ -115,7 +115,6 @@
 		  autoProcessQueue : true
 		, url : '/pro/uploadGalleryImg'
 		, method : 'post'
-		, maxFiles : 1
 		, maxFilesize : 10
 		, resizeQueality : 0.9
 		, resizeWidth : 960
@@ -169,7 +168,6 @@
 		  autoProcessQueue : true
 		, url : '/pro/uploadGalleryVideo'
 		, method : 'post'
-		, maxFiles : 1
 		, maxFilesize : 50
 		, dictFileTooBig : '{{maxFilesize}}MB 이하로 업로드 해주세요.'
 		, paramName : 'file'

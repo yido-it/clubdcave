@@ -90,7 +90,7 @@ public class ProController {
 	 * 
 	 * @param model
 	 * @param req
-	 * @param mmsNum
+	 * @param msNum
 	 * @return
 	 */
 	@RequestMapping("/proDetail")
@@ -215,10 +215,6 @@ public class ProController {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		//String yearMonth = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM"));
-		String path = "profile/" + params.get("msNum") + "/";
-		params.put("msImgPath", path); // 나중에 변경
-
 		try {
 			memberService.uploadProfileImg(params, mreq);
 			map.put("result", true);
@@ -263,7 +259,7 @@ public class ProController {
 	}
 	
 	/**
-	 * 프로 프로필 이미지 업로드
+	 * 프로 갤러리 이미지 업로드
 	 * 
 	 * @param mreq
 	 * @param params
@@ -275,9 +271,6 @@ public class ProController {
 			throws IllegalStateException, IOException {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-
-		String path = "picture/" + params.get("msNum") + "/";
-		params.put("imgPath", path); // 나중에 변경
 
 		try {
 			proService.uploadGalleryImg(params, mreq);
@@ -291,33 +284,22 @@ public class ProController {
 		return map;
 	}
 	
+	/**
+	 * 프로 갤러리 영상 업로드
+	 * 
+	 * @param mreq
+	 * @param params
+	 * @return map
+	 */
 	@RequestMapping("/uploadGalleryVideo")
 	@ResponseBody
 	public Map<String, Object> uploadGalleryVideo(MultipartHttpServletRequest mreq, @RequestParam Map<String, Object> params)
 			throws IllegalStateException, IOException {
+				
+		Map<String, Object> map = new HashMap<String, Object>();	
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		String path = "video/main/clubd_cheongdam/"; // 비디오 업로드 전용 버킷 폴더 경로
-		params.put("imgPath", path); // 나중에 변경
-		
-		double duration = FFmpegUtil.getVideoDuration(mreq);
-		System.out.println(duration);		
-		if(duration  <= 0) {
-			map.put("result", false);
-			map.put("message", "잘못된 파일입니다.");
-			
-			return map;
-		}			
-		if(duration > 10) {
-			map.put("result", false);
-			map.put("message", "업로드 하려는 동영상이 10초를 넘습니다.");
-			
-			return map;
-		}	
 		try {			
-			proService.uploadGalleryVideo(params, mreq);
-			map.put("result", true);
+			map = proService.uploadGalleryVideo(params, mreq);
 			
 		} catch (Exception e) {
 			map.put("result", false);
@@ -326,7 +308,13 @@ public class ProController {
 		}		
 		return map;
 	}
-
+	
+	/**
+	 * 프로 갤러리 이미지 삭제
+	 * 
+	 * @param params
+	 * @return map
+	 */
 	@RequestMapping(value = "/deleteGalleryImg")
 	@ResponseBody
 	public Map<String, Object> deleteGalleryImg(@RequestParam Map<String, Object> params) {
@@ -341,6 +329,12 @@ public class ProController {
 		return map;
 	}
 	
+	/**
+	 * 프로 갤러리 영상 삭제
+	 * 
+	 * @param params
+	 * @return map
+	 */
 	@RequestMapping(value = "/deleteGalleryVideo")
 	@ResponseBody
 	public Map<String, Object> deleteGalleryVideo(@RequestParam Map<String, Object> params) {

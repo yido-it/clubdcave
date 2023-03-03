@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 import com.yido.clubd.model.ProVO;
 
 /**
- * 레슨프로자격사항
+ * 프로
  * 
- * @author bae
+ * @author YOO
  *
  */
 @Mapper
@@ -42,12 +42,16 @@ public interface ProMapper {
 	// 프로 갤러리 이미지/영상 등록
 	public void insertProImage(Map<String, Object> params);
 
+	// 프로 특이사항 조회
 	public ProVO selectProNotice(ProVO proVO);
 
+	// 프로 자격사항 조회
 	public ProVO selectProLicense(ProVO proVO);
 
+	// 프로 자격사항 전부 삭제
 	public void deleteAllProLicense(Map<String, Object> params);
 
+	// 프로 갤러리 이미지/영상 삭제
 	public void deleteProImage(Map<String, Object> params);
 
 }
