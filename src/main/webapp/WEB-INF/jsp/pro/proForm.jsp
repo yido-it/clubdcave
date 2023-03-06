@@ -262,7 +262,6 @@
     </div>
     <!-- Page content ends here--> 
 </div>
- 
 <div class="menu-hider"><div></div></div>
 <script type="text/javascript">
 	var params;
@@ -347,17 +346,6 @@
 			}
 		});
 		
-	$('.dropzone').onchange = function () {
-		alert();
-		  loadImage (
-		      this.files[0]
-		    , function (img) {
-		      	document.body.appendChild(img)
-		    }
-		    , { maxWidth: 600 } // Options
-		  )
-	}
-	
 	var objData = []; // 제출 시 비교할 기존 데이터
 	objData["msNum"] = "${sessionScope.msMember.msNum}";
 	objData["msSex"] = "${sessionScope.msMember.msSex}";

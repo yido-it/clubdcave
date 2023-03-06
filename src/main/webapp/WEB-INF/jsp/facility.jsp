@@ -59,7 +59,7 @@
         <a href="bay3" class="card card-style" data-card-height="180" style="background: url(/images/gallery/store_main2.jpg) no-repeat 0 0;background-size:cover">
             <div class="card-center pl-3 pr-5">
                 <h1 class="color-white font-700"> 
-               RECEIPTION  <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">1F</span></h1>
+               RECEPTION  <span class="badge bg-blue-dark px-2 py-1 mr-1 mt-2 text-uppercase">1F</span></h1>
                 <p class="color-white opacity-80 mb-0 mt-n2">
       			 클럽디청담, FULLSWING, TINO5
                 </p>

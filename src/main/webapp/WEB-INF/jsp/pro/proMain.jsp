@@ -98,7 +98,6 @@
 </div>	
 
 <div class="menu-hider"><div></div></div>
-
 <script type="text/javascript">		
 
 	//getProList();
@@ -113,11 +112,11 @@
             	if(data.result) {
             		drawProList(data.proList);
             	} else {
-            		alert(data.message);
+            		alertModal.fail(data.message);
             	}
             }
     		, error : function(data) {	    			
-            		alert("프로 조회에 실패했습니다.");
+    			alertModal.fail("프로 조회에 실패했습니다.");
             }
         })
 	}

@@ -403,7 +403,7 @@
 		        , success: function(data) {
 		        	if(data.result){
 			        	// [TEST] 나중에 삭제하기
-						alert('[TEST]' + verifyCode);
+						alertModal.fail('[TEST]' + verifyCode);
 			        	$('#hiddenCode').val(verifyCode);
 			        	alertModal.send(data.message);
 		        	}else{

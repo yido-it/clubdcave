@@ -58,12 +58,14 @@ public class ProService {
 		List<ProVO> list = new ArrayList<ProVO>();
 		for (Entry<String, Object> entry : params.entrySet()) {
 			if (-1 < entry.getKey().indexOf("n_")) {
-				ProVO proVO = new ProVO();
-				proVO.setMsNum((String) params.get("msNum"));
-				proVO.setNoticeDiv(entry.getKey().replace("n_", ""));
-				proVO.setProRemark(((String) entry.getValue()).replace("\r\n", "<br/>"));
-
-				list.add(proVO);
+				if(!((String) entry.getValue()).trim().isEmpty()) {					
+					ProVO proVO = new ProVO();
+					proVO.setMsNum((String) params.get("msNum"));
+					proVO.setNoticeDiv(entry.getKey().replace("n_", ""));
+					proVO.setProRemark(((String) entry.getValue()).replace("\r\n", "<br/>"));
+					
+					list.add(proVO);
+				}
 			}
 		}
 

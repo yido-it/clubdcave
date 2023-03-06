@@ -181,9 +181,8 @@
     </div>
 </div>   
 <!------------->
-
 	    
-<div class="menu-hider"><div></div></div>	
+<div class="menu-hider"><div></div></div>
 <script type="text/javascript">
 	
 	var msNum = "<c:out value='${sessionScope.msMember.msNum}'/>";

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
-
+<jsp:include page="../common/alertModal.jsp" />
 <jsp:include page="../common/script.jsp" />
 <head>
 </head>
@@ -31,11 +31,11 @@
 			var sUrl = "<c:url value='/member/doLoginForSocial'/>";
 	
 			if (msId == "" || msId == null) {
-				alert("알 수 없는 오류입니다. 다시 시도해주세요.");
+				alertModal.fail("알 수 없는 오류입니다. 다시 시도해주세요.");
 				return;
 			}
 			if (msName == "" || msName == null) {
-				alert("알 수 없는 오류입니다. 다시 시도해주세요.");
+				alertModal.fail("알 수 없는 오류입니다. 다시 시도해주세요.");
 				return;
 			}
 			

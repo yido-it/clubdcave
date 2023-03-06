@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.model.BBS;
 import com.yido.clubd.model.MemberVO;
+import com.yido.clubd.model.Push;
 import com.yido.clubd.service.BBSService;
 import com.yido.clubd.service.MemberService;
 
@@ -99,6 +99,28 @@ public class WebController {
         log.debug("ip1 - {}", req.getRemoteAddr());
         return "/member/login";
     }  
+    
+    /**
+	 *
+	 * @param model
+	 * @return
+	 * 비동기로 APP에 접속자의 msNum을 넘겨줌
+	 */
+	@RequestMapping("/api/appInfo")
+	public String appInfo(Model model, HttpServletRequest req) {
+		SessionVO msMember = (SessionVO)req.getSession().getAttribute("msMember");
+		return "redirect:/main?msNum=" + msMember.getMsNum();
+	}
+
+	/**
+	 * 접속자 토큰정보 저장
+	 * @param push
+	 * @throws IOException
+	 */
+	@RequestMapping("/api/sendToken")
+	public void sendToken(Push push, HttpServletResponse res) throws IOException {
+		//memberService.updateMemberToken(push);
+	}
     
     /**
 	 * 로그아웃 처리

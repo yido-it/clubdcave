@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.yido.clubd.common.service.CommonService;
 import com.yido.clubd.common.utils.FFmpegUtil;
 import com.yido.clubd.common.utils.SessionVO;
+import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.model.CdCommon;
 import com.yido.clubd.model.CoPlace;
 import com.yido.clubd.model.DrMsCoInfo;
@@ -191,6 +192,13 @@ public class ProController {
 
 			proService.saveProNotice(params);
 			proService.saveProLicense(params);
+			
+			// 나중에 추가
+			params.put("ipAddr", Utils.getClientIpAddress(req));
+			params.put("tplCd", Utils.getProperties("Globals.findPw.tplCd", "00001"));
+			params.put("msPhone", (params.get("msPhone")).toString().replace("-", ""));
+			// commonService.sendSms(params);
+			
 			map.put("result", true);
 		} catch (Exception e) {
 			e.printStackTrace();

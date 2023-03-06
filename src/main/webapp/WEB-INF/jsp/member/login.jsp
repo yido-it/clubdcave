@@ -189,6 +189,7 @@
 							changeDormant(data.userInfo);
 	            		}
 	            	} else {
+	            		goAppInfo();
 	            		// 페이지 이동
 	            		if(data.dest != null && data.dest != "") {	  
 	            			location.href = data.dest;
@@ -199,6 +200,21 @@
 				} else {
 					alertModal.fail(data.message);
 				}
+			}
+			, error: function(data) {
+				alertModal.fail('[error] 오류가 발생했습니다.');
+			}
+		});
+	}
+	
+	function goAppInfo() {
+		$.ajax({
+			  url: "<c:url value='/api/appInfo'/>"
+			, type: "post"
+			, dataType: 'json'
+			, contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+			, success: function(data) {
+				alert(data);
 			}
 			, error: function(data) {
 				alertModal.fail('[error] 오류가 발생했습니다.');

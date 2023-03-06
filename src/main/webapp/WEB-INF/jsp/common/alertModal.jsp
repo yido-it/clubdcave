@@ -4,17 +4,17 @@
 <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
  -->
  
-<div id="alertPopup" class="menu menu-box-modal rounded-m" data-menu-hide="2000" data-menu-width="220" data-menu-height="160" style="">
+<div id="alertPopup" class="menu menu-box-modal rounded-m" data-menu-hide="2000" data-menu-width="220" data-menu-height="160" style="z-index:999">
 	<h2 class="text-center fa-4x mt-2 pt-3 pb-2"><i class=""></i></h2>
 	<h4 class="text-center font-15 fontnormal"></h4>
 </div>
-<div id="confirm1Popup" class="menu menu-box-bottom bg-blue-dark rounded-0" data-menu-height="335" data-menu-effect="menu-parallax" data-backdrop="true" >
+<div id="confirm1Popup" class="menu menu-box-bottom bg-blue-dark rounded-0" data-menu-height="335" data-menu-effect="menu-parallax" data-backdrop="true" style="z-index:999">
     <h1 class="text-center mt-4"><i class="fa fa-3x fa-check-circle scale-box color-white shadow-xl rounded-circle"></i></h1>
     <h1 class="text-center mt-3 font-700 color-white confirm1-title"></h1>
     <p class="boxed-text-l color-white opacity-70 font-16"></p>
     <a href="#" class="font-18  btn close-menu btn-m btn-center-m button-s shadow-l rounded-s text-uppercase font-600 bg-white color-black btn-ok">확인</a>  
 </div>
-<div id="confirm2Popup" class="menu menu-box-modal rounded-0" data-menu-height="" data-menu-width="330" data-menu-effect="menu-parallax">
+<div id="confirm2Popup" class="menu menu-box-modal rounded-0" data-menu-height="" data-menu-width="330" data-menu-effect="menu-parallax" style="z-index:999">
 	<h1 class="text-center mt-2"><i class="fa-solid fa-triangle-exclamation fa-2x color-red-dark"></i></h1>
 	<p class="boxed-text-xl opacity-70"></p>
 	<div class="row mb-0 mr-3 ml-3 mb-3">

@@ -643,7 +643,8 @@
 		WHERE 1 = 1
 			AND A.MS_DIVISION = 00
 			AND IFNULL(NULLIF(A.MS_BLANK,''),'N') = 'N'
-			AND IFNULL(NULLIF(A.MS_DORMANT,''),'N') = 'N'    
+			AND IFNULL(NULLIF(A.MS_DORMANT,''),'N') = 'N'
+			AND A.MS_STATUS = 'Y'     
 		ORDER BY MS_IMG_NAME DESC
 	</select>
 	<update id="updateMsSessionKey" parameterType="hashmap">
@@ -660,7 +661,7 @@
 		WHERE MS_NUM = #{msNum}
 	</update>
 	<insert id="insertLoginLog" parameterType="hashmap">
-	/* memberMapper.insertLoginLog - 로그인 접속 로그 등록 (하루 한번?) */
+	/* memberMapper.insertLoginLog - 로그인 접속 로그 등록 (하루 한번) */
 		<selectKey resultType="Integer" keyProperty="loginSeq" order="BEFORE">
 			SELECT IFNULL(MAX(LOGIN_SEQ), 0) + 1 as loginSeq
 			FROM MS_MAININFO_LOGIN

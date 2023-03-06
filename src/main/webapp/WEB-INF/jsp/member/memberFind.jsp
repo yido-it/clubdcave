@@ -69,14 +69,14 @@
                                         </div>                                        
                                         <div class="col-12 mb-3">
                                             <div class="input-style input-style-2 input-required">
-                                                <span class="color-highlight input-style-1-active">휴대폰번호</span>
+                                                <span class="color-highlight input-style-1-active">핸드폰번호</span>
                                                
                                                 <input class="form-control" type="name" placeholder="" id="findPwPhone">
                                             </div> 
                                         </div>
                                   
                                     </div>
-                                    <a href="javascript:doFindPw()" class="mb-4 btn btn-md bg-blue-dark btn-full shadow-xl text-uppercase 
+                                    <a href="javascript:doResetPw()" class="mb-4 btn btn-md bg-blue-dark btn-full shadow-xl text-uppercase 
                                     font-800 rounded-s">비밀번호 초기화</a>
 
                                 </div>
@@ -148,13 +148,13 @@
 
 		$("#findPwName").keypress(function (event) {
 	        if(event.keyCode == 13) {
-	        	doFindPw();
+	        	doResetPw();
 	        }
 	    });
 
 		$("#findPwId").keypress(function (event) {
 	        if(event.keyCode == 13) {
-	        	doFindPw();
+	        	doResetPw();
 	        }
 	    });
 	}
@@ -203,8 +203,8 @@
 	    });
 	}
 
-	function doFindPw() {
-		var sUrl = "<c:url value='/member/doFindPw'/>";
+	function doResetPw() {
+		var sUrl = "<c:url value='/member/doResetPw'/>";
 		var sParams = "";
 		
 		var msId = $("#findPwId").val();

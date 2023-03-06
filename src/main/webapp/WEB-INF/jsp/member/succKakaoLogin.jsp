@@ -3,6 +3,7 @@
 <html>
 
 <jsp:include page="../common/script.jsp" />
+<jsp:include page="../common/alertModal.jsp" />
 <head>
 </head>
 <body>
@@ -10,7 +11,7 @@
 		
 		$(document).ready(function(){			
 			if('${message}' != ''){
-		        alert('${message}');
+		        alertModal.fail('${message}');
 		        history.back();
 			}
 		});
@@ -26,11 +27,11 @@
 			var sUrl = "<c:url value='/member/doLoginForSocial'/>";
 			
 			if (msId == "" || msId == null) {
-				alert("알 수 없는 오류입니다. 다시 시도해주세요.");
+				alertModal.fail("알 수 없는 오류입니다. 다시 시도해주세요.");
 				return;
 			}
 			if (msName == "" || msName == null) {
-				alert("알 수 없는 오류입니다. 다시 시도해주세요.");
+				alertModal.fail("알 수 없는 오류입니다. 다시 시도해주세요.");
 				return;
 			}
 			

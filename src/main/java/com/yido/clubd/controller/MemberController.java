@@ -160,6 +160,8 @@ public class MemberController {
 				map.put("result", false);
 				map.put("message", "이미 가입된 번호입니다.");				
 			} else {
+				params.put("msPhone", ((String)params.get("msPhone")).replace("-", ""));
+				// 나중에 추가
 				//commonService.sendSms(params);
 				map.put("result", true);
 				map.put("message", "문자로 인증번호를 전송했습니다.");
@@ -508,11 +510,7 @@ public class MemberController {
 			if(member.getMsLoginCd().equals("NAVER")) {
 				throw new Exception("NAVER 간편 로그인으로 로그인 부탁드립니다.");
 			}
-			/* params.put("ipAddr", Utils.getClientIpAddress(req));
-			params.put("tplCd", Utils.getProperties("Globals.findId.tplCd", "00001"));
-			params.put("msId", member.getMsId());
-			commonService.sendSms(params); */
-						
+
 			map.put("result", true);
 			map.put("msId", member.getMsId());
 			
@@ -530,9 +528,9 @@ public class MemberController {
 	 * @param params
 	 * @return Map
 	 */
-	@RequestMapping(value = "/doFindPw")
+	@RequestMapping(value = "/doResetPw")
 	@ResponseBody
-	public Map<String, Object>  doFindPw(HttpServletRequest req, @RequestParam Map<String, Object> params) {
+	public Map<String, Object>  doResetPw(HttpServletRequest req, @RequestParam Map<String, Object> params) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			MemberVO member = memberService.selectFindUser(params);
@@ -560,14 +558,12 @@ public class MemberController {
 
 			memberService.updatePassword(params);
 
-			params.put("ipAddr", Utils.getClientIpAddress(req));
-			params.put("tplCd", Utils.getProperties("Globals.findPw.tplCd", "00001"));
 			params.put("msPhone", (params.get("msPhone")).toString().replace("-", ""));
 			params.put("msPassword", newMsPassword);
 			
-			// commonService.sendSms(params); (나중)
-			// [TEST] 나중에 삭제하기
-			System.out.println("새 비밀번호 :::::::::::::::::::::::::::::::::: " + newMsPassword);
+			// 나중에 추가
+			// commonService.sendSms(params);
+			System.out.println("새 비밀번호 :::::::::::::::::::::::::::::::::: " + newMsPassword); // 나중에 삭제
 			
 			map.put("result", true);
 		} catch (Exception e) {
