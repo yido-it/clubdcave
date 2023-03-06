@@ -406,7 +406,7 @@
     <div class="accordion" id="accordion-1">
         <div class="mb-0">
             <button class="btn accordion-btn border-0 color-theme font-16">
-                <i class="fa-solid fa-play color-red-dark mr-2"></i>클럽디 회원 이용 약관
+                <i class="fa-solid fa-play color-red-dark mr-2"></i>이도클럽디청담 회원 이용 약관
             </button>
             <div id="collapse1" class="collapse show"  style="background-color: rgb(86 86 86);">
                 <pre class="py-2 pl-3 pr-3"style="overflow-y: scroll;">

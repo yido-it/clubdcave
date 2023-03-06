@@ -96,7 +96,7 @@
 <jsp:include page="../common/footerBar.jsp" />
 
 <!--베이선택 팝업-->
-<div id="select_bay" class="menu menu-box-bottom rounded-0 modal_bay" data-menu-height="356" data-menu-effect="menu-parallax" style="display: block; height: 335px;">
+<div id="select_bay" class="menu menu-box-bottom rounded-0 modal_bay" data-menu-height="426" data-menu-effect="menu-parallax" style="display: block; height: 335px;">
     <div class="menu-title">
         <h1 class="my-0 py-0">Bay Selection</h1>
         <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
