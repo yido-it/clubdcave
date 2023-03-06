@@ -66,10 +66,10 @@
 		                <div class="col-6" onclick="javascript:location.href='proDetail?msNum=${item.msNum}'">
 	                		<c:choose>
 		                	<c:when test="${item.msImgName != null && item.msImgName != ''}">
-		                    <div class="card card-style m-0 mb-2 rounded-m" data-card-height="150" style="background: url(${item.fileURL}) no-repeat 0 0">
+		                    <div class="card card-style m-0 mb-2 rounded-m" data-card-height="150" style="background: url(${item.fileURL}) no-repeat 0 0;  background-size: cover;">
 		                    </c:when>
 		                    <c:otherwise>
-		                    <div class="card card-style m-0 mb-2 rounded-m bg-empty_pro" data-card-height="150" style="">
+		                    <div class="card card-style m-0 mb-2 rounded-m bg-empty_pro" data-card-height="150" style="background-size: cover;">
 		                    </c:otherwise>
 	                    	</c:choose>
 		                        <c:if test="${item.licName != null && item.licName != ''}">

@@ -9,7 +9,7 @@
 				<img src="images/logo_white.png" class="mr-2 mt-5" style="width:60px;position: absolute;right: 1%;">
 			</div>
 			<div>
-				<h5 class="font-15">클럽디청담</h5>
+				<h5 class="font-15">이도클럽디청담</h5>
 				 <a href="" data-menu="modal_agree2" class="header-title">
 				 	개인정보수집방침
 				 </a> 
@@ -22,7 +22,8 @@
 		</div>
 		
 		<p class="mb-5 mt-2 font-12">
-			서울시 강남구 도산대로 439 (소봉빌딩) B1 ~ 3F<br/>
+			서울특별시 중구 서소문로 124, 3층
+			<!-- 서울시 강남구 도산대로 439 (소봉빌딩) B1 ~ 3F --><br/>
 			대표자명 : 김태환, 최영훈<br/>
 			사업자번호: 512-86-02825<br/>
 			통신판매업자: 제 2023-서울중구-0389호<br/>
