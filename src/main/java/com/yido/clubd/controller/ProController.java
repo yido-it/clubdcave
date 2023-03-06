@@ -72,13 +72,15 @@ public class ProController {
 	@RequestMapping("/proMain")
 	public String goProMain(Model model) {
 		try {
-			List<MemberVO> drMsMaininfoList = memberService.selectProList();
+			List<MemberVO> proList = memberService.selectProList();
+			List<MemberVO> ambassadorList = memberService.selectAmbassadorList();
 
-			if (drMsMaininfoList.isEmpty()) {
+			if (proList.isEmpty()) {
 				throw new Exception("조회 가능한 프로가 없습니다");
 			}
 			model.addAttribute("result", true);
-			model.addAttribute("proList", drMsMaininfoList);
+			model.addAttribute("proList", proList);
+			model.addAttribute("ambassadorList", ambassadorList);
 		} catch (Exception e) {
 			model.addAttribute("result", false);
 			model.addAttribute("message", e.getMessage());
@@ -181,7 +183,7 @@ public class ProController {
 	@RequestMapping("/saveProForm")
 	@ResponseBody
 	public Map<String, Object> saveProForm(HttpServletRequest req, @RequestParam HashMap<String, Object> params) {
-
+		SessionVO msMember = (SessionVO)req.getSession().getAttribute("msMember");
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		try {
@@ -196,7 +198,7 @@ public class ProController {
 			// 나중에 추가
 			params.put("ipAddr", Utils.getClientIpAddress(req));
 			params.put("tplCd", Utils.getProperties("Globals.findPw.tplCd", "00001"));
-			params.put("msPhone", (params.get("msPhone")).toString().replace("-", ""));
+			params.put("msPhone", (msMember.getFullMsPhone().replace("-", "")));
 			// commonService.sendSms(params);
 			
 			map.put("result", true);

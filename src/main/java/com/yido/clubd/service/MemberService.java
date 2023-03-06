@@ -309,6 +309,16 @@ public class MemberService {
 	public List<MemberVO> selectProList() {
 		return memberMapper.selectProList();
 	}
+	
+	/**
+	 * 앰배서더 목록 조회
+	 * 
+	 * @param
+	 * @return MemberVO
+	 */
+	public List<MemberVO> selectAmbassadorList() {
+		return memberMapper.selectAmbassadorList();
+	}
 
 	/**
 	 * 회원정보에 세션키 등록 (자동 로그인)
@@ -481,6 +491,11 @@ public class MemberService {
 	 */
 	public void updateMemberQuit(Map<String, Object> params) {
 		memberMapper.updateMemberQuit(params);
+		
+	}
+
+	public void updateMemberToken(Map<String, Object> params) {
+		memberMapper.updateMemberToken(params);
 		
 	}	
 

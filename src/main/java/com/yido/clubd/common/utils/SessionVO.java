@@ -59,4 +59,8 @@ public class SessionVO {
 	private String msJobCd; 			// 직업코드	
 	private String msArea1; 			// 직업코드	
 	private String msArea2; 			// 직업코드	
+	
+	public String getFullMsPhone() {
+		return this.msFirstPhone1 + this.msMidPhone1 + this.msLastPhone1;
+	}	
 }

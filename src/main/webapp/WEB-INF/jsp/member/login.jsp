@@ -189,7 +189,7 @@
 							changeDormant(data.userInfo);
 	            		}
 	            	} else {
-	            		goAppInfo();
+	            		if(mobileYn()) { goAppInfo(); }
 	            		// 페이지 이동
 	            		if(data.dest != null && data.dest != "") {	  
 	            			location.href = data.dest;
@@ -207,7 +207,7 @@
 		});
 	}
 	
-	function goAppInfo() {
+	function goAppInfo() {	
 		$.ajax({
 			  url: "<c:url value='/api/appInfo'/>"
 			, type: "post"

@@ -78,6 +78,9 @@ public interface MemberMapper {
 	// 프로 목록 조회
 	public List<MemberVO> selectProList();
 	
+	// 앰배서더 리스트 조회
+	public List<MemberVO> selectAmbassadorList();
+	
 	// 로그인 접속 로그 등록
 	public void insertLoginLog(Map<String, Object> params);
 
@@ -92,6 +95,8 @@ public interface MemberMapper {
 
 	// 회원 탈퇴
 	public void updateMemberQuit(Map<String, Object> params);
+
+	public void updateMemberToken(Map<String, Object> params);
 
 
 }

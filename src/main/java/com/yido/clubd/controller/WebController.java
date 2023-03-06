@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yido.clubd.common.utils.SessionVO;
+import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.model.BBS;
 import com.yido.clubd.model.MemberVO;
 import com.yido.clubd.model.Push;
@@ -117,9 +118,12 @@ public class WebController {
 	 * @param push
 	 * @throws IOException
 	 */
-	@RequestMapping("/api/sendToken")
-	public void sendToken(Push push, HttpServletResponse res) throws IOException {
-		//memberService.updateMemberToken(push);
+	@RequestMapping("/api/setToken")
+	public void sendToken(Map<String, Object> params, HttpServletRequest req, HttpServletResponse res) throws IOException {
+		SessionVO msMember = (SessionVO)req.getSession().getAttribute("msMember");
+		params.put("msNum", msMember.getMsNum());
+		params.put("ipAddr", Utils.getClientIpAddress(req));
+		memberService.updateMemberToken(params);
 	}
     
     /**
@@ -148,7 +152,7 @@ public class WebController {
     			}
         	}
     	}    	
-    	return "/index";
+    	return "redirect:/main";
 	}
 
 	/**

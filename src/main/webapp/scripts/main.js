@@ -423,3 +423,8 @@ function textLengthOverCut(txt, len, lastTxt) {
     }
     return txt;
 }
+
+// 모바일 기기 여부 확인
+function mobileYn() {
+		return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}

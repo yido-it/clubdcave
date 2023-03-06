@@ -12,14 +12,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 public class Push extends CommonVO{
 
-	private String  cmpyCd;
-	private Integer siteCd;
-	private Integer ptnrCd;
-	private String	userId;
-	private String  siteAuth;
-	private Integer mainSeq;
-	private Integer subSeq;
-
+	private String	msNum;
 	private String	device;
 	private String 	token;
 
@@ -35,13 +28,9 @@ public class Push extends CommonVO{
 	private String	forwardUrl;
 	private String  imgUrl;
 
-	private Integer badgeCnt;
-
 	private int	targetTp;
 
 	private Boolean successYn;
 
 	private String targetIds;
-
-	public String soundAt;
 }
