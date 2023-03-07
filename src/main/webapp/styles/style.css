@@ -7118,7 +7118,7 @@ html.lb-disable-scrolling {
 
 
 
-
+/**/
 /**************************커스텀********************************/
 .theme-dark .menu, .theme-dark .interest-check label{
 background-color: #1b1d21;}
@@ -7127,6 +7127,12 @@ background-color: #1b1d21;}
 .badge{font-weight:400}
 a.header-title.header-subtitle{ margin-top: 0.175rem !important;}
 .card-full{min-height: unset !important;} /*스크롤되는 카드에 min-height제거*/
+.kakaoplus {
+    position: fixed;   bottom: 78px; 
+    border: 3px solid white;    color: #fff;    width: 52px;    height: 52px;
+    text-align: center;    line-height: 1;    font-size: 18px;    border-radius: 50%;
+    right: 15px;  transition: background 0.5s;    z-index:99;
+}
 /*예약*/
 /*bay선택*/
 .modal_bay .list-custom-small a img{width:80px;height:auto}

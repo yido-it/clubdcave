@@ -246,11 +246,12 @@ public class MemberController {
     		} else {
     			memberService.loginUserInfo(req, res, session, params);  
     			
-    			map.put("result",  true);
-    			map.put("dest",  (String)session.getAttribute("dest"));    			
+    			String dest = (String)session.getAttribute("dest") == null? "/main" : (String)session.getAttribute("dest");
+    			session.setAttribute("dest", dest);
+    			
+    			map.put("result",  true);		
+    			map.put("dest",  dest);		
         		map.put("userInfo",  userInfo);
-        		
-        		session.removeAttribute("dest");
     		}
     	} catch (Exception e) {
     		map.put("result",  false);

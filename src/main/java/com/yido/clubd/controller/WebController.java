@@ -1,6 +1,7 @@
 package com.yido.clubd.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +22,6 @@ import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.model.BBS;
 import com.yido.clubd.model.MemberVO;
-import com.yido.clubd.model.Push;
 import com.yido.clubd.service.BBSService;
 import com.yido.clubd.service.MemberService;
 
@@ -109,8 +110,20 @@ public class WebController {
 	 */
 	@RequestMapping("/api/appInfo")
 	public String appInfo(Model model, HttpServletRequest req) {
-		SessionVO msMember = (SessionVO)req.getSession().getAttribute("msMember");
-		return "redirect:/main?msNum=" + msMember.getMsNum();
+		HttpSession session = req.getSession();
+		SessionVO msMember = (SessionVO)session.getAttribute("msMember");	
+		System.out.println("=======================/api/appInfo 들어옴=======================");
+		return "redirect:/api/getAppInfo?msNum=" + msMember.getMsNum();
+	}
+	
+	@RequestMapping("/api/getAppInfo")
+	public String getAppInfo(Model model, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		String dest = (String)session.getAttribute("dest");
+		model.addAttribute("dest", dest);
+		
+		session.removeAttribute("dest");
+		return "/member/redirect";
 	}
 
 	/**
@@ -120,7 +133,9 @@ public class WebController {
 	 */
 	@RequestMapping("/api/setToken")
 	public void sendToken(Map<String, Object> params, HttpServletRequest req, HttpServletResponse res) throws IOException {
+		System.out.println("=====================params : " + params + " [" + LocalDate.now() + "]========================");
 		SessionVO msMember = (SessionVO)req.getSession().getAttribute("msMember");
+		System.out.println("=====================msMember : " + msMember + "=====================");
 		params.put("msNum", msMember.getMsNum());
 		params.put("ipAddr", Utils.getClientIpAddress(req));
 		memberService.updateMemberToken(params);

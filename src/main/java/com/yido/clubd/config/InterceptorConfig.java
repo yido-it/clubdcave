@@ -31,6 +31,7 @@ public class InterceptorConfig extends HandlerInterceptorAdapter {
 			, "/pro/proGallery/**"
 			, "/pro/proForm/**"
 			, "/book/**"
+			, "/voucher/**"
 			};
 	
 	public String[] loginInessential = {
