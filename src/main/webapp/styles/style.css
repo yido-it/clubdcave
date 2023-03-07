@@ -323,7 +323,7 @@ a.btn_accodion_voucher{width:60px !important;}
 }
 
 .color-red-dark {
-  color: #DA4453 !important;
+  color: #ff6a78  !important;
 }
 
 .color-icon-red {
@@ -6121,6 +6121,7 @@ html.lb-disable-scrolling {
   max-width: inherit;
   max-height: none;
   border-radius: 3px;
+touch-action: pinch-zoom;
 }
 
 .lightbox a img {
