@@ -7131,7 +7131,7 @@ a.header-title.header-subtitle{ margin-top: 0.175rem !important;}
     position: fixed;   bottom: 78px; 
     border: 3px solid white;    color: #fff;    width: 52px;    height: 52px;
     text-align: center;    line-height: 1;    font-size: 18px;    border-radius: 50%;
-    right: 15px;  transition: background 0.5s;    z-index:999;
+    right: 15px;  transition: background 0.5s;    z-index:99;
 }
 /*예약*/
 /*bay선택*/
