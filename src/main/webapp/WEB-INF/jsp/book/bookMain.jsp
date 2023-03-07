@@ -473,6 +473,9 @@ function selectedBay(bayCd, bayName) {
 
 // 예약하기 버튼 클릭
 function doBook() {
+	
+	console.log("------> msId : " , msId);
+	
 	var matches = document.getElementsByClassName('active');
 	
 	if (matches.length <= 0) {
