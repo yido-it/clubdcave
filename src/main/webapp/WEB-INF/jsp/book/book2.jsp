@@ -81,7 +81,7 @@
 								<!-- 이용권 개당 가격 
 								<input type="hidden" name="" id="" value="${vc.SALE_SEQ}" />-->
 								
-								<i class="icon-check-1 far fa-square color-gray-dark font-16"></i>
+								<i class="icon-check-1 far fa-square color-gray-dark font-16" style="top:0"></i>
 								<i class="icon-check-2 far fa-check-square font-16 color-highlight"></i>
 							</div>
 							
