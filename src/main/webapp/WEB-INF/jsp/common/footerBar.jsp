@@ -29,6 +29,11 @@
 	</a>
 </div> 
 
+<!--카카오친구 -->
+<a href="" class="kakaoplus" >
+	<img src="/images/icons/icon_kakaoplus.png" style="width:100%">
+</a>
+
 <jsp:include page="../common/alertModal.jsp" />
 <script type="text/javascript">
 

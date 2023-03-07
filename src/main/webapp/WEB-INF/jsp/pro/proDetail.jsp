@@ -75,13 +75,20 @@
                 	<c:if test="${not empty proNoticeList}">
 	                    <c:forEach items="${proNoticeList}" var="item" varStatus="status">
 	                    <c:if test="${item.noticeDiv == '005'}">
-	                    <a href="${item.proRemark}" class="icon icon-m rounded-sm mb-2 mt-2  mr-2" style="background-color:#fae100"><i class="fa fa-2x fa-brands fa-kaggle" style="color:#000"></i></a>
+	                    
+	                    <a href="${item.proRemark}" class="icon icon-m rounded-sm mb-2 mt-2  mr-2" >
+	                    	<img src="/images/icons/icon_youtube.png" style="width:40px">
+	                    </a>
 	                    </c:if>
 	                    <c:if test="${item.noticeDiv == '006'}">
-	                    <a href="${item.proRemark}" class="icon icon-m rounded-sm mb-2 mt-2 mr-2"  style="background: linear-gradient( to bottom, #a50bff, #ffc502 );"><i class="fab fa-instagram font-18"></i></a>
+	                    <a href="${item.proRemark}" class="icon icon-m rounded-sm mb-2 mt-2 mr-2">
+	                    	<img src="/images/icons/icon_kakao.png" style="width:40px">
+						</a>
 	                    </c:if>
 	                    <c:if test="${item.noticeDiv == '003'}">			            
-	                        <a href="${item.proRemark}" class="icon icon-m rounded-sm mb-2 mt-2  mr-2" style="background-color: #ff0101;"><i class="fa-brands fa-youtube font-18"></i></a>
+	                        <a href="${item.proRemark}" class="icon icon-m rounded-sm mb-2 mt-2  mr-2">	                        	
+	                    		<img src="/images/icons/icon_insta.png" style="width:40px">
+	                        </a>
 	                    </c:if>
 	                    </c:forEach>
                 	</c:if>
