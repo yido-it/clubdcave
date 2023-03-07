@@ -281,6 +281,15 @@ public class BookController {
 				}			
 				// end.
 				
+				// 베이 이용시간&정리시간 조회
+				BookInfoVO bkInfo2 = new BookInfoVO();
+				bkInfo2.setCoDiv(coDiv);
+				bkInfo2.setBayCondi(temp.getBayCd());
+				bkInfo2.setBkDay(temp.getBkDay());
+				List<DrBkTime> bkTimeList = drBkTimeService.getBkTime(bkInfo2);
+				model.addAttribute("useTime", bkTimeList.get(0).getBkUseTime());	// 이용시간
+				model.addAttribute("gapTime", bkTimeList.get(0).getBkGapTime());	// 정리시간
+				// end.
 			}
 
 		} catch(Exception e) {

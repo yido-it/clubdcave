@@ -135,7 +135,7 @@
 </div> 
 <!--//예약개수 초과 모달 -->
 
-<!-- 예약취소 팝업 -->
+<!-- 예약취소 팝업
 <div id="voucher_cancle" class="menu menu-box-modal rounded-0" data-menu-height="270" data-menu-width="330"
 	data-menu-effect="menu-parallax">
 	<h1 class="text-center mt-4"><i class="fa-solid fa-triangle-exclamation fa-2x color-red-dark"></i></h1>
@@ -152,7 +152,7 @@
 		</div>
 	</div>
 </div> 
-
+ -->
 
 </body>
 

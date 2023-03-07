@@ -51,6 +51,9 @@
                 <h5 class="col-4 text-left font-15">이용시간</h5>
                 <h5 class="col-8 text-right font-14 opacity-60"> ${bkHis.bkTime} </h5>
              
+             	<h5 class="col-12 text-right font-14 opacity-60">
+             	※ 이용시간 ${useTime}분, 정리시간은 ${gapTime}분입니다.
+             	</h5>	
              	<!-- 
                 <h5 class="col-4 text-left font-15">예약장소</h5>
                 <h5 class="col-8 text-right font-14 opacity-60 ">서울시 청담동 클럽디청담</h5>

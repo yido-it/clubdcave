@@ -36,6 +36,8 @@
 		SELECT BK_TIME
 			 , BK_TOTAL_COUNT
 			 , BK_REM_COUNT 
+             , BK_USE_TIME
+             , BK_GAP_TIME
 		 FROM DR_BK_TIME
 		WHERE 1=1 
 		<if test='coDiv != null and coDiv != ""'>
