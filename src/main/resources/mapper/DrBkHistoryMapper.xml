@@ -96,7 +96,7 @@
 		<if test='calcSerialNo != null and calcSerialNo != ""'>
 		 AND A.CALC_SERIAL_NO = #{calcSerialNo}
 		</if>
-		<if test='strtDt != null and endDt != null'>
+		<if test='srchPeriod != null and srchPeriod != "" and strtDt != null and endDt != null'>
 		 AND A.BK_DAY BETWEEN #{strtDt} AND #{endDt}
 		</if>
 		<choose> 

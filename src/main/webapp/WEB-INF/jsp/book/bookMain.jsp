@@ -371,7 +371,7 @@ function initCalendar(year, month) {
 						// 기본 달력 표출 
 						divCnt += "<a href='#' class='cal-disabled'>" + data[i].DAYNUM + "</a>";
 					} else {
-						//  지점, 베이, 회원등급에 따른 달력 표출 
+						// 지점, 베이, 회원등급에 따른 달력 표출 
 						if(data[i].CL_SOLAR == currentDay) {
 							// 당일
 							if (dayClick == "") {

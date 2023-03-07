@@ -117,13 +117,14 @@ public class VoucherController {
 				map.put("offset", listSize);
 			}
 			
-			if (req.getParameter("strtDt") != null && req.getParameter("endDt") != null) {
+			if (req.getParameter("srchPeriod") != null && !req.getParameter("srchPeriod").equals("") 
+					&& req.getParameter("strtDt") != null && req.getParameter("endDt") != null) {
 				String strtDt = req.getParameter("strtDt").toString();
 				String endDt = req.getParameter("endDt").toString();
 				
 				map.put("strtDt", strtDt.replace("-", ""));
 				map.put("endDt", endDt.replace("-", ""));
-			
+				map.put("srchPeriod", req.getParameter("srchPeriod"));
 			}
 			
 			// srchUseYn > 전체 : A, 사용완료 : Y, 사용중 : N
