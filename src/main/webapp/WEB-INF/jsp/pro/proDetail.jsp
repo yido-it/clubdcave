@@ -190,6 +190,7 @@
 <!------------->
 	    
 <div class="menu-hider"><div></div></div>
+<jsp:include page="../common/footerBar.jsp" />
 <script type="text/javascript">
 	
 	var msNum = "<c:out value='${sessionScope.msMember.msNum}'/>";

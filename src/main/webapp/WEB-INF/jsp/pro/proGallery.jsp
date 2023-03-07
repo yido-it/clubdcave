@@ -107,7 +107,7 @@
     <br/>
 </div>
 <div class="menu-hider"><div></div></div>
-
+<jsp:include page="../common/footerBar.jsp" />
 <script type="text/javascript">	
 
 	Dropzone.autoDiscover = false;
