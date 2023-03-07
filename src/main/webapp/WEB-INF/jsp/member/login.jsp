@@ -189,13 +189,8 @@
 							changeDormant(data.userInfo);
 	            		}
 	            	} else {
-	            		if(mobileYn()) { goAppInfo(); }
-	            		// 페이지 이동
-	            		if(data.dest != null && data.dest != "") {	  
-	            			location.href = data.dest;
-	            		} else {	            			
-							location.href = "<c:url value='/main'/>";
-	            		}         		
+	            		location.href = '/api/appInfo';
+	            		//goAppInfo(data.dest);	
 	            	}
 				} else {
 					alertModal.fail(data.message);
@@ -207,14 +202,14 @@
 		});
 	}
 	
-	function goAppInfo() {	
+	function goAppInfo(dest) {	
 		$.ajax({
 			  url: "<c:url value='/api/appInfo'/>"
 			, type: "post"
-			, dataType: 'json'
+			, dataType: 'text'
 			, contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
 			, success: function(data) {
-				alert(data);
+        		location.href = dest;
 			}
 			, error: function(data) {
 				alertModal.fail('[error] 오류가 발생했습니다.');
