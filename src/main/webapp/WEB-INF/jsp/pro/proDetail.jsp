@@ -230,6 +230,7 @@
 	var el;
 	var startX;
 	var startY;
+	var initScale;
 	var transform = [];	
 	
 	$('.btn-pic').on('click', function() {
@@ -241,13 +242,12 @@
 		screen = document.querySelector(".lb-container");
 		el = document.querySelector('.image-container');
 		var mc = new Hammer.Manager(el);
-		var initScale = 1;
 		
 		startX = Math.round((screen.offsetWidth - el.offsetWidth) / 2);
 		startY = Math.round((screen.offsetHeight - el.offsetHeight) / 2);
 		
 		mc.add(new Hammer.Pan({ threshold: 0, pointers: 0}));
-		mc.add(new Hammer.Swipe()).recognizeWith(mc.get('pan'));
+		//mc.add(new Hammer.Swipe()).recognizeWith(mc.get('pan'));
 		mc.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith(mc.get('pan'));
 		
 		mc.on("panstart panmove", onPan);
@@ -275,6 +275,12 @@
 	}
 	
 	function elementUpdate() {
+		if(transform.scale <= 1) {
+			transform.translate = {
+				x: startX,
+				y: startY
+			};
+		}
 	    var value = [
 	    	'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
 	        'scale(' + transform.scale + ', ' + transform.scale + ')'
@@ -287,9 +293,14 @@
 	}
 	
 	function initImgPos() {
+		transform.translate = {
+			x: startX,
+			y: startY
+		};
+		transform.scale = 1;
 		var value = [
 	    	'translate3d(0px, 0px, 0)',
-	        'scale(1, 1)'
+	    	'scale(' + transform.scale + ', ' + transform.scale + ')'
 	    ];		
 		
 		value = value.join(" ");
