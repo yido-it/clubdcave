@@ -4,19 +4,16 @@
 <%@ page import="com.yido.clubd.common.utils.Globals" %>
 <jsp:include page="../common/head.jsp" />
 <jsp:include page="../common/script.jsp" />
-<!-- <link rel="stylesheet" type="text/css" href="/styles/glightbox.css"> -->
-<!-- <script type="text/javascript" src="/scripts/glightbox.js"></script>
-<script type="text/javascript" src="/scripts/glightbox-call.js"></script> -->
 <script type="text/javascript" src="/scripts/hammer.min.js"></script>
 <style>
 .lb-nav, .lb-prev, .lb-next {
 	display:none !important;
 }
 .image-container {
-	touch-action: pan-x pan-y !important;
+	touch-action: none !important;
 }
 .lb-image {
-	touch-action: pan-x pan-y !important;
+	touch-action: none !important;
 }
 </style>
 <body class="theme-dark">
@@ -220,12 +217,13 @@
 <script type="text/javascript">
 	
 	var msNum = "<c:out value='${sessionScope.msMember.msNum}'/>";
-	
+
 	$().ready(function() {
 		if(urlParam('msNum') == msNum) {		
 			$('#btnEdit').show();
 			$('#btnGallery').show();
 		}
+
 	});
 	
 	var screen;
@@ -235,15 +233,15 @@
 	var transform = [];	
 	
 	$('.btn-pic').on('click', function() {
-		
 		var url = $(this).data('pic-url');
-		$(this).find('img').attr('data-src', url);
+		$(this).find('img').attr('data-src', url);		
 		
 		// ------------------------------------------ hammer.js
 		
 		screen = document.querySelector(".lb-container");
 		el = document.querySelector('.image-container');
 		var mc = new Hammer.Manager(el);
+		var initScale = 1;
 		
 		startX = Math.round((screen.offsetWidth - el.offsetWidth) / 2);
 		startY = Math.round((screen.offsetHeight - el.offsetHeight) / 2);
@@ -257,9 +255,8 @@
 		
 		// ------------------------------------------ hammer.js
 		
-	})
+	})	
 	
-	var initScale = 1;
 	function onPinch(ev) {
 	    if(ev.type == 'pinchstart') {
 	        initScale = transform.scale || 1;
@@ -268,12 +265,11 @@
 
 	    elementUpdate();
 	}
-	
+		
 	function onPan(ev) {
-		$('.lb-number').text(startX + " => " + ev.deltaX);
 	    transform.translate = {
-		        x: startX + ev.deltaX,
-		        y: startY + ev.deltaY
+			x: startX + ev.deltaX,
+			y: startY + ev.deltaY
 		};
 		elementUpdate();
 	}
@@ -283,10 +279,21 @@
 	    	'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
 	        'scale(' + transform.scale + ', ' + transform.scale + ')'
 	    ];	   
-	    
-	    
+	    	    
 	    value = value.join(" ");
 	    el.style.webkitTransform = value;
+	    el.style.mozTransform = value;
+	    el.style.transform = value;
+	}
+	
+	function initImgPos() {
+		var value = [
+	    	'translate3d(0px, 0px, 0)',
+	        'scale(1, 1)'
+	    ];		
+		
+		value = value.join(" ");
+		el.style.webkitTransform = value;
 	    el.style.mozTransform = value;
 	    el.style.transform = value;
 	}

@@ -1026,6 +1026,7 @@ $(document).ready(function(){
         $('[data-lightbox]').addClass('default-link');
         lightbox.option({alwaysShowNavOnTouchDevices:true, 'resizeDuration': 200, 'wrapAround': false})
         $('#lightbox').hammer().on("swipe", function (event) {
+			initImgPos();
             if (event.gesture.direction === 4) {
                 $('#lightbox a.lb-prev').trigger('click');
             } else if (event.gesture.direction === 2) {
