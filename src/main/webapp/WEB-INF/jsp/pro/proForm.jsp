@@ -87,7 +87,7 @@
 	                    <em><i class="fa fa-angle-down"></i></em>
 	                    <input class="form-control" type="hidden" id="msArea1Val" value="${sessionScope.msMember.msArea1}" >
 	                      <select id="msArea1" name="msArea1">
-	                        <option value="">선택하세요</option>
+	                        <option value="" disabled>선택하세요</option>
 	                        <c:forEach items="${msArea1List}" var="item" varStatus="status">
 	                        <option value="${item.cdCode}">${item.cdTitle1}</option>
 			                </c:forEach>
@@ -100,7 +100,7 @@
                         <em><i class="fa fa-angle-down"></i></em>
                         <input class="form-control" type="hidden" id="msArea2Val" value="${sessionScope.msMember.msArea2}" >
                         <select id="msArea2" name="msArea2">
-                            <option value="">선택하세요</option>
+                            <option value="" disabled>선택하세요</option>
                         </select>
                     </div> 
                 </div>
