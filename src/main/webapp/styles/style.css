@@ -3359,8 +3359,8 @@ img.mx-auto {
   pointer-events: all;
   margin-top: -3px;
   margin-left: -1px;
-  width: 58px !important;
-  height: 32px !important;
+  width: 62px !important;
+  height: 28px !important;
   border-radius: 50px !important;
 }
 
@@ -3368,7 +3368,7 @@ img.mx-auto {
   margin-top: -2px;
   z-index: 6;
   width: 30px !important;
-  height: 30px !important;
+  height: 26px !important;
   transition: all 250ms ease;
   border-radius: 50px !important;
   background-color: #FFF;
@@ -3381,7 +3381,7 @@ img.mx-auto {
 }
 
 .ios-input:checked ~ .custom-control-label::before {
-  background-color: #8CC152 !important;
+  background-color: #DA4453 !important;
 }
 
 .highlight-switch .ios-input:checked ~ .custom-control-label::before {
@@ -3389,7 +3389,7 @@ img.mx-auto {
 }
 
 .ios-switch-icon label::before {
-  background-color: #DA4453 !important;
+  background-color:#8CC152  !important;
 }
 
 .ios-switch-icon i {
@@ -3420,7 +3420,7 @@ img.mx-auto {
 .ios-switch-icon span:last-child {
   z-index: 5;
   position: absolute;
-  margin-left: 24px;
+  margin-left: 25px;
 }
 
 /*Android Switcher*/
@@ -3565,7 +3565,7 @@ img.mx-auto {
   display: block;
 }
 
-.icon-check i.icon-check-1, .icon-check i.icon-check-2{top: 5px}
+.icon-check i.icon-check-1, .icon-check i.icon-check-2{top: 0px}
 
 /*Input Style 1*/
 .input-style-1 {
@@ -5698,6 +5698,7 @@ code {
   background-color: #1b1d21;
   border: solid 1px rgba(255, 255, 255, 0.05) !important;
 }
+
 
 .theme-dark .footer,
 .theme-dark .card,

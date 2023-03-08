@@ -146,21 +146,55 @@
 			</div>
 
             <!--레슨관련-->
-            <h3 class="font-700 mt-5 mb-3">레슨</h3> 
-    
-            <div class="row mb-0 mt-4">
+            <h3 class="font-700 mt-4 mb-3">레슨</h3> 
+            <!--레슨계획공개여부 -->
+      		 <div class="d-flex">
+                <div class="pt-1">
+                    <h5 data-activate="toggle-id-3" class="font-500 font-17">레슨계획</h5>
+                </div>
+                <div class="ml-auto mr-4 pr-2">
+                  <span style="top: 5px;position: relative;right: 5px;">공개여부</span>
+                    <div class="custom-control ios-switch ios-switch-icon fr">
+                        <input type="checkbox" class="ios-input" id="toggle-id-3">
+                        <label class="custom-control-label" for="toggle-id-3"></label>
+                        <span style="white-space: pre;">OFF</span>
+                        <span style="white-space: pre;">ON</span>
+                    </div>
+                </div>
+            </div>
+              <!--//레슨계획공개여부 -->
+              
+            <div class="row mb-0 mt-2">
                 <div class="col-12 mb-1">
                     <div class="input-style input-style-2 input-required">
                         <em></em>
-                        <span class="input-style-1-active input-style-1-inactive">레슨계획</span>
                         <textarea class="form-control" placeholder="자유롭게 기술" style="height: 110px;padding: 10px;line-height: unset;" id="n_002" name="n_002"></textarea>
                     </div>
                 </div>
+             </div>   
+                
+              <!--레슨일정공개여부 -->
+      		 <div class="d-flex">
+                <div class="pt-1">
+                    <h5 data-activate="toggle-id-4" class="font-500 font-17">레슨일정</h5>
+                </div>
+                <div class="ml-auto mr-4 pr-2">
+                  <span style="top: 5px;position: relative;right: 5px;">공개여부</span>
+                    <div class="custom-control ios-switch ios-switch-icon fr">
+                        <input type="checkbox" class="ios-input" id="toggle-id-4">
+                        <label class="custom-control-label" for="toggle-id-4"></label>
+                        <span style="white-space: pre;">OFF</span>
+                        <span style="white-space: pre;">ON</span>
+                    </div>
+                </div>
+            </div>
+              <!--//레슨일정공개여부 -->
+              
+              <div class="row mb-0 mt-2">  
                 <div class="col-12 mb-1">
                     <div class="input-style input-style-2 input-required">
                         <em></em>
-                        <span class="input-style-1-active input-style-1-inactive">레슨일정</span>
-                        <textarea class="form-control" placeholder="레슨가능날짜, 시간, 횟수 등" style="height: 110px;padding: 10px;line-height: unset;" id="n_007" name="n_007"></textarea>
+                       <textarea class="form-control" placeholder="레슨가능날짜, 시간, 횟수 등" style="height: 110px;padding: 10px;line-height: unset;" id="n_007" name="n_007"></textarea>
                     </div>
                 </div>
                 <div class="col-12 mb-1">
