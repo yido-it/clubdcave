@@ -250,8 +250,13 @@ public class MemberController {
     			session.setAttribute("dest", dest);
     			
     			map.put("result",  true);		
-    			map.put("dest",  dest);		
         		map.put("userInfo",  userInfo);
+        		
+        		// 모바일이 아니면 그냥 이동
+        		if(req.getHeader("User-Agent").toLowerCase().indexOf("mobi") > -1) {        			
+        			map.put("dest",  dest);
+        			session.removeAttribute("dest");
+        		}
     		}
     	} catch (Exception e) {
     		map.put("result",  false);

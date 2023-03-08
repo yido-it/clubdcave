@@ -146,50 +146,22 @@
 			</div>
 
             <!--레슨관련-->
-            <h3 class="font-700 mt-5 mb-3">레슨가능날짜,시간</h3> 
+            <h3 class="font-700 mt-5 mb-3">레슨</h3> 
     
             <div class="row mb-0 mt-4">
                 <div class="col-12 mb-1">
                     <div class="input-style input-style-2 input-required">
                         <em></em>
-                        <span class="input-style-1-active input-style-1-inactive">레슨계획 입력</span>
+                        <span class="input-style-1-active input-style-1-inactive">레슨계획</span>
                         <textarea class="form-control" placeholder="자유롭게 기술" style="height: 110px;padding: 10px;line-height: unset;" id="n_002" name="n_002"></textarea>
                     </div>
                 </div>
-                <div class="col-6 mb-1">
-                    <div class="input-style input-style-2  input-required">
-                        <span class="color-highlight">레슨가능횟수</span>
-                        <em><i class="fa fa-angle-down"></i></em>
-                        <select>
-                            <option value="" disabled>빈도 선택</option>
-                            <option value="week1">주1회</option>
-                            <option value="week2">주2회</option> 
-                            <option value="week3">주3회</option>
-                            <option value="week4">주4회</option> 
-                            <option value="week5">주5회</option>
-                            <option value="week6">주6회</option> 
-                            <option value="week7">주7회</option> 
-                        </select>
-                    </div> 
-                </div>
-                <div class="col-6 mb-1">
-                    <div class="input-style input-style-2  input-required">
-                        <span class="color-highlight input-style-1-active">선호 요일</span>
-                        <input class="form-control" type="name" placeholder="ex) 월,수">
-                    </div> 
-                </div>
-            
-                <div class="col-6 mb-1">
-                    <div class="input-style input-style-2  input-required">
-                        <span class="color-highlight input-style-1-active">레슨 선호시간</span>
-                        <input class="form-control" type="name" placeholder=" ex) 19시~21시">
-                    </div> 
-                </div>
-                <div class="col-6 mb-1">
-                    <div class="input-style input-style-2  input-required">
-                        <span class="color-highlight input-style-1-active">필드 레슨일</span>
-                        <input class="form-control" type="name" placeholder=" ex) 매주 화요일">
-                    </div> 
+                <div class="col-12 mb-1">
+                    <div class="input-style input-style-2 input-required">
+                        <em></em>
+                        <span class="input-style-1-active input-style-1-inactive">레슨일정</span>
+                        <textarea class="form-control" placeholder="레슨가능날짜, 시간, 횟수 등" style="height: 110px;padding: 10px;line-height: unset;" id="n_007" name="n_007"></textarea>
+                    </div>
                 </div>
                 <div class="col-12 mb-1">
                     <div class="input-style input-style-2 input-required">

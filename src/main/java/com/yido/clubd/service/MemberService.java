@@ -1,7 +1,6 @@
 package com.yido.clubd.service;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,6 +26,7 @@ import com.yido.clubd.common.utils.SessionVO;
 import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.model.DrMsCoInfo;
 import com.yido.clubd.model.MemberVO;
+import com.yido.clubd.model.Push;
 import com.yido.clubd.repository.DrMsCoInfoMapper;
 import com.yido.clubd.repository.MemberMapper;
 
@@ -494,8 +494,8 @@ public class MemberService {
 		
 	}
 
-	public void updateMemberToken(Map<String, Object> params) {
-		memberMapper.updateMemberToken(params);
+	public void updateMemberToken(Push push) {
+		memberMapper.updateMemberToken(push);
 		
 	}	
 

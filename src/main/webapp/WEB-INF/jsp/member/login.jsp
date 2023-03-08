@@ -189,8 +189,11 @@
 							changeDormant(data.userInfo);
 	            		}
 	            	} else {
-	            		location.href = '/api/appInfo';
-	            		//goAppInfo(data.dest);	
+	            		if(data.dest != null) {
+	            			location.href = data.dest;
+	            		} else {	            			
+		            		location.href = '/api/appInfo';
+	            		}
 	            	}
 				} else {
 					alertModal.fail(data.message);

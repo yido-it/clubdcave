@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.yido.clubd.common.utils.SessionVO;
-import com.yido.clubd.model.BookInfoVO;
 import com.yido.clubd.model.MemberVO;
+import com.yido.clubd.model.Push;
 
 /**
  * 회원정보
@@ -96,7 +96,7 @@ public interface MemberMapper {
 	// 회원 탈퇴
 	public void updateMemberQuit(Map<String, Object> params);
 
-	public void updateMemberToken(Map<String, Object> params);
+	public void updateMemberToken(Push push);
 
 
 }

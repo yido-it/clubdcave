@@ -4,11 +4,23 @@
 <%@ page import="com.yido.clubd.common.utils.Globals" %>
 <jsp:include page="../common/head.jsp" />
 <jsp:include page="../common/script.jsp" />
-    
+<!-- <link rel="stylesheet" type="text/css" href="/styles/glightbox.css"> -->
+<!-- <script type="text/javascript" src="/scripts/glightbox.js"></script>
+<script type="text/javascript" src="/scripts/glightbox-call.js"></script> -->
+<script type="text/javascript" src="/scripts/hammer.min.js"></script>
+<style>
+.lb-nav, .lb-prev, .lb-next {
+	display:none !important;
+}
+.image-container {
+	touch-action: pan-x pan-y !important;
+}
+.lb-image {
+	touch-action: pan-x pan-y !important;
+}
+</style>
 <body class="theme-dark">
-
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div> 
-
 <div id="page">
  
     <div class="page-title page-title-fixed" style="opacity: 1; z-index: 99;">
@@ -111,11 +123,25 @@
                 <div class="divider mb-2 mt-2"></div>        
                 
                 <p class="mb-n1 color-highlight font-600 mb-n1">Lesson</p>
-                <h2>레슨방식</h2>
+                <h2>레슨계획</h2>
                 <p>
                 	<c:if test="${not empty proNoticeList}">
 	                    <c:forEach items="${proNoticeList}" var="item" varStatus="status">
 	                    <c:if test="${item.noticeDiv == '002'}">
+	                        ${item.proRemark}
+	                    </c:if>
+	                    </c:forEach>
+	                </c:if>
+                </p> 
+                
+                 <div class="divider mb-2 mt-2"></div>        
+                
+                <p class="mb-n1 color-highlight font-600 mb-n1">Lesson</p>
+                <h2>레슨일정</h2>
+                <p>
+                	<c:if test="${not empty proNoticeList}">
+	                    <c:forEach items="${proNoticeList}" var="item" varStatus="status">
+	                    <c:if test="${item.noticeDiv == '007'}">
 	                        ${item.proRemark}
 	                    </c:if>
 	                    </c:forEach>
@@ -151,7 +177,7 @@
 		             	<c:forEach items="${proImgList}" var="item" varStatus="status">
 		             	<c:choose>
 		              	<c:when test="${item.imgDiv eq 1}">
-	                    	<a href="${item.fileURL}" data-lightbox="gallery-1" class="filtr-item default-link btn-picture" data-pic-url="${item.fileURL}" data-category="${item.imgDiv}" >								
+	                    	<a href="${item.fileURL}" data-lightbox="gallery-1" class="filtr-item default-link btn-pic" data-pic-url="${item.fileURL}" data-category="${item.imgDiv}" >								
 								<img src="${item.thumbURL}" class="preload-img rounded-s shadow-m" >								
 							</a>
 		              	</c:when>
@@ -202,10 +228,68 @@
 		}
 	});
 	
+	var screen;
+	var el;
+	var startX;
+	var startY;
+	var transform = [];	
+	
 	$('.btn-pic').on('click', function() {
+		
 		var url = $(this).data('pic-url');
 		$(this).find('img').attr('data-src', url);
+		
+		// ------------------------------------------ hammer.js
+		
+		screen = document.querySelector(".lb-container");
+		el = document.querySelector('.image-container');
+		var mc = new Hammer.Manager(el);
+		
+		startX = Math.round((screen.offsetWidth - el.offsetWidth) / 2);
+		startY = Math.round((screen.offsetHeight - el.offsetHeight) / 2);
+		
+		mc.add(new Hammer.Pan({ threshold: 0, pointers: 0}));
+		mc.add(new Hammer.Swipe()).recognizeWith(mc.get('pan'));
+		mc.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith(mc.get('pan'));
+		
+		mc.on("panstart panmove", onPan);
+		mc.on("pinchstart pinchmove", onPinch);
+		
+		// ------------------------------------------ hammer.js
+		
 	})
+	
+	var initScale = 1;
+	function onPinch(ev) {
+	    if(ev.type == 'pinchstart') {
+	        initScale = transform.scale || 1;
+	    }
+	    transform.scale = initScale * ev.scale;
+
+	    elementUpdate();
+	}
+	
+	function onPan(ev) {
+		$('.lb-number').text(startX + " => " + ev.deltaX);
+	    transform.translate = {
+		        x: startX + ev.deltaX,
+		        y: startY + ev.deltaY
+		};
+		elementUpdate();
+	}
+	
+	function elementUpdate() {
+	    var value = [
+	    	'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
+	        'scale(' + transform.scale + ', ' + transform.scale + ')'
+	    ];	   
+	    
+	    
+	    value = value.join(" ");
+	    el.style.webkitTransform = value;
+	    el.style.mozTransform = value;
+	    el.style.transform = value;
+	}
 	
 	$('.btn-video').on('click', function() {
 		var url = $(this).data('video-url');
@@ -213,6 +297,8 @@
 		$('#menu-video').find('video').attr('src', url);
 		$('#menu-video').find('video').attr('poster', thumb);
 	})
+	
+	
 	
 </script>
 </body>

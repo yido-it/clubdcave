@@ -4,12 +4,13 @@
 <jsp:include page="../common/script.jsp" />
 <head>
 	TEST
+	TEST
+	TEST
 </head>
 <body>
-	<button type="button" onclick="location='/main'">메인가기(삭제할거임)</button>
 	<script type="text/javascript">
 		var dest = '${dest}';
-		//location.href = dest;
+		location.href = dest;
 		$(document).ready(function(){	
 			//location.href = dest;		
 		})

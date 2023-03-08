@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yido.clubd.common.utils.SessionVO;
-import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.model.BBS;
 import com.yido.clubd.model.MemberVO;
+import com.yido.clubd.model.Push;
 import com.yido.clubd.service.BBSService;
 import com.yido.clubd.service.MemberService;
 
@@ -112,7 +112,6 @@ public class WebController {
 	public String appInfo(Model model, HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		SessionVO msMember = (SessionVO)session.getAttribute("msMember");	
-		System.out.println("=======================/api/appInfo 들어옴=======================");
 		return "redirect:/api/getAppInfo?msNum=" + msMember.getMsNum();
 	}
 	
@@ -120,8 +119,7 @@ public class WebController {
 	public String getAppInfo(Model model, HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		String dest = (String)session.getAttribute("dest");
-		model.addAttribute("dest", dest);
-		
+		model.addAttribute("dest", dest);		
 		session.removeAttribute("dest");
 		return "/member/redirect";
 	}
@@ -132,13 +130,12 @@ public class WebController {
 	 * @throws IOException
 	 */
 	@RequestMapping("/api/setToken")
-	public void sendToken(Map<String, Object> params, HttpServletRequest req, HttpServletResponse res) throws IOException {
-		System.out.println("=====================params : " + params + " [" + LocalDate.now() + "]========================");
-		SessionVO msMember = (SessionVO)req.getSession().getAttribute("msMember");
-		System.out.println("=====================msMember : " + msMember + "=====================");
-		params.put("msNum", msMember.getMsNum());
-		params.put("ipAddr", Utils.getClientIpAddress(req));
-		memberService.updateMemberToken(params);
+	public void setToken(Push push, HttpServletResponse res) throws IOException {
+		System.out.println("============push : " + push + " [" + LocalDate.now() + "]==========");
+		push.setIpAddr("");
+		if(push != null) {			
+			//memberService.updateMemberToken(push); 나중에
+		}
 	}
     
     /**
@@ -151,6 +148,15 @@ public class WebController {
 	 */
     @RequestMapping("/succ-logout")
 	public String successLogout(Model model, HttpServletRequest req, HttpServletResponse res) {
+    	
+    	SessionVO msMember = (SessionVO)req.getSession().getAttribute("msMember");
+    	
+    	if(req.getHeader("User-Agent").toLowerCase().indexOf("mobi") > -1) {
+	    	Push push = new Push();
+			push.setMsNum(msMember.getMsNum());
+			push.setIpAddr("");
+			//memberService.updateMemberToken(push); 나중에 추가
+    	}
 
 		//세션 invalidate
     	req.getSession().invalidate();
@@ -166,7 +172,8 @@ public class WebController {
         			res.addCookie(cookie); 
     			}
         	}
-    	}    	
+    	}
+    	
     	return "redirect:/main";
 	}
 
@@ -230,5 +237,6 @@ public class WebController {
 	public String bay5(Model model, HttpServletRequest req) {
 		return "/bay/bay5";
 	}
+
 }
  	
