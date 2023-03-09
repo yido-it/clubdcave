@@ -24,17 +24,16 @@
 		<i class="fa fa-spinner fa-pulse fa-fw"></i>
 		<br/><br/>
 		로딩중입니다.
-	</h1>
- 
+	</h1> 
 
 	<script type="text/javascript">
 		var dest = '${dest}';
-		// 화면 작업 위해 잠시 막아둠
-		/* if(dest != null) {
+		console.log(dest);
+		if(dest != null) {
 			location.href = dest;
 		} else {	            			
     		location.href = '/main';
-		} */
+		}
 	</script>
 </body>
 </html>
