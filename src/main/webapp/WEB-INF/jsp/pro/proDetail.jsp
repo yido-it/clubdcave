@@ -137,7 +137,7 @@
 						<div class="divider mb-2 mt-2"></div>    
                 
 		                <p class="mb-n1 color-highlight font-600 mb-n1">Lesson</p>
-		                <h2>레슨일정</h2>
+		                <h2>레슨일정 <span class="sub_txt">상세일정은 프로와 상의하세요</span></h2>
 		                <p>
                 			${item.proRemark}	                    
                 		</p> 

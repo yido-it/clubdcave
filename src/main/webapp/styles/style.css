@@ -7165,6 +7165,7 @@ a.header-title.header-subtitle{ margin-top: 0.175rem !important;}
 .image-fit{height: 91px;  width: 100%;  object-fit: cover;}
 .dz-preview{float:left}
 a.dz-remove{padding:0 0.75em}
+.sub_txt{margin-left:5px;color: #727272 !important;font-size:13px;font-weight:normal}
 /*이용권*/
 .collapse{border-bottom:1px solid #333}
 .accodion-padding{padding: 12px 8px !important}

@@ -105,7 +105,11 @@
                         </select>
                     </div> 
                 </div>
-            </div>    
+            </div>
+           <div class="d-flex">
+            <div class="pt-1">
+                    <h5 data-activate="n_002_yn" class="font-500 font-17">경력사항 입력</h5>
+                </div>    
 			<div class="ml-auto mr-4 pr-2">
 				<span style="top: 5px;position: relative;right: 5px;">공개여부</span>
 				<div class="custom-control ios-switch ios-switch-icon fr">
@@ -115,8 +119,8 @@
 					<span style="white-space: pre;">ON</span>
 				</div>
             </div>
-            <div class="input-style input-style-2 input-required">
-                <span class="input-style-1-active input-style-1-inactive">경력사항 입력</span>
+            </div>
+            <div class="input-style input-style-2 input-required mt-2"> 
                 <em></em>
                	<textarea class="form-control" placeholder="ex)학력, 투어경력, 방송활동, 레슨경력" style="height: 110px;padding: 10px;line-height: unset;" id="n_001" name="n_001"></textarea>
             </div>     
