@@ -385,7 +385,15 @@
 		objData['${"l_"}${item.licKind}'] = 'Y';
 	</c:forEach>
 	
-	if(localStorage.getItem('frmPro') != undefined) {
+	if(localStorage.getItem('frmPro') != undefined) {		
+		alertModal.confirm2('중간저장된 내용을 불러올까요? 취소하면 삭제됩니다.', 'getMidSaveInfo();')			
+	}
+	
+	$('.btn-cancel').on('click', function () {
+		localStorage.removeItem('frmPro');   
+	})
+	
+	function getMidSaveInfo() {
 		var obj = JSON.parse(localStorage.getItem('frmPro'));
 		if(obj.msNum == $('#msNum').val()) {
 			for(var key in obj) {
@@ -412,7 +420,7 @@
 					}
 				}
 			}	
-		}		
+		}	
 	}
 	
 	 $('.hidden-notice').each(function () {

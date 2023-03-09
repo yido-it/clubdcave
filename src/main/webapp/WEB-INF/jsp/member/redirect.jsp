@@ -4,16 +4,16 @@
 <jsp:include page="../common/script.jsp" />
 <head>
 	TEST
-	TEST
-	TEST
 </head>
 <body>
 	<script type="text/javascript">
 		var dest = '${dest}';
-		location.href = dest;
-		$(document).ready(function(){	
-			//location.href = dest;		
-		})
+		// 화면 작업 위해 잠시 막아둠
+		/* if(dest != null) {
+			location.href = dest;
+		} else {	            			
+    		location.href = '/main';
+		} */
 	</script>
 </body>
 </html>

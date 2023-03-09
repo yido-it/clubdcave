@@ -98,7 +98,6 @@
 		var target = e.target;
 		if((!$(target).hasClass('btn')) && (!$('#confirm1Popup').is(target)) && (!$('#confirm2Popup').is(target))) {
 			$('#confirm1Popup').removeClass('menu-active');
-			$('#confirm2Popup').removeClass('menu-active');
 		}
 	})
 </script>

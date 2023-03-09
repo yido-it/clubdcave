@@ -103,47 +103,47 @@
                 	</c:if>
                 </div> 
                 
-                <div class="divider mb-2 mt-2"></div>        
-                
-                <p class="mb-n1 color-highlight font-600 mb-n1">Career</p>
-                <h2>경력사항</h2>
-                <p>
-                	<c:if test="${not empty proNoticeList}">
-	                    <c:forEach items="${proNoticeList}" var="item" varStatus="status">
-	                    <c:if test="${item.noticeDiv == '001'}">
-	                        ${item.proRemark}
-	                    </c:if>
-	                    </c:forEach>
-                    </c:if>
-                </p> 
+               	<c:if test="${not empty proNoticeList}">
+           	    <c:forEach items="${proNoticeList}" var="item" varStatus="status">
+	                <c:if test="${item.noticeDiv == '001' && item.noticeOpenYn != 'N'}">
+	                <div class="divider mb-2 mt-2"></div>        
+	                
+	                <p class="mb-n1 color-highlight font-600 mb-n1">Career</p>
+	                <h2>경력사항</h2>
+	                <p>
+	                	${item.proRemark}
+	                </p> 
+	                </c:if>
+                </c:forEach>
+                </c:if>
 
-                <div class="divider mb-2 mt-2"></div>        
+                <c:if test="${not empty proNoticeList}">
+                	<c:forEach items="${proNoticeList}" var="item" varStatus="status">
+                	<c:if test="${item.noticeDiv == '002' && item.noticeOpenYn != 'N'}">                
+	               		<div class="divider mb-2 mt-2"></div>        
+	                
+		                <p class="mb-n1 color-highlight font-600 mb-n1">Lesson</p>
+		                <h2>레슨계획</h2>
+		                <p>
+							${item.proRemark}
+	                	</p>
+					</c:if>
+	                </c:forEach>
+	             </c:if> 
                 
-                <p class="mb-n1 color-highlight font-600 mb-n1">Lesson</p>
-                <h2>레슨계획</h2>
-                <p>
-                	<c:if test="${not empty proNoticeList}">
-	                    <c:forEach items="${proNoticeList}" var="item" varStatus="status">
-	                    <c:if test="${item.noticeDiv == '002'}">
-	                        ${item.proRemark}
-	                    </c:if>
-	                    </c:forEach>
-	                </c:if>
-                </p> 
+				<c:if test="${not empty proNoticeList}">
+					<c:forEach items="${proNoticeList}" var="item" varStatus="status">
+					<c:if test="${item.noticeDiv == '007' && item.noticeOpenYn != 'N'}">
+						<div class="divider mb-2 mt-2"></div>    
                 
-                 <div class="divider mb-2 mt-2"></div>        
-                
-                <p class="mb-n1 color-highlight font-600 mb-n1">Lesson</p>
-                <h2>레슨일정</h2>
-                <p>
-                	<c:if test="${not empty proNoticeList}">
-	                    <c:forEach items="${proNoticeList}" var="item" varStatus="status">
-	                    <c:if test="${item.noticeDiv == '007'}">
-	                        ${item.proRemark}
-	                    </c:if>
-	                    </c:forEach>
-	                </c:if>
-                </p> 
+		                <p class="mb-n1 color-highlight font-600 mb-n1">Lesson</p>
+		                <h2>레슨일정</h2>
+		                <p>
+                			${item.proRemark}	                    
+                		</p> 
+                	</c:if>
+	                </c:forEach>
+				</c:if>
                 
             </div>
             <!-- // content -->
