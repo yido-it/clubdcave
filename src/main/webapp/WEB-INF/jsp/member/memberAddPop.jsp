@@ -21,6 +21,7 @@
                 <option value="" disabled>성별 선택</option>
                 <option value="M">남성</option>
                 <option value="F">여성</option> 
+                <option value="">선택안함</option>
             </select>
         </div>
 
@@ -41,6 +42,7 @@
                         <c:forEach items="${msArea1List}" var="item" varStatus="status">
                         <option value="${item.cdCode}">${item.cdTitle1}</option>
 		                </c:forEach>
+		                <option value="">선택안함</option>
                     </select>
                 </div> 
             </div>
@@ -94,6 +96,7 @@
                  <c:forEach items="${placeList}" var="item" varStatus="status">
                  <option value="${item.coDiv}">${item.coName}</option>
                  </c:forEach>
+                 <option value="">선택안함</option>
              </select>
         </div>
              
@@ -106,6 +109,7 @@
                 <option value="" disabled>레슨경험</option>
                 <option value="Y">있음</option>
                 <option value="N">없음</option> 
+                <option value="">선택안함</option>
             </select>
         </div>
     
@@ -150,6 +154,7 @@
 		                <c:forEach items="${jobList}" var="item" varStatus="status">
 		                <option value="${item.cdCode}">${item.cdTitle1}</option>
 		                </c:forEach>
+		                <option value="">선택안함</option>
            			</select>
                 </div> 
             </div>
@@ -217,35 +222,39 @@
 		})
 		
 		function getArea2List() {
-			var params = {
-				  coDiv : '001'
-				, cdDivision : '221'	
-				, cdCode : $('#msArea1').val()
-			}		
-			
-			$.ajax({
-		        url: "<c:out value='/common/getCommonCodeDetailList'/>"
-		        , type: "post"
-		        , dataType: 'json'
-		        , data: params
-		        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
-		        , success: function(data) {
-		            if(data.result){		          
-		            	var list = data.detailList;
-		            	$('.cd_detail_list').remove();
-						for(var i = 0; i < list.length; i++) {
-							var option = $("<option value='" + list[i].cdCode + "' class='cd_detail_list'>" + list[i].cdTitle1 + "</option>");
-							$('#msArea2').append(option);
-						}
-						setSelectValue('msArea2');
-		            } else {
-		                alertModal.fail(data.message);                    
-		            }                
-		        }
-		        , error: function(data) {
-		        	 alertModal.fail('[error] 코드 호출 중 오류 발생했습니다.');
-		        }
-		    });
+			if($('#msArea1').val() != null && $('#msArea1').val() != "") {
+				var params = {
+					  coDiv : '001'
+					, cdDivision : '221'	
+					, cdCode : $('#msArea1').val()
+				}		
+				
+				$.ajax({
+			        url: "<c:out value='/common/getCommonCodeDetailList'/>"
+			        , type: "post"
+			        , dataType: 'json'
+			        , data: params
+			        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+			        , success: function(data) {
+			            if(data.result){		          
+			            	var list = data.detailList;
+			            	$('.cd_detail_list').remove();
+							for(var i = 0; i < list.length; i++) {
+								var option = $("<option value='" + list[i].cdCode + "' class='cd_detail_list'>" + list[i].cdTitle1 + "</option>");
+								$('#msArea2').append(option);
+							}
+							setSelectValue('msArea2');
+			            } else {
+			                alertModal.fail(data.message);                    
+			            }                
+			        }
+			        , error: function(data) {
+			        	 alertModal.fail('[error] 코드 호출 중 오류 발생했습니다.');
+			        }
+			    });
+			} else {
+				$('.cd_detail_list').remove();
+			}
 		}
 				
 		$('#btnAddCar').on('click', function() {

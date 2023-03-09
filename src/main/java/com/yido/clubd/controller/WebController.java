@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yido.clubd.common.utils.SessionVO;
+import com.yido.clubd.common.utils.Utils;
 import com.yido.clubd.model.BBS;
 import com.yido.clubd.model.MemberVO;
 import com.yido.clubd.model.Push;
@@ -130,11 +131,11 @@ public class WebController {
 	 * @throws IOException
 	 */
 	@RequestMapping("/api/setToken")
-	public void setToken(Push push, HttpServletResponse res) throws IOException {
+	public void setToken(Push push, HttpServletRequest req, HttpServletResponse res) throws IOException {
 		System.out.println("============push : " + push + " [" + LocalDate.now() + "]==========");
-		push.setIpAddr("");
+		push.setIpAddr(Utils.getClientIpAddress(req));
 		if(push != null) {			
-			//memberService.updateMemberToken(push); 나중에
+			memberService.updateMemberToken(push);
 		}
 	}
     
@@ -154,8 +155,9 @@ public class WebController {
     	if(req.getHeader("User-Agent").toLowerCase().indexOf("mobi") > -1) {
 	    	Push push = new Push();
 			push.setMsNum(msMember.getMsNum());
-			push.setIpAddr("");
-			//memberService.updateMemberToken(push); 나중에 추가
+			push.setToken("");
+			push.setIpAddr(Utils.getClientIpAddress(req));
+			memberService.updateMemberToken(push);
     	}
 
 		//세션 invalidate

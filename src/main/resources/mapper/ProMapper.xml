@@ -3,6 +3,7 @@
 
 <mapper namespace="com.yido.clubd.repository.ProMapper">   	
    	<select id="selectProNoticeList" resultType="ProVO">
+   		/* proMapper.selectProNoticeList 프로 특이사항 목록 조회 */
 		SELECT
 			  M.MS_NUM
 		    , M.MS_NAME
@@ -15,11 +16,11 @@
 	    RIGHT OUTER JOIN DR_MS_MAININFO M ON N.MS_NUM = M.MS_NUM
 	    WHERE 1 = 1
 			AND M.MS_NUM = ${msNum}
-	        AND IFNULL(NULLIF(M.MS_BLANK,''),'N') = 'N'
-	        AND N.NOTICE_OPEN_YN = 'Y'    
+	        AND IFNULL(NULLIF(M.MS_BLANK,''),'N') = 'N'  
 	</select>
 	
 	<select id="selectProNotice" resultType="ProVO">
+		/* proMapper.selectProNotice 프로 특이사항 단일 조회 */
 		SELECT
 			  M.MS_NUM
 		    , M.MS_NAME
@@ -34,11 +35,11 @@
 			AND M.MS_NUM = #{msNum}
 			AND NOTICE_DIV = #{noticeDiv}
 	        AND IFNULL(NULLIF(M.MS_BLANK,''),'N') = 'N'
-	        AND N.NOTICE_OPEN_YN = 'Y'
 	    LIMIT 1    
 	</select>
 	
 	<select id="selectProImageList" resultType="ProVO">
+		/* proMapper.selectProImageList 프로 갤러리 이미지/영상 목록 조회 */
 		SELECT
 			  MS_NUM
 			, IMG_DIV
@@ -52,6 +53,7 @@
 	</select>
 	
     <insert id="insertProNotice">
+    	/* proMapper.insertProNotice 프로 특이사항 등록 */
     	INSERT INTO PRO_NOTICE (
 			  MS_NUM				
 			, NOTICE_DIV			
@@ -63,11 +65,12 @@
     		, #{noticeDiv}		
     		, 'Y'		
     		, #{proRemark}
-    		, 'Y'		
+    		, #{noticeOpenYn}		
     	)  	
     </insert>
     
    	<update id="updateProNotice">
+   		/* proMapper.updateProNotice 프로 특이사항 수정 */
 		UPDATE PRO_NOTICE
 		   SET MS_NUM = #{msNum}
 		   	 <if test='proMustYn != null and proMustYn != ""'>
@@ -84,6 +87,7 @@
 	</update>
 
 	<select id="selectProLicenseList" resultType="ProVO">
+		/* proMapper.selectProLicenseList 프로 자격증 목록 조회 */
 		SELECT
 			  M.MS_NUM
 		    , M.MS_NAME
@@ -101,6 +105,7 @@
 	</select>
 	
 	<select id="selectProLicense" resultType="ProVO">
+		/* proMapper.selectProLicense 프로 자격증 단일 조회 */
 		SELECT
 			  LIC_SEQ
 			, MS_NUM
@@ -114,12 +119,14 @@
 	</select>
 	
 	<select id="deleteAllProLicense" resultType="ProVO">
+		/* proMapper.deleteAllProLicense 프로 자격증 모두 삭제 */
 		DELETE FROM PRO_LICENSE 
 	    WHERE 1 = 1
 			AND MS_NUM = #{msNum}
 	</select>
 	
 	<insert id="insertProLicense">
+	 		/* proMapper.insertProLicense 프로 자격증 등록 */
 	 	<selectKey resultType="Integer" keyProperty="licSeq" order="BEFORE">
             SELECT IFNULL(MAX(LIC_SEQ), 0) + 1
 				FROM PRO_LICENSE
@@ -140,6 +147,7 @@
     </insert>
     
  	<update id="updateProLicense">
+ 		/* proMapper.updateProLicense 프로 자격증 수정 */
 		UPDATE PRO_LICENSE
 		   SET LIC_KIND 		= #{licKind}
 		     , LIC_REMARK 		= #{licRemark}
@@ -148,6 +156,7 @@
 	</update>
 		
 	<insert id="insertProImage">
+		/* proMapper.insertProImage 프로 갤러리 이미지/영상 등록 */
 		<selectKey resultType="Integer" keyProperty="imgSeq" order="BEFORE">
 	            SELECT IFNULL(MAX(IMG_SEQ), 0) + 1
 					FROM PRO_IMAGE

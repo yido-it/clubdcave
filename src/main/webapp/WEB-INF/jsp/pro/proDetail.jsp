@@ -261,7 +261,11 @@
 	    if(ev.type == 'pinchstart') {
 	        initScale = transform.scale || 1;
 	    }
-	    transform.scale = initScale * ev.scale;
+	    if(initScale * ev.scale > 1) {	    	
+		    transform.scale = initScale * ev.scale;
+	    } else {
+	    	transform.scale = 1;
+	    }
 
 	    elementUpdate();
 	}
@@ -299,7 +303,7 @@
 		};
 		transform.scale = 1;
 		var value = [
-	    	'translate3d(0px, 0px, 0)',
+	    	'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
 	    	'scale(' + transform.scale + ', ' + transform.scale + ')'
 	    ];		
 		

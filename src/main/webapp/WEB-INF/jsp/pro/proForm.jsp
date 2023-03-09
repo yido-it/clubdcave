@@ -91,6 +91,7 @@
 	                        <c:forEach items="${msArea1List}" var="item" varStatus="status">
 	                        <option value="${item.cdCode}">${item.cdTitle1}</option>
 			                </c:forEach>
+			                <option value="">선택안함</option>
 	                    </select>
 	                </div> 
 	            </div>
@@ -105,7 +106,15 @@
                     </div> 
                 </div>
             </div>    
-
+			<div class="ml-auto mr-4 pr-2">
+				<span style="top: 5px;position: relative;right: 5px;">공개여부</span>
+				<div class="custom-control ios-switch ios-switch-icon fr">
+					<input type="checkbox" class="ios-input" id="001_yn" name="001_yn" data-switch='001_yn' value="N">
+					<label class="custom-control-label" for="001_yn"></label>
+					<span style="white-space: pre;">OFF</span>
+					<span style="white-space: pre;">ON</span>
+				</div>
+            </div>
             <div class="input-style input-style-2 input-required">
                 <span class="input-style-1-active input-style-1-inactive">경력사항 입력</span>
                 <em></em>
@@ -150,13 +159,13 @@
             <!--레슨계획공개여부 -->
       		 <div class="d-flex">
                 <div class="pt-1">
-                    <h5 data-activate="toggle-id-3" class="font-500 font-17">레슨계획</h5>
+                    <h5 data-activate="n_002_yn" class="font-500 font-17">레슨계획</h5>
                 </div>
                 <div class="ml-auto mr-4 pr-2">
                   <span style="top: 5px;position: relative;right: 5px;">공개여부</span>
                     <div class="custom-control ios-switch ios-switch-icon fr">
-                        <input type="checkbox" class="ios-input" id="toggle-id-3">
-                        <label class="custom-control-label" for="toggle-id-3"></label>
+                        <input type="checkbox" class="ios-input" id="002_yn" name="002_yn" value="N">
+                        <label class="custom-control-label" for="002_yn"></label>
                         <span style="white-space: pre;">OFF</span>
                         <span style="white-space: pre;">ON</span>
                     </div>
@@ -176,16 +185,16 @@
               <!--레슨일정공개여부 -->
       		 <div class="d-flex">
                 <div class="pt-1">
-                    <h5 data-activate="toggle-id-4" class="font-500 font-17">레슨일정</h5>
+                    <h5 data-activate="n_007_yn" class="font-500 font-17">레슨일정</h5>
                 </div>
                 <div class="ml-auto mr-4 pr-2">
-                  <span style="top: 5px;position: relative;right: 5px;">공개여부</span>
-                    <div class="custom-control ios-switch ios-switch-icon fr">
-                        <input type="checkbox" class="ios-input" id="toggle-id-4">
-                        <label class="custom-control-label" for="toggle-id-4"></label>
-                        <span style="white-space: pre;">OFF</span>
-                        <span style="white-space: pre;">ON</span>
-                    </div>
+                  	<span style="top: 5px;position: relative;right: 5px;">공개여부</span>
+	                <div class="custom-control ios-switch ios-switch-icon fr">
+	                    <input type="checkbox" class="ios-input" id="007_yn" name="007_yn" value="N">
+	                    <label class="custom-control-label" for="007_yn"></label>
+	                    <span style="white-space: pre;">OFF</span>
+	                    <span style="white-space: pre;">ON</span>
+	                </div>
                 </div>
             </div>
               <!--//레슨일정공개여부 -->
@@ -203,10 +212,11 @@
                         <em><i class="fa fa-angle-down"></i></em>
                         <input class="form-control" type="hidden" id="coDivVal" value="${msFirstPick}" >
 						<select id="coDiv" name="coDiv">
-							<option value="" selected>선호하는 업장</option>
+							<option value="" disabled>선호하는 업장</option>
 			                <c:forEach items="${placeList}" var="item" varStatus="status">
 			                <option value="${item.coDiv}">${item.coName}</option>
 			                </c:forEach>
+			                <option value="">선택안함</option>
 			             </select>
                     </div> 
                 </div>
@@ -270,7 +280,6 @@
 </div>
 <div class="menu-hider"><div></div></div>
 <script type="text/javascript">
-	var params;
 
 	$().ready(function() {
 		
@@ -347,7 +356,7 @@
 				// 파일 업로드 성공 후
 				this.on("success", function(file, res){
 					this.removeAllFiles();
-	            	goAfterModal();  	                   
+	            	goAfterModal();
                 });
 			}
 		});
@@ -359,12 +368,18 @@
 	objData["msArea1"] = "${sessionScope.msMember.msArea1}";
 	objData["msArea2"] = "${sessionScope.msMember.msArea2}";
 	objData["coDiv"] = "${msFirstPick}";
+	
 	<c:forEach items="${carList}" var="item" varStatus="status">
 		objData['${"msCarNo"}${status.count}'] = '${item.msCarNo}';
 	</c:forEach>
+	
 	<c:forEach items="${noticeList}" var="item" varStatus="status">
+		<c:if test="${item.noticeOpenYn == 'N'}">
+			$('${"#"}${item.noticeDiv}${"_yn"}').attr('checked', true);
+		</c:if>	
 		objData['${"n_"}${item.noticeDiv}'] = '${item.proRemark}'.replaceAll("<br/>", "\r\n");
 	</c:forEach>
+	
 	<c:forEach items="${proLicList}" var="item" varStatus="status">
 		$('${"#l_"}${item.licKind}').attr('checked', true);
 		objData['${"l_"}${item.licKind}'] = 'Y';
@@ -372,7 +387,6 @@
 	
 	if(localStorage.getItem('frmPro') != undefined) {
 		var obj = JSON.parse(localStorage.getItem('frmPro'));
-		console.log(obj);
 		if(obj.msNum == $('#msNum').val()) {
 			for(var key in obj) {
 				var type = $('#' + key).prop('type');
@@ -386,8 +400,13 @@
 					if(type == 'date') {
 						setDateValue(key, obj[key]);
 					}
-					if(type.indexOf('check') > -1) {
+					if(key.indexOf('n_') > -1) {
 						if(obj[key] == 'Y') {						
+						$('#' + key).prop('checked', true);
+						}
+					}
+					if(key.indexOf('_yn') > -1) {
+						if(obj[key] == 'N') {						
 						$('#' + key).prop('checked', true);
 						}
 					}
@@ -451,35 +470,39 @@
 	})
 	
 	function getArea2List() {
-		var params = {
-			  coDiv : '001'
-			, cdDivision : '221'	
-			, cdCode : $('#msArea1').val()
+		if($('#msArea1').val() != null && $('#msArea1').val() != "") {
+			var params = {
+					  coDiv : '001'
+					, cdDivision : '221'	
+					, cdCode : $('#msArea1').val()
+				}		
+				
+				$.ajax({
+			        url: "<c:out value='/common/getCommonCodeDetailList'/>"
+			        , type: "post"
+			        , dataType: 'json'
+			        , data: params
+			        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+			        , success: function(data) {
+			            if(data.result){		          
+			            	var list = data.detailList;
+			            	$('.cd_detail_list').remove();
+							for(var i = 0; i < list.length; i++) {
+								var option = $("<option value='" + list[i].cdCode + "' class='cd_detail_list'>" + list[i].cdTitle1 + "</option>");
+								$('#msArea2').append(option);
+							}
+							setSelectValue('msArea2');
+			            } else {
+			                alertModal.fail(data.message);                    
+			            }                
+			        }
+			        , error: function(data) {
+			        	 alertModal.fail('[error] 코드 호출 중 오류 발생했습니다.');
+			        }
+			    });
+		} else {
+			$('.cd_detail_list').remove();
 		}		
-		
-		$.ajax({
-	        url: "<c:out value='/common/getCommonCodeDetailList'/>"
-	        , type: "post"
-	        , dataType: 'json'
-	        , data: params
-	        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
-	        , success: function(data) {
-	            if(data.result){		          
-	            	var list = data.detailList;
-	            	$('.cd_detail_list').remove();
-					for(var i = 0; i < list.length; i++) {
-						var option = $("<option value='" + list[i].cdCode + "' class='cd_detail_list'>" + list[i].cdTitle1 + "</option>");
-						$('#msArea2').append(option);
-					}
-					setSelectValue('msArea2');
-	            } else {
-	                alertModal.fail(data.message);                    
-	            }                
-	        }
-	        , error: function(data) {
-	        	 alertModal.fail('[error] 코드 호출 중 오류 발생했습니다.');
-	        }
-	    });
 	}
 
 	$('#btnAddCar').on('click', function() {
@@ -501,25 +524,26 @@
 	})
 	
 	$('#btnMidSave').on('click', function() {
-		var midSave = new Object();
+		var obj = new Object();
 		var frmArr = $('#frmPro').serializeArray();
-		var obj = [];
 		$.each(frmArr, function() {
 			obj[this.name] = this.value;
 		})
-		localStorage.setItem('frmPro', JSON.stringify(obj));
+		
+		// localStorage에 String 형태로 저장
+		localStorage.setItem('frmPro', JSON.stringify(obj)); 
 		alertModal.success('중간저장이 완료되었습니다.');
 	})
 	
 	$('#btnSubmit').on('click', function() {
-		var frmArr = $('#frmPro').serializeArray()
+		var frmArr = $('#frmPro').serializeArray();
 		var result = false;
 		$.each(frmArr, function() {
 			if(objData[this.name] != this.value && !(this.value == '' && objData[this.name] == undefined)) {
 				result = true;
+				console.log("이름 : " + this.name + '\r\n변경전 : ' + objData[this.name] + '\r\n변경후 : ' + this.value);
 				return result;
 			}
-			//console.log(objData[this.name] + ' == ' + this.value + ', result : ' + result);
 		})
 		
 		if(!result) {

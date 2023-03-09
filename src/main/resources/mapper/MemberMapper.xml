@@ -818,7 +818,7 @@
 	<update id="updateMemberToken" parameterType="hashmap">
 		/* memberMapper.updateMemberToken - 토큰 저장 */
 		UPDATE DR_MS_MAININFO
-		   SET MS_REMARK = #{token}
+		   SET MS_PUSH_KEY = #{token}
 		     , UPDATE_STAFF = 'APP'
 			 , UPDATE_DATETIME = NOW()
 			 , UPDATE_IP = #{ipAddr}
