@@ -256,7 +256,7 @@
 		                      <p style="color:#727272">https://youtu.be/</p>
 		                </div> 
 		                <div class="ml-1 mr-4 pr-2">
-		                  	 <input class="form-control" type="name" placeholder="" id="n_003" name="n_003">
+		                  	 <input class="form-control" type="name" placeholder="" id="n_003" name="n_003" style="border-radius: 10px !important;">
 		                </div>
 		            </div>
                 </div> 
@@ -269,7 +269,7 @@
 		                     <p style="color:#727272">https://www.instagram.com/</p>
 		                </div> 
 		                <div class="ml-1 mr-4 pr-2">
-		                  	 <input class="form-control" type="name" placeholder="" id="n_006" name="n_006">
+		                  	 <input class="form-control" type="name" placeholder="" id="n_006" name="n_006" style="border-radius: 10px !important;">
 		                </div>
 		            </div>
                 </div> 
@@ -282,7 +282,7 @@
 		                     <p style="color:#727272">https://open.kakao.com/o/</p>
 		                </div> 
 		                <div class="ml-1 mr-4 pr-2">
-		                  	  <input class="form-control" type="name" placeholder="" id="n_005" name="n_005">
+		                  	  <input class="form-control" type="name" placeholder="" id="n_005" name="n_005" style="border-radius: 10px !important;">
 		                </div>
 		            </div>
                 </div> 
