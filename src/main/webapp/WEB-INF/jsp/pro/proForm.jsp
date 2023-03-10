@@ -248,27 +248,46 @@
             <!--선택-->
             <h3 class="font-700 mt-5 mb-3">SNS정보입력</h3> 
             <div class="row mb-0 mt-4">
-                <div class="col-12 mb-3">
-                    <div class="input-style input-style-2 input-required">
-                        <span class="color-highlight input-style-1-active">유튜브채널 주소</span>
-                        <div>https://youtu.be/</div>
-                        <input class="form-control" type="name" placeholder="채널명" id="n_003" name="n_003">
-                    </div> 
+		          <div class="col-12 mb-3"> 
+		                    <h5 data-activate="n_002_yn" class="font-500 font-17">
+		                    <img  class="mb-1"  src="/images/icons/icon_youtube.png" style="width:20px"> 유튜브채널 주소</h5> 
+		              	<div class="d-flex">
+		                <div class="pt-2">
+		                      <p style="color:#727272">https://youtu.be/</p>
+		                </div> 
+		                <div class="ml-1 mr-4 pr-2">
+		                  	 <input class="form-control" type="name" placeholder="" id="n_003" name="n_003">
+		                </div>
+		            </div>
                 </div> 
-                <div class="col-12 mb-3">
-                    <div class="input-style input-style-2 input-required">
-                        <span class="color-highlight input-style-1-active">인스타그램 주소</span>
-                        <div>https://www.instagram.com/</div>
-                       <input class="form-control" type="name" placeholder="계정명" id="n_006" name="n_006">
-                    </div> 
+                
+                 <div class="col-12 mb-3"> 
+		                    <h5 data-activate="n_002_yn" class="font-500 font-17">
+		                    <img class="mb-1" src="/images/icons/icon_insta.png" style="width:20px"> 인스타그램 주소</h5> 
+		              	<div class="d-flex">
+		                <div class="pt-2">
+		                     <p style="color:#727272">https://www.instagram.com/</p>
+		                </div> 
+		                <div class="ml-1 mr-4 pr-2">
+		                  	 <input class="form-control" type="name" placeholder="" id="n_006" name="n_006">
+		                </div>
+		            </div>
                 </div> 
-                <div class="col-12 mb-3">
-                    <div class="input-style input-style-2 input-required">                    
-                        <span class="color-highlight input-style-1-active">카카오 오픈채팅 주소</span>
-                        <div>https://open.kakao.com/o/</div>
-                        <input class="form-control" type="name" placeholder="" id="n_005" name="n_005">
-                    </div> 
-                </div>             
+                
+                  <div class="col-12 mb-3"> 
+		                    <h5 data-activate="n_002_yn" class="font-500 font-17">
+		                    <img  class="mb-1"  src="/images/icons/icon_kakao.png" style="width:20px"> 카카오 오픈채팅 주소</h5> 
+		              	<div class="d-flex">
+		                <div class="pt-2">
+		                     <p style="color:#727272">https://open.kakao.com/o/</p>
+		                </div> 
+		                <div class="ml-1 mr-4 pr-2">
+		                  	  <input class="form-control" type="name" placeholder="" id="n_005" name="n_005">
+		                </div>
+		            </div>
+                </div> 
+                
+                
             </div>
             <input type="hidden" id="msNum" name="msNum" value="${sessionScope.msMember.msNum}"/>
             <div class="mt-4 mb3" style="display:flex;">

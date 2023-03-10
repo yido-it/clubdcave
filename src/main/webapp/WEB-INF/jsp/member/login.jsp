@@ -38,7 +38,7 @@
                     </div> 
                     <div class="form-check icon-check mt-3 opacity-60">
                         <input class="form-check-input" type="checkbox" value="" id="chkSaveLogin" name="chkSaveLogin">
-                        <label class="form-check-label color-white" for="chkSaveLogin" style="padding: 5px 10px 2px 29px;">자동로그인</label>
+                        <label class="form-check-label color-white" for="chkSaveLogin" style="padding: 0px 10px 2px 29px;">자동로그인</label>
                         <i style="top:5px" class="icon-check-1 fa fa-square color-gray-dark font-16 ml-n1"></i>
                         <i class="icon-check-2 fa fa-check-square font-16 color-highlight ml-n1"></i>
                     </div>

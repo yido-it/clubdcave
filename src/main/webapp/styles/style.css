@@ -5844,6 +5844,7 @@ code {
 .theme-dark .form-control {
   background-color: transparent !important;
 }
+.theme-dark .form-control:focus{color: #b5b5b5;}
 
 .theme-dark .tabs-no-border a {
   background-color: transparent !important;
