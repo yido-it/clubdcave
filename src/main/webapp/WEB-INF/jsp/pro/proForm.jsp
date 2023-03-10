@@ -310,6 +310,79 @@
 <div class="menu-hider"><div></div></div>
 <script type="text/javascript">
 
+	/* ------------- 제출 시 비교할 기존 데이터 (+ 체크박스 값 넣기) */
+	var objData = [];
+	objData["msNum"] = "${sessionScope.msMember.msNum}";
+	objData["msSex"] = "${sessionScope.msMember.msSex}";
+	objData["msBirth"] = "${sessionScope.msMember.msBirth}";
+	objData["msArea1"] = "${sessionScope.msMember.msArea1}";
+	objData["msArea2"] = "${sessionScope.msMember.msArea2}";
+	objData["coDiv"] = "${msFirstPick}";
+	
+	<c:forEach items="${carList}" var="item" varStatus="status">
+		objData['${"msCarNo"}${status.count}'] = '${item.msCarNo}';
+	</c:forEach>
+	
+	<c:forEach items="${noticeList}" var="item" varStatus="status">
+		var check = '${item.noticeOpenYn}' == 'N'? true : false;
+		$('input[name=' + '${item.noticeDiv}' + '_yn]').val('${item.noticeOpenYn}');
+		$('#' + '${item.noticeDiv}' + '_yn').attr('checked', check);
+		
+		objData['n_' + '${item.noticeDiv}'] = '${item.proRemark}'.replaceAll("<br/>", "\r\n");
+		objData['${item.noticeDiv}' + '_yn'] = '${item.noticeOpenYn}';
+	</c:forEach>
+	
+	<c:forEach items="${proLicList}" var="item" varStatus="status">
+		$('#l_' + '${item.licKind}').attr('checked', true);
+		objData['l_' + '${item.licKind}'] = 'Y';
+	</c:forEach>
+	/* -------------// 제출 시 비교할 기존 데이터 (+ 체크박스 값 넣기) */
+
+	if(localStorage.getItem('frmPro') != undefined) {		
+		alertModal.confirm2('중간저장된 내용을 불러올까요? 취소하면 삭제됩니다.', 'getMidSaveInfo();')			
+	}
+	
+	$('.btn-cancel').on('click', function () {
+		localStorage.removeItem('frmPro');   
+	})
+	
+	function getMidSaveInfo() {
+		var obj = JSON.parse(localStorage.getItem('frmPro'));
+		if(obj.msNum == $('#msNum').val()) {
+			for(var key in obj) {
+				var type = $('#' + key).prop('type');
+				if(type != undefined) {
+					if(type.indexOf('text') > -1) {
+						$('#' + key).val(obj[key]);
+					}
+					if(type.indexOf('select') > -1) {
+						setSelectValue(key, obj[key]);
+					}
+					if(type == 'date') {
+						setDateValue(key, obj[key]);
+					}
+					// 자격증
+					if(key.indexOf('l_') > -1) {
+						if(obj[key] == 'Y') {						
+							$('#' + key).prop('checked', true);
+						} else {
+							$('#' + key).prop('checked', false);
+						}
+					}
+					// 표시 여부
+					if(key.indexOf('_yn') > -1) {
+						console.log(obj[key]);
+						if(obj[key] == 'N') {						
+							$('#' + key).prop('checked', true);
+						} else {
+							$('#' + key).prop('checked', false);
+						}
+					}
+				}
+			}	
+		}	
+	}
+
 	$().ready(function() {
 		
 	    $('#msBirth').datepicker({
@@ -389,73 +462,7 @@
                 });
 			}
 		});
-		
-	/* ------------- 제출 시 비교할 기존 데이터 (+ 체크박스 값 넣기) */
-	var objData = [];
-	objData["msNum"] = "${sessionScope.msMember.msNum}";
-	objData["msSex"] = "${sessionScope.msMember.msSex}";
-	objData["msBirth"] = "${sessionScope.msMember.msBirth}";
-	objData["msArea1"] = "${sessionScope.msMember.msArea1}";
-	objData["msArea2"] = "${sessionScope.msMember.msArea2}";
-	objData["coDiv"] = "${msFirstPick}";
-	
-	<c:forEach items="${carList}" var="item" varStatus="status">
-		objData['${"msCarNo"}${status.count}'] = '${item.msCarNo}';
-	</c:forEach>
-	
-	<c:forEach items="${noticeList}" var="item" varStatus="status">
-		var check = '${item.noticeOpenYn}' == 'N'? true : false;
-		$('input[name=' + '${item.noticeDiv}' + '_yn]').val('${item.noticeOpenYn}');
-		$('#' + '${item.noticeDiv}' + '_yn').attr('checked', check);
-		
-		objData['n_' + '${item.noticeDiv}'] = '${item.proRemark}'.replaceAll("<br/>", "\r\n");
-		objData['${item.noticeDiv}' + '_yn'] = '${item.noticeOpenYn}';
-	</c:forEach>
-	
-	<c:forEach items="${proLicList}" var="item" varStatus="status">
-		$('#l_' + '${item.licKind}').attr('checked', true);
-		objData['l_' + '${item.licKind}'] = 'Y';
-	</c:forEach>
-	/* -------------// 제출 시 비교할 기존 데이터 (+ 체크박스 값 넣기) */
-	
-	if(localStorage.getItem('frmPro') != undefined) {		
-		alertModal.confirm2('중간저장된 내용을 불러올까요? 취소하면 삭제됩니다.', 'getMidSaveInfo();')			
-	}
-	
-	$('.btn-cancel').on('click', function () {
-		localStorage.removeItem('frmPro');   
-	})
-	
-	function getMidSaveInfo() {
-		var obj = JSON.parse(localStorage.getItem('frmPro'));
-		if(obj.msNum == $('#msNum').val()) {
-			for(var key in obj) {
-				var type = $('#' + key).prop('type');
-				if(type != undefined) {
-					if(type.indexOf('text') > -1) {
-						$('#' + key).val(obj[key]);
-					}
-					if(type.indexOf('select') > -1) {
-						setSelectValue(key, obj[key]);
-					}
-					if(type == 'date') {
-						setDateValue(key, obj[key]);
-					}
-					if(key.indexOf('n_') > -1) {
-						if(obj[key] == 'Y') {						
-						$('#' + key).prop('checked', true);
-						}
-					}
-					if(key.indexOf('_yn') > -1) {
-						if(obj[key] == 'N') {						
-						$('#' + key).prop('checked', true);
-						}
-					}
-				}
-			}	
-		}	
-	}
-	
+			
 	 $('.hidden-notice').each(function () {
 		var id = this.id;
 		var val = $(this).val().replaceAll("<br/>", "\r\n");
