@@ -113,11 +113,12 @@
 			<div class="ml-auto mr-4 pr-2">
 				<span style="top: 5px;position: relative;right: 5px;">공개여부</span>
 				<div class="custom-control ios-switch ios-switch-icon fr">
-					<input type="checkbox" class="ios-input" id="001_yn" name="001_yn" data-switch='001_yn' value="N">
+					<input type="checkbox" class="ios-input" id="001_yn" name="" data-switch='001_yn' value="N">
 					<label class="custom-control-label" for="001_yn"></label>
 					<span style="white-space: pre;">OFF</span>
 					<span style="white-space: pre;">ON</span>
 				</div>
+				<input type="hidden" id="" name="001_yn"/>
             </div>
             </div>
             <div class="input-style input-style-2 input-required mt-2"> 
@@ -168,11 +169,12 @@
                 <div class="ml-auto mr-4 pr-2">
                   <span style="top: 5px;position: relative;right: 5px;">공개여부</span>
                     <div class="custom-control ios-switch ios-switch-icon fr">
-                        <input type="checkbox" class="ios-input" id="002_yn" name="002_yn" value="N">
+                        <input type="checkbox" class="ios-input" id="002_yn" name="" value="N">
                         <label class="custom-control-label" for="002_yn"></label>
                         <span style="white-space: pre;">OFF</span>
                         <span style="white-space: pre;">ON</span>
                     </div>
+                    <input type="hidden" id="" name="002_yn"/>
                 </div>
             </div>
               <!--//레슨계획공개여부 -->
@@ -194,11 +196,12 @@
                 <div class="ml-auto mr-4 pr-2">
                   	<span style="top: 5px;position: relative;right: 5px;">공개여부</span>
 	                <div class="custom-control ios-switch ios-switch-icon fr">
-	                    <input type="checkbox" class="ios-input" id="007_yn" name="007_yn" value="N">
+	                    <input type="checkbox" class="ios-input" id="007_yn" name="" value="N">
 	                    <label class="custom-control-label" for="007_yn"></label>
 	                    <span style="white-space: pre;">OFF</span>
 	                    <span style="white-space: pre;">ON</span>
 	                </div>
+                    <input type="hidden" id="" name="007_yn"/>
                 </div>
             </div>
               <!--//레슨일정공개여부 -->
@@ -248,18 +251,21 @@
                 <div class="col-12 mb-3">
                     <div class="input-style input-style-2 input-required">
                         <span class="color-highlight input-style-1-active">유튜브채널 주소</span>
-                        <input class="form-control" type="name" placeholder="https://www.youtube.com/@채널명" id="n_003" name="n_003">
+                        <div>https://youtu.be/</div>
+                        <input class="form-control" type="name" placeholder="채널명" id="n_003" name="n_003">
                     </div> 
                 </div> 
                 <div class="col-12 mb-3">
                     <div class="input-style input-style-2 input-required">
                         <span class="color-highlight input-style-1-active">인스타그램 주소</span>
-                       <input class="form-control" type="name" placeholder="https://www.instagram.com/계정명" id="n_006" name="n_006">
+                        <div>https://www.instagram.com/</div>
+                       <input class="form-control" type="name" placeholder="계정명" id="n_006" name="n_006">
                     </div> 
                 </div> 
                 <div class="col-12 mb-3">
-                    <div class="input-style input-style-2 input-required">
+                    <div class="input-style input-style-2 input-required">                    
                         <span class="color-highlight input-style-1-active">카카오 오픈채팅 주소</span>
+                        <div>https://open.kakao.com/o/</div>
                         <input class="form-control" type="name" placeholder="" id="n_005" name="n_005">
                     </div> 
                 </div>             
@@ -365,7 +371,8 @@
 			}
 		});
 		
-	var objData = []; // 제출 시 비교할 기존 데이터
+	/* ------------- 제출 시 비교할 기존 데이터 (+ 체크박스 값 넣기) */
+	var objData = [];
 	objData["msNum"] = "${sessionScope.msMember.msNum}";
 	objData["msSex"] = "${sessionScope.msMember.msSex}";
 	objData["msBirth"] = "${sessionScope.msMember.msBirth}";
@@ -378,16 +385,19 @@
 	</c:forEach>
 	
 	<c:forEach items="${noticeList}" var="item" varStatus="status">
-		<c:if test="${item.noticeOpenYn == 'N'}">
-			$('${"#"}${item.noticeDiv}${"_yn"}').attr('checked', true);
-		</c:if>	
-		objData['${"n_"}${item.noticeDiv}'] = '${item.proRemark}'.replaceAll("<br/>", "\r\n");
+		var check = '${item.noticeOpenYn}' == 'N'? true : false;
+		$('input[name=' + '${item.noticeDiv}' + '_yn]').val('${item.noticeOpenYn}');
+		$('#' + '${item.noticeDiv}' + '_yn').attr('checked', check);
+		
+		objData['n_' + '${item.noticeDiv}'] = '${item.proRemark}'.replaceAll("<br/>", "\r\n");
+		objData['${item.noticeDiv}' + '_yn'] = '${item.noticeOpenYn}';
 	</c:forEach>
 	
 	<c:forEach items="${proLicList}" var="item" varStatus="status">
-		$('${"#l_"}${item.licKind}').attr('checked', true);
-		objData['${"l_"}${item.licKind}'] = 'Y';
+		$('#l_' + '${item.licKind}').attr('checked', true);
+		objData['l_' + '${item.licKind}'] = 'Y';
 	</c:forEach>
+	/* -------------// 제출 시 비교할 기존 데이터 (+ 체크박스 값 넣기) */
 	
 	if(localStorage.getItem('frmPro') != undefined) {		
 		alertModal.confirm2('중간저장된 내용을 불러올까요? 취소하면 삭제됩니다.', 'getMidSaveInfo();')			
@@ -434,12 +444,12 @@
 	}) 
 	
 	function showCarInput() {
-			if($('#msCarNo2').val() != '' && $('#msCarNo2').val() != null) {
-				$('#carArea2').show();
-			}
-			if($('#msCarNo3').val() != '' && $('#msCarNo3').val() != null) {
-				$('#carArea3').show();
-			}
+		if($('#msCarNo2').val() != '' && $('#msCarNo2').val() != null) {
+			$('#carArea2').show();
+		}
+		if($('#msCarNo3').val() != '' && $('#msCarNo3').val() != null) {
+			$('#carArea3').show();
+		}
 	}
 	 
 	$('.dz-remove').on('click', function() {	
@@ -516,6 +526,16 @@
 			$('.cd_detail_list').remove();
 		}		
 	}
+	
+	$('.ios-input').on('click', function() {
+		var name = $(this).attr('id');
+		var val = $(this).prop('checked');
+		if(val) {			
+			$("input[name=" + name + "]").val("N");
+		} else {
+			$("input[name=" + name + "]").val("Y");
+		}
+	})
 
 	$('#btnAddCar').on('click', function() {
 		if(!$('#carArea2').is(':visible')) {
@@ -565,16 +585,29 @@
 		alertModal.confirm1('관리자 검토/승인후에 프로필이 반영됩니다.<br/>제출하시겠습니까?', 'saveProForm()', '관리자 승인필요');
 	})
 			
-	function saveProForm() {			
-	    $.ajax({
+	function saveProForm() {
+		var obj = new Object();
+		var frmArr = $('#frmPro').serializeArray();
+		$.each(frmArr, function() {
+			if(this.name == 'n_003') {
+				obj[this.name] = 'https://youtu.be/' + this.value;
+			} else if(this.name == 'n_006') {
+				obj[this.name] = 'https://www.instagram.com/' + this.value;
+			} else if(this.name == 'n_005') {
+				obj[this.name] = 'https://open.kakao.com/o/' + this.value;
+			} else {
+				obj[this.name] = this.value;
+			}
+		})
+
+	   $.ajax({
 	        url: "/pro/saveProForm"
 	        , type: "post"
 	        , dataType: 'json'
-	        , data: $('#frmPro').serialize()
+	        , data: obj
 	        , contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
 	        , success: function(data) {		    	
-	            if(data.result){	       
-	            	
+	            if(data.result){	            	
                		$("#confirm1Popup").removeClass('menu-active');
 	            	
    	            	alertModal.success('제출이 완료되었습니다.');

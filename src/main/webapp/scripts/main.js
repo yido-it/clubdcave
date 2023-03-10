@@ -428,3 +428,28 @@ function textLengthOverCut(txt, len, lastTxt) {
 function mobileYn() {
 		return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
+
+/* 
+* 폼데이터 수정
+* values : formData
+* k : 변경할 input Name
+* v : 변결될 input Value
+*/
+function changeSerialize(values, k, v) {
+    var found = false;
+    for (i = 0; i < values.length && !found; i++) {
+        if ( values[i].name == k ) { 
+            values[i].value = v;
+            found = true;
+        }
+    }
+    if (!found) {
+        values.push(
+            {
+                name: k,
+                value: v
+            }  
+        );
+    }
+    return values;
+}

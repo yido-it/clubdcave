@@ -83,19 +83,18 @@
                 <div class="">
                 	<c:if test="${not empty proNoticeList}">
 	                    <c:forEach items="${proNoticeList}" var="item" varStatus="status">
-	                    <c:if test="${item.noticeDiv == '005'}">
-	                    
-	                    <a href="${item.proRemark}" class="icon icon-m rounded-sm mb-2 mt-2  mr-2" >
+	                    <c:if test="${item.noticeDiv == '003'}">	                    
+	                    <a href="https://youtu.be/${item.proRemark}" class="icon icon-m rounded-sm mb-2 mt-2  mr-2" >
 	                    	<img src="/images/icons/icon_youtube.png" style="width:40px">
 	                    </a>
 	                    </c:if>
-	                    <c:if test="${item.noticeDiv == '006'}">
-	                    <a href="${item.proRemark}" class="icon icon-m rounded-sm mb-2 mt-2 mr-2">
+	                    <c:if test="${item.noticeDiv == '005'}">
+	                    <a href="https://open.kakao.com/o/${item.proRemark}" class="icon icon-m rounded-sm mb-2 mt-2 mr-2">
 	                    	<img src="/images/icons/icon_kakao.png" style="width:40px">
 						</a>
 	                    </c:if>
-	                    <c:if test="${item.noticeDiv == '003'}">			            
-	                        <a href="${item.proRemark}" class="icon icon-m rounded-sm mb-2 mt-2  mr-2">	                        	
+	                    <c:if test="${item.noticeDiv == '006'}">			            
+	                        <a href="https://www.instagram.com/${item.proRemark}" class="icon icon-m rounded-sm mb-2 mt-2  mr-2">	                        	
 	                    		<img src="/images/icons/icon_insta.png" style="width:40px">
 	                        </a>
 	                    </c:if>
@@ -246,8 +245,7 @@
 		startX = Math.round((screen.offsetWidth - el.offsetWidth) / 2);
 		startY = Math.round((screen.offsetHeight - el.offsetHeight) / 2);
 		
-		mc.add(new Hammer.Pan({ threshold: 0, pointers: 0}));
-		//mc.add(new Hammer.Swipe()).recognizeWith(mc.get('pan'));
+		mc.add(new Hammer.Pan({ threshold: 0, pointers: 0}));	
 		mc.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith(mc.get('pan'));
 		
 		mc.on("panstart panmove", onPan);

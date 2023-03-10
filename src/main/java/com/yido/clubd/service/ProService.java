@@ -58,21 +58,21 @@ public class ProService {
 		List<ProVO> list = new ArrayList<ProVO>();
 		for (Entry<String, Object> entry : params.entrySet()) {
 			if (-1 < entry.getKey().indexOf("n_")) {
-				
+
 				// notice 값이 있는 경우
-				if(!((String) entry.getValue()).trim().isEmpty()) {
+				if (!((String) entry.getValue()).trim().isEmpty()) {
 					String noticeDiv = entry.getKey().replace("n_", "");
-					String openYn = (String)params.getOrDefault(noticeDiv + "_yn", "Y"); 					
-			
+					String openYn = (String) params.getOrDefault(noticeDiv + "_yn", "Y");
+
 					ProVO proVO = new ProVO();
 					proVO.setMsNum((String) params.get("msNum"));
 					proVO.setNoticeDiv(noticeDiv);
 					proVO.setNoticeOpenYn(openYn);
 					proVO.setProRemark(((String) entry.getValue()).replace("\r\n", "<br/>"));
-					
+
 					list.add(proVO);
 				}
-				
+
 			}
 		}
 
@@ -150,7 +150,7 @@ public class ProService {
 			// mFile의 파일이름 가져옴
 			String orgFileNm = mFile.getOriginalFilename();
 			String extNm = orgFileNm.substring(orgFileNm.lastIndexOf(".") + 1, orgFileNm.length()).toLowerCase();
-			
+
 			String folderNm = "picture/" + params.get("msNum") + "/"; // ex) test/picture/00000001/
 			String newFileNm = System.currentTimeMillis() + "." + extNm;
 
@@ -166,17 +166,18 @@ public class ProService {
 
 			AWSFileUtil.uploadFile(folderNm, newFileNm, extNm, tmpFile, mimeType); // 생성할 폴더명, 새 파일 이름, 복사될 파일, 파일타입
 			// 업로드 후 임시파일 삭제
-			if (tmpFile.exists())	tmpFile.delete();
+			if (tmpFile.exists())
+				tmpFile.delete();
 
 			params.put("imgDiv", 1);
 			params.put("imgFilename", newFileNm);
 			params.put("imgPath", folderNm);
-			
+
 			proMapper.insertProImage(params);
 		}
 
 	}
-	
+
 	/**
 	 * 프로 갤러리 영상 업로드
 	 * 
@@ -184,7 +185,8 @@ public class ProService {
 	 * @param mreq
 	 * @return Map
 	 */
-	public Map<String, Object> uploadGalleryVideo(Map<String, Object> params, MultipartHttpServletRequest mreq) throws Exception {
+	public Map<String, Object> uploadGalleryVideo(Map<String, Object> params, MultipartHttpServletRequest mreq)
+			throws Exception {
 
 		Iterator<String> iter = mreq.getFileNames();
 		while (iter.hasNext()) {
@@ -196,46 +198,47 @@ public class ProService {
 			String orgFileNm = mFile.getOriginalFilename();
 			String extNm = orgFileNm.substring(orgFileNm.lastIndexOf(".") + 1, orgFileNm.length()).toLowerCase();
 
-			String folderNm = "video/main/clubd_cheongdam/";	// 비디오 업로드 전용 버킷 폴더 경로
+			String folderNm = "video/main/clubd_cheongdam/"; // 비디오 업로드 전용 버킷 폴더 경로
 			String newFileNm = (String) params.get("msNum") + "_" + System.currentTimeMillis() + "." + extNm;
 
-			File sameFile = new File(orgFileNm);			// 똑같은 이름의 파일 객체 생성 (file_name.jpg)
-			String filePath = sameFile.getAbsolutePath();	// 실행 중인 working directory + File에 전달한 경로값
-			File tmpFile = new File(filePath);				// 절대경로로 다시 파일 객체 생성
+			File sameFile = new File(orgFileNm); // 똑같은 이름의 파일 객체 생성 (file_name.jpg)
+			String filePath = sameFile.getAbsolutePath(); // 실행 중인 working directory + File에 전달한 경로값
+			File tmpFile = new File(filePath); // 절대경로로 다시 파일 객체 생성
 			mFile.transferTo(tmpFile);
 
-			Path srcPath = Paths.get(filePath);					// String을 Path 객체로 만들어줌
-			String mimeType = Files.probeContentType(srcPath);	// 파일 경로에 있는 Content-Type(파일 유형) 확인
-			mimeType = (mimeType == null ? "" : mimeType);		// 확장자가 없는 경우 null을 반환
+			Path srcPath = Paths.get(filePath); // String을 Path 객체로 만들어줌
+			String mimeType = Files.probeContentType(srcPath); // 파일 경로에 있는 Content-Type(파일 유형) 확인
+			mimeType = (mimeType == null ? "" : mimeType); // 확장자가 없는 경우 null을 반환
 
-			// 1) 동영상 길이 제한 
+			// 1) 동영상 길이 제한
 			double duration = FFmpegUtil.getVideoDuration(filePath);
-			if(duration  <= 0) {
+			if (duration <= 0) {
 				params.put("result", false);
 				params.put("message", "잘못된 파일입니다.");
-				
+
 				return params;
-			}			
-			if(duration > 10) {
+			}
+			if (duration > 10) {
 				params.put("result", false);
 				params.put("message", "업로드 하려는 동영상이 10초를 넘습니다.");
-				
+
 				return params;
-			}	
-			
+			}
+
 			// 2) 업로드
-			AWSFileUtil.uploadFile(folderNm, newFileNm, extNm, tmpFile, mimeType);	// 생성할 폴더명, 새 파일 이름, 복사될 파일, 파일타입
-			if (tmpFile.exists()) tmpFile.delete();									// 업로드 후 임시파일 삭제
-			
-			// 3) DB 데이터 삽입		
+			AWSFileUtil.uploadFile(folderNm, newFileNm, extNm, tmpFile, mimeType); // 생성할 폴더명, 새 파일 이름, 복사될 파일, 파일타입
+			if (tmpFile.exists())
+				tmpFile.delete(); // 업로드 후 임시파일 삭제
+
+			// 3) DB 데이터 삽입
 			newFileNm = newFileNm.substring(0, newFileNm.lastIndexOf(".")).concat("_default.mp4"); // 인코딩 후 파일명
 			params.put("imgFilename", newFileNm);
 			params.put("imgDiv", 2);
-			params.put("imgPath", folderNm); 
-			proMapper.insertProImage(params);	
-			
+			params.put("imgPath", folderNm);
+			proMapper.insertProImage(params);
+
 		}
-		
+
 		params.put("result", true);
 		return params;
 
@@ -269,7 +272,7 @@ public class ProService {
 
 		proMapper.deleteProImage(params);
 	}
-	
+
 	/**
 	 * 프로 갤러리 이미지/영상 저장
 	 * 
