@@ -1,7 +1,11 @@
 package com.yido.clubd.config;
 
+import org.apache.catalina.Context;
+import org.apache.tomcat.util.scan.StandardJarScanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
@@ -38,6 +42,18 @@ public class AppConfig implements WebMvcConfigurer {
     	String imgDir = rootDir + "/";
         registry.addResourceHandler("/store/**").addResourceLocations(imgDir);
     }
+    
+    // Disable scanManifest of Jar Scan in tomcat embed in spring boot
+    @Bean
+    public TomcatServletWebServerFactory tomcatFactory() {
+      return new TomcatServletWebServerFactory() {
+        @Override
+        protected void postProcessContext(Context context) {
+          ((StandardJarScanner) context.getJarScanner()).setScanManifest(false);
+        }
+      };
+    }
+    
     
 
 }

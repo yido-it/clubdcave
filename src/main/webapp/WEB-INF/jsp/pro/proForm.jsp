@@ -371,7 +371,7 @@
 					}
 					// 표시 여부
 					if(key.indexOf('_yn') > -1) {
-						console.log(obj[key]);
+						$("input[name=" + key + "]").val(obj[key]);
 						if(obj[key] == 'N') {						
 							$('#' + key).prop('checked', true);
 						} else {
@@ -598,8 +598,8 @@
 		var result = false;
 		$.each(frmArr, function() {
 			if(objData[this.name] != this.value && !(this.value == '' && objData[this.name] == undefined)) {
-				result = true;
 				console.log("이름 : " + this.name + '\r\n변경전 : ' + objData[this.name] + '\r\n변경후 : ' + this.value);
+				result = true;
 				return result;
 			}
 		})

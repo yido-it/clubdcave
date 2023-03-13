@@ -76,8 +76,7 @@
 		                        <div class="card-bottom"><span class="badge bg-highlight p-1 pl-2 rounded-0">${item.licName}</span></div>
 		                        </c:if>
 			                </div>
-		                    <p class="line-height-s color-theme mb-1">${item.msName} 프로 </p>
-		                    <p class="mb-0 font-10 pt-0 opacity-60"><i class="fa fa-clock pr-1"></i>레슨: 화/목</p> 
+		                    <p class="line-height-s color-theme mb-3">${item.msName} 프로 </p>
 		                </div>
 		                </c:forEach>         
 	            	</c:when>

@@ -5,7 +5,7 @@
  * 테이블명 : PRO_NOTICE_LOG
  * 테이블 설명 : 레슨프로특이사항 로그
 -->
-<mapper namespace="com.yido.clubd.repository.ProNoticeLogMapper">
+<mapper namespace="com.yido.clubd.repository.ProLogMapper">
    
     <insert id="insertProNoticeLog">
         <selectKey resultType="String" keyProperty="logSeq" order="BEFORE">
